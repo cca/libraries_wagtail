@@ -9,7 +9,7 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > # use "activate.fish" below for Fish shel
 > source bin/activate
 > # install Wagtail & other dependencies in the environment's packages
-> pip install -r requirements.txt
+> pip install -r libraries/requirements.txt
 > # we already have a wagtail site in this repo, but if there's wasn't one
 > # you'd run the command below to create it
 > wagtail start libraries
@@ -18,8 +18,7 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 # When you're done
 
 ```sh
-> # if you've added or updated packages, save the updates for pip
-> pip freeze > requirements.txt
+> # if you've added or updated packages, write them into libraries/requirements.txt
 > # turn off the virtualenv
 > deactivate
 ```
