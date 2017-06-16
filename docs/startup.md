@@ -10,6 +10,9 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > source bin/activate
 > # install Wagtail & other dependencies in the environment's packages
 > pip install -r requirements.txt
+> # we already have a wagtail site in this repo, but if there's wasn't one
+> # you'd run the command below to create it
+> wagtail start libraries
 ```
 
 # When you're done
