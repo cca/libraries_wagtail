@@ -4,6 +4,7 @@ TODO: write out a thorough development workflow for documenting, writing, and pu
 
 ## Shell Commands
 
+These should be run from inside the "libraries" directory as it is the root of the Wagtail site.
 
 ```sh
 > # update database schema—run after any change to a model
