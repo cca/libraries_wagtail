@@ -13,6 +13,8 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > # we already have a wagtail site in this repo, but if there's wasn't one
 > # you'd run the commands below to create it & its database
 > wagtail start libraries; python libraries/manage.py migrate
+> # install npm dependencies (used for front-end build processes)
+> npm install
 ```
 
 # When you're done
