@@ -26,4 +26,4 @@ The landing pages almost certainly will require distinct templates.
 
 Again, these are conjectural, not set in stone.
 
-`HomePage`, `ServicesPage`, `CollectionsPage`, `AboutUsPage`, `ContentPage` (covering all child-of-child pages).
+`HomePage`, `ServicesPage`, `CollectionsPage`, `AboutUsPage`, `ContentPage` (covering both services & about us grandchild pages), `BlogPage`.
