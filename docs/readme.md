@@ -4,13 +4,15 @@ _Note_: as of right now, this is just a sketch based on what we assume to be tru
 
 There are a few layers to the CCA Libraries site:
 
+```
 home page (root)
 |---services landing page
     |---service page
-|---collections landing page<sup>1</sup>
+|---collections landing page¹
 |---about us landing page
     |---policy/about us page
-    |---blog page<sup>2</sup>
+    |---blog page²
+```
 
 The service, policy/about us, and blog child-of-child pages all may be able to share a single template since they should be primarily text but with perhaps one main image and a few inline images. We can use one `ContentPage` class to cover all of them, perhaps.
 
