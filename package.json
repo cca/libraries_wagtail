@@ -1,0 +1,26 @@
+{
+  "name": "libraries-wagtail",
+  "version": "1.0.0",
+  "description": "CCA Libraries website in Wagtail CMS",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "scripts": {
+      "sass": "node-sass --output-style compressed libraries/libraries/static/scss --output libraries/libraries/static/css",
+      "sass-watch": "node-sass --output-style compressed --watch libraries/libraries/static/scss --output libraries/libraries/static/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cca/libraries_wagtail.git"
+  },
+  "author": "phette23 <phette23@gmail.com> (http://phette.net)",
+  "license": "ECL-2.0",
+  "bugs": {
+    "url": "https://github.com/cca/libraries_wagtail/issues"
+  },
+  "homepage": "https://github.com/cca/libraries_wagtail#readme",
+  "devDependencies": {
+    "node-sass": "^4.5.3"
+  }
+}
