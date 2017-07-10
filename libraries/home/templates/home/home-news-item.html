@@ -1,0 +1,28 @@
+<li class="home-news-item">
+	<div class="home-news-item__image-wrapper">
+		<img
+			alt="Image of {{ title }}"
+			class="home-news-item__image"
+			src="{{ image }}"
+			title="Image of {{ title }}"
+		/>
+	</div>
+
+	<div class="home-news-item__content">
+		<time class="home-news-item__date">
+			{{ date }}
+		</time>
+		<h3 class="home-news-item__title">
+			<a
+				class="home-news-item__link"
+				title="Read full article"
+				href="#"
+			>
+				{{ title }}
+			</a>
+		</h3>
+		<p class="home-news-item__text">
+			{{ text }}
+		</p>
+	</div>
+</li>
