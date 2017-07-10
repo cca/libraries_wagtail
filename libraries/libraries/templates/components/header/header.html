@@ -1,0 +1,45 @@
+<header class="header js-header">
+	<div class="wrapper wrapper--header">
+		<a
+			class="header__home-link"
+			href="/"
+			title="Go home"
+		>
+			<img
+				alt="CCA Libraries Logo"
+				class="header__logo"
+				src="/images/logo.png"
+			/>
+		</a>
+
+		<a
+			class="header__nav-link js-header-hamburger"
+			href="#open"
+			title="View links"
+		>
+			<img
+				alt="Navigation Icon"
+				class="header__icon"
+				src="/images/hamburger-icon.png"
+			/>
+		</a>
+
+		{% include 'components/header/main-navigation.html' %}
+
+		<a
+			class="header__nav-link header__nav-link--search js-header-search"
+			href="#search"
+			title="Search"
+		>
+			<img
+				alt="Search Icon"
+				class="header__icon"
+				src="/images/search-icon.png"
+			/>
+		</a>
+
+		<div class="header-search-box js-header-search-box">
+			{% include 'components/search/search-box.html' %}
+		</div>
+	</div>
+</header>

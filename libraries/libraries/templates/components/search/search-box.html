@@ -1,0 +1,59 @@
+<form
+	action="/search"
+	class="search-box"
+>
+	<h2 class="search-box__title">
+		Search
+	</h2>
+
+	{% include 'components/search/search-input.html' %}
+
+	<label
+		tabindex="0"
+		class="search-box__type-label"
+	>
+		<input
+			checked="checked"
+			class="search-box__type-input"
+			name="searchType"
+			tabindex="-1"
+			type="radio"
+			value="all"
+		/>
+		Entire catalogue
+	</label>
+
+	<label
+		tabindex="0"
+		class="search-box__type-label"
+	>
+		<input
+			class="search-box__type-input"
+			name="searchType"
+			tabindex="-1"
+			type="radio"
+			value="ccaLibrary"
+		/>
+		CCA Library only
+	</label>
+
+	<label
+		tabindex="0"
+		class="search-box__type-label"
+	>
+		<input
+			class="search-box__type-input"
+			name="searchType"
+			tabindex="-1"
+			type="radio"
+			value="services"
+		/>
+		Library services
+	</label>
+
+	<div class="search-box__number-results">
+		<strong>52</strong>
+		search results
+	</div>
+
+</form>
