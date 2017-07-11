@@ -14,5 +14,7 @@ These should be run from inside the "libraries" directory as it is the root of t
 > # rebuild the site styles from SASS
 > npm run sass
 > # continually watch for SASS changes & recompile the CSS
-> npm run sass-watch
+> npm run watch
 ```
+
+We're using [Gulp](http://gulpjs.com/) for our front-end build tool because that was what Torchbox's designer used, but could easily switch to something else. Note that tools like autoprefixer are solving some bugs though so switching might result in some style problems (e.g. the radio buttons on the home page search box need autoprefixer).
