@@ -7,4 +7,5 @@ pip-selfcheck.json
 *.pyc
 libraries/db.sqlite3
 libraries/libraries/static/css
+libraries/media
 
