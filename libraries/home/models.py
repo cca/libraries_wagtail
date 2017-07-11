@@ -12,8 +12,7 @@ class HomePage(Page):
     # @TODO the blurbs for the 3 main sections (services, collections, about us)
     # should be data represented in this model
 
-    # @TODO once models for subpages have been created, restrict the children here
-    # subpage_types = []
+    subpage_types = ['categories.ServicesPage', 'categories.CollectionsPage', 'categories.AboutUsPage']
 
     # don't allow more home pages to be created
     parent_page_types = []
