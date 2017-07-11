@@ -1,0 +1,15 @@
+{% load wagtailcore_tags %}
+
+<li class="service-row">
+	<h2 class="service-row__title">
+		{{ type.title }}
+	</h2>
+	<p class="service-row__summary">
+		{{ type.summary|richtext }}
+	</p>
+	<ul class="service-row__items">
+		{% for service in type.services %}
+			{% include 'categories/service-row-item.html' %}
+		{% endfor %}
+	</ul>
+</li>

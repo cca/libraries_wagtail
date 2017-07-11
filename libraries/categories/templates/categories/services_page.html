@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body_class %}services{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <ul class="services">
+            {% for type in page.service_types %}
+                {% include 'categories/service-row.html' %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

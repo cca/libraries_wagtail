@@ -1,0 +1,20 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<li class="collection">
+	{# store image object so we can get its URL later #}
+	{% image collection.image fill-360x203 as img %}
+	<div
+		class="collection__image"
+		style="background-image: url('{{img.url}}');"
+	></div>
+	<div class="collection__content">
+		<h2 class="collection__title">
+			<span class="collection__title-text">
+				<a href="{{collection.link}}">{{collection.title}}</a>
+			</span>
+		</h2>
+		<p class="collection__text">
+			{{collection.blurb|richtext}}
+		</p>
+	</div>
+</li>

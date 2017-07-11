@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block body_class %}collections{% endblock %}
+
+{% block content %}
+
+    <div class="wrapper wrapper--padding-top">
+        <h1 class="collections-title">
+            Special Collections
+        </h1>
+    </div>
+
+    <div class="wrapper wrapper--collections">
+        <ul class="collections-nav">
+            {% for collection in page.collections.all %}
+                {% include 'categories/collections-nav-item.html'%}
+            {% endfor %}
+        </ul>
+
+        <ul class="collections-list">
+            {% for collection in page.collections.all %}
+                {% include 'categories/collection.html'%}
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}

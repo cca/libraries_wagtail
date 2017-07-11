@@ -1,0 +1,28 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<li class="service-row-item">
+	<h2 class="service-row-item__title">
+		{{ title }}
+	</h2>
+	<p class="service-row-item__text">
+		{{ text }}
+	</p>
+
+	{{#image}}
+		<div class="service-row-item__image-wrapper">
+			<img
+				src="{{ image }}"
+				alt="{{ title }}"
+				class="service-row-item__image"
+			/>
+		</div>
+		<div class="service-row-item__text-wrapper">
+			<p class="service-row-item__name">
+				{{ name }}
+			</p>
+			<p class="service-row-item__position">
+				{{ position }}
+			</p>
+		</div>
+	{{/image}}
+</li>
