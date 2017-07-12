@@ -6,6 +6,7 @@ from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailsearch import index
 
 
 class ServicesPage(Page):
@@ -34,6 +35,14 @@ class CollectionsPage(Page):
     # link to the external collection, and feature image _at least_
     content_panels = Page.content_panels + [
         InlinePanel('collections', label='collection')
+    ]
+
+    # make collections page searchable by text of specific collections
+    search_fields = [
+        index.RelatedFields('collections', [
+            index.SearchField('title'),
+            index.SearchField('blurb'),
+        ]),
     ]
 
     # allow only one instance of this page type
