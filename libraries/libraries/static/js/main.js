@@ -102,7 +102,7 @@ function main() {
   // Add a class of the page name for help with
   // main navigation. We do this because of the
   // simplicity of mustache templages.
-  var pageName = window.location.href.split('/').pop();
+  var pageName = window.location.href.replace(/\//g, '');
 
   // Search pages can contain query params
   // so the pageName isn't pure
