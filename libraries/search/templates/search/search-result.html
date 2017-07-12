@@ -1,0 +1,32 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% with result.specific as result %}
+	<li class="search-result">
+		{# @TODO because of this we will need a search_image field in every Page model #}
+		{% image result.search_image fill-40x40 as img %}
+		{# @TODO if no search image provide a filler icon #}
+		<div
+			class="search-result__image"
+			style="background-image: url('{{ img.url }}');"
+		></div>
+		<div class="search-result__content">
+			<h2 class="search-result__title">
+				{# this verbose "if result.seo_title..."" is the best I could do #}
+				<a
+					class="search-result__link"
+					href="{% pageurl result %}"
+					title="View {% if result.seo_title %}{{result.seo_title}}{% else %}{{result.title}}{% endif %}"
+				>
+					{% if result.seo_title %}{{result.seo_title}}{% else %}{{result.title}}{% endif %}
+				</a>
+			</h2>
+			<p class="search-result__text">
+				{% if result.search_description %}
+					{{ result.search_description }}
+				{% else %}
+					No description available.
+				{% endif %}
+			</p>
+		</div>
+	</li>
+{% endwith %}

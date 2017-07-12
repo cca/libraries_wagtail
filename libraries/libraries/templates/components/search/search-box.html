@@ -13,14 +13,17 @@
 		class="search-box__type-label"
 	>
 		<input
-			checked="checked"
+			{# default only if not a site search #}
+			{% if not search_query %}
+				checked="checked"
+			{% endif %}
 			class="search-box__type-input"
 			name="searchType"
 			tabindex="-1"
 			type="radio"
 			value="all"
 		/>
-		Entire catalogue
+		Libraries' Search
 	</label>
 
 	<label
@@ -32,9 +35,9 @@
 			name="searchType"
 			tabindex="-1"
 			type="radio"
-			value="ccaLibrary"
+			value="catalog"
 		/>
-		CCA Library only
+		Books & Media
 	</label>
 
 	<label
@@ -42,18 +45,22 @@
 		class="search-box__type-label"
 	>
 		<input
+			{% if search_query %}
+				checked="checked"
+			{% endif %}
 			class="search-box__type-input"
 			name="searchType"
 			tabindex="-1"
 			type="radio"
 			value="services"
 		/>
-		Library services
+		Library Services
 	</label>
 
-	<div class="search-box__number-results">
-		<strong>52</strong>
-		search results
-	</div>
+	{% if search_results.paginator.count > 0 %}
+		<div class="search-box__number-results">
+			<strong>{{search_results.paginator.count}}</strong> search results
+		</div>
+	{% endif %}
 
 </form>
