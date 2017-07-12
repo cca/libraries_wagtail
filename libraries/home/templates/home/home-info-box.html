@@ -3,50 +3,45 @@
 
 	<li class="home-info-box__item">
 		<h2 class="home-info-box__item-title">
+			{# @TODO should these a[href] be a reference, not a hard-coded value? #}
 			<a
 				class="home-info-box__item-link"
-				href="#"
+				href="/services"
 				title="Services"
 			>
 				Services
 			</a>
 		</h2>
 		<p class="home-info-box__item-text">
-			This gives you a bit more insight into what
-			you’ll find in this section and how that
-			might be helpful to you.
+			{{page.services_text}}
 		</p>
 	</li>
 	<li class="home-info-box__item">
 		<h2 class="home-info-box__item-title">
 			<a
 				class="home-info-box__item-link"
-				href="#"
+				href="/collections"
 				title="Collections"
 			>
 				Collections
 			</a>
 		</h2>
 		<p class="home-info-box__item-text">
-			Aliquam iaculis ornare tristique. Phasellus
-			ullamcorper tristique est, ac dictum
-			quam sagittis ut.
+			{{page.collections_text}}
 		</p>
 	</li>
 	<li class="home-info-box__item">
 		<h2 class="home-info-box__item-title">
 			<a
 				class="home-info-box__item-link"
-				href="#"
+				href="/about-us"
 				title="About Us"
 			>
 				About Us
 			</a>
 		</h2>
 		<p class="home-info-box__item-text">
-			Aliquam iaculis ornare tristique. Phasellus
-			ullamcorper tristique est, ac dictum
-			quam sagittis ut.
+			{{page.about_us_text}}
 		</p>
 	</li>
 </ul>
