@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<li class="collection">
+<li class="collection js-collection-item" id="{{collection.title|slugify}}">
 	{# store image object so we can get its URL later #}
 	{% image collection.image fill-360x203 as img %}
 	<div

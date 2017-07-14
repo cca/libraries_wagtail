@@ -1,7 +1,9 @@
-<li class="collections-nav-item">
+{% load wagtailcore_tags %}
+
+<li class="collections-nav-item js-collections-nav-item">
 	<a
-		class="collections-nav-item__link"
-		href="#"
+		class="collections-nav-item__link js-collections-nav-item-link"
+		href="#{{collection.title|slugify}}"
 		title="{{collection.title}}"
 	>
 		<span class="collections-nav-item__text">
