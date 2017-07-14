@@ -1,4 +1,17 @@
-<div class="home-hero">
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div
+	class="home-hero"
+	style="background-image: url(
+		{% if page.specific.background_image %}
+			{% image page.specific.background_image fill-1440x630 as img %}
+			{{img.url}}
+		{% else %}
+			{# this is a default image packaged with the app #}
+			images/home-hero-bg.png
+		{% endif %}
+	)"
+>
 	<div class="wrapper">
 		<div class="home-hero__search-box">
 			{% include "components/search/search-box.html" %}

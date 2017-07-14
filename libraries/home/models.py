@@ -4,10 +4,17 @@ from django.db import models
 
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 class HomePage(Page):
-    # background_image = models.ForeignKey('wagtailimages.Image', ...)
+    background_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='ideal dimensions are 1440x630px, please optimize image size too!',
+    )
     # background_caption = RichTextField(blank=True)
 
     # blurbs for the 3 main sections (services, collections, about us)
@@ -17,12 +24,17 @@ class HomePage(Page):
     collections_text = models.CharField(default=latin, max_length=150)
     about_us_text = models.CharField(default=latin, max_length=150)
 
-    subpage_types = ['categories.ServicesPage', 'categories.CollectionsPage', 'categories.AboutUsPage']
+    subpage_types = [
+        'categories.ServicesPage',
+        'categories.CollectionsPage',
+        'categories.AboutUsPage'
+    ]
 
     # don't allow more home pages to be created
     parent_page_types = []
 
     content_panels = Page.content_panels + [
+        ImageChooserPanel('background_image'),
         MultiFieldPanel([
             FieldPanel('services_text'),
             FieldPanel('collections_text'),
