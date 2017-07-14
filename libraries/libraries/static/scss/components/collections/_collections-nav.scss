@@ -1,0 +1,18 @@
+// ========================================
+// Collections page navigation ul element
+// ========================================
+
+.collections-nav {
+  @include clearfix(); // fix margins
+  margin: 0 15px 10px;
+
+  @include respond($break-medium) {
+    background: $white;
+    margin: 0;
+    max-height: calc(100vh - 200px);
+    overflow: scroll;
+    position: fixed;
+    width: 200px;
+    z-index: 99;
+  }
+}

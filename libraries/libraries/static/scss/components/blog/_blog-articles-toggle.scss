@@ -1,0 +1,49 @@
+// ========================================
+// Blog page "More articles" toggle
+// ========================================
+
+.blog-articles-toggle {
+  border-bottom: 1px solid black(0.15);
+  color: inherit;
+  display: block;
+  font-family: $font-family-serif;
+  font-size: 12px;
+  padding: 12px 15px;
+  position: relative;
+  text-decoration: none;
+  transition: background 0.3s ease;
+
+  @include respond($break-large) {
+    display: none;
+  }
+}
+
+.blog-articles-toggle::before {
+  content: 'More articles';
+}
+
+.blog-articles-toggle::after {
+  background-image: url('/images/chevron.png');
+  background-size: 13px 8px;
+  content: '';
+  height: 8px;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+  width: 13px;
+}
+
+.blog-articles-toggle:hover {
+  background: black(0.01);
+}
+
+.blog-articles-toggle--is-active {
+  &::before {
+    content: 'Hide articles';
+  }
+
+  &::after {
+    transform: translateY(-50%);
+  }
+}

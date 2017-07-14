@@ -1,0 +1,16 @@
+// ===========================================
+// The search results wrapping ul
+// ===========================================
+
+.search-list {
+  border-top: 1px solid black(0.1);
+  padding: 20px 0;
+
+  @include respond($break-medium) {
+    border-top: 0;
+
+    // offset absolutly positioned
+    // .search-box__number-results
+    padding-top: 60px;
+  }
+}

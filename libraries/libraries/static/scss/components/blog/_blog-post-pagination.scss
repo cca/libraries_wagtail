@@ -1,0 +1,108 @@
+// ========================================
+// Blog post pagination
+// ========================================
+
+.blog-post-pagination {
+  border-top: 1px solid black(0.1);
+  display: flex;
+  margin: 60px 0 0;
+  padding: 20px 0 0;
+  position: relative;
+
+  @include respond($break-medium) {
+    margin-top: 40px;
+  }
+}
+
+  .blog-post-pagination__title {
+    font-size: 16px;
+    font-weight: 700;
+    position: absolute;
+    top: -30px;
+
+    @include respond($break-medium) {
+      display: none;
+    }
+  }
+
+  .blog-post-pagination__item {
+    @include clearfix();
+    flex: 1 0 50%;
+ }
+
+  .blog-post-pagination__item--prev {
+    display: none;
+
+    @include respond($break-medium) {
+      display: block;
+    }
+  }
+
+    .blog-post-pagination__link {
+      color: inherit;
+      display: flex;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+
+      @include respond($break-medium) {
+        display: block;
+        width: 60%;
+      }
+    }
+
+    .blog-post-pagination__link:hover {
+      opacity: 0.7;
+    }
+
+    .blog-post-pagination__link--next {
+      @include respond($break-medium) {
+        float: right;
+        text-align: right;
+      }
+    }
+
+      .blog-post-pagination__image {
+        align-self: flex-start;
+        background-size: cover;
+        display: inline-block;
+        height: 65px;
+        width: 100px;
+
+        @include respond($break-medium) {
+          margin: 0 0 7px;
+        }
+      }
+
+      .blog-post-pagination__type {
+        border-bottom: 2px solid $green;
+        display: none;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        margin: 0 0 7px;
+
+        @include respond($break-medium) {
+          display: inline-block;
+        }
+      }
+
+      .blog-post-pagination__post-title {
+        align-self: center;
+        flex: 1 1;
+        font-family: $font-family-serif;
+        font-size: 14px;
+        line-height: 1.6em;
+        padding: 0 25px 0 15px;
+
+        @include respond($break-medium) {
+          font-size: 12px;
+          padding: 0;
+        }
+      }
+
+        .blog-post-pagination__post-title-text {
+          @include respond(0, $break-medium) {
+            border-bottom: 1px solid $green;
+            padding: 0 0 2px;
+          }
+        }

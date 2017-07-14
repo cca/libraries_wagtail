@@ -1,0 +1,78 @@
+// ===================================
+// Home hero info box. Holds general
+// information about the site and
+// whats going on today.
+// ===================================
+
+.home-info-box-times {
+  color: $white;
+  flex: 1 0 100%;
+  padding: 0 0 30px;
+  position: relative;
+
+  @include respond($break-medium) {
+    flex: 0 0 50%;
+    order: 3;
+    padding: 0;
+  }
+
+  @include respond($break-large) {
+    flex: 0 0 20%;
+  }
+}
+
+  .home-info-box-times__title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin: 0 0 20px;
+    padding: 0 0 0 5px;
+  }
+
+  .home-info-box-times__title::before {
+    background-image: url('/images/clock-icon.png');
+    background-size: 25px 25px;
+    content: '';
+    display: inline-block;
+    height: 25px;
+    left: -5px;
+    position: relative;
+    top: 5px;
+    width: 25px;
+  }
+
+  .home-info-box-times__timetable {
+    border-top: 1px solid white(0.4);
+    display: flex;
+    flex-wrap: wrap;
+    font-family: $font-family-serif;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    line-height: 20px;
+    margin: 0 0 5px;
+    padding: 10px 0 0;
+  }
+
+    .home-info-box-times__timetable-name,
+    .home-info-box-times__timetable-times {
+      border-bottom: 1px solid white(0.4);
+      flex: 1 0 40%;
+      font-weight: 700;
+      margin: 0 0 10px;
+      padding: 0 0 10px;
+    }
+
+    .home-info-box-times__timetable-times {
+      flex: 1 0 60%;
+      font-weight: 300;
+    }
+
+  .home-info-box-times__link {
+    color: inherit;
+    font-family: $font-family-serif;
+    font-size: 14px;
+  }
+
+  .home-info-box-times__link:hover {
+    opacity: 0.7;
+  }

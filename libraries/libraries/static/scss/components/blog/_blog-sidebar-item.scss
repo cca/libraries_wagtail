@@ -1,0 +1,66 @@
+// ========================================
+// Blog page sidebar list item
+// ========================================
+
+.blog-sidebar-item {
+  border-bottom: 1px solid black(0.1);
+  margin: 0 0 15px;
+  padding: 0 0 15px;
+
+  @include respond($break-medium) {
+    flex: 1 0 50%;
+  }
+
+  @include respond($break-large) {
+    border-bottom: 0;
+    flex: 1 0 100%;
+    margin: 0 0 5px;
+  }
+}
+
+  .blog-sidebar-item__link {
+    color: inherit;
+    display: flex;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+
+    @include respond($break-large) {
+      flex-wrap: wrap;
+    }
+  }
+
+  .blog-sidebar-item__link:hover {
+    opacity: 0.7;
+  }
+
+    .blog-sidebar-item__image {
+      align-self: flex-start;
+      background-size: cover;
+      display: block;
+      height: 80px;
+      width: 125px;
+
+      @include respond($break-large) {
+        height: 70px;
+        margin: 0 0 10px;
+        width: 110px;
+      }
+    }
+
+    .blog-sidebar-item__title {
+      flex: 1 1;
+      font-family: $font-family-serif;
+      font-size: 12px;
+      line-height: 1.6em;
+      padding: 0 25px 0 15px;
+
+      @include respond($break-large) {
+        flex: 1 0 100%;
+        padding: 0;
+      }
+    }
+
+      .blog-sidebar-item__title-text {
+        border-bottom: 1px solid $green;
+        padding: 0 0 2px;
+      }

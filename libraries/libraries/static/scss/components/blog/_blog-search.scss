@@ -1,0 +1,44 @@
+// ========================================
+// Blog page search component
+// ========================================
+
+.blog-search {
+  background: $grey;
+  margin: 0 0 15px;
+  padding: 15px;
+
+  @include respond($break-large) {
+    background: transparent;
+    margin: 0 0 20px;
+    padding: 0;
+  }
+}
+
+  .blog-search__title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 10px;
+
+    @include respond($break-large) {
+      font-size: 16px;
+    }
+  }
+
+  // Pass-through to the <input> component
+  .blog-search {
+    .search-input__input {
+      font-size: 14px;
+      padding: 10px 12px;
+    }
+
+    .search-input__submit {
+      height: 35px;
+      width: 35px;
+    }
+
+    .search-input__submit::after {
+      height: 30px;
+      top: 1px;
+      width: 30px;
+    }
+  }

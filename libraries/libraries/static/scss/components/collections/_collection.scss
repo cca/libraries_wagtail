@@ -1,0 +1,88 @@
+// ========================================
+// Collection page collection item
+// ========================================
+
+.collection {
+  @include clearfix();
+
+  @include respond($break-medium) {
+    margin: 0 0 20px;
+    position: relative;
+  }
+
+  // Cant add classes in mustache templates
+  // so alternating like this
+  &:nth-of-type(even) {
+    .collection__content {
+      float: left;
+
+      @include respond($break-large) {
+        left: 0;
+        right: auto;
+      }
+    }
+  }
+}
+
+  .collection__image {
+    background-position: center center;
+    background-size: cover;
+    height: 200px;
+    width: 100%;
+
+    @include respond($break-medium) {
+      height: 300px;
+    }
+
+    @include respond($break-large) {
+      height: 400px;
+    }
+  }
+
+  .collection__content {
+    background: $white;
+    float: right;
+    padding: 15px 15px 0;
+    position: relative;
+    top: -40px;
+    width: calc(100% - 40px);
+
+    @include respond($break-large) {
+      bottom: 0;
+      float: none;
+      padding: 25px;
+      position: absolute;
+      right: 0;
+      top: auto;
+      width: 40%;
+    }
+  }
+
+    .collection__title {
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.3em;
+      margin: 0 0 10px;
+      padding: 0 0 3px;
+      text-decoration: none;
+
+      @include respond($break-large) {
+        font-size: 28px;
+      }
+    }
+
+    .collection__title:hover {
+      opacity: 0.7;
+    }
+
+      .collection__title-text {
+        border-bottom: 2px solid $purple;
+      }
+
+    .collection__text {
+      font-family: $font-family-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.4em;
+    }

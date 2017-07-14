@@ -1,0 +1,36 @@
+// ==========================================
+// Search page search box. This component
+// wraps the search-box component to
+// apply specific styles for the search page
+// ==========================================
+
+.search-page-search-box {
+  background: $grey;
+  display: none;
+
+  @include respond($break-medium) {
+    display: block;
+  }
+}
+
+
+// Search page specific overrides
+.search-page-search-box .search-box {
+  background: transparent;
+  border: 0;
+  padding: 30px 0;
+}
+
+.search-page-search-box .search-box__title {
+  display: none;
+}
+
+// Position the results below the display of the form
+.search-page-search-box .search-box__number-results {
+  bottom: -34px;
+  position: absolute;
+}
+
+.search-page-search-box .search-input {
+  max-width: 500px;
+}

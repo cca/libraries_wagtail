@@ -1,0 +1,17 @@
+// ===================================
+// Home page news section.
+// ===================================
+
+.home-news {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+  .home-news__list {
+    flex: 1 0 100%;
+
+    @include respond($break-medium) {
+      flex: 1 0 70%;
+    }
+  }

@@ -1,0 +1,14 @@
+// ========================================
+// Collections page title element
+// ========================================
+
+.collections-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 24px;
+
+  @include respond($break-medium) {
+    font-size: 28px;
+    margin: 0 0 30px;
+  }
+}

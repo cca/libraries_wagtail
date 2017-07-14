@@ -1,0 +1,130 @@
+// ===================================
+// Home page news item.
+// ===================================
+
+.home-news-item {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 24px;
+
+  @include respond($break-small) {
+    flex-wrap: nowrap;
+  }
+}
+
+.home-news-item--instagram {
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+
+  @include respond($break-medium) {
+    flex: 1 0 30%;
+    padding: 0 0 0 10px;
+  }
+
+  @include respond($break-large) {
+    padding: 0 0 0 30px;
+  }
+}
+
+  .home-news-item__image-wrapper {
+    background-size: cover;
+    flex: 1 0 100%;
+    margin: 0 0 10px;
+
+    @include respond($break-small) {
+      flex: 1 0 30%;
+    }
+
+    @include respond($break-large) {
+      flex: 1 0 45%;
+    }
+  }
+
+  .home-news-item__image-wrapper--instagram {
+    @include respond($break-medium) {
+      flex: 1 0 100%;
+    }
+  }
+
+    .home-news-item__image {
+      display: block;
+      height: auto;
+      width: 100%;
+    }
+
+  .home-news-item__content {
+    flex: 1 0 100%;
+
+    @include respond($break-small) {
+      flex: 1 0 70%;
+      padding: 0 10px;
+    }
+
+    @include respond($break-medium) {
+      padding: 0 20px;
+    }
+
+    @include respond($break-large) {
+      flex: 1 0 55%;
+    }
+  }
+
+  .home-news-item__content--instagram {
+    @include respond($break-medium) {
+      flex: 1 0 100%;
+      padding: 0;
+    }
+  }
+
+    .home-news-item__date {
+      display: none;
+      font-family: $font-family-serif;
+      font-size: 12px;
+      margin: 0 0 6px;
+
+      @include respond($break-small) {
+        display: block;
+      }
+    }
+
+    .home-news-item__title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4em;
+      margin: 0 0 7px;
+
+      @include respond($break-medium) {
+        font-size: 18px;
+        margin: 0 0 12px;
+      }
+    }
+
+      .home-news-item__link {
+        border-bottom: 2px solid $turquoise;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .home-news-item__link:hover {
+        opacity: 0.7;
+      }
+
+    .home-news-item__text {
+      font-family: $font-family-serif;
+      font-size: 13px;
+      line-height: 1.4em;
+
+      @include respond($break-medium) {
+        font-size: 14px;
+      }
+    }
+
+    .home-news-item__text em {
+      cursor: pointer;
+      font-style: normal;
+      text-decoration: underline;
+    }
+
+    .home-news-item__text em:hover {
+      opacity: 0.7;
+    }

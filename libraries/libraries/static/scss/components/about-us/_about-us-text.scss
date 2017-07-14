@@ -1,0 +1,59 @@
+// ========================================
+// About us page text
+// ========================================
+
+.about-us-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 24px;
+
+  @include respond($break-medium) {
+    font-size: 28px;
+    margin: 0 0 30px;
+  }
+}
+
+.about-us-content {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 24px;
+
+  @include respond($break-medium) {
+    flex-wrap: nowrap;
+  }
+}
+
+  .about-us-text-wrapper {
+    flex: 1 0 100%;
+
+    @include respond($break-medium) {
+      flex: 2 0 30%;
+    }
+  }
+
+    .about-us-text {
+      font-family: $font-family-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.4em;
+      margin: 0 0 24px;
+    }
+
+  .about-us-image-wrapper {
+    flex: 1 0 100%;
+    margin: 0 0 20px;
+    order: 0;
+
+    @include respond($break-medium) {
+      flex: 1 1 20%;
+      margin: 0 0 0 40px;
+      order: 1;
+    }
+  }
+
+    .about-us-image {
+      display: block;
+      height: auto;
+      width: 100%;
+    }

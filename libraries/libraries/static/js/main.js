@@ -102,7 +102,7 @@ function main() {
   // Add a class of the page name for help with
   // main navigation. We do this because of the
   // simplicity of mustache templages.
-  var pageName = window.location.href.replace(/\//g, '');
+  var pageName = window.location.pathname.replace(/\//g,'');
 
   // Search pages can contain query params
   // so the pageName isn't pure
@@ -161,13 +161,87 @@ function main() {
 
   var $blogSearchToggle = $('.js-blog-search-toggle');
   var $blogSidebar = $('.js-blog-sidebar');
+  var $blogSidebarContent = $('.js-blog-sidebar-content');
+  var $blogSidebarList = $('.js-blog-sidebar-list');
+  var $footer = $('.js-footer');
 
   $blogSearchToggle.click(function(e) {
     e.preventDefault();
-    $blogSidebar.slideToggle();
+    $blogSidebarContent.slideToggle();
     $blogSearchToggle.toggleClass(
       'blog-articles-toggle--is-active'
     );
+  });
+
+  // -- Blog sidebar scroll (desktop only) -- \\
+
+  var docHeight = document.body.scrollHeight;
+  var viewHeight = document.documentElement.clientHeight;
+  var maxHeight = docHeight - viewHeight;
+  var footerHeight = $footer.height();
+  var bodyWithoutfooterHeight = maxHeight - footerHeight;
+
+  if ($blogSidebar.length > 0) {
+    $window.on('scroll', function(e) {
+      if ($window.width() > breakpoints.large) {
+        var scrollPosition = $window.scrollTop();
+
+        if (scrollPosition > bodyWithoutfooterHeight) {
+          var offset = scrollPosition - bodyWithoutfooterHeight + 240;
+          $blogSidebarList.css(
+            'max-height',
+            'calc(100vh - ' + offset + 'px)'
+          );
+        } else {
+          $blogSidebarList.removeAttr('style');
+        }
+      }
+    });
+  }
+
+  // -- Collections navigation scroll (desktop only) -- \\
+
+  var $collectionsNav = $('.js-collections-nav');
+
+  if ($collectionsNav.length > 0) {
+    var $collectionItems = $('.js-collection-item');
+    var $collectionsNavItems = $('.js-collections-nav-item');
+    var collectionNavActiveCls = 'collections-nav-item--is-active';
+
+    $window.on('scroll', function(e) {
+      $collectionItems.each(function(i, item) {
+        var visible = isInView(item);
+
+        if (visible) {
+          $collectionsNavItems.removeClass(collectionNavActiveCls);
+          var $collectionsNavItemLink = $(
+            ".js-collections-nav-item-link[href^='#" + item.id + "']"
+          );
+          $collectionsNavItemLink.parent().addClass(
+            collectionNavActiveCls
+          );
+        }
+      });
+    });
+  }
+
+  // Check if element is in view
+  // https://stackoverflow.com/a/42777210/5386237
+  function isInView(el) {
+    const { top, bottom } = el.getBoundingClientRect()
+    return top >= 0 && bottom <= window.innerHeight
+  }
+
+  // -- Anchor link scrolling -- \\
+
+  $("a.js-scroll-to[href^='#']").click(function(e) {
+    e.preventDefault();
+    var dest = $(this).attr('href');
+    $('html, body').animate(
+      { scrollTop: $(dest).offset().top - 100 }, // offset header
+      'medium'
+    );
+    $window.trigger('scroll'); // needed for collection nav etc
   });
 }
 

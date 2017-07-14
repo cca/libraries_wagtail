@@ -1,0 +1,46 @@
+// ===========================================
+// The search box <input>
+// ===========================================
+
+.search-input {
+  position: relative;
+}
+
+  .search-input__input {
+    border: 1px solid black(0.1);
+    font-size: 16px;
+    padding: 12px;
+    width: 100%;
+  }
+
+  .search-input__submit {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    height: 40px;
+    overflow: hidden; // image replacement
+    position: absolute;
+    right: 2px;
+    text-indent: 200%; // image replacement
+    top: 2px;
+    transition: opacity 0.3s ease;
+    white-space: nowrap; // image replacement
+    width: 40px;
+  }
+
+  .search-input__submit:hover,
+  .search-input__submit:focus {
+    opacity: 0.5;
+  }
+
+  .search-input__submit::after {
+    background-image: url('/images/search-icon.png');
+    background-repeat: no-repeat;
+    background-size: 33px 33px;
+    content: '';
+    height: 33px;
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    width: 33px;
+  }

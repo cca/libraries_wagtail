@@ -1,0 +1,17 @@
+// ===================================
+// Main website footer.
+// ===================================
+
+.footer {
+  background: $grey;
+  padding: 15px 0;
+}
+
+  .footer__sections {
+    display: flex;
+    flex-wrap: wrap;
+
+    @include respond($break-medium) {
+      flex-wrap: nowrap;
+    }
+  }

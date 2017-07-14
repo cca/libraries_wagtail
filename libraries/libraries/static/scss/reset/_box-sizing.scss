@@ -1,0 +1,15 @@
+/**
+ * Prevent margin and border from affecting element width.
+ * https://goo.gl/pYtbK7
+ *
+ */
+
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}

@@ -1,0 +1,38 @@
+// ========================================
+// Breadcrumb navigation
+// ========================================
+
+.breadcrumb {
+  margin: 0 0 20px;
+  padding: 10px 0 0;
+}
+
+  .breadcrumb__item {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+    .breadcrumb__link {
+      border-bottom: 2px solid $lightblue;
+      color: inherit;
+      margin: 0 20px 0 0;
+      opacity: 0.8;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .breadcrumb__link:hover {
+      opacity: 1;
+    }
+
+    .breadcrumb__link::after {
+      background-image: url('/images/breadcrumb-arrow.png');
+      content: '';
+      height: 14px;
+      opacity: 0.4;
+      position: absolute;
+      right: -17px;
+      top: 2px;
+      width: 9px;
+    }

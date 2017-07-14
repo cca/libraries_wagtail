@@ -1,0 +1,25 @@
+// Project colour mixins
+// These allow for easy alpha manipulation
+
+@function black($opacity:1) {
+  @return rgba(7, 7, 7, $opacity)
+}
+
+@function white($opacity:1) {
+  @return rgba(255, 255, 255, $opacity)
+}
+
+@function purple($opacity:1) {
+  @return rgba(114, 30, 160, $opacity)
+}
+
+// Main project colours
+$black: black();
+$white: white();
+
+$grey: rgba(245, 245, 245, 1);
+$blue: rgba(0, 118, 160, 1);
+$lightblue: rgba(0, 162, 206, 1);
+$purple: purple();
+$green: rgba(183, 191, 16, 1);
+$turquoise: rgba(23, 191, 179, 1);

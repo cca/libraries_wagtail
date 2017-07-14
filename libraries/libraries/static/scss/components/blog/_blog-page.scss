@@ -1,0 +1,11 @@
+// ========================================
+// Blog page content wrapper
+// ========================================
+
+.blog-page {
+  @include respond($break-large) {
+    display: flex;
+    padding-top: 30px;
+    position: relative;
+  }
+}
