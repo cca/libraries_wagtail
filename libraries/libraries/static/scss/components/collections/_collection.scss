@@ -67,6 +67,12 @@
       padding: 0 0 3px;
       text-decoration: none;
 
+      // title links should appear like regular headings
+      a {
+          color: inherit;
+          text-decoration: none;
+      }
+
       @include respond($break-large) {
         font-size: 28px;
       }
