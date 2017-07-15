@@ -7,24 +7,26 @@ const postcss = require('gulp-postcss');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const autoprefixer = require('autoprefixer');
-const config = require('config');
 
+const static_root = 'libraries/libraries/static'
 const settings = {
 
 	/**
 	 * Distribution settings
 	 */
 	dist: {
-		css: 'libraries/libraries/static/css/',
-		js: 'libraries/libraries/static/js/'
+		css: static_root + '/css/',
+		js: static_root + '/js/'
 	},
 
 	/**
 	 * Source settings
 	 */
+
 	src: {
-		main: 'libraries/libraries/static/scss/main.scss',
-		scss: ['libraries/libraries/static/scss/**/*.scss']
+		js: [static_root + '/js/main.js'],
+		main: static_root + '/scss/main.scss',
+		scss: [static_root + '/scss/**/*.scss']
 	}
 };
 
@@ -43,13 +45,9 @@ function styles () {
 gulp.task('styles', styles);
 
 function scripts () {
-	const scriptsInConfig = config.get('scripts').map((name) => `src${name}`);
-	// Assume this is always run in NODE_ENV=development
-	console.log('Scripts that are bundled:\n',
-		scriptsInConfig.join('\n'));
-	gulp.src(scriptsInConfig)
+	gulp.src(settings.src.js)
 		.pipe(sourcemaps.init())
-		.pipe(concat('bundle.js'))
+		.pipe(concat('main.min.js'))
 		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest( settings.dist.js ));

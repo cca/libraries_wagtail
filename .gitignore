@@ -8,4 +8,7 @@ pip-selfcheck.json
 libraries/db.sqlite3
 libraries/libraries/static/css
 libraries/media
-
+*.min.css
+*.min.css.map
+*.min.js
+*.min.js.map

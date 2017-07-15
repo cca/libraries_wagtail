@@ -228,8 +228,7 @@ function main() {
   // Check if element is in view
   // https://stackoverflow.com/a/42777210/5386237
   function isInView(el) {
-    const { top, bottom } = el.getBoundingClientRect()
-    return top >= 0 && bottom <= window.innerHeight
+    return el.getBoundingClientRect().bottom <= window.innerHeight
   }
 
   // -- Anchor link scrolling -- \\
