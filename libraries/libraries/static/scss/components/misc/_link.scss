@@ -3,14 +3,13 @@
 // ========================================
 
 .link {
-  border-bottom: 2px dashed purple(0.1);
-  color: inherit;
+  border-bottom: 2px solid transparent;
+  color: $lightblue;
   display: inline-block;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: border 0.3s ease;
 }
 
 .link:hover {
-  background: purple(0.05);
-  border-bottom-color: purple(0.2);
+  border-bottom-color: $lightblue;
 }
