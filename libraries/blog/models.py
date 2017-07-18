@@ -9,7 +9,7 @@ from wagtail.wagtailsearch import index
 
 
 def latest_posts():
-    return BlogPage.objects.live().order_by('-first_published_at')
+    return BlogPage.objects.live().order_by('-first_published_at').reverse()
 
 
 # we don't really use a blog index page but we need this here
@@ -22,7 +22,7 @@ class BlogIndex(Page):
 
     # override serve to redirect to latest blog post if index is visited
     def serve(self, request):
-        post = BlogPage.objects.live().latest('first_published_at')
+        post = BlogPage.objects.live().earliest('first_published_at')
         return render(request, BlogPage.template, {
             'other_posts': latest_posts(),
             'page': post,

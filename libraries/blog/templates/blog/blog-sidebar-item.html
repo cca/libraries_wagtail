@@ -1,7 +1,7 @@
 {% load wagtailimages_tags %}
 
 <li class="blog-sidebar-item">
-	<a href="#" class="blog-sidebar-item__link" title="Read {{ post.title }}">
+	<a href="{{ post.url }}" class="blog-sidebar-item__link" title="Read {{ post.title }}">
 		{# store image object so we can get its URL later #}
 		{% image post.main_image fill-110x70 as img %}
 		<div
