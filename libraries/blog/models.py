@@ -1,10 +1,15 @@
 from django.db import models
+from django.shortcuts import render
 
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
+
+
+def latest_posts():
+    return BlogPage.objects.live().order_by('-first_published_at')
 
 
 # we don't really use a blog index page but we need this here
@@ -14,6 +19,14 @@ from wagtail.wagtailsearch import index
 class BlogIndex(Page):
     parent_page_types = ['home.HomePage']
     subpage_types = ['blog.BlogPage']
+
+    # override serve to redirect to latest blog post if index is visited
+    def serve(self, request):
+        post = BlogPage.objects.live().latest('first_published_at')
+        return render(request, BlogPage.template, {
+            'other_posts': latest_posts(),
+            'page': post,
+        })
 
 
 class BlogPage(Page):
@@ -40,7 +53,7 @@ class BlogPage(Page):
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super(BlogPage, self).get_context(request)
-        other_posts = BlogPage.objects.live().order_by('-first_published_at')
+        other_posts = latest_posts()
         context['other_posts'] = other_posts
         return context
 
