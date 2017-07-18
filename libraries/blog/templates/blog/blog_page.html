@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body_class %}blog-page{% endblock %}
+
+{% block content %}
+	<div class="wrapper wrapper--blog">
+		<div class="blog-page">
+			{% include 'blog/blog-sidebar.html' %}
+			{% include 'blog/blog-post.html' %}
+		</div>
+	</div>
+{% endblock %}
