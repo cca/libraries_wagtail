@@ -9,7 +9,7 @@
 
 		<ul class="blog-sidebar__list js-blog-sidebar-list">
 			{# @TODO need to put "previous_blogs" or similar in page context #}
-			{% for post in other_posts %}
+			{% for post in latest_posts %}
 				{% include 'blog/blog-sidebar-item.html' %}
 			{% endfor %}
 		</ul>

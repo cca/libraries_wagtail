@@ -8,24 +8,27 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
 
-def latest_posts():
-    return BlogPage.objects.live().order_by('-first_published_at').reverse()
+# helper to get a list of published blog posts in reverse chronological order
+def all_blog_posts():
+    blogs = BlogPage.objects.live().order_by('-date')
+    return list(blogs)
 
 
 # we don't really use a blog index page but we need this here
 # for the home > blog index > blog page URL hierarcy
-# @TODO if someone visits the blog index's slug "/blog/"
-# they should be redirected to the latest blog post
 class BlogIndex(Page):
     parent_page_types = ['home.HomePage']
     subpage_types = ['blog.BlogPage']
 
     # override serve to redirect to latest blog post if index is visited
     def serve(self, request):
-        post = BlogPage.objects.live().earliest('first_published_at')
+        latest_posts = all_blog_posts()[:5]
+
         return render(request, BlogPage.template, {
-            'other_posts': latest_posts(),
-            'page': post,
+            'next_post': None,
+            'other_posts': latest_posts,
+            'page': latest_post[0],
+            'previous_post': latest_posts[1],
         })
 
 
@@ -49,13 +52,30 @@ class BlogPage(Page):
     )
     # @TODO a streamfield for the body block of new (not imported) posts
 
-    # add latest blog posts to context
+    # add latest, next, & previous blog posts to context
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super(BlogPage, self).get_context(request)
-        other_posts = latest_posts()
-        context['other_posts'] = other_posts
+
+        all_posts = all_blog_posts()
+        index = all_posts.index(self)
+        # handle cases where we're on the newest/oldest post
+        if index == 0:
+            next_post = None
+            previous_post = all_posts[index + 1]
+        elif index + 1 == len(all_posts):
+            next_post = all_posts[index - 1]
+            previous_post = None
+        else:
+            next_post = all_posts[index - 1]
+            previous_post = all_posts[index + 1]
+
+        context['latest_posts'] = all_posts[:5]
+        context['next_post'] = next_post
+        context['previous_post'] = previous_post
+
         return context
+
 
     search_fields = Page.search_fields + [
         index.SearchField('imported_body'),

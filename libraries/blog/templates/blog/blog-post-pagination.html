@@ -1,57 +1,62 @@
+{% load wagtailimages_tags %}
+
 <ul class="blog-post-pagination">
 
 	<h3 class="blog-post-pagination__title">
 		Next Article
 	</h3>
 
-	<li class="blog-post-pagination__item blog-post-pagination__item--prev">
-		<a
-			class="blog-post-pagination__link"
-			href="#"
-		  title="Prev"
-		>
-			<div
-				class="blog-post-pagination__image"
-				style="background-image: url('/images/blog-image1.png');"
-				title="Image of blog 1"
-			></div>
+	{% if previous_post %}
+		<li class="blog-post-pagination__item blog-post-pagination__item--prev">
+			<a
+				class="blog-post-pagination__link"
+				href="{{ previous_post.url }}"
+				title="Previous">
+				{% image previous_post.main_image fill-110x70 as img %}
+				<div
+					class="blog-post-pagination__image"
+					style="background-image: url('{{ img.url }}');"
+					title="{{ previous_post.title }}"
+				></div>
 
-			<br />
-
-			<span class="blog-post-pagination__type">
-				Prev
-			</span>
-
-			<h5 class="blog-post-pagination__post-title">
-				This is the name of the previous blog post
-			</h5>
-		</a>
-	</li>
-
-	<li class="blog-post-pagination__item">
-		<a
-			class="blog-post-pagination__link blog-post-pagination__link--next"
-			href="#"
-		  title="Next"
-		>
-			<div
-				class="blog-post-pagination__image"
-				style="background-image: url('/images/blog-image2.png');"
-				title="Image of blog 2"
-			></div>
-
-			<br />
-
-			<span class="blog-post-pagination__type">
-				Next
-			</span>
-
-			<h5 class="blog-post-pagination__post-title">
-				<span class="blog-post-pagination__post-title-text">
-					This is the name of the next blog post
+				<br>
+				<span class="blog-post-pagination__type">
+					Previous
 				</span>
-			</h5>
-		</a>
-	</li>
+
+				<h5 class="blog-post-pagination__post-title">
+					{{ previous_post.title }}
+				</h5>
+			</a>
+		</li>
+	{% endif %}
+
+	{# there's only a "next article" if this post isn't the latest itself #}
+	{% if next_post %}
+		<li class="blog-post-pagination__item">
+			<a
+				class="blog-post-pagination__link blog-post-pagination__link--next"
+				href="{{ next_post.url }}"
+			 	title="Next">
+				{% image next_post.main_image fill-110x70 as img %}
+				<div
+					class="blog-post-pagination__image"
+					style="background-image: url('{{ img.url }}');"
+					title="{{ next_post.title }}"
+				></div>
+
+				<br>
+				<span class="blog-post-pagination__type">
+					Next
+				</span>
+
+				<h5 class="blog-post-pagination__post-title">
+					<span class="blog-post-pagination__post-title-text">
+						{{ next_post.title }}
+					</span>
+				</h5>
+			</a>
+		</li>
+	{% endif %}
 
 </ul>
