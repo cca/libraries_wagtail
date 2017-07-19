@@ -27,7 +27,7 @@ class BlogIndex(Page):
         return render(request, BlogPage.template, {
             'next_post': None,
             'other_posts': latest_posts,
-            'page': latest_post[0],
+            'page': latest_posts[0],
             'previous_post': latest_posts[1],
         })
 
