@@ -1,28 +1,34 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
 <li class="home-news-item">
 	<div class="home-news-item__image-wrapper">
-		<img
-			alt="Image of {{ title }}"
-			class="home-news-item__image"
-			src="{{ image }}"
-			title="Image of {{ title }}"
-		/>
+		{% image post.specific.main_image fill-400x267 class="home-news-item__image" %}
 	</div>
 
 	<div class="home-news-item__content">
 		<time class="home-news-item__date">
-			{{ date }}
+			{{ post.date }}
 		</time>
 		<h3 class="home-news-item__title">
 			<a
 				class="home-news-item__link"
 				title="Read full article"
-				href="#"
+				href="{% pageurl post %}"
 			>
-				{{ title }}
+				{{ post.title }}
 			</a>
 		</h3>
-		<p class="home-news-item__text">
-			{{ text }}
-		</p>
+		<div class="home-news-item__text">
+			{% if post.search_description %}
+				{# prefer a search_description if we have one #}
+				{{ post.search_description }}
+			{% elif post.imported_body %}
+				{# HTML imported from the old site's blog #}
+				{{ post.imported_body|richtext|truncatewords_html:50 }}
+			{% elif post.body %}
+				{# this is a streamfield #}
+				{{ post.body|truncatewords_html:50 }}
+			{% endif %}
+		</div>
 	</div>
 </li>
