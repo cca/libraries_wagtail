@@ -4,9 +4,9 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 
 ```sh
 > # create a virtual environment using the python3 interpreter
-> virutalenv -p python3 .
+> virtualenv -p python3 .
 > # activate the environment—you'll do this every time you want to work on the project
-> # use "activate.fish" below for Fish shel
+> # use "activate.fish" below for Fish shell
 > source bin/activate
 > # install Wagtail & other dependencies in the environment's packages
 > pip install -r libraries/requirements.txt
@@ -15,6 +15,8 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > wagtail start libraries; python libraries/manage.py migrate
 > # install npm dependencies (used for front-end build processes)
 > npm install
+> # build/minify the frontend assets
+> gulp build
 ```
 
 # When you're done
