@@ -5,8 +5,8 @@
 {% block content %}
     <div class="wrapper">
         <ul class="services">
-            {% for type in page.service_types %}
-                {% include 'categories/service-row.html' %}
+            {% for row in services_rows %}
+                {% include 'categories/services-row.html' %}
             {% endfor %}
         </ul>
     </div>

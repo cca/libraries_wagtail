@@ -50,7 +50,12 @@ class ServicesPage(Page):
     parent_page_types = ['home.HomePage']
     subpage_types = ['categories.ServicesRowPage']
 
-    # @TODO use get_context method to provide rows & pages within rows
+    # add child ServicesRowPage to context
+    def get_context(self, request):
+        context = super(ServicesPage, self).get_context(request)
+        rows = self.get_children().live()
+        context['services_rows'] = rows
+        return context
 
     # allow only one instance of this page type
     @classmethod
@@ -68,18 +73,20 @@ class ServicePage(Page):
 
     # @TODO related staff member
 
-    content_panels = [
+    content_panels = Page.content_panels + [
         StreamFieldPanel('body'),
     ]
 
 
 # does not have a matching template, should never be visited on its own
 # but only used as a component of ServicesPage
+# also since the ServicesRowPage is never directly rendered we can't use its
+# get_context() method to retrieve child services, that has to be done in template
 class ServicesRowPage(Page):
     parent_page_types = ['categories.ServicesPage']
     subpage_types = ['categories.ServicePage']
-    # RichTextField allows links & text formatting so this is questionable
-    summary = RichTextField()
+    # this can't be RichTextField or the template screws up
+    summary = models.CharField(max_length=350)
     # do not index for search
     search_fields = []
 
