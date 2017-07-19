@@ -25,8 +25,8 @@ class BlogIndex(Page):
         latest_posts = all_blog_posts()[:5]
 
         return render(request, BlogPage.template, {
+            'latest_posts': latest_posts,
             'next_post': None,
-            'other_posts': latest_posts,
             'page': latest_posts[0],
             'previous_post': latest_posts[1],
         })
