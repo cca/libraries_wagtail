@@ -22,7 +22,7 @@ def create_blogindex(apps, schema_editor):
     home_page = Page.objects.get(slug='home')
 
     blogindex = BlogIndex(
-        title="CCA Libraries Bog",
+        title="CCA Libraries Blog",
         slug='blog',
         content_type=blogindex_content_type,
         depth=3,
