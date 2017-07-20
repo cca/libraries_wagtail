@@ -1,10 +1,16 @@
 {% extends "base.html" %}
+{% load wagtailcore_tags %}
 
 {% block body_class %}about-us{% endblock %}
 
 {% block content %}
 
     <div class="wrapper wrapper--padding-top">
+        {# include breadcrumbs for deeply nested (grandchild) pages #}
+        {% if page.get_ancestors|length > 2 %}
+            {% include 'categories/breadcrumbs.html' %}
+        {% endif %}
+
 		<h1 class="about-us-title">
 			About Us
 		</h1>
