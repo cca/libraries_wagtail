@@ -52,6 +52,7 @@ class Migration(migrations.Migration):
     # we need the blogindex model to already exist
     dependencies = [
         ('blog', '0002_blogindex'),
+        ('home', '0002_create_homepage'),
     ]
 
     operations = [

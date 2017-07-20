@@ -75,6 +75,7 @@ class Migration(migrations.Migration):
     # we need the category models to already exist
     dependencies = [
         ('categories', '0005_auto_20170719_1924'),
+        ('home', '0002_create_homepage'),
     ]
 
     operations = [
