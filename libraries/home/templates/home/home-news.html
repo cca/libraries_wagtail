@@ -1,13 +1,9 @@
 <div class="home-news">
 
 	<ul class="home-news__list">
-		{% comment %}
-		@TODO once we have actual blog posts to pull from
-		this section should pull the most recent two for display
-			{{#home-news}}
-				{{> home/home-news-item }}
-			{{/home-news}}
-		{% endcomment %}
+			{% for post in news_items %}
+				{% include 'home/home-news-item.html' %}
+			{% endfor %}
 	</ul>
 
 	{% include "home/home-instagram.html" %}

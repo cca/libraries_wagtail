@@ -6,6 +6,8 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+from blog.models import all_blog_posts
+
 
 class HomePage(Page):
     background_image = models.ForeignKey(
@@ -41,3 +43,10 @@ class HomePage(Page):
             FieldPanel('about_us_text'),
         ], heading="Category Descriptions")
     ]
+
+    def get_context(self, request):
+        context = super(HomePage, self).get_context(request)
+        # add latest 2 blog posts as "news items"
+        news_items = all_blog_posts()[:2]
+        context['news_items'] = news_items
+        return context

@@ -1,0 +1,83 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<article class="blog-post">
+	{% image page.main_image width-700 class="blog-post__image" %}
+
+	<div class="blog-post__title-wrapper">
+		<time class="blog-post__date">
+			{{ page.date }}
+		</time>
+		<h1 class="blog-post__title">
+			{{ page.title }}
+		</h1>
+	</div>
+
+	{# handle our older imported blog posts lacking a streamfield body #}
+	{% if page.imported_body %}
+		{{ page.imported_body|richtext }}
+	{% else %}
+		{# @TODO streamfield body #}
+		<p class="blog-post__paragraph">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in condimentum lectus. Phasellus ultricies justo vel ante tincidunt tincidunt. Proin vitae dolor erat. Nam condimentum tincidunt risus nec imperdiet. Morbi imperdiet tortor non ante vehicula at hendrerit erat tempor. Mauris in tincidunt augue. Ut tristique augue ut enim fermentum aliquam laoreet augue condimentum. Quisque luctus pulvinar luctus. Donec nec magna purus. Morbi condimentum odio et mauris convallis vel tincidunt ante imperdiet. Aenean pharetra placerat ligula gravida volutpat. Vestibulum cursus rutrum accumsan. Aliquam convallis sodales elit, vitae feugiat tellus elementum quis.
+		</p>
+
+		<div class="blog-post__row">
+			<p class="blog-post__paragraph">
+				Proin vitae dolor erat. Nam condimentum tincidunt risus nec imperdiet. Morbi imperdiet tortor non ante vehicula at hendrerit erat tempor. Mauris in tincidunt augue. Ut tristique augue ut enim fermentum aliquam laoreet augue condimentum. Quisque luctus pulvinar luctus. Donec nec magna purus. Morbi condimentum odio et mauris convallis vel tincidunt ante imperdiet. Aenean pharetra placerat ligula gravida volutpat. Vestibulum cursus rutrum accumsan. Aliquam convallis sodales elit, vitae feugiat tellus elementum quis.
+			</p>
+
+			<blockquote class="blog-post__quote">
+				<p class="blog-post__quote-text blog-post__quote-text--quotemark">This is a pull or attributed quote it can be shown without the attribution or quote marks if necessary.</p>
+				<footer>
+					<cite class="blog-post__quote-cite-name">
+						Name of person
+					</cite>
+					<span class="blog-post__quote-cite-position">
+						And their position
+					</span>
+				</footer>
+			</blockquote>
+		</div>
+
+		<p class="blog-post__paragraph">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in condimentum lectus. Phasellus ultricies justo vel ante tincidunt tincidunt. Proin vitae dolor erat. Nam condimentum tincidunt risus nec imperdiet. Morbi imperdiet tortor non ante vehicula at hendrerit erat tempor. Mauris in tincidunt augue. Ut tristique augue ut enim fermentum aliquam laoreet augue condimentum. Quisque luctus pulvinar luctus. Donec nec magna purus. Morbi condimentum odio et mauris convallis vel tincidunt ante imperdiet. Aenean pharetra placerat ligula gravida volutpat. Vestibulum cursus rutrum accumsan. Aliquam convallis sodales elit, vitae feugiat tellus elementum quis.
+		</p>
+
+		<img
+			class="blog-post__image"
+			src="/images/blog-image2.png"
+			alt="Image"
+		/>
+
+		<p class="blog-post__image-description">
+			Aenean pharetra placerat ligula gravida volutpat. Vestibulum cursus rutrum accumsan. Aliquam convallis sodales elit, vitae feugiat tellus elementum quis.
+		</p>
+
+		<img
+			class="blog-post__image"
+			src="/images/blog-image3.png"
+			alt="Image"
+		/>
+
+		<h2 class="blog-post__subtitle">
+			This is an article subheading.
+		</h2>
+
+		<p class="blog-post__paragraph">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in condimentum lectus. Phasellus ultricies justo vel ante tincidunt tincidunt. Proin vitae dolor erat. Nam condimentum tincidunt risus nec imperdiet. Morbi imperdiet tortor non ante vehicula at hendrerit erat tempor. Mauris in tincidunt augue. Ut tristique augue ut enim fermentum aliquam laoreet augue condimentum. Quisque luctus pulvinar luctus. Donec nec magna purus. Morbi condimentum odio et mauris convallis vel tincidunt ante imperdiet. Aenean pharetra placerat ligula gravida volutpat. Vestibulum cursus rutrum accumsan. Aliquam convallis sodales elit, vitae feugiat tellus elementum quis.
+		</p>
+
+		<blockquote class="blog-post__snippet">
+			<p class="blog-post__snippet-text">
+				This is a snippet, which shows content from an external source quoted within the article. Curabitur ut turpis est, ut tincidunt sapien. Etiam a iaculis enim. Cras ultrices justo ac nibh molestie dignissim. Phasellus auctor, nisi id.
+			</p>
+		</blockquote>
+
+		<p class="blog-post__paragraph">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in condimentum lectus. Phasellus ultricies justo vel ante tincidunt tincidunt. Proin vitae dolor erat. Nam condimentum tincidunt risus nec imperdiet. Morbi imperdiet tortor non ante vehicula at.
+		</p>
+	{% endif %}
+
+	{% include 'blog/blog-post-pagination.html' %}
+
+</article>
