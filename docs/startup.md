@@ -13,7 +13,7 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > # install npm dependencies (used for front-end build processes)
 > npm install
 > # build/minify the frontend assets
-> gulp build
+> npm run build
 > # create the site database & an admin user
 > python libraries/manage.py migrate
 > python libraries/manage.py createsuperuser

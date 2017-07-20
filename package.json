@@ -7,6 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
+    "build": "gulp build",
+    "scripts": "gulp scripts",
     "sass": "gulp styles",
     "watch": "gulp"
   },
