@@ -89,6 +89,8 @@ class ServicesRowPage(Page):
     summary = models.CharField(max_length=350)
     # do not index for search
     search_fields = []
+    # no need for a promote tab since slug & search_desc aren't used
+    promote_panels = []
 
     content_panels = Page.content_panels + [
         FieldPanel('summary'),
