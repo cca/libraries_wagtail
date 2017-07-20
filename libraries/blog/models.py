@@ -31,6 +31,11 @@ class BlogIndex(Page):
             'previous_post': latest_posts[1],
         })
 
+    # allow only one instance of this page type
+    @classmethod
+    def can_create_at(cls, parent):
+        return super(BlogIndex, cls).can_create_at(parent) and not cls.objects.exists()
+
 
 class BlogPage(Page):
     parent_page_types = ['blog.BlogIndex']
