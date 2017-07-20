@@ -7,6 +7,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from blog.models import all_blog_posts
+from instagram.api import get_instagram
 
 
 class HomePage(Page):
@@ -49,7 +50,12 @@ class HomePage(Page):
 
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
+
         # add latest 2 blog posts as "news items"
         news_items = all_blog_posts()[:2]
         context['news_items'] = news_items
+
+        # add instagram
+        context['instagram'] = get_instagram()
+
         return context

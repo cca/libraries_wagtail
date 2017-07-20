@@ -1,9 +1,13 @@
+{% load wagtailcore_tags %}
+
+{% if instagram %}
+
 <div class="home-news-item home-news-item--instagram">
 	<div class="home-news-item__image-wrapper home-news-item__image-wrapper--instagram">
 		<img
 			alt="Instagram image"
 			class="home-news-item__image "
-			src="/images/instagram-image.png"
+			src="{{ instagram.image }}"
 			title="Image from Instagram"
 		/>
 	</div>
@@ -13,16 +17,15 @@
 			<a
 				class="home-news-item__link"
 				title="Read full article"
-				href="#"
+				href="https://www.instagram.com/{{ instagram.username }}/"
 			>
 				Instagram
 			</a>
 		</h3>
 		<p class="home-news-item__text">
-			<strong>cacollegeofarts</strong>
-			This Saturday, the work of furniture designer and artist, CCA alum Hannah Beatrice Quinn will be featured in a Hunt Projects Open Studio. Check it out from 10 a.m. to 8 p.m. at 1460 Davidson Avenue in SF!
-			<em>#ccaalumm</em>
-			<em>#HuntsProjects</em>
+			{{ instagram.html|safe }}
 		</p>
 	</div>
 </div>
+
+{% endif %}
