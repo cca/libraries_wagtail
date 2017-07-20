@@ -228,7 +228,10 @@ function main() {
   // Check if element is in view
   // https://stackoverflow.com/a/42777210/5386237
   function isInView(el) {
-      const { top, bottom } = el.getBoundingClientRect()
+      // can't do const { top, bottom } bc uglify chokes on it -EP
+      var rect = el.getBoundingClientRect()
+          , top = rect.top
+          , bottom = rect.bottom;
       return top >= 0 && bottom <= window.innerHeight
   }
 
