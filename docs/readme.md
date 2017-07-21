@@ -1,26 +1,29 @@
 # Site Structure & Wagtail Classes
 
-_Note_: as of right now, this is just a sketch based on what we assume to be true. We still need to implement all the page types.
+_Note_: This is still just a sketch. Expect things to be in flux until the site goes live.
 
-There are a few layers to the CCA Libraries site:
+There are a few layers to the CCA Libraries site. The outline below shows the basic structure with a few annotations:
+
+- The parenthesis next to a page title contain the name of its model
+- An asterisk \* denotes a _singleton_ page
+- A caret ^ denotes non-page content (doesn't appear in search results, shouldn't be visited directly)
 
 ```
-home page (root)
-|---services landing page
-    |---service page
-|---collections landing page¹
-|---about us landing page
-    |---policy/about us page
-    |---blog page²
+Root (Wagtail abstraction)
+    |---Home (home.HomePage)
+        |---Services* (categories.CategoryPage)
+            |---All service pages...
+        |---Collections* (categories.CategoryPage)
+            |---Special Collections (categories.SpecialCollectionsPage)
+            |---All collection pages...
+        |---About Us* (categories.CategoryPage)
+            |---Staff listing
+            |---Hours
+            |---All policy pages...
+        |---Blog*^ (blog.BlogIndex)
+            |---All blog posts... (blog.BlogPage)
+        |---Search (no model, search() in search/views.py is the view)
 ```
-
-The service, policy/about us, and blog child-of-child pages all may be able to share a single template since they should be primarily text but with perhaps one main image and a few inline images. We can use one `ContentPage` class to cover all of them, perhaps.
-
-The landing pages almost certainly will require distinct templates.
-
-<sup>1</sup>We might not need a subpage type for collections since the collections will link out to an external resource.
-
-<sup>2</sup>See [wagtail-blog-app](https://github.com/Tivix/wagtail-blog-app) for resources on building this app. Also, note that _we do not need a Blog Index_ page type or template with our current design as their is no blog index, merely a list of adjacent posts in a sidebar.
 
 ## Class Names
 
