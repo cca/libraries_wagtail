@@ -12,26 +12,17 @@
         {% endif %}
 
 		<h1 class="about-us-title">
-			About Us
+			{{ page.title }}
 		</h1>
 		<div class="about-us-content">
-			<div class="about-us-image-wrapper">
-                {# @TODO replace with image tag #}
-				<img
-					class="about-us-image"
-					title="About us"
-					alt="Random image"
-					src="/images/collection1.png"
-				/>
-			</div>
-			<div class="about-us-text-wrapper">
-				<p class="about-us-text">
-					Lorem ipsum dolor sit amet, <a class="link" href="#">consectetur adipiscing elit</a>. Nunc in condimentum lectus. Phasellus ultricies justo vel ante tincidunt tincidunt. Proin vitae dolor erat. Nam condimentum tincidunt risus nec imperdiet. Morbi imperdiet tortor non ante vehicula at hendrerit erat tempor. Mauris in tincidunt augue. Ut tristique augue ut enim fermentum aliquam laoreet augue condimentum. Quisque luctus pulvinar luctus. Donec nec magna purus. Morbi condimentum odio et mauris convallis vel tincidunt ante imperdiet. Aenean pharetra placerat ligula gravida volutpat. Vestibulum cursus rutrum accumsan. Aliquam convallis sodales elit, vitae feugiat tellus elementum quis.
-				</p>
-				<p class="about-us-text">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in condimentum lectus. Phasellus ultricies justo vel ante tincidunt tincidunt. Proin vitae dolor erat. Nam condimentum tincidunt risus nec imperdiet. Morbi imperdiet tortor non ante vehicula at hendrerit erat tempor. Mauris in tincidunt augue. Ut tristique augue ut enim fermentum aliquam laoreet augue condimentum. Quisque luctus pulvinar luctus. Donec nec magna purus. Morbi condimentum odio et mauris convallis vel tincidunt ante imperdiet. <a class="link" href="#">Aenean pharetra</a> placerat ligula gravida volutpat. Vestibulum cursus rutrum accumsan. Aliquam convallis sodales elit, vitae feugiat tellus elementum quis.
-				</p>
-			</div>
+            {% if page.specific.main_image %}
+    			<div class="about-us-image-wrapper">
+                    {% image page.specific.main_image width-404 class="about-us-image" %}
+    			</div>
+            {% endif %}
+
+            {% include_block page.body %}
+
 		</div>
 	</div>
 

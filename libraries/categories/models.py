@@ -10,7 +10,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, StreamFi
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
-from wagtail.wagtailcore.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock
+from wagtail.wagtailcore.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 
@@ -18,7 +18,10 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 # to ImageBlock() if need be
 class ImageFormatChoiceBlock(FieldBlock):
     field = forms.ChoiceField(choices=(
-        ('left', 'Wrap left'), ('right', 'Wrap right'), ('mid', 'Mid width'), ('full', 'Full width'),
+        ('left', 'Wrap left'),
+        ('right', 'Wrap right'),
+        ('mid', 'Mid width'),
+        ('full', 'Full width'),
     ))
 
 
@@ -39,17 +42,28 @@ class PullQuoteBlock(StructBlock):
         icon = "openquote"
 
 
+class EmbedHTML(RawHTMLBlock):
+    html = RawHTMLBlock(
+        "Embed code or raw HTML",
+        help_text='Use this sparingly, if possible.',
+    )
+
+
 class BaseStreamBlock(StreamBlock):
     subheading = CharBlock(icon="title", classname="title")
     paragraph = RichTextBlock(icon="pilcrow")
     image = ImageBlock()
     pullquote = PullQuoteBlock()
     snippet = RichTextBlock()
+    html = EmbedHTML(label="Embed code")
 
 
 class CategoryPage(Page):
     parent_page_types = ['home.HomePage']
-    subpage_types = ['categories.RowComponent']
+    subpage_types = [
+        'categories.RowComponent',
+        'categories.AboutUsPage',
+    ]
 
     # add child RowComponent to context
     def get_context(self, request):
@@ -59,12 +73,18 @@ class CategoryPage(Page):
         return context
 
 
+# @TODO we don't have a template for this type of page
+# should it reuse BlogPage or AboutUsPage?
+# also it needs an image for search results
 class ServicePage(Page):
     parent_page_types = ['categories.RowComponent']
+    # may need to revisit this but for now no children of service pages
     subpage_types = []
-    # @TODO _here_ is the spot for some streamfields I think
-    # reuse about_us_page template most likely
-    body = StreamField(BaseStreamBlock())
+    body = StreamField(
+        BaseStreamBlock(),
+        verbose_name='Page content',
+        null=True
+    )
     search_fields = Page.search_fields + [ index.SearchField('body') ]
 
     # @TODO related staff member
@@ -143,10 +163,28 @@ class SpecialCollection(Orderable):
         ImageChooserPanel('image'),
     ]
 
-
+# ServicePage & AboutUsPage are basically two different templates for the same
+# sort of grandchild content (CategoryPage > RowComponent > Service/AboutUsPage)
 class AboutUsPage(Page):
     parent_page_types = ['categories.CategoryPage']
+    # we allow nested about us pages
+    subpage_types = ['categories.AboutUsPage']
+    body = StreamField(
+        BaseStreamBlock(),
+        verbose_name='Page content',
+        null=True,
+    )
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Try to ALWAYS provide a main image.'
+    )
+    search_fields = Page.search_fields + [ index.SearchField('body') ]
 
-    # only fields are likely to be a featured image
-    # and a stream field for text, pull quotes, images, etc.
-    # similar to a blog post
+    content_panels = Page.content_panels + [
+        ImageChooserPanel('main_image'),
+        StreamFieldPanel('body'),
+    ]
