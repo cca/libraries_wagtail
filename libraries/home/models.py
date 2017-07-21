@@ -18,6 +18,12 @@ class HomePage(Page):
         related_name='+',
         help_text='ideal dimensions are 1440x630px, please optimize image size too!',
     )
+    # for search result template
+    def _get_image(self):
+        return self.background_image
+
+    main_image = property(_get_image)
+
     # background_caption = RichTextField(blank=True)
 
     # blurbs for the 3 main sections (services, collections, about us)
