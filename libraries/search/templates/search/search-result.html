@@ -2,9 +2,13 @@
 
 {% with result.specific as result %}
 	<li class="search-result">
-		{# @TODO because of this we will need a search_image field in every Page model #}
-		{% image result.search_image fill-40x40 as img %}
-		{# @TODO if no search image provide a filler icon #}
+		{# we want an image for every derivate of the Page model but field names vary #}
+		{% if result.main_image %}
+			{% image result.main_image fill-105x70 as img %}
+		{% elif result.image %}
+			{% image result.image fill-105x70 as img %}
+		{% endif %}
+		{# @TODO if there's no search image should we provide a filler icon? #}
 		<div
 			class="search-result__image"
 			style="background-image: url('{{ img.url }}');"
