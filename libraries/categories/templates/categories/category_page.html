@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block body_class %}services{% endblock %}
+{% block body_class %}{{ page.slug }}{% endblock %}
 
 {% block content %}
     <div class="wrapper">
         <ul class="services">
-            {% for row in services_rows %}
-                {% include 'categories/services-row.html' %}
+            {% for row in rows %}
+                {% include 'categories/row.html' %}
             {% endfor %}
         </ul>
     </div>

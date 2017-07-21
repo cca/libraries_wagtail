@@ -6,20 +6,20 @@
 
     <div class="wrapper wrapper--padding-top">
         <h1 class="collections-title">
-            Special Collections
+            {{ page.title }}
         </h1>
     </div>
 
     <div class="wrapper wrapper--collections">
         <ul class="collections-nav js-collections-nav">
-            {% for collection in page.collections.all %}
+            {% for collection in page.special_collections.all %}
                 {% include 'categories/collections-nav-item.html'%}
             {% endfor %}
         </ul>
 
         <ul class="collections-list">
-            {% for collection in page.collections.all %}
-                {% include 'categories/collection.html'%}
+            {% for collection in page.special_collections.all %}
+                {% include 'categories/special-collection.html'%}
             {% endfor %}
         </ul>
     </div>
