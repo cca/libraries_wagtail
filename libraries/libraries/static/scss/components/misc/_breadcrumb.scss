@@ -12,9 +12,18 @@
     font-size: 14px;
     line-height: 22px;
   }
-
+    // vary breadcrumb color based on category
+    .page--services .breadcrumb__link {
+        border-bottom: 2px solid $blue;
+    }
+    .page--about-us .breadcrumb__link {
+        border-bottom: 2px solid $green;
+    }
+    .page--collections .breadcrumb__link {
+        border-bottom: 2px solid $purple;
+    }
+    
     .breadcrumb__link {
-      border-bottom: 2px solid $lightblue;
       color: inherit;
       margin: 0 20px 0 0;
       opacity: 0.8;
