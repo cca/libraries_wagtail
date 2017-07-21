@@ -12,11 +12,11 @@ def create_categories(apps, schema_editor):
     ContentType = apps.get_model('contenttypes.ContentType')
     CategoryPage = apps.get_model('categories.CategoryPage')
 
-    # Delete any existing category pages
+    # Delete any existing pages with same slug (no matter their model)
     # if migration is run multiple times
-    CategoryPage.objects.filter(slug='about-us', depth=3).delete()
-    CategoryPage.objects.filter(slug='collections', depth=3).delete()
-    CategoryPage.objects.filter(slug='services', depth=3).delete()
+    Page.objects.filter(slug='about-us', depth=3).delete()
+    Page.objects.filter(slug='collections', depth=3).delete()
+    Page.objects.filter(slug='services', depth=3).delete()
 
     # Get content type for category page
     categorypage_content_type, __ = ContentType.objects.get_or_create(
