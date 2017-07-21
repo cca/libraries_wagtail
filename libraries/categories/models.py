@@ -1,5 +1,6 @@
 from django.db import models
 from django import forms
+from django.shortcuts import redirect
 
 from modelcluster.fields import ParentalKey
 
@@ -90,6 +91,11 @@ class RowComponent(Page):
     content_panels = Page.content_panels + [
         FieldPanel('summary'),
     ]
+
+    # if a row is requested, redirect to its parent page instead
+    def serve(self, request):
+        parent = self.get_parent()
+        return redirect(parent.url)
 
 
 class SpecialCollectionsPage(Page):
