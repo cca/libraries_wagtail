@@ -46,8 +46,11 @@
 		></script>
         <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 
-        {% block extra_js %}
-            {# Override this in templates to add extra javascript #}
-        {% endblock %}
+        {# analytics if user's not signed in & we're on production site #}
+        {% if not user.authenciated and settings.ANALYTICS_ID %}
+            {% include 'components/ga.html' %}
+        {% endif %}
+
+        {% block extra_js %}{% endblock %}
     </body>
 </html>
