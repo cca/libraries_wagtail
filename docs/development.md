@@ -1,6 +1,11 @@
 # Development
 
-TODO: write out a thorough development workflow for documenting, writing, and pushing to production changes to the site.
+Basic outline for working on the site:
+
+- Pick an app or feature to work on & checkout a logically-named branch
+- If model or database changes happen, run `makemigrations`
+- Feel free to `git push origin $BRANCH` to get the changes on GitHub but _don't push to master_ until the changes have been tested on another copy of the site
+- Check the readme here to see if models or class names have to be updated
 
 ## Shell Commands
 
