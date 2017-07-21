@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}about-us{% endblock %}
 
@@ -16,6 +16,7 @@
 		</h1>
 		<div class="about-us-content">
 			<div class="about-us-image-wrapper">
+                {# @TODO replace with image tag #}
 				<img
 					class="about-us-image"
 					title="About us"
