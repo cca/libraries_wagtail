@@ -21,8 +21,13 @@
     			</div>
             {% endif %}
 
-            {% include_block page.body %}
-
+            <div class="about-us-text-wrapper">
+                {% for block in page.body %}
+                    <div class="about-us-text">
+                        {% include_block block %}
+                    </div>
+                {% endfor %}
+            </div>
 		</div>
 	</div>
 

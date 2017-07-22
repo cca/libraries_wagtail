@@ -27,21 +27,25 @@ class ImageFormatChoiceBlock(FieldBlock):
 
 class ImageBlock(StructBlock):
     image = ImageChooserBlock()
-    caption = RichTextBlock()
+    caption = RichTextBlock(blank=True)
     # alignment = ImageFormatChoiceBlock()
 
     class Meta:
         icon = "image"
+        template = "categories/blocks/image.html"
 
 
 class PullQuoteBlock(StructBlock):
     quote = TextBlock("quote title")
-    attribution = CharBlock()
+    name = CharBlock(blank=True)
+    position = CharBlock(blank=True, label="Position or affiliation")
 
     class Meta:
         icon = "openquote"
+        template = "categories/blocks/quote.html"
 
 
+# no need for a template as raw HTML is what we want
 class EmbedHTML(RawHTMLBlock):
     html = RawHTMLBlock(
         "Embed code or raw HTML",
@@ -50,11 +54,18 @@ class EmbedHTML(RawHTMLBlock):
 
 
 class BaseStreamBlock(StreamBlock):
-    subheading = CharBlock(icon="title", classname="title")
-    paragraph = RichTextBlock(icon="pilcrow")
+    subheading = CharBlock(
+        icon="title",
+        classname="title",
+        template="categories/blocks/subheading.html"
+    )
+    paragraph = RichTextBlock(
+        template="categories/blocks/paragraph.html",
+        icon="pilcrow",
+    )
     image = ImageBlock()
     pullquote = PullQuoteBlock()
-    snippet = RichTextBlock()
+    snippet = RichTextBlock(template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
 
 
@@ -80,6 +91,14 @@ class ServicePage(Page):
     parent_page_types = ['categories.RowComponent']
     # may need to revisit this but for now no children of service pages
     subpage_types = []
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Try to ALWAYS provide a main image.'
+    )
     body = StreamField(
         BaseStreamBlock(),
         verbose_name='Page content',
@@ -100,8 +119,11 @@ class ServicePage(Page):
 # get_context() method to retrieve child pages, that has to be done in template
 class RowComponent(Page):
     parent_page_types = ['categories.CategoryPage']
-    subpage_types = ['categories.ServicePage']
-    # this can't be RichTextField or the template screws up
+    subpage_types = [
+        'categories.ServicePage',
+        'categories.AboutUsPage',
+        'categories.SpecialCollectionsPage',
+    ]
     summary = models.CharField(max_length=350)
     # do not index for search
     search_fields = []
@@ -118,8 +140,9 @@ class RowComponent(Page):
         return redirect(parent.url)
 
 
+# Another child of RowComponent but with a very different structure & template
 class SpecialCollectionsPage(Page):
-    parent_page_types = ['categories.CategoryPage']
+    parent_page_types = ['categories.RowComponent']
     # right now, no child special collection pages, but could add in the future
     subpage_types = []
 
@@ -166,13 +189,13 @@ class SpecialCollection(Orderable):
 # ServicePage & AboutUsPage are basically two different templates for the same
 # sort of grandchild content (CategoryPage > RowComponent > Service/AboutUsPage)
 class AboutUsPage(Page):
-    parent_page_types = ['categories.CategoryPage']
+    parent_page_types = ['categories.RowComponent']
     # we allow nested about us pages
     subpage_types = ['categories.AboutUsPage']
     body = StreamField(
-        BaseStreamBlock(),
-        verbose_name='Page content',
-        null=True,
+            BaseStreamBlock(),
+            verbose_name='Page content',
+            null=True,
     )
     main_image = models.ForeignKey(
         'wagtailimages.Image',
