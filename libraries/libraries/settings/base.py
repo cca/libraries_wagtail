@@ -98,6 +98,14 @@ WSGI_APPLICATION = 'libraries.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'libraries_dev_cca_edu',
+        'USER': 'libuser',
+        'PASSWORD': 'SIidfjiw9x9Ghiai9weig',
+        'HOST': '10.16.8.25',#vm-postgres-04.cca.edu
+        },
+    }
+    'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
