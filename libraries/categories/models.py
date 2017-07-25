@@ -68,6 +68,11 @@ class BaseStreamBlock(StreamBlock):
     snippet = RichTextBlock(template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
 
+# helper method—for child pages, return their category i.e. parent CategoryPage
+# one of: services, collections, about us
+def get_category(page):
+    return page.get_ancestors().type(CategoryPage).first()
+
 
 class CategoryPage(Page):
     parent_page_types = ['home.HomePage']
@@ -106,6 +111,10 @@ class ServicePage(Page):
     )
     search_fields = Page.search_fields + [ index.SearchField('body') ]
 
+
+    def category(self):
+        return get_category(self)
+
     # @TODO related staff member
 
     content_panels = Page.content_panels + [
@@ -134,6 +143,10 @@ class RowComponent(Page):
         FieldPanel('summary'),
     ]
 
+
+    def category(self):
+        return get_category(self)
+
     # if a row is requested, redirect to its parent page instead
     def serve(self, request):
         parent = self.get_parent()
@@ -154,6 +167,9 @@ class SpecialCollectionsPage(Page):
 
     # @TODO needs a main_image for search...maybe a method that returns
     # the first image from a child SpecialCollection?
+
+    def category(self):
+        return get_category(self)
 
     # make page searchable by text of child special collections
     search_fields = [
@@ -211,3 +227,7 @@ class AboutUsPage(Page):
         ImageChooserPanel('main_image'),
         StreamFieldPanel('body'),
     ]
+
+
+    def category(self):
+        return get_category(self)
