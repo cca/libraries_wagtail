@@ -39,9 +39,16 @@
   }
 
   .blog-post__title-wrapper {
-    border-left: 2px solid $green;
     margin: 0 0 20px;
     padding: 0 15px;
+  }
+
+  // vary color by section
+  .page--blog-post .blog-post__title-wrapper {
+      border-left: 2px solid $green;
+  }
+  .page--services .blog-post__title-wrapper {
+      border-left: 2px solid $blue;
   }
 
     .blog-post__date {
@@ -143,13 +150,21 @@
 
   .blog-post__snippet {
     background: $grey;
-    border-left: 2px solid $green;
     margin: 0 0 20px;
     padding: 15px;
 
     @include respond($break-medium) {
       padding: 20px;
     }
+  }
+
+  // vary color by section
+  .page--blog-post .blog-post__snippet {
+      border-left: 2px solid $green;
+  }
+
+  .page--services .blog-post__snippet {
+      border-left: 2px solid $blue;
   }
 
     .blog-post__snippet-text {
