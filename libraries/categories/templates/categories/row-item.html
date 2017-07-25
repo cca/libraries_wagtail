@@ -1,21 +1,21 @@
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 <li class="service-row-item">
 	<h2 class="service-row-item__title">
-		{{ item.title }}
+		<a href="{% pageurl item %}">{{ item.title }}</a>
 	</h2>
 	<p class="service-row-item__text">
 		{{ item.search_description }}
 	</p>
 
-	{% if item.main_image %}
+	{% if item.specific.main_image %}
 		<div class="service-row-item__image-wrapper">
-			{% image item.main_image width-120 class="service-row-item__image" %}
+			{% image item.specific.main_image width-120 class="service-row-item__image" %}
 		</div>
 	{% endif %}
 
 	{# @TODO associate services with staff members #}
-	{% if item.staff %}
+	{% if item.specific.staff %}
 		<div class="service-row-item__text-wrapper">
 			<p class="service-row-item__name">
 				{{ name }}

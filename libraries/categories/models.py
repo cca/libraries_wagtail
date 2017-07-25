@@ -129,6 +129,7 @@ class ServicePage(Page):
     # @TODO related staff member?
 
     content_panels = Page.content_panels + [
+        ImageChooserPanel('main_image'),
         StreamFieldPanel('body'),
     ]
 
