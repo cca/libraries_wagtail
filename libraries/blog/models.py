@@ -2,10 +2,12 @@ from django.db import models
 from django.shortcuts import render
 
 from wagtail.wagtailcore.models import Page
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
+from wagtail.wagtailcore.fields import RichTextField, StreamField
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
+
+from categories.models import BaseStreamBlock
 
 
 # helper to get a list of published blog posts in reverse chronological order
@@ -50,6 +52,12 @@ class BlogPage(Page):
         related_name='+',
         help_text='Try to ALWAYS provide a main image.'
     )
+    # we reuse the same StreamField from categories
+    body = StreamField(
+        BaseStreamBlock(),
+        verbose_name='Page content',
+        null=True
+    )
     # for backwards compatibility with our Drupal blog posts
     imported_body = RichTextField(
         blank=True,
@@ -89,6 +97,7 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         ImageChooserPanel('main_image'),
+        StreamFieldPanel('body'),
         FieldPanel('imported_body'),
     ]
     pass

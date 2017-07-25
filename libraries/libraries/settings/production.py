@@ -8,3 +8,5 @@ try:
     from .local import *
 except ImportError:
     pass
+
+ANALYTICS_ID = 'UA-18459158-1'

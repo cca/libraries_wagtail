@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block body_class %}collections{% endblock %}
+{% block body_class %}page--{{ page.category.slug }}{% endblock %}
 
 {% block content %}
 
@@ -9,6 +9,8 @@
             {{ page.title }}
         </h1>
     </div>
+
+    {# @TODO insert brief search_description <p> here, too #}
 
     <div class="wrapper wrapper--collections">
         <ul class="collections-nav js-collections-nav">

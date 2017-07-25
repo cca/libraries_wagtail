@@ -2,20 +2,20 @@
 
 <li class="service-row-item">
 	<h2 class="service-row-item__title">
-		{{ service.title }}
+		{{ item.title }}
 	</h2>
 	<p class="service-row-item__text">
-		{{ service.search_description }}
+		{{ item.search_description }}
 	</p>
 
-	{% if service.image %}
+	{% if item.main_image %}
 		<div class="service-row-item__image-wrapper">
-			{% image service.image class="service-row-item__image" %}
+			{% image item.main_image width-120 class="service-row-item__image" %}
 		</div>
 	{% endif %}
 
 	{# @TODO associate services with staff members #}
-	{% if service.staff %}
+	{% if item.staff %}
 		<div class="service-row-item__text-wrapper">
 			<p class="service-row-item__name">
 				{{ name }}

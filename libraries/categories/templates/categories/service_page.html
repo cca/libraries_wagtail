@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}page--{{ page.category.slug }}{% endblock %}
+
+{# we basically reuse the blog_post template & retain its class names #}
+{% block content %}
+	<div class="wrapper wrapper--blog">
+		{# include breadcrumbs for deeply nested (grandchild) pages #}
+		{% if page.get_ancestors|length > 2 %}
+			{% include 'categories/breadcrumbs.html' %}
+		{% endif %}
+
+		<div class="blog-page">
+			<article class="blog-post">
+				{% image page.main_image width-700 class="blog-post__image" %}
+
+				<div class="blog-post__title-wrapper">
+					<h1 class="blog-post__title">
+						{{ page.title }}
+					</h1>
+				</div>
+
+				{% include_block page.body %}
+			</article>
+		</div>
+	</div>
+{% endblock %}

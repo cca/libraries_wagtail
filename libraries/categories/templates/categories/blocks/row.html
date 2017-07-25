@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+
+<div class="blog-post__row">
+	{% for block in value %}
+        {% include_block block %}
+    {% endfor %}
+</div>

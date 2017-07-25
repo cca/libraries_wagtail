@@ -1,5 +1,6 @@
 from django.db import models
 from django import forms
+from django.shortcuts import redirect
 
 from modelcluster.fields import ParentalKey
 
@@ -9,7 +10,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, StreamFi
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
-from wagtail.wagtailcore.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock
+from wagtail.wagtailcore.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 
@@ -17,38 +18,68 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 # to ImageBlock() if need be
 class ImageFormatChoiceBlock(FieldBlock):
     field = forms.ChoiceField(choices=(
-        ('left', 'Wrap left'), ('right', 'Wrap right'), ('mid', 'Mid width'), ('full', 'Full width'),
+        ('left', 'Wrap left'),
+        ('right', 'Wrap right'),
+        ('mid', 'Mid width'),
+        ('full', 'Full width'),
     ))
 
 
 class ImageBlock(StructBlock):
     image = ImageChooserBlock()
-    caption = RichTextBlock()
+    caption = RichTextBlock(blank=True)
     # alignment = ImageFormatChoiceBlock()
 
     class Meta:
         icon = "image"
+        template = "categories/blocks/image.html"
 
 
 class PullQuoteBlock(StructBlock):
     quote = TextBlock("quote title")
-    attribution = CharBlock()
+    name = CharBlock(blank=True)
+    position = CharBlock(blank=True, label="Position or affiliation")
 
     class Meta:
         icon = "openquote"
+        template = "categories/blocks/quote.html"
+
+
+# no need for a template as raw HTML is what we want
+class EmbedHTML(RawHTMLBlock):
+    html = RawHTMLBlock(
+        "Embed code or raw HTML",
+        help_text='Use this sparingly, if possible.',
+    )
 
 
 class BaseStreamBlock(StreamBlock):
-    subheading = CharBlock(icon="title", classname="title")
-    paragraph = RichTextBlock(icon="pilcrow")
+    subheading = CharBlock(
+        icon="title",
+        classname="title",
+        template="categories/blocks/subheading.html"
+    )
+    paragraph = RichTextBlock(
+        template="categories/blocks/paragraph.html",
+        icon="pilcrow",
+    )
     image = ImageBlock()
     pullquote = PullQuoteBlock()
-    snippet = RichTextBlock()
+    snippet = RichTextBlock(template="categories/blocks/snippet.html")
+    html = EmbedHTML(label="Embed code")
+
+# helper method—for child pages, return their category i.e. parent CategoryPage
+# one of: services, collections, about us
+def get_category(page):
+    return page.get_ancestors().type(CategoryPage).first()
 
 
 class CategoryPage(Page):
     parent_page_types = ['home.HomePage']
-    subpage_types = ['categories.RowComponent']
+    subpage_types = [
+        'categories.RowComponent',
+        'categories.AboutUsPage',
+    ]
 
     # add child RowComponent to context
     def get_context(self, request):
@@ -58,13 +89,31 @@ class CategoryPage(Page):
         return context
 
 
+# @TODO we don't have a template for this type of page
+# should it reuse BlogPage or AboutUsPage?
+# also it needs an image for search results
 class ServicePage(Page):
     parent_page_types = ['categories.RowComponent']
+    # may need to revisit this but for now no children of service pages
     subpage_types = []
-    # @TODO _here_ is the spot for some streamfields I think
-    # reuse about_us_page template most likely
-    body = StreamField(BaseStreamBlock())
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Try to ALWAYS provide a main image.'
+    )
+    body = StreamField(
+        BaseStreamBlock(),
+        verbose_name='Page content',
+        null=True
+    )
     search_fields = Page.search_fields + [ index.SearchField('body') ]
+
+
+    def category(self):
+        return get_category(self)
 
     # @TODO related staff member
 
@@ -79,8 +128,11 @@ class ServicePage(Page):
 # get_context() method to retrieve child pages, that has to be done in template
 class RowComponent(Page):
     parent_page_types = ['categories.CategoryPage']
-    subpage_types = ['categories.ServicePage']
-    # this can't be RichTextField or the template screws up
+    subpage_types = [
+        'categories.ServicePage',
+        'categories.AboutUsPage',
+        'categories.SpecialCollectionsPage',
+    ]
     summary = models.CharField(max_length=350)
     # do not index for search
     search_fields = []
@@ -92,8 +144,18 @@ class RowComponent(Page):
     ]
 
 
+    def category(self):
+        return get_category(self)
+
+    # if a row is requested, redirect to its parent page instead
+    def serve(self, request):
+        parent = self.get_parent()
+        return redirect(parent.url)
+
+
+# Another child of RowComponent but with a very different structure & template
 class SpecialCollectionsPage(Page):
-    parent_page_types = ['categories.CategoryPage']
+    parent_page_types = ['categories.RowComponent']
     # right now, no child special collection pages, but could add in the future
     subpage_types = []
 
@@ -105,6 +167,9 @@ class SpecialCollectionsPage(Page):
 
     # @TODO needs a main_image for search...maybe a method that returns
     # the first image from a child SpecialCollection?
+
+    def category(self):
+        return get_category(self)
 
     # make page searchable by text of child special collections
     search_fields = [
@@ -137,10 +202,32 @@ class SpecialCollection(Orderable):
         ImageChooserPanel('image'),
     ]
 
-
+# ServicePage & AboutUsPage are basically two different templates for the same
+# sort of grandchild content (CategoryPage > RowComponent > Service/AboutUsPage)
 class AboutUsPage(Page):
-    parent_page_types = ['categories.CategoryPage']
+    parent_page_types = ['categories.RowComponent']
+    # we allow nested about us pages
+    subpage_types = ['categories.AboutUsPage']
+    body = StreamField(
+            BaseStreamBlock(),
+            verbose_name='Page content',
+            null=True,
+    )
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Try to ALWAYS provide a main image.'
+    )
+    search_fields = Page.search_fields + [ index.SearchField('body') ]
 
-    # only fields are likely to be a featured image
-    # and a stream field for text, pull quotes, images, etc.
-    # similar to a blog post
+    content_panels = Page.content_panels + [
+        ImageChooserPanel('main_image'),
+        StreamFieldPanel('body'),
+    ]
+
+
+    def category(self):
+        return get_category(self)

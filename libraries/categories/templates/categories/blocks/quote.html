@@ -1,0 +1,19 @@
+<blockquote class="blog-post__quote">
+    <p class="blog-post__quote-text blog-post__quote-text--quotemark">
+        {{ value.quote }}
+    </p>
+    {% if value.name or value.position %}
+        <footer>
+            {% if value.name %}
+                <cite class="blog-post__quote-cite-name">
+                    {{ value.name }}
+                </cite>
+            {% endif %}
+            {% if value.position %}
+                <span class="blog-post__quote-cite-position">
+                    {{ value.position }}
+                </span>
+            {% endif %}
+        </footer>
+    {% endif %}
+</blockquote>

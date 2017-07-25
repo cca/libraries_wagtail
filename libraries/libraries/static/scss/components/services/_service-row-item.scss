@@ -28,9 +28,18 @@
   }
   // scss-lint:enable DeclarationOrder
 }
+  // vary color based on category
+  .page--services .service-row-item__title {
+      border-bottom: 2px solid $blue;
+  }
+  .page--about-us .service-row-item__title {
+      border-bottom: 2px solid $green;
+  }
+  .page--collections .service-row-item__title {
+      border-bottom: 2px solid $purple;
+  }
 
   .service-row-item__title {
-    border-bottom: 2px solid $lightblue;
     cursor: pointer;
     display: inline-block;
     font-size: 17px;
