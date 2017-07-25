@@ -9,6 +9,7 @@
         {# include breadcrumbs for deeply nested (grandchild) pages #}
         {% if page.get_ancestors|length > 2 %}
             {% include 'categories/breadcrumbs.html' %}
+            <br>
         {% endif %}
 
 		<h1 class="about-us-title">

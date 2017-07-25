@@ -68,6 +68,12 @@ class BaseStreamBlock(StreamBlock):
     snippet = RichTextBlock(template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
 
+# AboutUsPage has a much simpler template
+class AboutUsStreamBlock(StreamBlock):
+    paragraph = RichTextBlock(
+        icon="pilcrow",
+    )
+
 # helper method—for child pages, return their category i.e. parent CategoryPage
 # one of: services, collections, about us
 def get_category(page):
@@ -89,13 +95,14 @@ class CategoryPage(Page):
         return context
 
 
-# @TODO we don't have a template for this type of page
-# should it reuse BlogPage or AboutUsPage?
-# also it needs an image for search results
+# reuses blocks from the BlogPage template
 class ServicePage(Page):
     parent_page_types = ['categories.RowComponent']
-    # may need to revisit this but for now no children of service pages
-    subpage_types = []
+    subpage_types = [
+        'categories.ServicePage',
+        'categories.AboutUsPage',
+        'categories.SpecialCollectionsPage',
+    ]
     main_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -115,7 +122,11 @@ class ServicePage(Page):
     def category(self):
         return get_category(self)
 
-    # @TODO related staff member
+
+    class Meta:
+        verbose_name = 'Complex Blog style page'
+
+    # @TODO related staff member?
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('body'),
@@ -147,7 +158,7 @@ class RowComponent(Page):
     def category(self):
         return get_category(self)
 
-    # if a row is requested, redirect to its parent page instead
+    # if a row is requested, redirect to its parent CategoryPage instead
     def serve(self, request):
         parent = self.get_parent()
         return redirect(parent.url)
@@ -202,16 +213,16 @@ class SpecialCollection(Orderable):
         ImageChooserPanel('image'),
     ]
 
-# ServicePage & AboutUsPage are basically two different templates for the same
+# ServicePage & AboutUsPage are two different templates for the same
 # sort of grandchild content (CategoryPage > RowComponent > Service/AboutUsPage)
 class AboutUsPage(Page):
     parent_page_types = ['categories.RowComponent']
     # we allow nested about us pages
     subpage_types = ['categories.AboutUsPage']
     body = StreamField(
-            BaseStreamBlock(),
-            verbose_name='Page content',
-            null=True,
+        AboutUsStreamBlock(),
+        verbose_name='Page content',
+        null=True,
     )
     main_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -231,3 +242,6 @@ class AboutUsPage(Page):
 
     def category(self):
         return get_category(self)
+
+    class Meta:
+        verbose_name = 'Simple "About Us" style page'

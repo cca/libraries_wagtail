@@ -12,21 +12,28 @@ There are a few layers to the CCA Libraries site. The outline below shows the ba
 Root (Wagtail abstraction)
     |---Home (home.HomePage)
         |---Services* (categories.CategoryPage)
-            |---All service pages...
+            |---Instructional Technology & Information Literacy (categories.RowComponent)
+                |---Child content pages...
+            |---Circulation Services (categories.RowComponent)
+                |---Child content pages...
         |---Collections* (categories.CategoryPage)
-            |---Special Collections (categories.SpecialCollectionsPage)
-            |---All collection pages...
+            |---Collections (categories.RowComponent)
+                |---Special Collections (categories.SpecialCollectionsPage)
+                |---Child content pages...
         |---About Us* (categories.CategoryPage)
-            |---Staff listing
-            |---Hours
-            |---All policy pages...
+            |---About Us (categories.RowComponent)
+                |---Staff listing
+                |---Hours
+                |---Child content pages...
         |---Blog*^ (blog.BlogIndex)
             |---All blog posts... (blog.BlogPage)
         |---Search (no model, search() in search/views.py is the view)
 ```
 
+The grandchild pages of each category (Services, Collections, and About Us), represented above with the phrase "child content pages...", can use one of three page models: ServicePage, AboutUsPage, and SpecialCollectionsPage. Each of these pages can then, in turn, have children of any of those three types.
+
 ## Class Names
 
 Again, these are conjectural, not set in stone.
 
-`HomePage`, `ServicesPage`, `CollectionsPage`, `AboutUsPage`, `ContentPage` (covering both services & about us grandchild pages), `BlogPage`.
+`home.HomePage`, `categories.CategoryPage`, `categories.RowComponent`, `categories.AboutUsPage`, `categories.ServicePage`, `categories.SpecialCollectionsPage`, `blog.BlogPage`.
