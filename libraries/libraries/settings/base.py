@@ -18,11 +18,19 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+SECRET_KEY = 'm(zvr$pcz%5x*4qfpgs7*h#p(j15+cd&j^@ksb_^t2clblu5)^'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-
+# Allowed Hosts
+ALLOWED_HOSTS = [
+	'127.0.0.1',
+	'libraries-dev.cca.edu',
+	'10.16.8.23',
+	'172.21.80.113',
+	]
+	
 # Application definition
 
 INSTALLED_APPS = [
