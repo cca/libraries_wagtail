@@ -1,11 +1,15 @@
 {% load wagtailimages_tags wagtailcore_tags %}
 
-{% image staff_member.main_image fill-150x150 %}
+{% with staff_member.staff_member as person %}
 
-<h2>{{ staff_member.name }}</h2>
-<br>
+    {% image person.main_image fill-150x150 class="search-result__image" %}
 
-<span>{{ staff_member.position }} | {{ staff_member.email }} | {{ staff_member.phone }}</span>
-<br>
+    <div class="search-result__content" id="{{ person.slug }}">
+        <h2 class="search-result__title">{{ person.name }}</h2>
 
-{{ staff_member.bio|richtext }}
+        <p class="search-result__text">{{ person.position }} | {{ person.email }}{% if person.phone %} | {{ person.phone }}{% endif %}</p><br>
+
+        <div class="search-result__text">{{ person.bio|richtext }}</div>
+    </div>
+
+{% endwith %}

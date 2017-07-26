@@ -1,0 +1,35 @@
+// ===================================
+// Staff list page
+// borrows most styles from search
+// ===================================
+.wrapper--staff {
+
+    &.wrapper--search {
+      margin-top: 0;
+
+      @include respond($break-medium) {
+        margin-top: 0;
+        max-width: $site-max-width-search;
+      }
+    }
+
+    .search-result__image {
+      height: 60px;
+      width: 60px;
+
+      @include respond($break-medium) {
+        height: 150px;
+        width: 150px;
+      }
+    }
+
+    .search-list {
+      padding: 20px 0;
+
+      @include respond($break-medium) {
+        // offset absolutly positioned
+        // .search-box__number-results
+        padding-top: 20px;
+      }
+    }
+}
