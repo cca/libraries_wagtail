@@ -6,6 +6,8 @@ from django.shortcuts import redirect, render
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch.models import Query
 
+from categories.models import RowComponent
+
 
 def search(request):
     search_query = request.GET.get('q', None)
@@ -22,7 +24,8 @@ def search(request):
 
     # Search
     if search_query:
-        search_results = Page.objects.live().search(search_query)
+        # exclude RowComponent pages
+        search_results = Page.objects.not_type(RowComponent).live().search(search_query)
         query = Query.get(search_query)
 
         # Record hit
