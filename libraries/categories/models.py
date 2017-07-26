@@ -177,8 +177,10 @@ class SpecialCollectionsPage(Page):
         InlinePanel('special_collections', label='Special Collection')
     ]
 
-    # @TODO needs a main_image for search...maybe a method that returns
-    # the first image from a child SpecialCollection?
+    # for search results—treat first SpecialCollection image as the page's image
+    @property
+    def main_image(self):
+        return self.specific.special_collections.first().image
 
     def category(self):
         return get_category(self)
@@ -201,7 +203,7 @@ class SpecialCollection(Orderable):
     link = models.URLField()
     image = models.ForeignKey(
         'wagtailimages.Image',
-        help_text='2x1 aspect ratio preferred, will be sized to 910x400px at its largest.'
+        help_text='2x1 aspect ratio preferred, will be sized to 910x400px at its largest.',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
