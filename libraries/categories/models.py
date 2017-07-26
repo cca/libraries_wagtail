@@ -201,6 +201,7 @@ class SpecialCollection(Orderable):
     link = models.URLField()
     image = models.ForeignKey(
         'wagtailimages.Image',
+        help_text='2x1 aspect ratio preferred, will be sized to 910x400px at its largest.'
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
