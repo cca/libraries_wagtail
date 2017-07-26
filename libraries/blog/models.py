@@ -63,7 +63,6 @@ class BlogPage(Page):
         blank=True,
         help_text='Do NOT use this field! It is only for imported data from our old site.'
     )
-    # @TODO a streamfield for the body block of new (not imported) posts
 
     # add latest, next, & previous blog posts to context
     def get_context(self, request):
