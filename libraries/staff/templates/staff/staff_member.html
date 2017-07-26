@@ -1,0 +1,11 @@
+{% load wagtailimages_tags wagtailcore_tags %}
+
+{% image staff_member.main_image fill-150x150 %}
+
+<h2>{{ staff_member.name }}</h2>
+<br>
+
+<span>{{ staff_member.position }} | {{ staff_member.email }} | {{ staff_member.phone }}</span>
+<br>
+
+{{ staff_member.bio|richtext }}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body_class %}page--about-us{% endblock %}
+
+{% block content %}
+    <div class="wrapper wrapper--padding-top">
+        <h1 class="about-us-title">
+			{{ page.title }}
+		</h1>
+
+        <div class="about-us-content">
+            <div class="about-us-text-wrapper">
+                {% for staff_member in page.staff_members %}
+                    <div class="about-us-text">
+                        {% include 'staff/staff_member.html' %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
