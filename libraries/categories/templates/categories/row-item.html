@@ -8,21 +8,26 @@
 		{{ item.search_description }}
 	</p>
 
-	{% if item.specific.main_image %}
+	{# display any related StaffMember snippet #}
+	{% if item.specific.staff %}
+		{% with item.specific.staff as staff %}
+			<div class="service-row-item__image-wrapper">
+				{% image staff.main_image width-120 class="service-row-item__image" %}
+			</div>
+
+			<div class="service-row-item__text-wrapper">
+				<p class="service-row-item__name">
+					{{ staff.name }}
+				</p>
+				<p class="service-row-item__position">
+					{{ staff.position }}
+				</p>
+			</div>
+		{% endwith %}
+	{% elif item.specific.main_image %}
+		{# without a StaffMember we should still have a main image #}
 		<div class="service-row-item__image-wrapper">
 			{% image item.specific.main_image width-120 class="service-row-item__image" %}
-		</div>
-	{% endif %}
-
-	{# @TODO associate services with staff members #}
-	{% if item.specific.staff %}
-		<div class="service-row-item__text-wrapper">
-			<p class="service-row-item__name">
-				{{ name }}
-			</p>
-			<p class="service-row-item__position">
-				{{ position }}
-			</p>
 		</div>
 	{% endif %}
 </li>
