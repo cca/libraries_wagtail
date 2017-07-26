@@ -21,12 +21,8 @@
                 {% endfor %}
             </ul>
 
-            {% if search_results.has_previous %}
-                <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
-            {% endif %}
-
-            {% if search_results.has_next %}
-                <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
+            {% if search_results.has_previous or search_results.has_next %}
+                {% include 'search/search-pagination.html' %}
             {% endif %}
         {% elif search_query %}
             <div class="search-box__number-results">
