@@ -28,7 +28,7 @@ def linkify_text(text):
 
 def get_instagram():
     url = 'https://www.instagram.com/{u}/media/'.format(u=settings.INSTAGRAM_USERNAME)
-    data = urllib.request.urlopen(url).read()
+    data = urllib.request.urlopen(url).read().decode('utf-8')
     insta = json.loads(data)
     gram = insta['items'][0]
     text = gram['caption']['text']
