@@ -8,6 +8,7 @@ from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailsearch import index
 
 from wagtail.wagtailcore.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock
@@ -65,7 +66,7 @@ class BaseStreamBlock(StreamBlock):
     )
     image = ImageBlock()
     pullquote = PullQuoteBlock()
-    snippet = RichTextBlock(template="categories/blocks/snippet.html")
+    snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
 
 # AboutUsPage has a much simpler template
@@ -111,6 +112,14 @@ class ServicePage(Page):
         related_name='+',
         help_text='Try to ALWAYS provide a main image.'
     )
+    staff = models.ForeignKey(
+        'staff.StaffMember',
+        blank=True,
+        help_text='Optional associated staff member',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
     body = StreamField(
         BaseStreamBlock(),
         verbose_name='Page content',
@@ -126,10 +135,9 @@ class ServicePage(Page):
     class Meta:
         verbose_name = 'Complex Blog style page'
 
-    # @TODO related staff member?
-
     content_panels = Page.content_panels + [
         ImageChooserPanel('main_image'),
+        SnippetChooserPanel('staff'),
         StreamFieldPanel('body'),
     ]
 
@@ -144,6 +152,7 @@ class RowComponent(Page):
         'categories.ServicePage',
         'categories.AboutUsPage',
         'categories.SpecialCollectionsPage',
+        'staff.StaffListPage',
     ]
     summary = models.CharField(max_length=350)
     # do not index for search
@@ -236,10 +245,19 @@ class AboutUsPage(Page):
         related_name='+',
         help_text='Try to ALWAYS provide a main image.'
     )
+    staff = models.ForeignKey(
+        'staff.StaffMember',
+        blank=True,
+        help_text='Optional associated staff member',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
     search_fields = Page.search_fields + [ index.SearchField('body') ]
 
     content_panels = Page.content_panels + [
         ImageChooserPanel('main_image'),
+        SnippetChooserPanel('staff'),
         StreamFieldPanel('body'),
     ]
 

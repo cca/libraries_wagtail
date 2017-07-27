@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body_class %}page--about-us{% endblock %}
+
+{% block content %}
+    <div class="wrapper wrapper--padding-top">
+        <div class="wrapper wrapper--search wrapper--staff">
+            <h1 class="about-us-title">
+    			{{ page.title }}
+    		</h1>
+
+            <ul class="search-list">
+                {% for staff_member in page.staff_members.all %}
+                    <li class="search-result">
+                        {% include 'staff/staff_member.html' %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
