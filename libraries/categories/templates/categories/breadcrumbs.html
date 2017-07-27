@@ -2,8 +2,8 @@
 
 <ul class="breadcrumb">
     {% for ancestor in page.get_ancestors %}
-        {# skip root of site #}
-        {% if ancestor.title != 'Root' %}
+        {# skip root of site & RowComponents (depth 4) #}
+        {% if ancestor.depth != 1 and ancestor.depth != 4 %}
             <li class="breadcrumb__item">
                 <a class="breadcrumb__link"
                     href="{% pageurl ancestor %}">
