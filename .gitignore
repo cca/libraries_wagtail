@@ -12,3 +12,4 @@ libraries/media
 *.min.css.map
 *.min.js
 *.min.js.map
+libraries/libraries/settings/local_settings.py
