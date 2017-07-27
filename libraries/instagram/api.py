@@ -1,6 +1,6 @@
 import json
 import re
-import urllib
+import requests
 from django.conf import settings
 
 # @me -> <a href=link>@me</a> etc.
@@ -28,8 +28,8 @@ def linkify_text(text):
 
 def get_instagram():
     url = 'https://www.instagram.com/{u}/media/'.format(u=settings.INSTAGRAM_USERNAME)
-    data = urllib.request.urlopen(url).read().decode('utf-8')
-    insta = json.loads(data)
+    response = requests.get(url)
+    insta = json.loads(response.text)
     gram = insta['items'][0]
     text = gram['caption']['text']
 
