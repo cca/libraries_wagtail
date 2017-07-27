@@ -13,3 +13,7 @@ libraries/media
 *.min.js
 *.min.js.map
 libraries/libraries/settings/local_settings.py
+libraries/libraries/static/wagtailadmin
+libraries/share/
+node_modules/
+python
