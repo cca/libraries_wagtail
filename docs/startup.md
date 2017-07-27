@@ -26,3 +26,11 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > # turn off the virtualenv
 > deactivate
 ```
+
+# Startup on dev server (libraries-dev.cca.edu vm-lib-django-02.cca.edu) do these as root (sudo)
+* cd /opt/libraries_wagtail
+* `git pull `
+* use libraries virtualenv `workon libraries`
+* run a migration `./manage.py migrate`
+* restart supervisord: `service supervisord stop` then `service supervisord start`
+* (optional) restart nginx `service nginx restart`
