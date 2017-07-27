@@ -67,6 +67,7 @@ class StaffListPage(Page):
     main_image = models.ForeignKey(
         'wagtailimages.Image',
         help_text='Only used in search results right now',
+        blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',

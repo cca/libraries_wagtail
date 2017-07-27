@@ -123,7 +123,7 @@ class ServicePage(Page):
     body = StreamField(
         BaseStreamBlock(),
         verbose_name='Page content',
-        null=True
+        null=True,
     )
     search_fields = Page.search_fields + [ index.SearchField('body') ]
 
