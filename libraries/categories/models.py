@@ -153,6 +153,7 @@ class RowComponent(Page):
         'categories.AboutUsPage',
         'categories.SpecialCollectionsPage',
         'staff.StaffListPage',
+        'hours.HoursPage',
     ]
     summary = models.CharField(max_length=350)
     # do not index for search

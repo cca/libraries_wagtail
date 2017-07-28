@@ -1,9 +1,13 @@
+import datetime
+
 from django.db import models
 
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailcore.fields import RichTextField
+from wagtail.wagtailcore.models import Page
 
 
 @register_snippet
@@ -100,3 +104,89 @@ class Closure(models.Model):
 
     def __str__(self):
         return self.label
+
+# returns a dict of each library's open hours for a given date e.g.
+# { meyer: '9-5', simpson: '9-6', materials: 'closed' }
+# the home page uses this function
+def get_open_hours(day=datetime.date.today()):
+    # if we're passed a string, convert it to a date
+    if type(day) is str:
+        # @TODO validate input, must match \d{4}-\d{2}-\d{2} regex
+        day = datetime.datetime.strptime(day, '%Y-%m-%d')
+
+    weekday = day.strftime('%a').lower()
+
+    hrs = OpenHours.objects.all()
+    # filter to open hours that contain the given day
+    hrs = hrs.filter(start_date__lte=day).filter(end_date__gte=day)
+
+    closures = Closure.objects.all()
+    closures = closures.filter(start_date__lte=day).filter(end_date__gte=day)
+    # closures should just be a list of closed library names
+    closed_libs = []
+    for closure in closures:
+        closed_libs.append(closure.library.name)
+
+    output = {}
+    # iterate over all Library snippets
+    for lib in Library.objects.all():
+        # initialize with a null fallback value
+        output[lib.name] = None
+        # register closures
+        if lib.name in closed_libs:
+            output[lib.name] = 'closed'
+        else:
+            # well that's some python if I've ever seen it
+            output[lib.name] = hrs.filter(library=lib).values_list(weekday).first()[0]
+
+    return output
+
+
+def get_hours_for_lib(libname):
+    today = datetime.date.today()
+    hrs = OpenHours.objects.all()
+    hrs = hrs.filter(start_date__lte=today).filter(end_date__gte=today).filter(library__name=libname)
+    if not hrs:
+        return None
+    else:
+        return hrs.first()
+
+
+class HoursPage(Page):
+    parent_page_types = ['categories.RowComponent']
+    subpage_types = []
+
+    intro = RichTextField(blank=True)
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Only used in search results',
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('intro'),
+        ImageChooserPanel('main_image'),
+    ]
+
+    # for consistency with other child pages in categories app
+    def category(self):
+        return 'about-us'
+
+    def get_context(self, request):
+        context = super(HoursPage, self).get_context(request)
+        today = datetime.date.today()
+        hrs = {}
+        for lib in ('Meyer', 'Simpson', 'Materials'):
+            hrs[lib] = get_hours_for_lib(lib)
+
+        context['hours'] = hrs
+
+        return context
+
+    # allow only one instance of the staff list page to be created
+    @classmethod
+    def can_create_at(cls, parent):
+        return super(HoursPage, cls).can_create_at(parent) and not cls.objects.exists()
