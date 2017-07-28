@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'categories',
     'instagram',
     'staff',
+    'hours',
 
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
