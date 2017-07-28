@@ -131,13 +131,15 @@ def get_open_hours(day=datetime.date.today()):
     # iterate over all Library snippets
     for lib in Library.objects.all():
         # initialize with a null fallback value
-        output[lib.name] = None
-        # register closures
+        output[lib.name] = ''
+        # register closures first, they override hours for a given date
         if lib.name in closed_libs:
             output[lib.name] = 'closed'
         else:
-            # well that's some python if I've ever seen it
-            output[lib.name] = hrs.filter(library=lib).values_list(weekday).first()[0]
+            lib_hrs = hrs.filter(library=lib)
+            # avoid NoneType errors by testing
+            if lib_hrs:
+                output[lib.name] = hrs.values_list(weekday).first()[0]
 
     return output
 

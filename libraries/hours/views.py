@@ -9,14 +9,13 @@ def hours(request):
     if request.GET.get('format') == 'json':
         # can request hours for a given day, or library
         library = request.GET.get('library')
-        date = request.GET.get('date')
-        output = {}
+        date = request.GET.get('date', datetime.datetime.today())
 
-        if library is not None:
+        if library:
             hrs = get_hours_for_lib(library)
             if not hrs:
                 return JsonResponse({
-                    'error': 'no library with name"%s" found' % library
+                    "error": "no library with name '%s' found" % library
                 })
 
             # surely there is a better way but OpenHours can't serialize to JSON
@@ -33,12 +32,8 @@ def hours(request):
                 }
             })
 
-        elif date is not None:
-            # @TODO validate input, must match \d{4}-\d{2}-\d{2} regex
-            return JsonResponse(get_open_hours(date))
-
         else:
-            return JsonResponse(get_open_hours())
+            return JsonResponse(get_open_hours(date))
 
     # redirect HTML requests to the hours page
     else:
