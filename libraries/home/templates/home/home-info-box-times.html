@@ -2,25 +2,30 @@
 	<h2 class="home-info-box-times__title">
 		Today
 	</h2>
+	{# @TODO ideally we'd iterate over Library snippets? #}
 	<dl class="home-info-box-times__timetable">
-		<dt class="home-info-box-times__timetable-name">
-			Simpson
-		</dt>
-		<dd class="home-info-box-times__timetable-times">
-			9am - 5pm
-		</dd>
-		<dt class="home-info-box-times__timetable-name">
-			Materials
-		</dt>
-		<dd class="home-info-box-times__timetable-times">
-			9am - 12pm
-		</dd>
-		<dt class="home-info-box-times__timetable-name">
-			Meyer
-		</dt>
-		<dd class="home-info-box-times__timetable-times">
-			9am - 5pm
-		</dd>
+		{% if hours %}
+			<dt class="home-info-box-times__timetable-name">
+				Simpson
+			</dt>
+			<dd class="home-info-box-times__timetable-times">
+				{{ hours.Simpson }}
+			</dd>
+			<dt class="home-info-box-times__timetable-name">
+				Materials
+			</dt>
+			<dd class="home-info-box-times__timetable-times">
+				{{ hours.Materials }}
+			</dd>
+			<dt class="home-info-box-times__timetable-name">
+				Meyer
+			</dt>
+			<dd class="home-info-box-times__timetable-times">
+				{{ hours.Meyer }}
+			</dd>
+		{% else %}
+			<i>Error retrieving hours data...</i><br>
+		{% endif %}
 	</dl>
 	<a
 		class="home-info-box-times__link"

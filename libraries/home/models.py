@@ -8,6 +8,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from blog.models import all_blog_posts
 from instagram.api import get_instagram
+from hours.utils import get_open_hours
 
 
 class HomePage(Page):
@@ -58,6 +59,8 @@ class HomePage(Page):
         # add latest 2 blog posts as "news items"
         news_items = all_blog_posts()[:2]
         context['news_items'] = news_items
+        # pull open hours snippets for today
+        context['hours'] = get_open_hours()
 
         # add instagram
         context['instagram'] = get_instagram()
