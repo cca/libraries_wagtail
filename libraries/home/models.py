@@ -8,7 +8,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from blog.models import all_blog_posts
 from instagram.api import get_instagram
-from hours.utils import get_open_hours
+from hours.models import get_open_hours
 
 
 class HomePage(Page):

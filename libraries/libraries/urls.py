@@ -6,6 +6,8 @@ from django.contrib import admin
 from django.views.generic import RedirectView
 
 from search import views as search_views
+from hours import views as hours_views
+
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
@@ -17,6 +19,7 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
 
     url(r'^search/$', search_views.search, name='search'),
+    url(r'^hours/$', hours_views.hours, name='hours'),
 
     # see https://stackoverflow.com/questions/27065510/how-to-serve-static-files-with-django-that-has-hardcoded-relative-paths-on-herok/40525157#40525157
     # static files (*.css, *.js, *.jpg etc.) served on /

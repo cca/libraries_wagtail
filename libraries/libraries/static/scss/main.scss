@@ -58,6 +58,12 @@
 @import 'components/home/home-news-item';
 @import 'components/home/home-news';
 
+// -- Hours
+// Table styles borrowed from Bootstrap
+@import 'bootstrap/variables';
+@import 'bootstrap/mixins/table-row';
+@import 'bootstrap/tables';
+
 // -- Misc
 @import 'components/misc/breadcrumb';
 @import 'components/misc/link';
