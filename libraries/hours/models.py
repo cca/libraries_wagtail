@@ -43,13 +43,13 @@ class OpenHours(models.Model):
     # because we can write in parentheticals ("no checkouts") & slightly easier
     # in templating because I can just spit out the raw CharField, no processing
     # NOTE: names of fields must be weekday names from datetime.strftime('%a').lower()
-    mon = models.CharField(max_length=150, blank=True)
-    tue = models.CharField(max_length=150, blank=True)
-    wed = models.CharField(max_length=150, blank=True)
-    thu = models.CharField(max_length=150, blank=True)
-    fri = models.CharField(max_length=150, blank=True)
-    sat = models.CharField(max_length=150, blank=True)
-    sun = models.CharField(max_length=150, blank=True)
+    mon = models.CharField(max_length=150)
+    tue = models.CharField(max_length=150)
+    wed = models.CharField(max_length=150)
+    thu = models.CharField(max_length=150)
+    fri = models.CharField(max_length=150)
+    sat = models.CharField(max_length=150)
+    sun = models.CharField(max_length=150)
 
     panels = [
         FieldPanel('label', classname="full title"),
