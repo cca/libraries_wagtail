@@ -73,6 +73,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'libraries.urls'
 
+LOGIN_REDIRECT_URL = 'wagtailadmin_home'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
