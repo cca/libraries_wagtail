@@ -1,3 +1,5 @@
+{% load wagtailcore_tags %}
+
 <li class="home-info-box-times">
 	<h2 class="home-info-box-times__title">
 		Today
@@ -30,7 +32,7 @@
 	<a
 		class="home-info-box-times__link"
 		title="View today's schedule"
-		href="#"
+		href="{% slugurl 'hours' %}"
 	>
 		Complete list
 	</a>
