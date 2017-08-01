@@ -7,7 +7,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from blog.models import all_blog_posts
-from instagram.api import get_instagram
+from instagram.models import Instagram
 from hours.models import get_open_hours
 
 
@@ -63,6 +63,6 @@ class HomePage(Page):
         context['hours'] = get_open_hours()
 
         # add instagram
-        context['instagram'] = get_instagram()
+        context['instagram'] = Instagram.objects.last()
 
         return context
