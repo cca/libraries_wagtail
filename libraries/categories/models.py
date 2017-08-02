@@ -158,6 +158,7 @@ class RowComponent(Page):
         'categories.ServicePage',
         'categories.AboutUsPage',
         'categories.SpecialCollectionsPage',
+        'categories.ExternalLink',
         'staff.StaffListPage',
         'hours.HoursPage',
     ]
@@ -290,3 +291,45 @@ class AboutUsPage(Page):
 
     class Meta:
         verbose_name = 'Simple "About Us" style page'
+
+
+class ExternalLink(Page):
+    # only used for linking items in a row to external locations
+    parent_page_types = [
+        'categories.RowComponent',
+    ]
+    # external link goes off the site, cannot have children
+    subpage_types = []
+
+    link = models.URLField(blank=False)
+
+    staff = models.ForeignKey(
+        'staff.StaffMember',
+        blank=True,
+        help_text='Optional associated staff member',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        help_text='Used in search results',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    # no need for a promote, search_desc is on content & slug isn't used
+    promote_panels = []
+
+    content_panels = Page.content_panels + [
+        FieldPanel('link'),
+        FieldPanel('search_description'),
+        ImageChooserPanel('main_image'),
+        SnippetChooserPanel('staff'),
+    ]
+
+    # redirect to external URL
+    def serve(self, request):
+        return redirect(self.link)
