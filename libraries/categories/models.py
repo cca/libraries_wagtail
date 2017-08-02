@@ -66,6 +66,7 @@ class RowBlock(StreamBlock):
 
     class Meta:
         help_text = 'Only add 2 blocks per row!'
+        icon = 'form'
         template = "categories/blocks/row.html"
 
 
