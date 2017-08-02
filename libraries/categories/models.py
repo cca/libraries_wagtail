@@ -54,6 +54,20 @@ class EmbedHTML(RawHTMLBlock):
         help_text='Use this sparingly, if possible.',
     )
 
+# two blocks combined in one row
+class RowBlock(StreamBlock):
+    paragraph = RichTextBlock(
+        template="categories/blocks/paragraph.html",
+        icon="pilcrow",
+    )
+    image = ImageBlock()
+    pullquote = PullQuoteBlock()
+    snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
+
+    class Meta:
+        help_text = 'Only add 2 blocks per row!'
+        template = "categories/blocks/row.html"
+
 
 class BaseStreamBlock(StreamBlock):
     subheading = CharBlock(
@@ -69,6 +83,7 @@ class BaseStreamBlock(StreamBlock):
     pullquote = PullQuoteBlock()
     snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
+    row = RowBlock()
 
 # AboutUsPage has a much simpler template
 class AboutUsStreamBlock(StreamBlock):

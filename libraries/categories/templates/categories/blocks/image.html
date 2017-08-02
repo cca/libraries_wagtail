@@ -1,9 +1,16 @@
 {% load wagtailimages_tags wagtailcore_tags %}
 
-{% image value.image width-580 class="blog-post__image" %}
+<div class="blog-post__image_wrapper">
+    {% if row %}
+        {# we're a _inside_ a row block, cut image width in half #}
+        {% image value.image width-240 class="blog-post__image" %}
+    {% else %}
+        {% image value.image width-580 class="blog-post__image" %}
+    {% endif %}
 
-{% if value.caption %}
-    <section class="blog-post__image-description">
-        {{ value.caption|richtext }}
-    </section>
-{% endif %}
+    {% if value.caption %}
+        <section class="blog-post__image-description">
+            {{ value.caption|richtext }}
+        </section>
+    {% endif %}
+</div>

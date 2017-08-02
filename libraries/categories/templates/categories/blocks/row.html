@@ -2,6 +2,6 @@
 
 <div class="blog-post__row">
 	{% for block in value %}
-        {% include_block block %}
+        {% include_block block with row=True %}
     {% endfor %}
 </div>
