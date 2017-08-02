@@ -38,6 +38,7 @@ class ImageBlock(StructBlock):
 
 class PullQuoteBlock(StructBlock):
     quote = TextBlock("quote title")
+    # @TODO how come these are still required fields in the editor?
     name = CharBlock(blank=True)
     position = CharBlock(blank=True, label="Position or affiliation")
 
@@ -98,7 +99,12 @@ class CategoryPage(Page):
 
 # reuses blocks from the BlogPage template
 class ServicePage(Page):
-    parent_page_types = ['categories.RowComponent']
+    parent_page_types = [
+        'categories.RowComponent',
+        'categories.ServicePage',
+        'categories.AboutUsPage',
+        'categories.SpecialCollectionsPage',
+    ]
     subpage_types = [
         'categories.ServicePage',
         'categories.AboutUsPage',
@@ -177,9 +183,17 @@ class RowComponent(Page):
 
 # Another child of RowComponent but with a very different structure & template
 class SpecialCollectionsPage(Page):
-    parent_page_types = ['categories.RowComponent']
-    # right now, no child special collection pages, but could add in the future
-    subpage_types = []
+    parent_page_types = [
+        'categories.RowComponent',
+        'categories.ServicePage',
+        'categories.AboutUsPage',
+        'categories.SpecialCollectionsPage',
+    ]
+    subpage_types = [
+        'categories.ServicePage',
+        'categories.AboutUsPage',
+        'categories.SpecialCollectionsPage',
+    ]
 
     # needs an orderable struct of some sort which contains a title, richtext blurb,
     # link to the external collection, and feature image _at least_
@@ -230,9 +244,17 @@ class SpecialCollection(Orderable):
 # ServicePage & AboutUsPage are two different templates for the same
 # sort of grandchild content (CategoryPage > RowComponent > Service/AboutUsPage)
 class AboutUsPage(Page):
-    parent_page_types = ['categories.RowComponent']
-    # we allow nested about us pages
-    subpage_types = ['categories.AboutUsPage']
+    parent_page_types = [
+        'categories.RowComponent',
+        'categories.ServicePage',
+        'categories.AboutUsPage',
+        'categories.SpecialCollectionsPage',
+    ]
+    subpage_types = [
+        'categories.ServicePage',
+        'categories.AboutUsPage',
+        'categories.SpecialCollectionsPage',
+    ]
     body = StreamField(
         AboutUsStreamBlock(),
         verbose_name='Page content',

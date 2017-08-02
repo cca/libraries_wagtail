@@ -12,18 +12,18 @@ There are a few layers to the CCA Libraries site. The outline below shows the ba
 Root (Wagtail abstraction)
     |---Home (home.HomePage)
         |---Services* (categories.CategoryPage)
-            |---Instructional Technology & Information Literacy (categories.RowComponent)
+            |---Instructional Technology & Information Literacy^ (categories.RowComponent)
                 |---Child content pages...
-            |---Circulation Services (categories.RowComponent)
+            |---Circulation Services^ (categories.RowComponent)
                 |---Child content pages...
         |---Collections* (categories.CategoryPage)
-            |---Collections (categories.RowComponent)
+            |---Collections^ (categories.RowComponent)
                 |---Special Collections (categories.SpecialCollectionsPage)
                 |---Child content pages...
         |---About Us* (categories.CategoryPage)
-            |---About Us (categories.RowComponent)
-                |---Staff listing
-                |---Hours
+            |---About Us^ (categories.RowComponent)
+                |---Staff listing (staff.StaffListPage)
+                |---Hours (hours.HoursPage)
                 |---Child content pages...
         |---Blog*^ (blog.BlogIndex)
             |---All blog posts... (blog.BlogPage)
@@ -36,4 +36,4 @@ The grandchild pages of each category (Services, Collections, and About Us), rep
 
 Again, these are conjectural, not set in stone.
 
-`home.HomePage`, `categories.CategoryPage`, `categories.RowComponent`, `categories.AboutUsPage`, `categories.ServicePage`, `categories.SpecialCollectionsPage`, `blog.BlogPage`.
+`home.HomePage`, `categories.CategoryPage`, `categories.RowComponent`, `categories.AboutUsPage`, `categories.ServicePage`, `categories.SpecialCollectionsPage`, `blog.BlogPage`, `hours.HoursPage`, `staff.StaffListPage`.
