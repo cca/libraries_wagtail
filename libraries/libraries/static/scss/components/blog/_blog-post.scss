@@ -44,7 +44,7 @@
   }
 
   // vary color by section
-  .page--blog-post .blog-post__title-wrapper,
+  .page--blog-page .blog-post__title-wrapper,
   .page--about-us .blog-post__title-wrapper {
       border-left: 2px solid $green;
   }
@@ -100,7 +100,7 @@
   }
 
   // vary color by section
-  .page--blog-post .blog-post__quote,
+  .page--blog-page .blog-post__quote,
   .page--about-us .blog-post__quote {
       border-left: 2px solid $green;
   }
@@ -177,7 +177,7 @@
   }
 
   // vary color by section
-  .page--blog-post .blog-post__snippet,
+  .page--blog-page .blog-post__snippet,
   .page--about-us .blog-post__snippet {
       border-left: 2px solid $green;
   }
