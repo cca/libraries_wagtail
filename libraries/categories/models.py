@@ -130,7 +130,7 @@ class ServicePage(Page):
         'wagtailimages.Image',
         null=True,
         blank=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name='+',
         help_text='Try to ALWAYS provide a main image.'
     )
@@ -247,7 +247,7 @@ class SpecialCollection(Orderable):
         help_text='2x1 aspect ratio preferred, will be sized to 910x400px at its largest.',
         null=True,
         blank=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name='+'
     )
 
@@ -281,7 +281,7 @@ class AboutUsPage(Page):
         'wagtailimages.Image',
         null=True,
         blank=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name='+',
         help_text='Try to ALWAYS provide a main image.'
     )
@@ -332,7 +332,7 @@ class ExternalLink(Page):
         blank=True,
         help_text='Used in search results',
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name='+',
     )
 

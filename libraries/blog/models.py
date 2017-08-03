@@ -48,7 +48,7 @@ class BlogPage(Page):
         'wagtailimages.Image',
         null=True,
         blank=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name='+',
         help_text='Try to ALWAYS provide a main image.'
     )

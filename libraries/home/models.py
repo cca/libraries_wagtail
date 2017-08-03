@@ -15,7 +15,7 @@ class HomePage(Page):
     background_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name='+',
         help_text='ideal dimensions are 1440x630px, please optimize image size too!',
     )

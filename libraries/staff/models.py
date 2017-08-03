@@ -26,7 +26,7 @@ class StaffMember(models.Model):
         'wagtailimages.Image',
         help_text="Will be sized 150-by-150px on the staff list page.",
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name='+',
     )
     bio = RichTextField(help_text='A single 4-5 sentence paragraph.')
@@ -69,7 +69,7 @@ class StaffListPage(Page):
         help_text='Only used in search results right now',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name='+',
     )
 
