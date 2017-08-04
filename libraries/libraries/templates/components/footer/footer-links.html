@@ -1,41 +1,23 @@
+{% load wagtailcore_tags %}
+
 <li class="footer-section footer-section--links">
 	<h4 class="footer-section__title">
 		Helpful links
 	</h4>
 
-	<a
-		href="/blog"
-		title="View our blog"
-		class="footer-section__link"
-	>
+	<a href="{% slugurl 'hours' %}" title="View our open hours" class="footer-section__link">
+		Open Hours
+	</a>
+
+	<a href="https://cca.summon.serialssolutions.com" title="Search for books, articles, DVDs, & more" class="footer-section__link">
+		Search
+	</a>
+
+	<a href="{% slugurl 'staff' %}" title="List of CCA Libraries' staff" class="footer-section__link">
+		Staff List
+	</a>
+
+	<a href="{% slugurl 'blog' %}" title="CCA Libraries' Blog" class="footer-section__link">
 		Blog
-	</a>
-	<a
-		href="#"
-		title="Quick brown fox"
-		class="footer-section__link"
-	>
-		Quick brown fox
-	</a>
-	<a
-		href="#"
-		title="Asking about something"
-		class="footer-section__link"
-	>
-		Asking about something
-	</a>
-	<a
-		href="#"
-		title="Another footer link"
-		class="footer-section__link"
-	>
-		Another footer link
-	</a>
-	<a
-		href="#"
-		title="Last one here"
-		class="footer-section__link"
-	>
-		Last one here
 	</a>
 </li>
