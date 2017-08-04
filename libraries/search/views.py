@@ -16,8 +16,12 @@ def search(request):
     # redirect Summon & Koha searches accordingly, default to Summon
     type = request.GET.get('searchType', 'all')
     if type == 'all':
-        summon_url = 'https://cca.summon.serialssolutions.com/?q='
-        return redirect(summon_url + search_query, permanent=True)
+        summon_url = 'https://cca.summon.serialssolutions.com/'
+        # going to /search (no query) -> Summon home page
+        if search_query:
+            return redirect(summon_url + '?q=' + search_query, permanent=True)
+        else:
+            return redirect(summon_url)
     elif type == 'catalog':
         koha_url = 'http://library.cca.edu/cgi-bin/koha/opac-search.pl?&q='
         return redirect(koha_url + search_query, permanent=True)
