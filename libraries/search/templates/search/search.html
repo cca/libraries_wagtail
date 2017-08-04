@@ -9,7 +9,7 @@
 
     <div class="search-page-search-box">
 		<div class="wrapper wrapper--search">
-			{% include 'components/search/search-box.html' %}
+			{% include 'components/search/search-box.html' with site_search=True %}
 		</div>
 	</div>
 
@@ -26,7 +26,12 @@
             {% endif %}
         {% elif search_query %}
             <div class="search-box__number-results">
-                No results found
+                No results found.
+            </div>
+            <br>
+        {% else %}
+            <div class="search-box__number-results">
+                Enter search terms above to see results.
             </div>
             <br>
         {% endif %}

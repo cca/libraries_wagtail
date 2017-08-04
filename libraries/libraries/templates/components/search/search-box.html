@@ -14,7 +14,7 @@
 	>
 		<input
 			{# default only if not a site search #}
-			{% if not search_query %}
+			{% if not site_search %}
 				checked="checked"
 			{% endif %}
 			class="search-box__type-input"
@@ -45,7 +45,7 @@
 		class="search-box__type-label"
 	>
 		<input
-			{% if search_query %}
+			{% if site_search %}
 				checked="checked"
 			{% endif %}
 			class="search-box__type-input"
