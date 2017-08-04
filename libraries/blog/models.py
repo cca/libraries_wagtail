@@ -25,6 +25,10 @@ class BlogIndex(Page):
     # override serve to redirect to latest blog post if index is visited
     def serve(self, request):
         latest_posts = all_blog_posts()[:5]
+        # pad the latest_posts list with None values so there's no error if we
+        # have no blog posts (e.g. when a new site instance is created)
+        if len(latest_posts) < 2:
+            latest_posts += [None] * (2 - len(latest_posts))
 
         return render(request, BlogPage.template, {
             'latest_posts': latest_posts,
