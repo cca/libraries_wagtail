@@ -1,10 +1,24 @@
-<!-- see: https://github.com/alexgleason/wagtailerrorpages -->
 {% extends "base.html" %}
+{# see: https://github.com/alexgleason/wagtailerrorpages #}
 
-{% block body_class %}template-404{% endblock %}
+{% block body_class %}page--404{% endblock %}
 
 {% block content %}
-    <h1>Page not found</h1>
+    <div class="wrapper wrapper--padding-top">
+        <h1 class="about-us-title">
+            <h1>Page not found</h1>
+        </h1>
 
-    <h2>Sorry, this page could not be found.</h2>
+        <div class="about-us-content">
+            <div class="about-us-text-wrapper">
+                <p>Sorry, we couldn't find what you were looking for. Try one of these:</p>
+                <ul>
+                    <li>use <a href="/search?searchType=services">the site search</a></li>
+                    <li>start over at <a href="/">our home page</a></li>
+                    <li>add <code>site:cca.edu</code> to a Google search to search all CCA sites at once</li>
+                </ul>
+            </div>
+		</div>
+
+    </div>
 {% endblock %}
