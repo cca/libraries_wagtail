@@ -40,7 +40,7 @@
 
       @include respond($break-large) {
         max-height: calc(100vh - 200px);
-        overflow: scroll;
+        overflow: auto;
         padding: 0;
       }
     }
