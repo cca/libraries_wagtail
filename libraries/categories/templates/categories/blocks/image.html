@@ -1,11 +1,18 @@
 {% load wagtailimages_tags wagtailcore_tags %}
 
 <div class="blog-post__image_wrapper">
-    {% if row %}
-        {# we're a _inside_ a row block, cut image width in half #}
+    {% if row and service_page %}
+        {# image inside a row block on a ServicePage #}
+        {% image value.image width-420 class="blog-post__image" %}
+    {% elif row %}
+        {# image inside a row block on a BlogPage #}
         {% image value.image width-240 class="blog-post__image" %}
+    {% elif service_page %}
+        {# full with ServicePage image #}
+        {% image value.image width-700 class="blog-post__image" %}
     {% else %}
-        {% image value.image width-580 class="blog-post__image" %}
+        {# full width BlogPage image #}
+        {% image value.image width-600 class="blog-post__image" %}
     {% endif %}
 
     {% if value.caption %}

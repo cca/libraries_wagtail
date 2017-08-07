@@ -5,24 +5,31 @@
 
 {# we basically reuse the blog_post template & retain its class names #}
 {% block content %}
-	<div class="wrapper wrapper--blog">
+	<div class="wrapper wrapper--padding-top">
 		{# include breadcrumbs for deeply nested (grandchild) pages #}
 		{% if page.get_ancestors|length > 2 %}
 			{% include 'categories/breadcrumbs.html' %}
 		{% endif %}
 
-		<div class="blog-page">
-			<article class="blog-post">
-				{% image page.main_image width-700 class="blog-post__image" %}
+		<h1 class="about-us-title">
+			{{ page.title }}
+		</h1>
+		<div class="about-us-content">
+			{% comment %}
+			the wrapper makes it so the text column isn't gigantic
+			so we want to keep it _even if_ there's no main_image
+			{% endcomment %}
+			<div class="about-us-image-wrapper">
+				{% if page.specific.main_image %}
+                    {% image page.specific.main_image width-404 class="about-us-image" %}
+				{% endif %}
+			</div>
 
-				<div class="blog-post__title-wrapper">
-					<h1 class="blog-post__title">
-						{{ page.title }}
-					</h1>
+			<article class="about-us-text-wrapper">
+                <div class="about-us-text">
+					{% include_block page.body with service_page=True %}
 				</div>
-
-				{% include_block page.body %}
-			</article>
+            </article>
 		</div>
 	</div>
 {% endblock %}
