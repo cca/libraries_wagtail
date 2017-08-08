@@ -28,7 +28,7 @@ class ImageFormatChoiceBlock(FieldBlock):
 
 class ImageBlock(StructBlock):
     image = ImageChooserBlock()
-    caption = RichTextBlock(blank=True)
+    caption = RichTextBlock(required=False)
     # alignment = ImageFormatChoiceBlock()
 
     class Meta:
@@ -39,8 +39,8 @@ class ImageBlock(StructBlock):
 class PullQuoteBlock(StructBlock):
     quote = TextBlock("quote title")
     # @TODO how come these are still required fields in the editor?
-    name = CharBlock(blank=True)
-    position = CharBlock(blank=True, label="Position or affiliation")
+    name = CharBlock(required=False)
+    position = CharBlock(required=False, label="Position or affiliation")
 
     class Meta:
         icon = "openquote"
