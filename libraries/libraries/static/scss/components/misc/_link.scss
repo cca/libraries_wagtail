@@ -1,15 +1,17 @@
 // ========================================
-// Inline page links (<a class="link">)
+// Inline page links
 // ========================================
 
-.link {
-  border-bottom: 2px solid transparent;
-  color: $lightblue;
-  display: inline-block;
-  text-decoration: none;
-  transition: border 0.3s ease;
-}
+.rich-text {
+    a[href] {
+      border-bottom: 2px solid transparent;
+      color: $lightblue;
+      display: inline-block;
+      text-decoration: none;
+      transition: border 0.3s ease;
+    }
 
-.link:hover {
-  border-bottom-color: $lightblue;
+    a[href]:hover {
+      border-bottom-color: $lightblue;
+    }
 }
