@@ -155,7 +155,7 @@ class ServicePage(Page):
 
 
     class Meta:
-        verbose_name = 'Complex Blog style page'
+        verbose_name = 'Complex text page'
 
     content_panels = Page.content_panels + [
         ImageChooserPanel('main_image'),
@@ -306,7 +306,7 @@ class AboutUsPage(Page):
         return get_category(self)
 
     class Meta:
-        verbose_name = 'Simple "About Us" style page'
+        verbose_name = 'Simple text page'
 
 
 class ExternalLink(Page):
