@@ -14,7 +14,7 @@
 
   @include respond($break-medium) {
     border-bottom: 0;
-    flex: 1 0 30%;
+    flex: 1 0 32%;
     padding-right: 10px;
   }
 
@@ -131,7 +131,6 @@
     }
 
     .footer-section__social-link::before {
-      background-image: url('/images/facebook-icon.png');
       background-repeat: no-repeat;
       background-size: 20px 20px;
       content: '';
@@ -139,16 +138,20 @@
       height: 20px;
       left: -10px; // padding offset
       position: relative;
-      top: 3px;
       width: 20px;
     }
 
-    .footer-section__social-link:nth-of-type(2)::before {
+    .footer-section__social-link.facebook::before {
+      background-image: url('/images/facebook-icon.png');
+      top: 3px;
+    }
+
+    .footer-section__social-link.instagram::before {
       background-image: url('/images/instagram-icon.png');
       top: 4px;
     }
 
-    .footer-section__social-link:nth-of-type(3)::before {
+    .footer-section__social-link.twitter::before {
       background-image: url('/images/twitter-icon.png');
       top: 5px;
     }
