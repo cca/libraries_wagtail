@@ -9,7 +9,7 @@
 
       @include respond($break-medium) {
         margin-top: 0;
-        max-width: $site-max-width-search;
+        max-width: 1000px;
       }
     }
 
@@ -24,12 +24,12 @@
     }
 
     .search-list {
+      display: flex;
+      flex-wrap: wrap;
       padding: 20px 0;
 
-      @include respond($break-medium) {
-        // offset absolutly positioned
-        // .search-box__number-results
-        padding-top: 20px;
+      .search-result {
+          flex: 50%;
       }
     }
 }
