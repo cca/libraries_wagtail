@@ -1,9 +1,11 @@
 {# @TODO I'm betting we'll need to change the /action here #}
 {# mostly likely change to /search & add a hidden <input> #}
-<form action="/blog" class="blog-search">
+<form action="/search" class="blog-search">
 	<h2 class="blog-search__title">
-		Search blog articles
+		Search news
 	</h2>
 
 	{% include 'components/search/search-input.html' %}
+
+	<input type="hidden" name="searchType" value="services">
 </form>

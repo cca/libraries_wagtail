@@ -42,6 +42,9 @@ class BlogIndex(Page):
     def can_create_at(cls, parent):
         return super(BlogIndex, cls).can_create_at(parent) and not cls.objects.exists()
 
+    class Meta:
+        verbose_name = 'News index'
+
 
 class BlogPage(Page):
     parent_page_types = ['blog.BlogIndex']
@@ -93,6 +96,10 @@ class BlogPage(Page):
         return context
 
 
+    class Meta:
+        verbose_name = 'News article'
+
+
     search_fields = Page.search_fields + [
         index.SearchField('imported_body'),
     ]
@@ -103,4 +110,3 @@ class BlogPage(Page):
         StreamFieldPanel('body'),
         FieldPanel('imported_body'),
     ]
-    pass
