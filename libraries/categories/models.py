@@ -11,7 +11,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailsearch import index
 
-from wagtail.wagtailcore.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock
+from wagtail.wagtailcore.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 
@@ -34,6 +34,17 @@ class ImageBlock(StructBlock):
     class Meta:
         icon = "image"
         template = "categories/blocks/image.html"
+
+
+class LinkedImageBlock(StructBlock):
+    image = ImageChooserBlock()
+    caption = RichTextBlock(required=False)
+    # alignment = ImageFormatChoiceBlock()
+    link = URLBlock()
+
+    class Meta:
+        icon = "link"
+        template = "categories/blocks/linked-image.html"
 
 
 class PullQuoteBlock(StructBlock):
@@ -61,6 +72,7 @@ class RowBlock(StreamBlock):
         icon="pilcrow",
     )
     image = ImageBlock()
+    linked_image = LinkedImageBlock()
     pullquote = PullQuoteBlock()
     snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
 
@@ -81,6 +93,7 @@ class BaseStreamBlock(StreamBlock):
         icon="pilcrow",
     )
     image = ImageBlock()
+    linked_image = LinkedImageBlock()
     pullquote = PullQuoteBlock()
     snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
