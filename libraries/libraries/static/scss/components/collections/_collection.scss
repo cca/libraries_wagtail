@@ -59,9 +59,8 @@
   }
 
     .collection__title {
-      cursor: pointer;
       font-size: 24px;
-      font-weight: 700;
+      font-weight: bold;
       line-height: 1.3em;
       margin: 0 0 10px;
       padding: 0 0 3px;
@@ -78,17 +77,16 @@
       }
     }
 
-    .collection__title:hover {
+    .collection__title a:hover {
       opacity: 0.7;
     }
 
-      .collection__title-text {
-        border-bottom: 2px solid $purple;
-      }
+    .collection__title-text {
+      border-bottom: 2px solid $purple;
+    }
 
     .collection__text {
       font-family: $font-family-serif;
       font-size: 14px;
-      font-weight: 300;
       line-height: 1.4em;
     }

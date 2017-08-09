@@ -10,7 +10,11 @@
 	<div class="collection__content">
 		<h2 class="collection__title">
 			<span class="collection__title-text">
-				<a href="{{collection.link}}">{{collection.title}}</a>
+				{% if collection.link %}
+					<a href="{{collection.link}}">{{collection.title}}</a>
+				{% else %}
+					{{collection.title}}
+				{% endif %}
 			</span>
 		</h2>
 		<p class="collection__text">

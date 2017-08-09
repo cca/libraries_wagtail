@@ -254,7 +254,8 @@ class SpecialCollection(Orderable):
     # RichTextField allows links & text formatting so this is questionable
     blurb = RichTextField()
     # URLField lets this link be either internal or external
-    link = models.URLField()
+    # Per Teri on 2017-08-09: some Spaces on a SpecColl page have no links
+    link = models.URLField(blank=True)
     image = models.ForeignKey(
         'wagtailimages.Image',
         help_text='2x1 aspect ratio preferred, will be sized to 910x400px at its largest.',
