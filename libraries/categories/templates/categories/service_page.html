@@ -7,7 +7,7 @@
 {% block content %}
 	<div class="wrapper wrapper--padding-top">
 		{# include breadcrumbs for deeply nested (grandchild) pages #}
-		{% if page.get_ancestors|length > 3 %}
+		{% if page.get_ancestors|length > 4 %}
 			{% include 'categories/breadcrumbs.html' %}
 		{% endif %}
 
