@@ -1,0 +1,34 @@
+// Custom CCA fonts. We have oblique & combination (bold italic, bold oblique)
+// font files for these too but for performance's sake we'll avoid using them.
+
+// Brown font face
+@font-face {
+    font-family: 'Brown';
+    src: url('/static/fonts/BrownStd-Regular.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Brown';
+    src: url('/static/fonts/BrownStd-Bold.otf') format('opentype');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'Brown';
+    src: url('/static/fonts/BrownStd-Italic.otf') format('opentype');
+    font-style: italic;
+}
+
+// The Serif font face
+@font-face {
+    font-family: 'The Serif';
+    src: url('/static/fonts/TheSerifB-W5Plain.otf') format('opentype');
+}
+@font-face {
+    font-family: 'The Serif';
+    src: url('/static/fonts/TheSerifB-W7Bold.otf') format('opentype');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'The Serif';
+    src: url('/static/fonts/TheSerifB-W5PlainItalic.otf') format('opentype');
+    font-style: italic;
+}
