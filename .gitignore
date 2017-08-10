@@ -7,10 +7,6 @@ pip-selfcheck.json
 *.pyc
 libraries/db.sqlite3
 libraries/media
-*.min.css
-*.min.css.map
-*.min.js
-*.min.js.map
 libraries/libraries/settings/local_settings.py
 libraries/libraries/settings/local.py
 libraries/share/
@@ -22,3 +18,8 @@ static/
 libraries/libraries/static/css
 libraries/libraries/static/fonts
 python
+# putting these below !libraries/libraries/static helps Atom out
+*.min.css
+*.min.css.map
+*.min.js
+*.min.js.map
