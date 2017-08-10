@@ -6,7 +6,6 @@ package-lock.json
 pip-selfcheck.json
 *.pyc
 libraries/db.sqlite3
-libraries/libraries/static/css
 libraries/media
 *.min.css
 *.min.css.map
@@ -20,5 +19,6 @@ node_modules/
 static/
 # track actual static files but not (proprietary) fonts
 !libraries/libraries/static
+libraries/libraries/static/css
 libraries/libraries/static/fonts
 python
