@@ -61,7 +61,7 @@ class StaffPageStaffMembers(Orderable):
     ]
 
 # actual staff list page
-class StaffListPage(Page):
+class StaffListPage(Page, index.Indexed):
     parent_page_types = ['categories.RowComponent']
     subpage_types = []
     main_image = models.ForeignKey(
@@ -78,16 +78,22 @@ class StaffListPage(Page):
         InlinePanel('staff_members', label='Staff Member'),
     ]
 
-    # @TODO confirm that this indexing works, not clear to me if the dot
-    # notation is the correct way to index connected snippets
-    search_fields = [
-        index.RelatedFields('staff_members', [
-            index.SearchField('staff_member.name'),
-            index.SearchField('staff_member.email'),
-            index.SearchField('staff_member.phone'),
-            index.SearchField('staff_member.position'),
-            index.SearchField('staff_member.bio'),
-        ]),
+    # shouldn't have to do this hacky workaround but index.RelatedFields chokes
+    # on the related StaffMember fields
+    def get_related_staff_for_search(self):
+        staff_fields = []
+
+        for staff in self.staff_members.all():
+            staff_fields.append(staff.staff_member.name)
+            staff_fields.append(staff.staff_member.email)
+            staff_fields.append(staff.staff_member.phone)
+            staff_fields.append(staff.staff_member.position)
+            staff_fields.append(staff.staff_member.bio)
+
+        return '\n'.join(staff_fields)
+
+    search_fields = Page.search_fields + [
+        index.SearchField('get_related_staff_for_search')
     ]
 
     # for consistency with other child pages in categories app

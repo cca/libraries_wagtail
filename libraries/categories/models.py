@@ -240,7 +240,7 @@ class SpecialCollectionsPage(Page):
         return get_category(self)
 
     # make page searchable by text of child special collections
-    search_fields = [
+    search_fields = Page.search_fields + [
         index.RelatedFields('special_collections', [
             index.SearchField('title'),
             index.SearchField('blurb'),
