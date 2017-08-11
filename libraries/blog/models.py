@@ -12,8 +12,13 @@ from categories.models import BaseStreamBlock
 
 # helper to get a list of published blog posts in reverse chronological order
 def all_blog_posts():
-    blogs = BlogPage.objects.live().order_by('-date')
-    return list(blogs)
+    blogs = list(BlogPage.objects.live().order_by('-date'))
+    # pad the blogs list with 2 None values so there's no error if we
+    # have no posts (e.g. when a new site instance is created)
+    while len(blogs) < 2:
+        blogs.append(None)
+
+    return blogs
 
 
 # we don't really use a blog index page but we need this here
@@ -25,10 +30,6 @@ class BlogIndex(Page):
     # override serve to redirect to latest blog post if index is visited
     def serve(self, request):
         latest_posts = all_blog_posts()[:5]
-        # pad the latest_posts list with None values so there's no error if we
-        # have no blog posts (e.g. when a new site instance is created)
-        if len(latest_posts) < 2:
-            latest_posts += [None] * (2 - len(latest_posts))
 
         return render(request, BlogPage.template, {
             'latest_posts': latest_posts,
