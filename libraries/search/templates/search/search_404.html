@@ -1,0 +1,8 @@
+{% if search_results %}
+    <p class="about-us-text">You might be trying to find one of the pages below.</p>
+    <ul class="search-results">
+        {% for result in search_results %}
+            {% include 'search/search-result.html' %}
+        {% endfor %}
+    </ul>
+{% endif %}
