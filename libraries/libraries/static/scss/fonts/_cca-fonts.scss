@@ -4,31 +4,18 @@
 // Brown font face
 @font-face {
     font-family: 'Brown';
-    src: url('/static/fonts/BrownStd-Regular.otf') format('opentype');
+    src: url('/static/fonts/lineto-brown-regular.woff2') format('woff2'),
+        url('/static/fonts/lineto-brown-regular.woff') format('woff');
 }
 @font-face {
     font-family: 'Brown';
-    src: url('/static/fonts/BrownStd-Bold.otf') format('opentype');
+    src: url('/static/fonts/lineto-brown-bold.woff2') format('woff2'),
+        url('/static/fonts/lineto-brown-bold.woff') format('woff');
     font-weight: bold;
 }
 @font-face {
     font-family: 'Brown';
-    src: url('/static/fonts/BrownStd-Italic.otf') format('opentype');
-    font-style: italic;
-}
-
-// The Serif font face
-@font-face {
-    font-family: 'The Serif';
-    src: url('/static/fonts/TheSerifB-W5Plain.otf') format('opentype');
-}
-@font-face {
-    font-family: 'The Serif';
-    src: url('/static/fonts/TheSerifB-W7Bold.otf') format('opentype');
-    font-weight: bold;
-}
-@font-face {
-    font-family: 'The Serif';
-    src: url('/static/fonts/TheSerifB-W5PlainItalic.otf') format('opentype');
+    src: url('/static/fonts/lineto-brown-italic.woff2') format('woff2'),
+        url('/static/fonts/lineto-brown-italic.woff') format('woff');
     font-style: italic;
 }
