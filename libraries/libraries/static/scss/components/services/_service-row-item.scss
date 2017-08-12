@@ -17,7 +17,7 @@
 
   // scss-lint:disable DeclarationOrder
   @include respond($break-medium) {
-    flex: 1 0 30%;
+    flex: 0 0 30%;
 
     &:not(:last-of-type) {
       border-bottom: 0;
