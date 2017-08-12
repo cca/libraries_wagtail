@@ -30,6 +30,12 @@
     @include respond($break-medium) {
       flex: 2 0 30%;
     }
+
+    ul, ol {
+        list-style: inherit;
+        margin: 0 0 24px;
+        padding-left: 2em;
+    }
   }
 
     .about-us-text {
