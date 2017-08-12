@@ -17,6 +17,8 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > # create the site database & an admin user
 > python libraries/manage.py migrate
 > python libraries/manage.py createsuperuser
+> # create the cache table—only relevant for production
+> python libraries/manage.py createcachetable libraries_wagtail_cache
 ```
 
 # When you're done
@@ -28,6 +30,7 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 ```
 
 # Startup on dev server (libraries-dev.cca.edu vm-lib-django-02.cca.edu) do these as root (sudo)
+
 * cd /opt/libraries_wagtail
 * `git pull `
 * use libraries virtualenv `workon libraries`
