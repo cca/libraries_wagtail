@@ -1,8 +1,11 @@
 import os
+import csv
 
 from django.core.management.base import BaseCommand, CommandError
 
 from wagtail.wagtailredirects import models
+
+from blog.models import BlogPage
 
 
 class Command(BaseCommand):
@@ -12,7 +15,7 @@ class Command(BaseCommand):
         parser.add_argument(
             'file',
             nargs=1,
-            help='tab-separated blog posts with columns: title, slug, date, HTML body, image',
+            help='tab-separated blog posts with columns: title, slug, date_created, body, main image',
         )
         parser.add_argument(
             '-d', '--dryrun',
@@ -26,14 +29,19 @@ class Command(BaseCommand):
         if not os.path.isfile(filename):
             raise CommandError('Could not find file at path "%s"' % filename)
 
-        with open(filename) as f:
-            lines = f.readlines()
-            for line in lines:
-                # this doesn't quite work, seems to choke onlines of a certain length
-                (title, slug, date_created, date_changed, body, main_image) = line.split('\t')
-
+        # open file with newline='' to work around newlines in CSV fields
+        with open(filename, 'r', newline='') as f:
+            csvreader = csv.DictReader(f)
+            for row in csvreader:
                 if options['dryrun']:
-                    print(title, slug, date_created, body, main_image)
+                    print('Dry run - no database inserts. Here is the parsed blog export CSV:')
+                    print(row)
                 else:
-                    # create images
-                    # create BlogPages
+                    # @TODO download image, create new WagtailImage?
+                    BlogPage.objects.create(
+                        title = row['title'],
+                        slug = row['slug'],
+                        date = int(row['date_created']),
+                        date_created = int(row['date_created']),
+                        imported_body = row['body'],
+                    )
