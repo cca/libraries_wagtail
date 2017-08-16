@@ -46,6 +46,7 @@
     font-weight: 700;
     line-height: 1.2em;
     margin: 0 0 8px;
+    opacity: 0.8;
     padding: 0 0 2px;
 
     // stop RowComponent headings from inheriting generic link styles
@@ -60,7 +61,7 @@
   }
 
   .service-row-item__title:hover {
-    opacity: 0.7;
+    opacity: 1;
   }
 
   .service-row-item__text {

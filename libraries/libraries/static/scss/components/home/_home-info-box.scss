@@ -85,17 +85,16 @@
         color: inherit;
         display: inline-block;
         line-height: 1.3em;
+        opacity: 0.8;
         text-decoration: none;
       }
 
       .home-info-box__item-link:hover {
-        opacity: 0.8;
+        opacity: 1;
       }
 
     .home-info-box__item-text {
-      font-family: $font-family-serif;
       font-size: 13px;
-      font-weight: 300;
       letter-spacing: 0.04em;
       line-height: 20px;
 
