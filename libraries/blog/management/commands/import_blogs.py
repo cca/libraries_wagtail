@@ -14,7 +14,7 @@ from blog.models import BlogIndex, BlogPage
 
 def download_img(path):
     root = 'http://libraries.cca.edu/'
-    img_url = root + path
+    img_url = root + path.replace(' ', '%20')
     img_filename = path.split('/')[-1]
     dest = settings.BASE_DIR + '/media/' + img_filename
     urlretrieve(img_url, dest)
