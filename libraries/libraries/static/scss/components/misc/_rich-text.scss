@@ -7,6 +7,11 @@
         list-style: inherit;
         margin: 0 0 24px;
         padding-left: 2em;
+
+        // sub-lists should be empty circles
+        ul {
+            list-style-type: circle;
+        }
     }
 
     h3 {
