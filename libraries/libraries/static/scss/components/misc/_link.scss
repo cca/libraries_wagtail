@@ -2,7 +2,8 @@
 // Inline page links
 // ========================================
 
-.rich-text {
+.rich-text,
+.service-row-item__text-wrapper {
     a[href] {
       border-bottom: 2px solid transparent;
       color: $lightblue;
