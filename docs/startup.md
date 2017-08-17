@@ -53,15 +53,25 @@ WAGTAILSEARCH_BACKENDS['default']['INDEX'] = 'libraries_wagtail_dev'
 
 Run `python libraries/manage.py update_index` to create the initial search index.
 
+## Misc Notes
 
-## When you're done
+Starting a fresh database with `manage.py migrate` and seeing an error? It's possible that an upgrade to core software (e.g. Wagtail, Django) introduced a new field but prior migrations didn't know about it so errors are thrown. See commit 97970f3 for instance where `django.db.utils.OperationalError: no such column: wagtailcore_page.last_published_at` errors were being thrown until a Wagtailcore migration was added as a dependency before creating the BlogIndex. The solution is to identify the migration in a dependency and add it to our custom migrations.
+
+Want to recreate the production or development database? The basic steps are:
 
 ```sh
-> # if you've added or updated packages, write them into libraries/requirements.txt
-> # turn off the virtualenv
-> deactivate
+> # download the media files
+> scp -r {{production_server}}:{{wagtail_root}}/libraries/media {{local_root}}/libraries
+> # download the db
+> ssh {{production_server}} 'pg_dump -h db_host -U db_user db_name > dump.sql'
+> scp {{production_server}}:dump.sql .
+> # delete any existing postgres db, create a new empty one, execute the dumped SQL
+> dropdb libraries_wagtail
+> createdb libraries_wagtail
+> psql libraries_wagtail < dump.sql
 ```
 
+It might be a little less straightforward than that but it's close.
 
 ## Startup on dev server (libraries-dev.cca.edu vm-lib-django-02.cca.edu) do these as root (sudo)
 
