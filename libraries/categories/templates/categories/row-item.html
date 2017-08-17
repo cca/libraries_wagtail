@@ -12,7 +12,9 @@
 	{% if item.specific.staff %}
 		{% with item.specific.staff as staff %}
 			<div class="service-row-item__image-wrapper">
-				{% image staff.main_image width-120 class="service-row-item__image" %}
+				<a href="{% pageurl item %}">
+					{% image staff.main_image width-120 class="service-row-item__image" %}
+				</a>
 			</div>
 
 			<div class="service-row-item__text-wrapper">
@@ -30,7 +32,9 @@
 	{% elif item.specific.main_image %}
 		{# without a StaffMember we should still have a main image #}
 		<div class="service-row-item__image-wrapper">
-			{% image item.specific.main_image width-120 class="service-row-item__image" %}
+			<a href="{% pageurl item %}">
+				{% image item.specific.main_image width-120 class="service-row-item__image" %}
+			</a>
 		</div>
 	{% endif %}
 </li>
