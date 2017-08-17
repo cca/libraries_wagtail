@@ -31,7 +31,7 @@ const settings = {
 };
 
 gulp.task('watch', function() {
-	gulp.watch(settings.src.scss, styles)
+	gulp.watch(settings.src.scss, [styles])
 });
 
 function styles () {
