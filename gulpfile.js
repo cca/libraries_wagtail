@@ -30,10 +30,6 @@ const settings = {
 	}
 };
 
-gulp.task('watch', function() {
-	gulp.watch(settings.src.scss, [styles])
-});
-
 function styles () {
 	gulp.src(settings.src.main)
 		.pipe(sourcemaps.init())
@@ -59,4 +55,6 @@ gulp.task('scripts', scripts);
  */
 gulp.task('build', ['styles', 'scripts']);
 
-gulp.task('default', ['styles', 'watch']);
+gulp.task('default', function() {
+	gulp.watch(settings.src.scss, ['build'])
+});
