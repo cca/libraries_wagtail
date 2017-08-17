@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
+{% load wagtailcore_tags %}
 
 {% block content %}
-<div class="wrapper wrapper--padding-top">
+<div class="wrapper wrapper--padding-top" style="max-width: 840px">
     <h1 class="about-us-title">
         {{ page.title }}
     </h1>
 
-    <div class="about-us-content">
-        {% if page.specific.intro %}
+    {% if page.specific.intro %}
+        <div class="about-us-content">
             <div class="about-us-text-wrapper">
-                <div class="about-us-text">{{ page.specific.intro }}</div>
+                <div class="about-us-text">{{ page.specific.intro|richtext }}</div>
             </div>
-        {% endif %}
+        </div>
+    {% endif %}
 
+    <div class="about-us-content">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -66,7 +69,6 @@
                 </tr>
             </tbody>
         </table>
-
     </div>
 
 </div>
