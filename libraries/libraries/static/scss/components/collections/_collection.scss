@@ -81,8 +81,17 @@
       opacity: 0.7;
     }
 
-    .collection__title-text {
+    // vary color by section
+    .page--collections .collection__title-text {
       border-bottom: 2px solid $purple;
+    }
+
+    .page--about-us .collection__title-text {
+      border-bottom: 2px solid $green;
+    }
+
+    .page--services .collection__title-text {
+      border-bottom: 2px solid $blue;
     }
 
     .collection__text {
