@@ -53,6 +53,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('blog', '0002_blogindex'),
         ('home', '0002_create_homepage'),
+        ('wagtailcore', '0035_page_last_published_at'),
     ]
 
     operations = [
