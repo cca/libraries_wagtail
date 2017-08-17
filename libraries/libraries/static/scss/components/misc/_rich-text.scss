@@ -3,6 +3,15 @@
 // ========================================
 
 .rich-text {
+    h3 {
+        font: bold 14px $font-family-sans-serif;
+        margin: 15px 0;
+
+        @include respond($break-medium) {
+          font-size: 18px;
+        }
+    }
+
     ul, ol {
         list-style: inherit;
         margin: 0 0 24px;
@@ -14,12 +23,7 @@
         }
     }
 
-    h3 {
-        font: bold 14px $font-family-sans-serif;
-        margin: 15px 0;
-
-        @include respond($break-medium) {
-          font-size: 18px;
-        }
+    p {
+        margin: 0 0 15px;
     }
 }
