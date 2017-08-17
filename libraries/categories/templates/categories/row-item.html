@@ -31,9 +31,10 @@
 		{% endwith %}
 	{% elif item.specific.main_image %}
 		{# without a StaffMember we should still have a main image #}
-		<div class="service-row-item__image-wrapper">
+		{# no name/position beside it so display a larger image #}
+		<div class="service-row-item__image-wrapper--large">
 			<a href="{% pageurl item %}">
-				{% image item.specific.main_image width-120 class="service-row-item__image" %}
+				{% image item.specific.main_image width-180 class="service-row-item__image" %}
 			</a>
 		</div>
 	{% endif %}
