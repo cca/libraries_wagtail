@@ -16,7 +16,17 @@
 
 	{# handle our older imported blog posts lacking a streamfield body #}
 	{% if page.imported_body %}
-		{{ page.imported_body|richtext }}
+		<div class="blog-post__imported-body">
+			{{ page.imported_body|safe }}
+		</div>
+		{% block extra_js %}
+			{# fix Wagtail's broken handling of raw HTML links #}
+			<script>
+			document.querySelectorAll('.blog-post__imported-body a').forEach(a => {
+				a.href = a.href.replace(/%22$/, '')
+			})
+			</script>
+		{% endblock %}
 	{% endif %}
 
 	{% include 'blog/blog-post-pagination.html' %}
