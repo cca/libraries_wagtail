@@ -1,0 +1,2 @@
+"title"|"slug"|"date_created"|"body"|"main_image"
+"Test Blog Post Import"|"test-blog-post-import"|1495044000|"<p>This is a <b>test</b> post meant to see if a) the <code>import_blogs</code> management command works and b) it properly adds the main image to the imported blog post."|"sites/default/files/images/cca_libraries_by_numbers.preview.png"

@@ -2,22 +2,32 @@ import os
 import csv
 import datetime
 import sys
-from urllib.request import urlretrieve
+from io import BytesIO
+import requests
 
 from django.core.management.base import BaseCommand, CommandError
-from django.conf import settings
+from django.core.files.images import ImageFile
 
-from wagtail.wagtailredirects import models
+from wagtail.wagtailimages.models import Image
 
 from blog.models import BlogIndex, BlogPage
 
 
-def download_img(path):
+def add_img_to_wagtail(path):
     root = 'http://libraries.cca.edu/'
+    # our query returns a file path, not a URL, so there can be spaces
     img_url = root + path.replace(' ', '%20')
-    img_filename = path.split('/')[-1]
-    dest = settings.BASE_DIR + '/media/' + img_filename
-    urlretrieve(img_url, dest)
+    filename = path.split('/')[-1]
+    # Creating image object from URL based off of this gist:
+    # https://gist.github.com/eyesee1/1ea8e1b90bfe632cd31f5a90afc0370c
+    response = requests.get(img_url)
+    image = Image.objects.create(
+        title=filename,
+        file=ImageFile(BytesIO(response.content), name=filename)),
+
+    # for some reason .create() returns a tuple?
+    # we want to return The Thing Itself instead, unencased
+    return image[0]
 
 
 class Command(BaseCommand):
@@ -33,6 +43,11 @@ class Command(BaseCommand):
             '-d', '--dryrun',
             action='store_true',
             help='Print out blogs that would be created without creating them.',
+        )
+        parser.add_argument(
+            '-n', '--noimages',
+            action='store_true',
+            help='Do not download and create associated images',
         )
 
     def handle(self, *args, **options):
@@ -53,17 +68,6 @@ class Command(BaseCommand):
                     print(row)
 
                 else:
-                    # @TODO create new WagtailImage so we can link BlogPage to it?
-                    img = row.get('main_image', None)
-
-                    if img and img != 'NULL':
-                        try:
-                            download_img(img)
-                            self.stdout.write(self.style.SUCCESS( 'Successfully downloaded %s' % img ))
-                        except:
-                            self.stdout.write(self.style.ERROR( 'Unable to download %s' % img ))
-                            self.stdout.write(sys.exc_info()[0])
-
                     # create a BlogPage from CSV data
                     try:
                         # date_created is a UNIX timestamp stored as a string
@@ -76,7 +80,20 @@ class Command(BaseCommand):
                         )
                         # have to add this way to get page's depth & path fields right
                         blog_index.add_child(instance=post)
-                        self.stdout.write(self.style.SUCCESS('Successfully created blog post %s' % post ))
+                        self.stdout.write(self.style.SUCCESS('Successfully created blog post %s' % post))
                     except:
                         self.stdout.write(self.style.ERROR('Unable to create blog post %s' % row['title']))
                         self.stdout.write(sys.exc_info()[0])
+
+                    # if there is one, create an image in Wagtail & attach it to the blog post
+                    img_field = row.get('main_image', None)
+
+                    if not options['noimages'] and img_field and img_field != 'NULL':
+                        try:
+                            wagtail_image = add_img_to_wagtail(img_field)
+                            post.main_image = wagtail_image
+                            post.save()
+                            self.stdout.write(self.style.SUCCESS( 'Successfully added main image %s' % img_field ))
+                        except:
+                            self.stdout.write(self.style.ERROR( 'Unable to add main image %s' % img_field ))
+                            self.stdout.write(sys.exc_info()[0])
