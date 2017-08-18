@@ -12,10 +12,10 @@
 				class="blog-post-pagination__link"
 				href="{{ previous_post.url }}"
 				title="Previous">
-				{% image previous_post.main_image fill-110x70 as img %}
+				{% image previous_post.main_image fill-110x70 as previous_img %}
 				<div
 					class="blog-post-pagination__image"
-					style="background-image: url('{{ img.url }}');"
+					style="background-image: url('{{ previous_img.url }}');"
 					title="{{ previous_post.title }}"
 				></div>
 
@@ -38,10 +38,10 @@
 				class="blog-post-pagination__link blog-post-pagination__link--next"
 				href="{{ next_post.url }}"
 			 	title="Next">
-				{% image next_post.main_image fill-110x70 as img %}
+				{% image next_post.main_image fill-110x70 as next_img %}
 				<div
 					class="blog-post-pagination__image"
-					style="background-image: url('{{ img.url }}');"
+					style="background-image: url('{{ next_img.url }}');"
 					title="{{ next_post.title }}"
 				></div>
 
