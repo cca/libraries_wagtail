@@ -14,6 +14,6 @@ AND n.created > 1439569286
 ORDER BY n.created DESC
 -- MySQL export to CSV, note there will be newlines _inside_ body field
 INTO OUTFILE /path/to/export.csv
-FIELDS TERMINATED BY ','
+FIELDS TERMINATED BY '|'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'

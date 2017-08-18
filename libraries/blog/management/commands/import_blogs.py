@@ -27,7 +27,7 @@ class Command(BaseCommand):
         parser.add_argument(
             'file',
             nargs=1,
-            help='tab-separated blog posts with columns: title, slug, date_created, body, main image',
+            help='pipe (|) separated blog posts with columns: title, slug, date_created, body, main_image',
         )
         parser.add_argument(
             '-d', '--dryrun',
@@ -42,12 +42,14 @@ class Command(BaseCommand):
         if not os.path.isfile(filename):
             raise CommandError('Could not find file at path "%s"' % filename)
 
-        # open file with newline='' to work around newlines in CSV fields
-        with open(filename, 'r', newline='') as f:
-            csvreader = csv.DictReader(f)
+        if options['dryrun']:
+            self.stdout.write('Dry run, no database inserts. Parsed CSV data:')
+
+        with open(filename) as f:
+            # csv reader apparently too stupid to handle commas in fields so use "|"
+            csvreader = csv.DictReader(f, delimiter='|')
             for row in csvreader:
                 if options['dryrun']:
-                    print('Dry run - no database inserts. Here is the parsed blog export CSV:')
                     print(row)
 
                 else:
@@ -72,6 +74,7 @@ class Command(BaseCommand):
                             date = post_date,
                             imported_body = row['body'],
                         )
+                        # have to add this way to get page's depth & path fields right
                         blog_index.add_child(instance=post)
                         self.stdout.write(self.style.SUCCESS('Successfully created blog post %s' % post ))
                     except:
