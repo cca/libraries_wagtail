@@ -16,7 +16,7 @@
 
 	{# handle our older imported blog posts lacking a streamfield body #}
 	{% if page.imported_body %}
-		<div class="blog-post__imported-body">
+		<div class="blog-post__imported-body rich-text">
 			{{ page.imported_body|safe }}
 		</div>
 		{% block extra_js %}
