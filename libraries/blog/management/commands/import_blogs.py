@@ -7,10 +7,19 @@ import requests
 
 from django.core.management.base import BaseCommand, CommandError
 from django.core.files.images import ImageFile
+from django.utils.html import strip_tags
 
 from wagtail.wagtailimages.models import Image
 
 from blog.models import BlogIndex, BlogPage
+
+
+def truncate(content, length=200, suffix='...'):
+    if len(content) <= length:
+        return content
+    else:
+        # split on spaces & drop the last entry, add suffix
+        return ' '.join(content[:length+1].split(' ')[0:-1]) + suffix
 
 
 def add_img_to_wagtail(path):
@@ -72,9 +81,12 @@ class Command(BaseCommand):
                     try:
                         # date_created is a UNIX timestamp stored as a string
                         post_date = datetime.datetime.fromtimestamp(int(row['date_created']))
+                        # strip HTML tags & truncate the body to create search description
+                        search_desc = truncate(strip_tags(row['body']))
                         post = BlogPage(
                             title = row['title'],
                             slug = row['slug'],
+                            search_description = search_desc,
                             date = post_date,
                             imported_body = row['body'],
                         )
