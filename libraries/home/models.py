@@ -1,5 +1,4 @@
-from __future__ import absolute_import, unicode_literals
-
+from django.conf import settings
 from django.db import models
 
 from wagtail.wagtailcore.models import Page
@@ -26,7 +25,7 @@ class HomePage(Page):
 
     main_image = property(_get_image)
 
-    image_attribution = RichTextField(blank=True)
+    image_attribution = RichTextField(features=settings.RICHTEXT_BASIC, blank=True)
 
     # blurbs for the 3 main sections (services, collections, about us)
     # we limit length & do not allow links like in a RichTextField

@@ -60,13 +60,17 @@ class BlogPage(Page):
         related_name='+',
         help_text='Try to ALWAYS provide a main image.'
     )
+
     # we reuse the same StreamField from categories
     body = StreamField(
         BaseStreamBlock(),
         verbose_name='Page content',
         null=True
     )
+
     # for backwards compatibility with our Drupal blog posts
+    # this should be the _only_ rich text field without a "features" property
+    # since we have no idea what the incoming HTML could be
     imported_body = RichTextField(
         blank=True,
         help_text='Do NOT use this field! It is only for imported data from our old site.'

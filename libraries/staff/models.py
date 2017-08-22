@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from modelcluster.fields import ParentalKey
@@ -29,7 +30,7 @@ class StaffMember(models.Model):
         on_delete=models.PROTECT,
         related_name='+',
     )
-    bio = RichTextField(help_text='A single 4-5 sentence paragraph.')
+    bio = RichTextField(features=settings.RICHTEXT_BASIC, help_text='A single 4-5 sentence paragraph.')
     slug = models.CharField(max_length=150)
 
     panels = [

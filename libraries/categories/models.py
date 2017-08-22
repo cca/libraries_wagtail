@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django import forms
 from django.shortcuts import redirect
@@ -28,7 +29,7 @@ class ImageFormatChoiceBlock(FieldBlock):
 
 class ImageBlock(StructBlock):
     image = ImageChooserBlock()
-    caption = RichTextBlock(required=False)
+    caption = RichTextBlock(features=settings.RICHTEXT_BASIC, required=False)
     # alignment = ImageFormatChoiceBlock()
 
     class Meta:
@@ -38,7 +39,7 @@ class ImageBlock(StructBlock):
 
 class LinkedImageBlock(StructBlock):
     image = ImageChooserBlock()
-    caption = RichTextBlock(required=False)
+    caption = RichTextBlock(features=settings.RICHTEXT_BASIC, required=False)
     # alignment = ImageFormatChoiceBlock()
     link = URLBlock()
 
@@ -68,13 +69,18 @@ class EmbedHTML(RawHTMLBlock):
 # two blocks combined in one row
 class RowBlock(StreamBlock):
     paragraph = RichTextBlock(
+        features=settings.RICHTEXT_ADVANCED,
         template="categories/blocks/paragraph.html",
         icon="pilcrow",
     )
     image = ImageBlock()
     linked_image = LinkedImageBlock()
     pullquote = PullQuoteBlock()
-    snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
+    # questionable that this should be advanced HTML but we use callouts a lot
+    snippet = RichTextBlock(
+        features=settings.RICHTEXT_ADVANCED,
+        label="Callout",
+        template="categories/blocks/snippet.html")
 
     class Meta:
         help_text = 'Only add 2 blocks per row!'
@@ -89,6 +95,7 @@ class BaseStreamBlock(StreamBlock):
         template="categories/blocks/subheading.html"
     )
     paragraph = RichTextBlock(
+        features=settings.RICHTEXT_ADVANCED,
         template="categories/blocks/paragraph.html",
         icon="pilcrow",
     )
@@ -102,6 +109,7 @@ class BaseStreamBlock(StreamBlock):
 # AboutUsPage has a much simpler template
 class AboutUsStreamBlock(StreamBlock):
     paragraph = RichTextBlock(
+        features=settings.RICHTEXT_ADVANCED,
         icon="pilcrow",
     )
 
@@ -251,8 +259,7 @@ class SpecialCollectionsPage(Page):
 class SpecialCollection(Orderable):
     page = ParentalKey(SpecialCollectionsPage, related_name='special_collections')
     title = models.CharField(max_length=255)
-    # RichTextField allows links & text formatting so this is questionable
-    blurb = RichTextField()
+    blurb = RichTextField(features=settings.RICHTEXT_BASIC)
     # URLField lets this link be either internal or external
     # Per Teri on 2017-08-09: some Spaces on a SpecColl page have no links
     link = models.URLField(blank=True)

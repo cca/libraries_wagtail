@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.db import models
 
 from wagtail.wagtailsnippets.models import register_snippet
@@ -90,7 +91,8 @@ class Closure(models.Model):
     end_date = models.DateField("End Date",
         help_text="can be the same as start date",)
 
-    explanation = RichTextField(blank=True)
+    # @TODO do we still need this since HoursPage intro talks about closures?
+    explanation = RichTextField(features=settings.RICHTEXT_BASIC, blank=True)
 
     panels = [
         FieldPanel('label', classname="full title"),
@@ -158,7 +160,7 @@ class HoursPage(Page):
     parent_page_types = ['categories.RowComponent']
     subpage_types = []
 
-    intro = RichTextField(blank=True)
+    intro = RichTextField(features=settings.RICHTEXT_ADVANCED, blank=True)
     main_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
