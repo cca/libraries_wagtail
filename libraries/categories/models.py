@@ -97,7 +97,7 @@ class BaseStreamBlock(StreamBlock):
     pullquote = PullQuoteBlock()
     snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
-    row = RowBlock()
+    row = RowBlock(max_num=2)
 
 # AboutUsPage has a much simpler template
 class AboutUsStreamBlock(StreamBlock):
