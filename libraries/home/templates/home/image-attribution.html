@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+
+{# attribution for the main background image on the home page #}
+{% if page.specific.image_attribution %}
+    <div class="home-image-attribution">
+        {{ page.specific.image_attribution|richtext }}
+    </div>
+{% endif %}

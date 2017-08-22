@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from django.db import models
 
 from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
@@ -25,7 +26,7 @@ class HomePage(Page):
 
     main_image = property(_get_image)
 
-    # background_caption = RichTextField(blank=True)
+    image_attribution = RichTextField(blank=True)
 
     # blurbs for the 3 main sections (services, collections, about us)
     # we limit length & do not allow links like in a RichTextField
@@ -46,6 +47,7 @@ class HomePage(Page):
 
     content_panels = Page.content_panels + [
         ImageChooserPanel('background_image'),
+        FieldPanel('image_attribution'),
         MultiFieldPanel([
             FieldPanel('services_text'),
             FieldPanel('collections_text'),
