@@ -10,7 +10,7 @@
   position: relative;
 
   @include respond($break-medium) {
-    padding: 0 30px;
+    padding: 0 $wrapper-medium-horizontal-padding;
   }
 }
 
@@ -18,7 +18,7 @@
   padding: 0;
 
   @include respond($break-medium) {
-    padding: 0 30px;
+    padding: 0 $wrapper-medium-horizontal-padding;
   }
 }
 
@@ -30,7 +30,7 @@
   padding: 0;
 
   @include respond($break-medium) {
-    padding: 0 30px;
+    padding: 0 $wrapper-medium-horizontal-padding;
     position: relative;
   }
 }

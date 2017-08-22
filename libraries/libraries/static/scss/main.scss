@@ -7,6 +7,7 @@
 @import 'settings/colors';
 @import 'settings/component-specific';
 @import 'settings/font-families';
+@import 'settings/vars';
 
 // Utilities
 @import 'utilities/respond';
@@ -55,6 +56,7 @@
 @import 'components/home/home-hero';
 @import 'components/home/home-info-box-times';
 @import 'components/home/home-info-box';
+@import 'components/home/image-attribution';
 @import 'components/home/home-news-item';
 @import 'components/home/home-news';
 
