@@ -123,20 +123,25 @@
       font-family: $font-family-serif;
       font-size: 13px;
       padding: 0 10px 14px;
-      text-decoration: none;
-    }
-
-    .footer-section__social-link:hover {
       text-decoration: underline;
     }
 
-    .footer-section__social-link::before {
+    .footer-section__social-link.icon-only {
+      color: transparent;
+      display: inline-block;
+      font-size: 0;
+    }
+
+    .footer-section__social-link:hover {
+      opacity: 0.7;
+    }
+
+    .footer-section__social-link.icon-only::before {
       background-repeat: no-repeat;
       background-size: 20px 20px;
       content: '';
       display: inline-block;
-      height: 20px;
-      left: -10px; // padding offset
+      height: 26px;
       position: relative;
       width: 20px;
     }
