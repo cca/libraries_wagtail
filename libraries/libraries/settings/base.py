@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'instagram',
     'staff',
     'hours',
+	'sersol_api',
 
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
