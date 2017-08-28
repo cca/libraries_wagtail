@@ -1,4 +1,4 @@
-fetch('http://127.0.0.1:8000/hours/?format=json')
+fetch('/hours/?format=json')
     .then(response => response.json())
     .then(data => {
         let h = function (selector, datum='closed') {
