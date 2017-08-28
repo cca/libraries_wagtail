@@ -73,6 +73,15 @@ Want to recreate the production or development database? The basic steps are:
 
 It might be a little less straightforward than that but it's close.
 
+## Cron jobs
+
+Wagtail automatically updates the search index and publishes scheduled pages. As we include more management commands, we may require more cron jobs but for now this is the only one that needs to be configured:
+
+```sh
+# download latest Instagram post (at least daily, scheduling not hugely important)
+* 4 * * * workon libraries; /opt/virtualenvs/libraries/bin/python /opt/libraries_wagtail/libraries/manage.py instagram
+```
+
 ## Startup on dev server (libraries-dev.cca.edu vm-lib-django-02.cca.edu) do these as root (sudo)
 
 * cd /opt/libraries_wagtail
