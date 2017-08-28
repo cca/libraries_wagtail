@@ -22,6 +22,9 @@ def truncate(content, length=200, suffix='...'):
         return ' '.join(content[:length+1].split(' ')[0:-1]) + suffix
 
 
+# NOTE: this creates duplicate images, see bug #39
+# it'd be better to store in memory each created image, check for dupes on path
+# and also make it reversible by deleting all created images/posts on error
 def add_img_to_wagtail(path):
     root = 'http://libraries.cca.edu/'
     # our query returns a file path, not a URL, so there can be spaces
