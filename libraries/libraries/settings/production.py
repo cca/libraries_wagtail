@@ -16,10 +16,9 @@ ANALYTICS_ID = 'UA-18459158-1'
 BASE_URL = 'https://libraries.cca.edu'
 
 # db cache for production
-# NOTE: temporarily disable cache in production, breaks home page hours feature
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-#         'LOCATION': 'libraries_wagtail_cache',
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'libraries_wagtail_cache',
+    }
+}
