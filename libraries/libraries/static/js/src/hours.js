@@ -1,7 +1,7 @@
 fetch('http://127.0.0.1:8000/hours/?format=json')
     .then(response => response.json())
     .then(data => {
-        let h = function (selector, datum) {
+        let h = function (selector, datum='closed') {
             let el = document.querySelector(selector)
             if (el) el.innerText = datum
         }
