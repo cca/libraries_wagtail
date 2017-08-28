@@ -5,6 +5,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 const postcss = require('gulp-postcss');
 const concat = require('gulp-concat');
+const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 const autoprefixer = require('autoprefixer');
 
@@ -24,7 +25,7 @@ const settings = {
 	 */
 
 	src: {
-		js: [static_root + '/js/main.js'],
+		js: [static_root + '/js/src/main.js', static_root + '/js/src/hours.js'],
 		main: static_root + '/scss/main.scss',
 		scss: [static_root + '/scss/**/*.scss']
 	}
@@ -44,6 +45,7 @@ function scripts () {
 	gulp.src(settings.src.js)
 		.pipe(sourcemaps.init())
 		.pipe(concat('main.min.js'))
+		.pipe(babel({ presets: ['env'] }))
 		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest( settings.dist.js ));
@@ -56,5 +58,5 @@ gulp.task('scripts', scripts);
 gulp.task('build', ['styles', 'scripts']);
 
 gulp.task('default', function() {
-	gulp.watch(settings.src.scss, ['build'])
+	gulp.watch(settings.src.scss.concat(settings.src.js), ['build'])
 });

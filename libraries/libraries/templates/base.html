@@ -46,7 +46,7 @@
 			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 			crossorigin="anonymous"
 		></script>
-        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/main.min.js' %}"></script>
 
         {# analytics if user's not signed in & we're on production site #}
         {% if not user.authenciated and settings.ANALYTICS_ID %}
