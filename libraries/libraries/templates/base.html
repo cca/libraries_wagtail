@@ -49,7 +49,7 @@
         <script type="text/javascript" src="{% static 'js/main.min.js' %}"></script>
 
         {# analytics if user's not signed in & we're on production site #}
-        {% if not user.authenciated and settings.ANALYTICS_ID %}
+        {% if not debug %}
             {% include 'components/ga.html' %}
         {% endif %}
 
