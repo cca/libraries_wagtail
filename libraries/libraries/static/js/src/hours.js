@@ -1,10 +1,17 @@
 fetch('http://127.0.0.1:8000/hours/?format=json')
     .then(response => response.json())
     .then(data => {
-        // meyer
-        let meyer = document.createElement('p').innerText = data.Meyer + '  today'
-        document.querySelectorAll('.footer-section__site')[0].append(meyer)
-        // simpson
-        let simpson = document.createElement('p').innerText = data.Simpson + ' today'
-        document.querySelectorAll('.footer-section__site')[1].append(simpson)
+        let h = function (selector, datum) {
+            let el = document.querySelector(selector)
+            if (el) el.innerText = datum
+        }
+
+        // info box hours
+        h('.home-info-box-times__timetable-times.js-simpson', data.Simpson)
+        h('.home-info-box-times__timetable-times.js-meyer', data.Meyer)
+        h('.home-info-box-times__timetable-times.js-materials', data.materials)
+
+        // footer hours
+        h('.footer-section__site-address.js-meyer-hrs', data.Meyer + ' today')
+        h('.footer-section__site-address.js-simpson-hrs', data.Simpson + ' today')
     })

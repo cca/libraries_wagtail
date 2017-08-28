@@ -4,25 +4,26 @@
 	<h2 class="home-info-box-times__title">
 		Today
 	</h2>
-	{# @TODO ideally we'd iterate over Library snippets? #}
+	{# NOTE: caching (possibly at Nginx layer?) throws this off in production #}
+	{# so I actually overwrite these times in JS later #}
 	<dl class="home-info-box-times__timetable">
 		{% if hours %}
-			<dt class="home-info-box-times__timetable-name">
+			<dt class="home-info-box-times__timetable-name js-simpson">
 				Simpson
 			</dt>
-			<dd class="home-info-box-times__timetable-times">
+			<dd class="home-info-box-times__timetable-times js-simpson">
 				{{ hours.Simpson }}
 			</dd>
-			<dt class="home-info-box-times__timetable-name">
+			<dt class="home-info-box-times__timetable-name js-materials">
 				Materials
 			</dt>
-			<dd class="home-info-box-times__timetable-times">
+			<dd class="home-info-box-times__timetable-times js-materials">
 				{{ hours.Materials }}
 			</dd>
-			<dt class="home-info-box-times__timetable-name">
+			<dt class="home-info-box-times__timetable-name js-meyer">
 				Meyer
 			</dt>
-			<dd class="home-info-box-times__timetable-times">
+			<dd class="home-info-box-times__timetable-times js-meyer">
 				{{ hours.Meyer }}
 			</dd>
 		{% else %}
