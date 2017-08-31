@@ -82,7 +82,13 @@ class BlogPage(Page):
         context = super(BlogPage, self).get_context(request)
 
         all_posts = all_blog_posts()
-        index = all_posts.index(self)
+
+        # all_posts is all _published_ posts so a draft preview won't be in it
+        try:
+            index = all_posts.index(self)
+        except:
+            index = 0
+
         # handle cases where we're on the newest/oldest post
         if index == 0:
             next_post = None
