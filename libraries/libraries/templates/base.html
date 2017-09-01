@@ -1,10 +1,7 @@
 {% load static wagtailuserbar %}
 
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html class="no-js">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,12 +9,28 @@
             {% block title %}
                 {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
             {% endblock %}
-            {% block title_suffix %}| CCA Libraries & Instructional Technology{% endblock %}
+            {% block title_suffix %}| CCA Libraries{% endblock %}
         </title>
         {% if self.search_description %}
             <meta name="description" content="{{self.search_description}}" />
+            <meta property="og:description" content="{{self.search_description}}"/>
         {% endif %}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {# social sharing <meta> tags #}
+        {% block social %}
+            {% if self.seo_title %}
+                <meta property="og:title" content="{{ self.seo_title }} | CCA Libraries" />
+            {% else %}
+                <meta property="og:title" content="{{ self.title }} | CCA Libraries" />
+            {% endif %}
+            <meta property="og:type" content="article" />
+            <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+            {% if self.specific.main_image %}
+                <meta property="og:image" content="https://{{ request.META.HTTP_HOST  }}{{ self.specific.main_image.file.url }}" />
+            {% endif %}
+            <meta property="og:site_name" content="CCA Libraries" />
+        {% endblock %}
 
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
