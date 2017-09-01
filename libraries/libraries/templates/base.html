@@ -48,7 +48,7 @@
 		></script>
         <script type="text/javascript" src="{% static 'js/main.min.js' %}"></script>
 
-        {# analytics if user's not signed in & we're on production site #}
+        {# analytics if we're on production site #}
         {% if not debug %}
             {% include 'components/ga.html' %}
         {% endif %}
