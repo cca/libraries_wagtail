@@ -4,9 +4,9 @@
 	<h2 class="service-row__title">
 		{{ row.title }}
 	</h2>
-	<p class="service-row__summary">
-		{{ row.specific.summary }}
-	</p>
+	<div class="service-row__summary">
+		{{ row.specific.summary|richtext }}
+	</div>
 	<ul class="service-row__items">
 		{% for item in row.get_children.live %}
 			{% include 'categories/row-item.html' %}

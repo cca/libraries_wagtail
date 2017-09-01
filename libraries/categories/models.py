@@ -199,7 +199,7 @@ class RowComponent(Page):
         'staff.StaffListPage',
         'hours.HoursPage',
     ]
-    summary = models.CharField(max_length=350)
+    summary = RichTextField(features=settings.RICHTEXT_BASIC)
     # do not index for search
     search_fields = []
     # no need for a promote tab since slug & search_desc aren't used
