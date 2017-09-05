@@ -57,14 +57,15 @@
     .home-info-box-times__timetable-name,
     .home-info-box-times__timetable-times {
       border-bottom: 1px solid white(0.4);
-      flex: 1 0 40%;
+      flex: 1 0 50%;
       margin: 0 0 10px;
       padding: 0 0 10px;
     }
 
     .home-info-box-times__timetable-times {
-      flex: 1 0 60%;
+      flex: 1 0 50%;
       font-weight: 300;
+      text-align: right;
     }
 
   .home-info-box-times__link {
