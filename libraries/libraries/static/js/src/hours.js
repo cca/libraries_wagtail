@@ -9,7 +9,7 @@ fetch('/hours/?format=json')
         // info box hours
         h('.home-info-box-times__timetable-times.js-simpson', data.Simpson)
         h('.home-info-box-times__timetable-times.js-meyer', data.Meyer)
-        h('.home-info-box-times__timetable-times.js-materials', data.materials)
+        h('.home-info-box-times__timetable-times.js-materials', data.Materials)
 
         // footer hours
         h('.footer-section__site-address.js-meyer-hrs', data.Meyer + ' today')
