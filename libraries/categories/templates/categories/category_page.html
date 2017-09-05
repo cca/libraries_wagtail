@@ -11,3 +11,38 @@
         </ul>
     </div>
 {% endblock %}
+
+{# pull in live hours data on "about us" page #}
+{% if slug == 'about-us' %}
+    {% block extra_js %}
+<script type="text/javascript">
+fetch('/hours/?format=json')
+    .then(response => response.json())
+    .then(data => {
+        // build hours table
+        let html = `<table class="table table-striped" style="font-size:90%"><thead>
+            <tr>
+                <th>Library</th>
+                <th>Today's Hours</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Simpson (SF)</td>
+                <td>${data.Simpson}</td>
+            </tr>
+            <tr>
+                <td>Materials (SF)</td>
+                <td>${data.Materials}</td>
+            </tr>
+            <tr>
+                <td>Meyer (Oak)</td>
+                <td>${data.Meyer}</td>
+            </tr>
+        </tbody></table>`
+        // replace the first RowComponent main_image (for "Hours" page)
+        document.querySelector('.service-row-item__image-wrapper--large').innerHTML = html
+    })
+</script>
+    {% endblock %}
+{% endif %}
