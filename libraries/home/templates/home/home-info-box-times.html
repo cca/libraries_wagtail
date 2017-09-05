@@ -9,22 +9,22 @@
 	<dl class="home-info-box-times__timetable">
 		{% if hours %}
 			<dt class="home-info-box-times__timetable-name js-simpson">
-				Simpson
+				Simpson (SF)
 			</dt>
 			<dd class="home-info-box-times__timetable-times js-simpson">
-				{{ hours.Simpson }}
+				{{ hours.Simpson|default:"closed" }}
 			</dd>
 			<dt class="home-info-box-times__timetable-name js-materials">
-				Materials
+				Materials (SF)
 			</dt>
 			<dd class="home-info-box-times__timetable-times js-materials">
-				{{ hours.Materials }}
+				{{ hours.Materials|default:"closed" }}
 			</dd>
 			<dt class="home-info-box-times__timetable-name js-meyer">
-				Meyer
+				Meyer (Oak)
 			</dt>
 			<dd class="home-info-box-times__timetable-times js-meyer">
-				{{ hours.Meyer }}
+				{{ hours.Meyer|default:"closed" }}
 			</dd>
 		{% else %}
 			<i>Error retrieving hours data...</i><br>
