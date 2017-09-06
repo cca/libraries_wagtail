@@ -25,7 +25,7 @@ class StaffMember(models.Model):
     position = models.CharField(max_length=150)
     main_image = models.ForeignKey(
         'wagtailimages.Image',
-        help_text="Will be sized 150-by-150px on the staff list page.",
+        help_text="Use a roughly square image; it will be sized 150-by-150px on the staff list page.",
         null=True,
         on_delete=models.PROTECT,
         related_name='+',
@@ -67,7 +67,7 @@ class StaffListPage(Page, index.Indexed):
     subpage_types = []
     main_image = models.ForeignKey(
         'wagtailimages.Image',
-        help_text='Only used in search results right now',
+        help_text="Doesn't display on the page itself but a thumbnail close to 230x115px is used on the 'About Us' page and a smaller thumbnail is also used in search results.",
         blank=True,
         null=True,
         on_delete=models.PROTECT,

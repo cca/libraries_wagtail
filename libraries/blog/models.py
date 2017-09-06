@@ -58,7 +58,7 @@ class BlogPage(Page):
         blank=True,
         on_delete=models.PROTECT,
         related_name='+',
-        help_text='Try to ALWAYS provide a main image.'
+        help_text='Resized to 400x267px for the home page thumbnail and 700px wide on the post itself with a preserved aspect ratio.'
     )
 
     # we reuse the same StreamField from categories

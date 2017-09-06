@@ -165,7 +165,7 @@ class HoursPage(Page):
         null=True,
         on_delete=models.PROTECT,
         related_name='+',
-        help_text='Only used in search results',
+        help_text="Doesn't display on the page itself but a thumbnail close to 230x115px is used on the 'About Us' page and a smaller thumbnail is also used in search results.",
     )
 
     content_panels = Page.content_panels + [
