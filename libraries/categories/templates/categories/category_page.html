@@ -13,8 +13,8 @@
 {% endblock %}
 
 {# pull in live hours data on "about us" page #}
-{% if slug == 'about-us' %}
-    {% block extra_js %}
+{% block extra_js %}
+{% if page.slug == "about-us" %}
 <script type="text/javascript">
 fetch('/hours/?format=json')
     .then(response => response.json())
@@ -44,5 +44,5 @@ fetch('/hours/?format=json')
         document.querySelector('.service-row-item__image-wrapper--large').innerHTML = html
     })
 </script>
-    {% endblock %}
 {% endif %}
+{% endblock %}
