@@ -83,7 +83,7 @@ class RowBlock(StreamBlock):
         template="categories/blocks/snippet.html")
 
     class Meta:
-        help_text = 'Only add 2 blocks per row!'
+        help_text = "First child block is given 40% of the row width while the 2nd gets 60%."
         icon = 'form'
         template = "categories/blocks/row.html"
 
@@ -153,7 +153,7 @@ class ServicePage(Page):
         blank=True,
         on_delete=models.PROTECT,
         related_name='+',
-        help_text='Try to ALWAYS provide a main image.'
+        help_text='Displays 404px wide on page with a preserved aspect ratio. If this page shows in one of the Services/Collections/About rows, a thumbnail close to 230x115px is generated.'
     )
     staff = models.ForeignKey(
         'staff.StaffMember',
@@ -265,7 +265,7 @@ class SpecialCollection(Orderable):
     link = models.URLField(blank=True)
     image = models.ForeignKey(
         'wagtailimages.Image',
-        help_text='2x1 aspect ratio preferred, will be sized to 910x400px at its largest.',
+        help_text='Close to a 2.25-by-1 aspect ratio is bst, image is sized to 910x400px at its largest.',
         null=True,
         blank=True,
         on_delete=models.PROTECT,
@@ -304,7 +304,7 @@ class AboutUsPage(Page):
         blank=True,
         on_delete=models.PROTECT,
         related_name='+',
-        help_text='Try to ALWAYS provide a main image.'
+        help_text='Displays 404px wide on page with a preserved aspect ratio. If this page shows in one of the Services/Collections/About rows, a thumbnail close to 230x115px is generated.',
     )
     staff = models.ForeignKey(
         'staff.StaffMember',
@@ -351,7 +351,7 @@ class ExternalLink(Page):
     main_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
-        help_text='Used in search results',
+        help_text='If this page shows in one of the Services/Collections/About rows, a thumbnail close to 230x115px is generated.',
         null=True,
         on_delete=models.PROTECT,
         related_name='+',
