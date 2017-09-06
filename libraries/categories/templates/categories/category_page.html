@@ -23,21 +23,21 @@ fetch('/hours/?format=json')
         let html = `<table class="table table-striped" style="font-size:90%"><thead>
             <tr>
                 <th>Library</th>
-                <th>Today's Hours</th>
+                <th class="text-right">Today's Hours</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>Simpson (SF)</td>
-                <td>${data.Simpson}</td>
+                <td class="text-right">${data.Simpson}</td>
             </tr>
             <tr>
                 <td>Materials (SF)</td>
-                <td>${data.Materials}</td>
+                <td class="text-right">${data.Materials}</td>
             </tr>
             <tr>
                 <td>Meyer (Oak)</td>
-                <td>${data.Meyer}</td>
+                <td class="text-right">${data.Meyer}</td>
             </tr>
         </tbody></table>`
         // replace the first RowComponent main_image (for "Hours" page)
