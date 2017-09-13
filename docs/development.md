@@ -7,10 +7,18 @@ Basic outline for working on the site:
 - If model or database changes happen, run `makemigrations -n short_name`
     + Try to _always_ name migrations so it's possible infer what it's doing from the filename
     + If you make multiple migrations for the same feature/issue, combine them _before pushing to GitHub_ with `squashmigrations app_name first_number last_number`
-- Feel free to `git push origin $BRANCH` to save changes to GitHub
+- Feel free to `git push origin $BRANCH` to save intermediary changes to GitHub
 - Once a feature is complete, checkout `dev` & `git merge $BRANCH` into it
 - Once `dev` has been tested on another instance of the site, checkout master & `git merge dev`
 - Check the readme here to see if models or class names need to be updated
+
+Many features are difficult to test without a full database and media files resembling the live site. The included `wagsync.fish` script will:
+
+- pull down all documents and images (including renditions)
+- dump the production postgres database & load it into a local one
+- reset everyone's passwords to `password`
+
+Note that you'll need to fill the postgres DB password into the script to make it work, or be prepared to insert the correct password when it runs.
 
 ## Shell Commands
 
@@ -24,7 +32,7 @@ These should be run from inside the "libraries" directory as it is the root of t
 > # rebuild the site styles and scripts
 > npm run build
 > # continually watch for SASS changes & recompile to CSS
-> npm run watch # @TODO the gulp watch task doesn't actually work last I checked
+> npx run gulp
 ```
 
 We use [Gulp](http://gulpjs.com/) for our front-end build tool because that was what Torchbox's designer used, but could easily switch to something else. Note that tools like autoprefixer are solving some bugs though so switching might result in some style problems (e.g. the radio buttons on the home page search box need autoprefixer).
