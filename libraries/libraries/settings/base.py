@@ -25,6 +25,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Allowed Hosts
 ALLOWED_HOSTS = [
 	'127.0.0.1',
+	'localhost',
 	'libraries.cca.edu',
 	'10.16.8.23',
 	]

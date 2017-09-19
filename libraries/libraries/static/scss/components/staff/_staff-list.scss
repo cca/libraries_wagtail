@@ -26,10 +26,14 @@
     .search-list {
       display: flex;
       flex-wrap: wrap;
-      padding: 20px 0;
+      padding: 20px 0 0;
 
       .search-result {
           flex: 50%;
       }
+    }
+
+    .rich-text {
+        margin-bottom: 1em;
     }
 }

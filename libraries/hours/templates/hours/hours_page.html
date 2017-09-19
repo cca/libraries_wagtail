@@ -7,9 +7,17 @@
         {{ page.title }}
     </h1>
 
-    {% if page.specific.intro %}
+    {% if page.specific.intro and not for_date %}
         <div class="about-us-text-wrapper">
             <div class="about-us-text">{{ page.specific.intro|richtext }}</div>
+        </div>
+    {% endif %}
+
+    {% if for_date %}
+        <div class="about-us-text-wrapper">
+            <div class="about-us-text">
+                <b>Showing hours for the time period including {{for_date|date:"l F d, Y"}}.</b>
+            </div>
         </div>
     {% endif %}
 

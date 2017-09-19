@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load wagtailcore_tags %}
 
-{% block body_class %}page--about-us{% endblock %}
+{% block body_clasststs %}page--about-us{% endblock %}
 
 {% block content %}
     <div class="wrapper wrapper--padding-top">
@@ -16,6 +17,10 @@
                     </li>
                 {% endfor %}
             </ul>
+
+            {% if page.specific.post_script %}
+                {{ page.specific.post_script|richtext }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
