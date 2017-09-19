@@ -73,10 +73,16 @@ class StaffListPage(Page, index.Indexed):
         on_delete=models.PROTECT,
         related_name='+',
     )
+    post_script = RichTextField(
+        features=settings.RICHTEXT_BASIC,
+        blank=True,
+        help_text='Text appears below the list of staff.',
+    )
 
     content_panels = Page.content_panels + [
         ImageChooserPanel('main_image'),
         InlinePanel('staff_members', label='Staff Member'),
+        FieldPanel('post_script'),
     ]
 
     # shouldn't have to do this hacky workaround but index.RelatedFields chokes
