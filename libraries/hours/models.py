@@ -144,10 +144,9 @@ def get_open_hours(day=datetime.date.today()):
     return output
 
 
-def get_hours_for_lib(libname):
-    today = datetime.date.today()
+def get_hours_for_lib(libname, for_date=datetime.date.today()):
     hrs = OpenHours.objects.all()
-    hrs = hrs.filter(start_date__lte=today).filter(end_date__gte=today).filter(library__name=libname)
+    hrs = hrs.filter(start_date__lte=for_date).filter(end_date__gte=for_date).filter(library__name=libname)
     if not hrs:
         return None
     else:
@@ -179,12 +178,14 @@ class HoursPage(Page):
 
     def get_context(self, request):
         context = super(HoursPage, self).get_context(request)
-        today = datetime.date.today()
+        # default to current date but allow "date" parameter in URL
+        for_date = request.GET.get('date', datetime.date.today())
         hrs = {}
         for lib in ('Meyer', 'Simpson', 'Materials'):
-            hrs[lib] = get_hours_for_lib(lib)
+            hrs[lib] = get_hours_for_lib(lib, for_date=for_date)
 
         context['hours'] = hrs
+        context['for_date'] = for_date
 
         return context
 
