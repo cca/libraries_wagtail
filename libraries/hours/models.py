@@ -185,7 +185,9 @@ class HoursPage(Page):
             hrs[lib] = get_hours_for_lib(lib, for_date=for_date)
 
         context['hours'] = hrs
-        context['for_date'] = for_date
+        # for ease of templating, don't pass "for_date" when it's current date
+        if for_date != datetime.date.today():
+            context['for_date'] = datetime.datetime.strptime(for_date, '%Y-%m-%d')
 
         return context
 
