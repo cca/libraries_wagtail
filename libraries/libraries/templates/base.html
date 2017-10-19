@@ -61,10 +61,7 @@
 		></script>
         <script type="text/javascript" src="{% static 'js/main.min.js' %}"></script>
 
-        {# analytics if we're on production site #}
-        {% if not request.is_preview and request.META.HTTP_HOST != "127.0.0.1:8000" and request.META.HTTP_HOST != "libraries-dev.cca.edu" %}
-            {% include 'components/ga.html' %}
-        {% endif %}
+        {% include 'components/ga.html' %}
 
         {% block extra_js %}{% endblock %}
     </body>

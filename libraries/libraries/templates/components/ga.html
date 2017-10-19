@@ -1,20 +1,16 @@
-{# google analytics tracking code, only included on production site #}
-{# @TODO getting to the point where this should be a separate, minified file #}
+{# google analytics tracking code, only active on production #}
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-18459158-1', 'auto');
-  ga('send', 'pageview');
-  // track document downloads
-  Array.from(document.querySelectorAll('a[href^="/documents/"]')).forEach(function(a) {
-      a.addEventListener('click', function(ev){
-          var u = new URL(a.href.split('/'))
-            , path = u.pathname.split('/')
-            , id = path[2]
-            , name = path[3]
-          ga('send', 'event', 'download', id, name)
-      })
-  })
+{% if not request.is_preview and request.META.HTTP_HOST == "libraries.cca.edu" %}
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-18459158-1', 'auto');
+ga('send', 'pageview');
+{% else %}
+{# for non-production sites, just log what would have been recorded #}
+function ga() {
+    console.log('google analytics:', arguments)
+}
+{% endif %}
 </script>
