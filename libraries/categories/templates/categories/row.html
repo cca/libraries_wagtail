@@ -1,7 +1,7 @@
 {% load wagtailcore_tags %}
 
 <li class="service-row">
-	<h2 class="service-row__title">
+	<h2 class="service-row__title" id="{{ row.title|slugify }}">
 		{{ row.title }}
 	</h2>
 	<div class="service-row__summary">
