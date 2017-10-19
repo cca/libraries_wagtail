@@ -2,7 +2,6 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
-const rename = require('gulp-rename');
 const postcss = require('gulp-postcss');
 const concat = require('gulp-concat');
 const babel = require('gulp-babel');
@@ -25,7 +24,7 @@ const settings = {
 	 */
 
 	src: {
-		js: [static_root + '/js/src/main.js', static_root + '/js/src/hours.js'],
+		js: [static_root + '/js/src/*.js'],
 		main: static_root + '/scss/main.scss',
 		scss: [static_root + '/scss/**/*.scss']
 	}
