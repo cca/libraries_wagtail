@@ -14,12 +14,14 @@ def hours(request):
         if library:
             hrs = get_hours_for_lib(library)
             if not hrs:
-                return JsonResponse({
+                response = JsonResponse({
                     "error": "no library with name '%s' found" % library
                 })
+                response["Access-Control-Allow-Origin"] = "*"
+                return response
 
             # surely there is a better way but OpenHours can't serialize to JSON
-            return JsonResponse({
+            response = JsonResponse({
                 'library': library,
                 'hours': {
                     'mon': hrs.mon,
@@ -31,9 +33,13 @@ def hours(request):
                     'sun': hrs.sun,
                 }
             })
+            response["Access-Control-Allow-Origin"] = "*"
+            return response
 
         else:
-            return JsonResponse(get_open_hours(date))
+            response = JsonResponse(get_open_hours(date))
+            response["Access-Control-Allow-Origin"] = "*"
+            return response
 
     # redirect HTML requests to the hours page
     else:
