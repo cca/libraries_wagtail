@@ -6,6 +6,5 @@ npm install
 npm run build
 python libraries/manage.py migrate
 python libraries/manage.py createsuperuser
-source bin/activate
 python libraries/manage.py runserver
 
