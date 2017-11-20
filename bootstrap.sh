@@ -7,4 +7,6 @@ npm run build
 python libraries/manage.py migrate
 python libraries/manage.py createsuperuser
 python libraries/manage.py runserver
-
+# postgres setup
+createuser libuser
+createdb libraries_cca_edu --owner libuser
