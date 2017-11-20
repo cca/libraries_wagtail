@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set local_wagtail '/Users/ephetteplace/Code/libraries-wagtail'
+set local_wagtail '/Users/ephetteplace/Code/libraries_wagtail'
 set remote_wagtail '/opt/libraries_wagtail'
 set static_destination "$local_wagtail/libraries/media"
 set dbname 'libraries_cca_edu'
@@ -11,6 +11,8 @@ cd $static_destination
 rsync -avz --progress --delete live:$remote_wagtail/libraries/media/documents .
 rsync -avz --progress --delete live:$remote_wagtail/libraries/media/original_images .
 rsync -avz --progress --delete live:$remote_wagtail/libraries/media/images .
+cd ..
+rsync -avz --progress --delete live:$remote_wagtail/libraries/static/fonts libraries/static
 
 # dump SQL db & download
 # can create a .pgpass file in user's home folder to bypass password prompt
