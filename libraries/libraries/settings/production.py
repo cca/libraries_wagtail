@@ -22,3 +22,28 @@ CACHES = {
         'LOCATION': 'libraries_wagtail_cache',
     }
 }
+
+# http://docs.wagtail.io/en/v1.13.1/advanced_topics/performance.html#templates
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(PROJECT_DIR, 'templates')
+        ],
+        'OPTIONS': {
+            # context_processors copied from base.py
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ],
+        },
+    }
+]
