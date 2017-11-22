@@ -15,13 +15,10 @@ except ImportError:
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'https://libraries.cca.edu'
 
-# db cache for production
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'libraries_wagtail_cache',
-    }
-}
+# caching for production
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 300
+CACHE_MIDDLEWARE_KEY_PREFIX = 'ccalib'
 
 # http://docs.wagtail.io/en/v1.13.1/advanced_topics/performance.html#templates
 TEMPLATES = [

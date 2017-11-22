@@ -65,7 +65,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+# the 2 cache middleware should sandwich everything else
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
+
     'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,7 +81,21 @@ MIDDLEWARE = [
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+# db cache for production, dummy for dev
+# https://docs.djangoproject.com/en/1.11/topics/cache/
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'libraries_wagtail_cache',
+    },
+    'dummy': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+    }
+}
 
 ROOT_URLCONF = 'libraries.urls'
 

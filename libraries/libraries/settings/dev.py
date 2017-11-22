@@ -20,10 +20,7 @@ try:
 except ImportError:
     pass
 
-# in-memory cache for dev
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'libraries_wagtail_cache',
-    }
-}
+# (fake) caching for development
+CACHE_MIDDLEWARE_ALIAS = 'dummy'
+CACHE_MIDDLEWARE_SECONDS = 300
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
