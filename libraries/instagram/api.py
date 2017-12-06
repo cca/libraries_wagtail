@@ -27,17 +27,16 @@ def linkify_text(text):
 
 
 def get_instagram():
-    url = 'https://www.instagram.com/{u}/media/'.format(u=settings.INSTAGRAM_USERNAME)
+    url = 'https://www.instagram.com/{u}/?__a=1'.format(u=settings.INSTAGRAM_USERNAME)
     response = requests.get(url)
     insta = json.loads(response.text)
-    gram = insta['items'][0]
-    text = gram['caption']['text']
+    gram = insta['user']['media']['nodes'][0]
+    text = gram['caption']
 
     output = {
         # link hashtags & usernames as they'd appear on IG itself
         'html': linkify_text(text),
-        # low_res img is 320x320 so perfect size
-        'image': gram['images']['low_resolution']['url'],
+        'image': gram['thumbnail_src'],
         'text': text,
         # we should already know this in a template but just for ease of use
         'username': settings.INSTAGRAM_USERNAME,
