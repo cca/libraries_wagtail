@@ -2,7 +2,9 @@
 
 <li class="home-news-item">
 	<div class="home-news-item__image-wrapper">
-		{% image post.specific.main_image fill-400x267 class="home-news-item__image" %}
+		<a href="{% pageurl post %}">
+			{% image post.specific.main_image fill-400x267 class="home-news-item__image" %}
+		</a>
 	</div>
 
 	<div class="home-news-item__content">

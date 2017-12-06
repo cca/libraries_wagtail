@@ -4,12 +4,14 @@
 
 <div class="home-news-item home-news-item--instagram">
 	<div class="home-news-item__image-wrapper home-news-item__image-wrapper--instagram">
-		<img
-			alt="Instagram image"
-			class="home-news-item__image "
-			src="{{ instagram.image }}"
-			title="Image from Instagram"
-		/>
+		<a href="https://www.instagram.com/{{ instagram.username }}/">
+			<img
+				alt="Instagram image"
+				class="home-news-item__image "
+				src="{{ instagram.image }}"
+				title="Image from Instagram"
+			/>
+		</a>
 	</div>
 
 	<div class="home-news-item__content home-news-item__content--instagram">
