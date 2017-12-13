@@ -1,10 +1,12 @@
 import datetime
 
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import never_cache
 from django.http import JsonResponse
 from hours.models import get_open_hours, get_hours_for_lib, HoursPage
 
 # hours API
+@never_cache
 def hours(request):
     if request.GET.get('format') == 'json':
         # can request hours for a given day, or library
