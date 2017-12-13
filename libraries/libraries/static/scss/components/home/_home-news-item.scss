@@ -112,6 +112,8 @@
     .home-news-item__text {
       font-family: $font-family-serif;
       font-size: 13px;
+      // fixes layout bugs when text includes long words e.g. URLs
+      hyphens: auto;
       line-height: 1.4em;
 
       @include respond($break-medium) {
