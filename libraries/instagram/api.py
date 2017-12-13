@@ -6,7 +6,7 @@ from django.conf import settings
 # @me -> <a href=link>@me</a> etc.
 def linkify_text(text):
     html = text
-    username_regex = r"(^|\s)(@[a-zA-Z0-9]+)"
+    username_regex = r"(^|\s)(@[a-zA-Z0-9.]+)"
     hashtag_regex = r"(^|\s)(#[a-zA-Z0-9]+)"
     ig_url = 'https://www.instagram.com/'
 
