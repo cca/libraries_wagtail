@@ -4,7 +4,8 @@
 
     {% image person.main_image fill-150x150 class="search-result__image" %}
 
-    <div class="search-result__content" id="{{ person.slug }}">
+    <div class="search-result__content">
+        <a class="anchor" id="{{ person.slug }}"></a>
         <h2 class="search-result__title">{{ person.name }}</h2>
 
         <p class="search-result__text">{{ person.position }} | {{ person.email }}{% if person.phone %} | {{ person.phone }}{% endif %}</p><br>
