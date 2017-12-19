@@ -32,8 +32,8 @@
     // fix long menus bleeding under the footer as you scroll down
     let num_menu_items = $('.collections-nav-item').length
     if (num_menu_items) {
-        // menu items are 49px high & 4 fit, the rest overflow
-        let margin = (num_menu_items - 4) * 49
+        // menu items are 49px high & 5 fit, the rest overflow
+        let margin = (num_menu_items - 5) * 49
         if (margin > 0) $('.collections-list').css('margin-bottom', margin + 'px')
     }
 })()

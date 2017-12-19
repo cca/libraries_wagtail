@@ -1,0 +1,11 @@
+// hidden anchor that offsets the fixed header
+.anchor {
+    display: block;
+    position: relative;
+    top: -1 * $header-height-small;
+    visibility: hidden;
+
+    @include respond($break-medium) {
+      top: -1 * $header-height-large;
+    }
+}
