@@ -10,8 +10,6 @@
         </h1>
     </div>
 
-    {# @TODO insert brief search_description <p> here, too #}
-
     <div class="wrapper wrapper--collections">
         <ul class="collections-nav js-collections-nav">
             {% for collection in page.special_collections.all %}
@@ -26,4 +24,18 @@
         </ul>
     </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+    // fix long menus bleeding under the footer as you scroll down
+    let num_menu_items = $('.collections-nav-item').length
+    if (num_menu_items) {
+        // menu items are 49px high & 4 fit, the rest overflow
+        let margin = (num_menu_items - 4) * 49
+        if (margin > 0) $('.collections-list').css('margin-bottom', margin + 'px')
+    }
+})()
+</script>
 {% endblock %}
