@@ -146,14 +146,23 @@ def get_open_hours(day=datetime.date.today()):
 
     return output
 
-
+# returns a dict of hours for a date
 def get_hours_for_lib(libname, for_date=datetime.date.today()):
     hrs = OpenHours.objects.all()
     hrs = hrs.filter(start_date__lte=for_date).filter(end_date__gte=for_date).filter(library__name=libname)
     if not hrs:
         return None
     else:
-        return hrs.first()
+        hrs = hrs.first()
+        return {
+            'mon': hrs.mon,
+            'tue': hrs.tue,
+            'wed': hrs.wed,
+            'thu': hrs.thu,
+            'fri': hrs.fri,
+            'sat': hrs.sat,
+            'sun': hrs.sun,
+        }
 
 
 class HoursPage(Page):

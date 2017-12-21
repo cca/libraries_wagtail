@@ -20,15 +20,7 @@ def hours(request):
             if hrs:
                 response = JsonResponse({
                     'library': library,
-                    'hours': {
-                        'mon': hrs.mon,
-                        'tue': hrs.tue,
-                        'wed': hrs.wed,
-                        'thu': hrs.thu,
-                        'fri': hrs.fri,
-                        'sat': hrs.sat,
-                        'sun': hrs.sun,
-                    }
+                    'hours': hrs
                 })
 
         if date and not library:
