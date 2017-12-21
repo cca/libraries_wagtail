@@ -113,8 +113,11 @@ class Closure(models.Model):
 def get_open_hours(day=datetime.date.today()):
     # if we're passed a string, convert it to a date
     if type(day) is str:
-        # @TODO validate input, must match \d{4}-\d{2}-\d{2} regex
-        day = datetime.datetime.strptime(day, '%Y-%m-%d')
+        # validate input, default to today if we can't get a valid date
+        try:
+            day = datetime.datetime.strptime(day, '%Y-%m-%d')
+        except:
+            day = datetime.date.today()
 
     weekday = day.strftime('%a').lower()
 
