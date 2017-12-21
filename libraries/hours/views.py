@@ -10,38 +10,37 @@ from hours.models import get_open_hours, get_hours_for_lib, HoursPage
 def hours(request):
     if request.GET.get('format') == 'json':
         # can request hours for a given day, or library
-        library = request.GET.get('library')
-        date = request.GET.get('date', datetime.datetime.today())
+        library = request.GET.get('library', None)
+        date = request.GET.get('date', datetime.date.today())
+        hrs = None
 
         if library:
-            hrs = get_hours_for_lib(library)
-            if not hrs:
+            hrs = get_hours_for_lib(library, date)
+
+            if hrs:
                 response = JsonResponse({
-                    "error": "no library with name '%s' found" % library
+                    'library': library,
+                    'hours': {
+                        'mon': hrs.mon,
+                        'tue': hrs.tue,
+                        'wed': hrs.wed,
+                        'thu': hrs.thu,
+                        'fri': hrs.fri,
+                        'sat': hrs.sat,
+                        'sun': hrs.sun,
+                    }
                 })
-                response["Access-Control-Allow-Origin"] = "*"
-                return response
 
-            # surely there is a better way but OpenHours can't serialize to JSON
-            response = JsonResponse({
-                'library': library,
-                'hours': {
-                    'mon': hrs.mon,
-                    'tue': hrs.tue,
-                    'wed': hrs.wed,
-                    'thu': hrs.thu,
-                    'fri': hrs.fri,
-                    'sat': hrs.sat,
-                    'sun': hrs.sun,
-                }
-            })
-            response["Access-Control-Allow-Origin"] = "*"
-            return response
-
-        else:
+        if date and not library:
             response = JsonResponse(get_open_hours(date))
-            response["Access-Control-Allow-Origin"] = "*"
-            return response
+
+        if hrs == None:
+            response = JsonResponse({
+                "error": "no hours set found for library with name '%s' on date '%s'" % (library, date)
+            })
+
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
 
     # redirect HTML requests to the hours page
     else:
