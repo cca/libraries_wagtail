@@ -24,8 +24,10 @@ def hours(request):
                 })
 
         if date and not library:
-            response = JsonResponse(get_open_hours(date))
+            hrs = get_open_hours(date)
+            response = JsonResponse(hrs)
 
+        # we didn't find any hours via either of the above methods
         if hrs == None:
             response = JsonResponse({
                 "error": "no hours set found for library with name '%s' on date '%s'" % (library, date)
