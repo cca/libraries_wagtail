@@ -25,12 +25,6 @@ urlpatterns = [
     # Serials Solution API proxy
     url(r'^sersol/$', sersol_views.sersol, name='sersol_api'),
 
-    # see https://stackoverflow.com/questions/27065510/how-to-serve-static-files-with-django-that-has-hardcoded-relative-paths-on-herok/40525157#40525157
-    # static files (*.css, *.js, *.jpg etc.) served on /
-    # (assuming Django uses /static/ and /media/ for static/media urls)
-    url(r'^(?!/?static/)(?!/?media/)(?P<path>.*\..*)$',
-        RedirectView.as_view(url='/static/%(path)s', permanent=False)),
-
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:

@@ -1,3 +1,4 @@
+{% load static %}
 <header class="header js-header">
 	<div class="wrapper wrapper--header">
 		<a
@@ -8,7 +9,7 @@
 			<img
 				alt="CCA Libraries Logo"
 				class="header__logo"
-				src="/images/logo.png"
+				src="{% static 'images/logo.png' %}"
 			/>
 		</a>
 
@@ -20,7 +21,7 @@
 			<img
 				alt="Navigation Icon"
 				class="header__icon"
-				src="/images/hamburger-icon.png"
+				src="{% static 'images/hamburger-icon.png' %}"
 			/>
 		</a>
 
@@ -34,7 +35,7 @@
 			<img
 				alt="Search Icon"
 				class="header__icon"
-				src="/images/search-icon.png"
+				src="{% static 'images/search-icon.png' %}"
 			/>
 		</a>
 
