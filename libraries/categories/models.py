@@ -1,7 +1,9 @@
+import inspect
+
 from django.conf import settings
 from django.db import models
 from django import forms
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 from modelcluster.fields import ParentalKey
 
@@ -126,10 +128,15 @@ class CategoryPage(Page):
         'categories.AboutUsPage',
     ]
 
-    # add child RowComponent to context
+    # add child RowComponent(s) to context
     def get_context(self, request):
-        context = super(CategoryPage, self).get_context(request)
-        rows = self.get_children().live()
+        # if this is a preview of a draft RowComponent, include the draft
+        if request.GET.get('DRAFT'):
+            context = self.get_context(request)
+            rows = self.get_children()
+        else:
+            context = super(CategoryPage, self).get_context(request)
+            rows = self.get_children().live()
         context['rows'] = rows
         return context
 
@@ -218,6 +225,14 @@ class RowComponent(Page):
         parent = self.get_parent()
         return redirect(parent.url)
 
+    # rendering drafts is complicated, we need to let the parent know to
+    # include draft RowComponents in its context
+    def serve_preview(self, request, mode_name):
+        parent = self.get_parent()
+        request.GET = request.GET.copy()
+        request.GET['DRAFT'] = True
+        ctx = CategoryPage.get_context(parent, request)
+        return render(request, 'categories/category_page.html', context=ctx)
 
 # Another child of RowComponent but with a very different structure & template
 class SpecialCollectionsPage(Page):
