@@ -210,12 +210,13 @@ function main() {
 
     $window.on('scroll', function(e) {
       $collectionItems.each(function(i, item) {
-        var visible = isInView(item);
+        let visible = isInView(item)
+        let id = $(item).find('a.anchor').attr('id')
 
         if (visible) {
           $collectionsNavItems.removeClass(collectionNavActiveCls);
           var $collectionsNavItemLink = $(
-            ".js-collections-nav-item-link[href^='#" + item.id + "']"
+            ".js-collections-nav-item-link[href^='#" + id + "']"
           );
           $collectionsNavItemLink.parent().addClass(
             collectionNavActiveCls
