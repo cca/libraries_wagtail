@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'staff',
     'hours',
 	'sersol_api',
+	'brokenlinks',
 
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
@@ -162,6 +163,23 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
 
 INSTAGRAM_USERNAME = 'ccalibraries'
+
+# brokenlinks app
+
+# Uncomment and fill these out with info from the "broken links" Google Form.
+# The key is in the URL like:
+# https://docs.google.com/forms/d/e/{{key}}/viewform
+# while the "entry.####" can be found by inspecting the form's <input> elements.
+
+# BROKENLINKS_GOOGLE_SHEET_KEY = '1FAIpQLSehVHSXLkZ5_gcAYxh5ZEktbU-0axbakVONq9lavfP1SXGc_A'
+# BROKENLINKS_HASH = {
+#     "ipaddress": "entry.1306463040",
+#     "openurl": "entry.1430108689",
+#     "permalink": "entry.743539962",
+#     "type": "entry.1515176237",
+#     "email": "entry.1509607699",
+#     "comments": "entry.249064033",
+# }
 
 # sets of HTML tags allowed in various rich text fields
 # full list here:

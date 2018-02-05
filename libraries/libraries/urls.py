@@ -7,6 +7,7 @@ from django.views.generic import RedirectView
 
 from search import views as search_views
 from hours import views as hours_views
+from brokenlinks import views as brokenlinks_views
 from sersol_api import views as sersol_views
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
@@ -21,6 +22,9 @@ urlpatterns = [
 
     url(r'^search/$', search_views.search, name='search'),
     url(r'^hours/$', hours_views.hours, name='hours'),
+
+    # Summon "broken links" app
+    url(r'^brokenlinks/$', brokenlinks_views.brokenlinks, name='brokenlinks'),
 
     # Serials Solution API proxy
     url(r'^sersol/$', sersol_views.sersol, name='sersol_api'),
