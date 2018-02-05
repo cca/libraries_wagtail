@@ -1,6 +1,6 @@
 import datetime
 
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.decorators.cache import never_cache
 from django.http import JsonResponse
 from hours.models import get_open_hours, get_hours_for_lib, HoursPage
