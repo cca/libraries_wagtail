@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, QueryDict
 from django.views.decorators.csrf import csrf_exempt
 import requests
 import json
@@ -22,16 +22,17 @@ def brokenlinks(request):
         return response
     elif request.method == 'POST':
         sheets_url = 'https://docs.google.com/a/cca.edu/forms/d/e/{0}/formResponse'.format(settings.BROKENLINKS_GOOGLE_SHEET_KEY)
+        body = QueryDict(request.body)
         data = {
             settings.BROKENLINKS_HASH['ipaddress']: request.META.get('REMOTE_ADDR', ''),
-            settings.BROKENLINKS_HASH['openurl']: request.POST.get('openurl', ''),
-            settings.BROKENLINKS_HASH['permalink']: request.POST.get('permalink', ''),
-            settings.BROKENLINKS_HASH['type']: request.POST.get('type', ''),
-            settings.BROKENLINKS_HASH['email']: request.POST.get('email', ''),
-            settings.BROKENLINKS_HASH['comments']: request.POST.get('comments', ''),
+            settings.BROKENLINKS_HASH['openurl']: body.get('openurl', ''),
+            settings.BROKENLINKS_HASH['permalink']: body.get('permalink', ''),
+            settings.BROKENLINKS_HASH['type']: body.get('type', ''),
+            settings.BROKENLINKS_HASH['email']: body.get('email', ''),
+            settings.BROKENLINKS_HASH['comments']: body.get('comments', ''),
         }
-        r = requests.post(sheets_url, data=data)
-        response = JsonResponse(data, status=r.status_code)
+        #r = requests.post(sheets_url, data=data)
+        response = JsonResponse(data, status=200)
         response["Access-Control-Allow-Origin"] = "*"
         return response
     else:
