@@ -15,10 +15,9 @@ def brokenlinks(request):
     # so we have to handle this case, cannot only accept POST requests
     elif request.method == 'OPTIONS':
         response = HttpResponse()
-        response['Access-Control-Allow-Origin'] = '*'
-        response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
         # note that '*' is not valid for Access-Control-Allow-Headers
-        response['Access-Control-Allow-Headers'] = 'origin, content-type, accept'
         return response
     elif request.method == 'POST':
         sheets_url = 'https://docs.google.com/a/cca.edu/forms/d/e/{0}/formResponse'.format(settings.BROKENLINKS_GOOGLE_SHEET_KEY)
@@ -33,9 +32,9 @@ def brokenlinks(request):
         }
         r = requests.post(sheets_url, data=data)
         response = JsonResponse(data, status=r.status_code)
-        response['Access-Control-Allow-Origin'] = '*'
+        response["Access-Control-Allow-Origin"] = "*"
         return response
     else:
         response = JsonResponse({"error": "expected a POST request"}, status=405)
-        response['Access-Control-Allow-Origin'] = '*'
+        response["Access-Control-Allow-Origin"] = "*"
         return response
