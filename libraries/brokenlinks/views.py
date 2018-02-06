@@ -4,10 +4,13 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 import json
 
+
 @csrf_exempt
 def brokenlinks(request):
     if not settings.BROKENLINKS_GOOGLE_SHEET_KEY or not settings.BROKENLINKS_HASH:
-        return JsonResponse({"error": "This Wagtail app needs both a BROKENLINKS_GOOGLE_SHEET_KEY and BROKENLINKS_HASH in its settings to function."}, status=500)
+        response = JsonResponse({"error": "This Wagtail app needs both a BROKENLINKS_GOOGLE_SHEET_KEY and BROKENLINKS_HASH in its settings to function."}, status=500)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
     elif request.method == 'POST':
         sheets_url = 'https://docs.google.com/a/cca.edu/forms/d/e/{0}/formResponse'.format(settings.BROKENLINKS_GOOGLE_SHEET_KEY)
         body = json.loads(request.body)
@@ -24,4 +27,6 @@ def brokenlinks(request):
         response['Access-Control-Allow-Origin'] = '*'
         return response
     else:
-        return JsonResponse({"error": "expected a POST request"}, status=405)
+        response = JsonResponse({"error": "expected a POST request"}, status=405)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
