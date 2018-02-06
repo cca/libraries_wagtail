@@ -31,7 +31,7 @@ def brokenlinks(request):
             settings.BROKENLINKS_HASH['email']: body.get('email', ''),
             settings.BROKENLINKS_HASH['comments']: body.get('comments', ''),
         }
-        #r = requests.post(sheets_url, data=data)
+        r = requests.post(sheets_url, data=data)
         response = JsonResponse(data, status=200)
         response["Access-Control-Allow-Origin"] = "*"
         return response
