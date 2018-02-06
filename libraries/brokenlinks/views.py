@@ -18,6 +18,7 @@ def brokenlinks(request):
         response["Access-Control-Allow-Origin"] = "*"
         response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
         # note that '*' is not valid for Access-Control-Allow-Headers
+        response["Access-Control-Allow-Headers"] = "origin, x-csrftoken, content-type, accept"
         return response
     elif request.method == 'POST':
         sheets_url = 'https://docs.google.com/a/cca.edu/forms/d/e/{0}/formResponse'.format(settings.BROKENLINKS_GOOGLE_SHEET_KEY)
