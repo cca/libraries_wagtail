@@ -2,7 +2,7 @@
 $(function() {
   var modalLoaded = false;
 
-  //Modal HTML
+  // Modal HTML
   var modal = function (title, body, button) {
     return `<div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -45,8 +45,8 @@ $(function() {
                     <textarea name="comments" class="form-control" style="max-width:100%"></textarea>
                 </div>
             </div>
-            <input name="openurl" type="hidden" value="http://ds3us6us9g.search.serialssolutions.com?${doc.open_url}">
-            <input name="permalink" type="hidden" value="http://fairfield.summon.serialssolutions.com/#!/search?bookMark=${doc.bookmark}">
+            <input name="openurl" type="hidden" value="http://ey7mr5fu9x.search.serialssolutions.com?${doc.open_url}">
+            <input name="permalink" type="hidden" value="https://cca.summon.serialssolutions.com/#!/search?bookMark=${doc.bookmark}">
             <input type="hidden" name="type" value="${doc.content_type}">
         </form>`;
   }
@@ -78,7 +78,9 @@ $(function() {
       return false;
     }
     sent = 1;
+    // NOTE: this is being sent as POST body content, not JSON, for some reason
     $.ajax({
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json; charset=utf-8'},
       url: 'https://libraries.cca.edu/brokenlinks/',
       method: 'POST',
       data: {
