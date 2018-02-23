@@ -173,32 +173,6 @@ function main() {
     );
   });
 
-  // -- Blog sidebar scroll (desktop only) -- \\
-
-  var docHeight = document.body.scrollHeight;
-  var viewHeight = document.documentElement.clientHeight;
-  var maxHeight = docHeight - viewHeight;
-  var footerHeight = $footer.height();
-  var bodyWithoutfooterHeight = maxHeight - footerHeight;
-
-  if ($blogSidebar.length > 0) {
-    $window.on('scroll', function(e) {
-      if ($window.width() > breakpoints.large) {
-        var scrollPosition = $window.scrollTop();
-
-        if (scrollPosition > bodyWithoutfooterHeight) {
-          var offset = scrollPosition - bodyWithoutfooterHeight + 240;
-          $blogSidebarList.css(
-            'max-height',
-            'calc(100vh - ' + offset + 'px)'
-          );
-        } else {
-          $blogSidebarList.removeAttr('style');
-        }
-      }
-    });
-  }
-
   // -- Collections navigation scroll (desktop only) -- \\
 
   var $collectionsNav = $('.js-collections-nav');
