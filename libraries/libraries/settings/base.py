@@ -28,7 +28,9 @@ ALLOWED_HOSTS = [
 	'localhost',
 	'libraries.cca.edu',
 	'10.16.8.23',
-	]
+	'libraries-dev.cca.edu',
+	'10.16.8.37',
+]
 
 # Application definition
 
