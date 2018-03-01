@@ -14,3 +14,25 @@ I've found upgrading Wagtail to be a little less straightforward than I thought,
 - insert them into the repo's static dir `rsync -avz static libraries`
 
 All those final steps around static files feel wonky but that's what's worked for me.
+
+## Wagtail 2.0 / Django 2.0 update
+
+We will likely not need to revisit this but several things changed and the upgrade process wasn't _quite_ straightforward so it's worth documenting a few things. Here was my basic process:
+
+```sh
+> workon libraries # activate the app's virtualenv
+> pip install --upgrade wagtail
+> pip freeze > libraries/requirements.txt
+> wagtail updatemodulepaths
+> python manage.py migrate
+```
+
+- update `django.core.urlresolvers` to `django.urls` wherever it occurs
+- delete `django.contrib.auth.middleware.SessionAuthenticationMiddleware` from the `MIDDLEWARE` setting if it's present; it was removed in Django 2.0
+- if urls.py has the line `url(r'^django-admin/', include(admin.site.urls))` the `incude()` method can be removed such that it's simply "admin.site.urls"
+- look for uses of `models.ForeignKey` which don't specify the now-required `on_delete` parameter
+
+Useful docs:
+
+- http://docs.wagtail.io/en/v2.0/releases/2.0.html#upgrade-considerations
+- https://docs.djangoproject.com/en/2.0/releases/2.0/
