@@ -3,7 +3,7 @@
 # also the URL will change if the ES server is remote
 WAGTAILSEARCH_BACKENDS = {
     'default': {
-        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch5',
+        'BACKEND': 'wagtail.search.backends.elasticsearch5',
         # Override both URLS and INDEX properties in local settings like
         # from .elasticsearch import *
         # WAGTAILSEARCH_BACKENDS['default']['URLS'] = "http://example.com:9200"

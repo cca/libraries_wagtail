@@ -9,7 +9,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.core.files.images import ImageFile
 from django.utils.html import strip_tags
 
-from wagtail.wagtailimages.models import Image
+from wagtail.images.models import Image
 
 from blog.models import BlogIndex, BlogPage
 

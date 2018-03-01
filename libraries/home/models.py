@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db import models
 
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.core.models import Page
+from wagtail.core.fields import RichTextField
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 from blog.models import all_blog_posts
 from instagram.models import Instagram

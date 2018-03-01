@@ -4,9 +4,9 @@ from __future__ import unicode_literals
 
 import categories.models
 from django.db import migrations
-import wagtail.wagtailcore.blocks
-import wagtail.wagtailcore.fields
-import wagtail.wagtailimages.blocks
+import wagtail.core.blocks
+import wagtail.core.fields
+import wagtail.images.blocks
 
 
 class Migration(migrations.Migration):
@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='blogpage',
             name='body',
-            field=wagtail.wagtailcore.fields.StreamField((('subheading', wagtail.wagtailcore.blocks.CharBlock(classname='title', icon='title', template='categories/blocks/subheading.html')), ('paragraph', wagtail.wagtailcore.blocks.RichTextBlock(icon='pilcrow', template='categories/blocks/paragraph.html')), ('image', wagtail.wagtailcore.blocks.StructBlock((('image', wagtail.wagtailimages.blocks.ImageChooserBlock()), ('caption', wagtail.wagtailcore.blocks.RichTextBlock(blank=True))))), ('pullquote', wagtail.wagtailcore.blocks.StructBlock((('quote', wagtail.wagtailcore.blocks.TextBlock('quote title')), ('name', wagtail.wagtailcore.blocks.CharBlock(blank=True)), ('position', wagtail.wagtailcore.blocks.CharBlock(blank=True, label='Position or affiliation'))))), ('snippet', wagtail.wagtailcore.blocks.RichTextBlock(label='Callout', template='categories/blocks/snippet.html')), ('html', categories.models.EmbedHTML(label='Embed code'))), null=True, verbose_name='Page content'),
+            field=wagtail.core.fields.StreamField((('subheading', wagtail.core.blocks.CharBlock(classname='title', icon='title', template='categories/blocks/subheading.html')), ('paragraph', wagtail.core.blocks.RichTextBlock(icon='pilcrow', template='categories/blocks/paragraph.html')), ('image', wagtail.core.blocks.StructBlock((('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.RichTextBlock(blank=True))))), ('pullquote', wagtail.core.blocks.StructBlock((('quote', wagtail.core.blocks.TextBlock('quote title')), ('name', wagtail.core.blocks.CharBlock(blank=True)), ('position', wagtail.core.blocks.CharBlock(blank=True, label='Position or affiliation'))))), ('snippet', wagtail.core.blocks.RichTextBlock(label='Callout', template='categories/blocks/snippet.html')), ('html', categories.models.EmbedHTML(label='Embed code'))), null=True, verbose_name='Page content'),
         ),
     ]

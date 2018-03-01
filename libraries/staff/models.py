@@ -3,13 +3,13 @@ from django.db import models
 
 from modelcluster.fields import ParentalKey
 
-from wagtail.wagtailsnippets.models import register_snippet
-from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
-from wagtail.wagtailcore.models import Orderable, Page
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsearch import index
+from wagtail.snippets.models import register_snippet
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.core.models import Orderable, Page
+from wagtail.core.fields import RichTextField
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
 
 # model for library staff
 @register_snippet
@@ -55,7 +55,7 @@ class StaffMember(models.Model):
 # connection between staff & the staff page
 class StaffPageStaffMembers(Orderable):
     page = ParentalKey('staff.StaffListPage', related_name='staff_members')
-    staff_member = models.ForeignKey('StaffMember', related_name='+')
+    staff_member = models.ForeignKey('StaffMember', related_name='+', on_delete=models.CASCADE)
 
     panels = [
         SnippetChooserPanel('staff_member'),

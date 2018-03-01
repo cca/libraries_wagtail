@@ -2,7 +2,7 @@ import os
 
 from django.core.management.base import BaseCommand, CommandError
 
-from wagtail.wagtailredirects import models
+from wagtail.contrib.redirects import models
 
 
 # import redirect mgmt command

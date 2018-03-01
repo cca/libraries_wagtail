@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 
 # create the initial About Us, Collections, and Services pages

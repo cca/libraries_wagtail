@@ -7,15 +7,15 @@ from django.shortcuts import redirect, render
 
 from modelcluster.fields import ParentalKey
 
-from wagtail.wagtailcore.models import Page, Orderable
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
-from wagtail.wagtailsearch import index
+from wagtail.core.models import Page, Orderable
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.search import index
 
-from wagtail.wagtailcore.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock
-from wagtail.wagtailimages.blocks import ImageChooserBlock
+from wagtail.core.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock
+from wagtail.images.blocks import ImageChooserBlock
 
 
 # @TODO we don't use this right now but it's here waiting to be added

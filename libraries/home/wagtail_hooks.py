@@ -1,5 +1,5 @@
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailadmin.menu import MenuItem
+from wagtail.core import hooks
+from wagtail.admin.menu import MenuItem
 
 # add a "help" section to admin menu that links out to our Google wiki
 # doesn't belong under home but hooks don't work in main "libraries" directory

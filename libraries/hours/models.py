@@ -3,12 +3,12 @@ import datetime
 from django.conf import settings
 from django.db import models
 
-from wagtail.wagtailsnippets.models import register_snippet
-from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailcore.models import Page
+from wagtail.snippets.models import register_snippet
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.core.fields import RichTextField
+from wagtail.core.models import Page
 
 
 @register_snippet
