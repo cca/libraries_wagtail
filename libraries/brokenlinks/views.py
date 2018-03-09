@@ -24,6 +24,7 @@ def brokenlinks(request):
         sheets_url = 'https://docs.google.com/a/cca.edu/forms/d/e/{0}/formResponse'.format(settings.BROKENLINKS_GOOGLE_SHEET_KEY)
         body = QueryDict(request.body)
         data = {
+            # NOTE: REMOTE_ADDR is always 127.0.0.1, this is useless
             settings.BROKENLINKS_HASH['ipaddress']: request.META.get('REMOTE_ADDR', ''),
             settings.BROKENLINKS_HASH['openurl']: body.get('openurl', ''),
             settings.BROKENLINKS_HASH['permalink']: body.get('permalink', ''),
