@@ -38,7 +38,6 @@ def search(request):
         search_results = Page.objects.none()
 
     # Pagination
-    # @TODO pagination number should be a setting, not hard-coded
     paginator = Paginator(search_results, 10)
     try:
         search_results = paginator.page(page)

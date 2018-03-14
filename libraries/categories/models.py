@@ -18,7 +18,7 @@ from wagtail.core.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock,
 from wagtail.images.blocks import ImageChooserBlock
 
 
-# @TODO we don't use this right now but it's here waiting to be added
+# we don't use this right now but it's here waiting to be added
 # to ImageBlock() if need be
 class ImageFormatChoiceBlock(FieldBlock):
     field = forms.ChoiceField(choices=(
@@ -52,7 +52,6 @@ class LinkedImageBlock(StructBlock):
 
 class PullQuoteBlock(StructBlock):
     quote = TextBlock("quote title")
-    # @TODO how come these are still required fields in the editor?
     name = CharBlock(required=False)
     position = CharBlock(required=False, label="Position or affiliation")
 

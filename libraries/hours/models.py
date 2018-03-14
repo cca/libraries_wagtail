@@ -91,8 +91,10 @@ class Closure(models.Model):
     end_date = models.DateField("End Date",
         help_text="can be the same as start date",)
 
-    # @TODO do we still need this since HoursPage intro talks about closures?
-    explanation = RichTextField(features=settings.RICHTEXT_BASIC, blank=True)
+    explanation = RichTextField(
+        features=settings.RICHTEXT_BASIC,
+        blank=True,
+        help_text='This is a staff-facing field only right now.')
 
     panels = [
         FieldPanel('label', classname="full title"),
