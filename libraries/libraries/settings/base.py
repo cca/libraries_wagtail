@@ -163,8 +163,6 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 
 WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
 
-INSTAGRAM_USERNAME = 'ccalibraries'
-
 # brokenlinks app
 
 # Uncomment and fill these out with info from the "broken links" Google Form.

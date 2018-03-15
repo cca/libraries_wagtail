@@ -29,18 +29,18 @@ def linkify_text(text):
 
 
 def get_instagram():
-    url = 'https://www.instagram.com/{u}/?__a=1'.format(u=settings.INSTAGRAM_USERNAME)
+    url = 'https://api.instagram.com/v1/users/self/media/recent?access_token=' + settings.INSTAGRAM_ACCESS_TOKEN
     response = requests.get(url)
     insta = json.loads(response.text)
-    gram = insta['user']['media']['nodes'][0]
-    text = gram['caption']
+    gram = insta['data'][0]
+    text = gram['caption']['text']
 
     output = {
         # link hashtags & usernames as they'd appear on IG itself
         'html': linkify_text(text),
-        'image': gram['thumbnail_src'],
+        'image': gram['images']['low_resolution']['url'],
         'text': text,
-        # we should already know this in a template but just for ease of use
-        'username': settings.INSTAGRAM_USERNAME,
+        # we should already know this but just for ease of use
+        'username': gram['user']['full_name'],
     }
     return output
