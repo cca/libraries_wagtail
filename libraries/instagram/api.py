@@ -41,6 +41,6 @@ def get_instagram():
         'image': gram['images']['low_resolution']['url'],
         'text': text,
         # we should already know this but just for ease of use
-        'username': gram['user']['full_name'],
+        'username': gram['user']['username'],
     }
     return output
