@@ -24,12 +24,12 @@
 			{% if post.search_description %}
 				{# prefer a search_description if we have one #}
 				{{ post.search_description }}
-			{% elif post.imported_body %}
-				{# HTML imported from the old site's blog #}
-				{{ post.imported_body|richtext|truncatewords_html:50 }}
 			{% elif post.body %}
 				{# this is a streamfield #}
 				{{ post.body|truncatewords_html:50 }}
+			{% elif post.imported_body %}
+				{# HTML imported from the old site's blog, list this last #}
+				{{ post.imported_body|richtext|truncatewords_html:50 }}
 			{% endif %}
 		</div>
 	</div>
