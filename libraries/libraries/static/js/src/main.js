@@ -180,6 +180,7 @@ function main() {
   if ($collectionsNav.length > 0) {
     var $collectionItems = $('.js-collection-item');
     var $collectionsNavItems = $('.js-collections-nav-item');
+    var $collectionsTitle = $('.js-collections-title')
     var collectionNavActiveCls = 'collections-nav-item--is-active';
 
     $window.on('scroll', function(e) {
@@ -189,25 +190,38 @@ function main() {
 
         if (visible) {
           $collectionsNavItems.removeClass(collectionNavActiveCls);
-          var $collectionsNavItemLink = $(
-            ".js-collections-nav-item-link[href^='#" + id + "']"
-          );
-          $collectionsNavItemLink.parent().addClass(
-            collectionNavActiveCls
-          );
+          $(`.js-collections-nav-item-link[href^='#${id}']`)
+            .parent().addClass(collectionNavActiveCls);
         }
+
+        if (isInView($collectionsTitle[0])) {
+            $collectionsNav.css('top', '').css('bottom', '')
+        // if the footer's even partially in view, don't let menu overlap it
+        } else if (isInView($footer[0], true)) {
+            $collectionsNav.css('top', '')
+            $collectionsNav.css('bottom', $footer.outerHeight(true) + 'px')
+        } else {
+            // if we're below the header, pull the nav menu up a bit
+            $collectionsNav.css('top', $header.outerHeight(true) + 'px')
+            $collectionsNav.css('bottom', '')
+        }
+
       });
     });
   }
 
   // Check if element is in view
   // https://stackoverflow.com/a/42777210/5386237
-  function isInView(el) {
+  function isInView(el, partial) {
       // can't do const { top, bottom } bc uglify chokes on it -EP
       var rect = el.getBoundingClientRect()
           , top = rect.top
           , bottom = rect.bottom;
-      return top >= 0 && bottom <= window.innerHeight
+      if (partial) {
+          return top < window.innerHeight && bottom >= 0
+      } else {
+          return top >= 0 && bottom <= window.innerHeight
+      }
   }
 
   // -- Anchor link scrolling -- \\
