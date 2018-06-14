@@ -282,7 +282,7 @@ class SpecialCollection(Orderable):
         help_text='Close to a 2.25-by-1 aspect ratio is bst, image is sized to 910x400px at its largest.',
         null=True,
         blank=True,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='+'
     )
 
