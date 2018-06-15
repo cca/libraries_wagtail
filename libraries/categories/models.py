@@ -9,7 +9,7 @@ from modelcluster.fields import ParentalKey
 
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, FieldRowPanel, InlinePanel, StreamFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.search import index
@@ -169,6 +169,7 @@ class ServicePage(Page):
         on_delete=models.SET_NULL,
         related_name='+',
     )
+    display_staff_card = models.BooleanField(default=False, help_text='Display a small "card" showing contact information for the associated staff member.')
     body = StreamField(
         BaseStreamBlock(),
         verbose_name='Page content',
@@ -186,7 +187,9 @@ class ServicePage(Page):
 
     content_panels = Page.content_panels + [
         ImageChooserPanel('main_image'),
-        SnippetChooserPanel('staff'),
+        FieldRowPanel(
+            (SnippetChooserPanel('staff'), FieldPanel('display_staff_card'),)
+        ),
         StreamFieldPanel('body'),
     ]
 
