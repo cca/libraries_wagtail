@@ -37,7 +37,10 @@
       font-size: 16px;
       font-weight: 300;
       line-height: 1.4em;
-      margin: 0 0 24px;
+
+      @include respond($break-medium) {
+          margin: 0 0 24px;
+      }
     }
 
   .about-us-image-wrapper {
@@ -50,6 +53,10 @@
       margin: 0 0 0 40px;
       order: 1;
     }
+  }
+
+  .about-us-staff-card {
+      margin: 20px 0 0;
   }
 
     .about-us-image {
