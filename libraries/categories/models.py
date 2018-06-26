@@ -310,6 +310,7 @@ class AboutUsPage(Page):
         'categories.AboutUsPage',
         'categories.SpecialCollectionsPage',
     ]
+    display_staff_card = models.BooleanField(default=False, help_text='Display a small "card" showing contact information for the associated staff member.')
     body = StreamField(
         AboutUsStreamBlock(),
         verbose_name='Page content',
@@ -335,7 +336,9 @@ class AboutUsPage(Page):
 
     content_panels = Page.content_panels + [
         ImageChooserPanel('main_image'),
-        SnippetChooserPanel('staff'),
+        FieldRowPanel(
+            (SnippetChooserPanel('staff'), FieldPanel('display_staff_card'),)
+        ),
         StreamFieldPanel('body'),
     ]
 
