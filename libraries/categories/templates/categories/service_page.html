@@ -25,17 +25,7 @@
 				{% endif %}
 
 				{% if page.specific.display_staff_card %}
-					<div class="about-us-staff-card">
-						{% with page.staff as person %}
-							<div class="about-us-text">
-								{% image person.main_image fill-150x150 %}
-
-								<h2>{{ person.name }}</h2>
-
-								<p>{{ person.position }}<br>{{ person.email }}{% if person.phone %} | {{ person.phone }}{% endif %}</p><br>
-							</div>
-						{% endwith %}
-					</div>
+					{% include 'categories/staff_card.html' with person=page.staff %}
 				{% endif %}
 			</div>
 

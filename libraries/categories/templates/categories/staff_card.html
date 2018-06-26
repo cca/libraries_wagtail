@@ -1,0 +1,14 @@
+{% load wagtailimages_tags %}
+<div class="about-us-staff-card">
+    <div class="about-us-text rich-text">
+        {% image person.main_image fill-150x150 %}
+
+        <h2>{{ person.name }}</h2>
+
+        <p>{{ person.position }}<br>
+            <a class="link" href="mailto:{{ person.email }}">{{ person.email }}</a>
+            {% if person.phone %} | {{ person.phone }}{% endif %}
+        </p>
+        <br>
+    </div>
+</div>

@@ -13,13 +13,13 @@
     <div class="wrapper wrapper--collections">
         <ul class="collections-nav js-collections-nav">
             {% for collection in page.special_collections.all %}
-                {% include 'categories/collections-nav-item.html'%}
+                {% include 'categories/collections-nav-item.html' %}
             {% endfor %}
         </ul>
 
         <ul class="collections-list">
             {% for collection in page.special_collections.all %}
-                {% include 'categories/special-collection.html'%}
+                {% include 'categories/special-collection.html' %}
             {% endfor %}
         </ul>
     </div>
