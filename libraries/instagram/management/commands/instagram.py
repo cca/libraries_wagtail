@@ -15,12 +15,18 @@ class Command(BaseCommand):
             # returns dict in form { html, image, text, username }
             insta = get_instagram()
 
-            Instagram.objects.create(
-                text=insta['text'],
-                html=insta['html'],
-                image=insta['image'],
-                username=insta['username'],
-            )
+            if 'html' in insta:
+                # new Instagram from API response
+                Instagram.objects.create(
+                    text=insta['text'],
+                    html=insta['html'],
+                    image=insta['image'],
+                    username=insta['username'],
+                )
 
-            self.stdout.write(self.style.SUCCESS('Latest @ccalibraries Instagram retrieved successfully:'))
-            self.stdout.write(insta['text'])
+                self.stdout.write(self.style.SUCCESS('Latest Instagram retrieved successfully:'))
+                self.stdout.write(insta['text'])
+
+            else:
+                self.stdout.write(self.style.ERROR('Error retrieving latest Instagram.'))
+                self.stdout.write('Type: %s | Message: %s ' % (insta['error_type'], insta['error_message']))
