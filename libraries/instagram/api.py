@@ -28,6 +28,11 @@ def linkify_text(text):
     return html
 
 
+def get_oauth_token():
+    # @TODO
+    pass
+
+
 def get_instagram():
     url = 'https://api.instagram.com/v1/users/self/media/recent?access_token=' + settings.INSTAGRAM_ACCESS_TOKEN
     response = requests.get(url)
