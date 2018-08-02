@@ -39,6 +39,7 @@ class HomePage(Page):
     subpage_types = [
         # 'blog.BlogIndex',
         # 'categories.CategoryPage',
+        'exhibitions.ExhibitsIndexPage',
     ]
 
     # don't allow more home pages to be created

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'hours',
 	'sersol_api',
 	'brokenlinks',
+	'exhibitions',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
