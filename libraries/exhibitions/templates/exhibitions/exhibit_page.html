@@ -1,0 +1,34 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<h1>{{ page.title }}</h1>
+
+<p><b>Template</b>: {{ page.display_template }}</p>
+
+<div>
+    {% for header in page.header_image.all %}
+        <p>{% image header.image width-640 %}</p>
+    {% endfor %}
+</div>
+
+<p>{{ page.location|richtext }}</p>
+<p>{{ page.dates|richtext }}</p>
+<p>{{ page.creators|richtext }}</p>
+<p>{{ page.reception|richtext }}</p>
+
+{% include_block page.description %}
+
+{% for work in page.exhibit_artwork.all %}
+    <div>
+        <p>Title: {{ work.title }} </p>
+        <p>Type: {{ work.type }} </p>
+        <p>Creator: {{ work.creator }} </p>
+        <p>Link: {{ work.link }} </p>
+        <p>Image: {% image work.image width-200 %} </p>
+        <p>Embed code: {{ work.embed_code|richtext }}</p>
+        <p>Description: {{ work.description|richtext }}</p>
+    </div>
+    <hr>
+{% endfor %}
+
+<section>
+    {{ page.epilogue|richtext }}
+</section>
