@@ -1,0 +1,14 @@
+// ===================================
+// Overrides of main site _page.scss
+// which is also included
+// ===================================
+.page {
+  background: $white;
+  font-family: $font-family-sans-serif;
+  font-smoothing: antialiased;
+  min-width: 360px;
+  text-rendering: optimizeLegibility;
+  // scss-lint:disable DuplicateProperty
+  text-rendering: geometricPrecision;
+  // scss-lint:enable DuplicateProperty
+}

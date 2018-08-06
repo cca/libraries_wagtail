@@ -1,16 +1,26 @@
+{% extends "exhibits-base.html" %}
 {% load wagtailcore_tags %}
-<h1>{{page.title}}</h1>
 
-<section>
-    {{page.front_matter|richtext}}
-</section>
+{% block body_class %}exhibits-index{% endblock %}
 
-<ul>
-{% for exhibit in exhibits %}
-    <li><a href="{% pageurl exhibit %}">{{ exhibit.title }}</a></li>
-{% endfor %}
-</ul>
+{% block content %}
 
-<section>
-    {{page.epilogue|richtext}}
-</section>
+<div class="wrapper">
+    <h1>{{page.title}}</h1>
+
+    <section>
+        {{page.front_matter|richtext}}
+    </section>
+
+    <ul>
+    {% for exhibit in exhibits %}
+        <li><a href="{% pageurl exhibit %}">{{ exhibit.title }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <section>
+        {{page.epilogue|richtext}}
+    </section>
+</div>
+
+{% endblock %}

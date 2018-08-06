@@ -1,0 +1,90 @@
+// ===================================
+// Exhibits header
+// black background, white font, teal links
+// ===================================
+
+.header {
+  @include clearfix();
+  background: $black;
+  height: $header-height-small;
+  margin: 0 auto;
+  max-width: $site-max-width;
+  width: 100%;
+
+  @include respond($break-medium) {
+    height: $header-height-small;
+  }
+}
+
+.header__home-link {
+    flex: 2;
+    max-width: 240px;
+
+    @include respond($break-medium) {
+        display: block;
+        height: auto;
+        max-width: 240px;
+        position: absolute;
+        transform: translateY(33%);
+        transition: opacity 0.3s ease;
+        width: 50%;
+    }
+}
+
+.header__home-link:hover {
+    opacity: 0.5;
+}
+
+.header__logo {
+    height: auto;
+    width: 100%;
+}
+
+.header__nav-link {
+    border-bottom: 3px solid transparent;
+    display: block;
+    float: right;
+    height: $header-height-small;
+    position: relative;
+    transition: background 0.3s ease;
+    width: $header-height-small;
+
+    @include respond($break-medium) {
+        // borders for search icon which is still visible
+        border: 1px solid transparent;
+        border-right: 0;
+        display: none;
+    }
+}
+
+.header__nav-link:hover {
+    border-bottom: 3px solid $white;
+}
+
+// Search modifier
+.header__nav-link--search {
+    @include respond($break-medium) {
+        display: block;
+        height: $header-height-large - 20px;
+        position: absolute;
+        right: 0;
+        width: 50px;
+
+        &.header__nav-link--is-active {
+            height: $header-height-large - 28px;
+        }
+    }
+}
+
+.header__icon {
+    height: 30px;
+    left: 50%;
+    position: absolute;
+    top: 16px;
+    transform: translateX(-50%);
+    width: 30px;
+
+    @include respond($break-medium) {
+        top: 16px;
+    }
+}

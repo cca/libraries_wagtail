@@ -1,0 +1,54 @@
+// ========================================
+// Main website navigation in the header.
+// On mobile it is a dropdown menu.
+// ========================================
+.main-navigation {
+    background: $black;
+    color: $white;
+    flex: 1;
+
+    @include respond($break-medium) {
+        display: flex;
+        float: right;
+        margin-right: 20px;
+        position: relative;
+        top: -4px; // border offset
+        width: auto;
+    }
+}
+
+.main-navigation__item {
+    border-bottom: 1px solid black(0.1);
+    color: $white;
+    display: inline-block;
+    padding: 0 13px;
+    transition: border 0.3s ease;
+
+    @include respond($break-medium) {
+        border-bottom: 3px solid transparent;
+        display: inline-block;
+        padding: 0 13px;
+        // to make bottom border align perfectly with black header bar
+        transform: translateY(1px);
+    }
+}
+
+.main-navigation__item:hover {
+    border-color: $turquoise;
+    color: $turquoise;
+}
+
+.main-navigation__link {
+    color: inherit;
+    display: block;
+    font-size: 14px;
+    padding: 20px 20px 20px 16px; // border offset
+    text-decoration: none;
+
+    @include respond($break-medium) {
+        font-size: 16px;
+        height: $header-height-small;
+        line-height: $header-height-small + 10;
+        padding: 0;
+    }
+}

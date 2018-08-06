@@ -1,0 +1,71 @@
+{% load static wagtailuserbar %}
+
+{% comment %}
+based substantially off of libraries/templates/base.html
+but must necessarily differ e.g. with the main CSS file
+{% endcomment %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}| CCA Libraries{% endblock %}
+        </title>
+        {% if self.search_description %}
+            <meta name="description" content="{{self.search_description}}" />
+            <meta property="og:description" content="{{self.search_description}}"/>
+        {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {# social sharing <meta> tags #}
+        {% block social %}
+            {% if self.seo_title %}
+                <meta property="og:title" content="{{ self.seo_title }} | CCA Libraries" />
+            {% else %}
+                <meta property="og:title" content="{{ self.title }} | CCA Libraries" />
+            {% endif %}
+            <meta property="og:type" content="article" />
+            <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+            {% if self.specific.main_image %}
+                <meta property="og:image" content="https://{{ request.META.HTTP_HOST  }}{{ self.specific.main_image.file.url }}" />
+            {% endif %}
+            <meta property="og:site_name" content="CCA Libraries" />
+        {% endblock %}
+
+        {# Exhibits stylesheet #}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/exhibits.css' %}">
+
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="page js-page {% block body_class %}{% endblock %}">
+        {% wagtailuserbar %}
+
+        {% include 'components/header.html' %}
+
+        <main role="main">
+            {% block content %}{% endblock %}
+        </main>
+
+        {% include 'components/footer/footer.html' %}
+
+        <script
+			src="https://code.jquery.com/jquery-3.2.1.min.js"
+			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			crossorigin="anonymous"
+		></script>
+
+        {% include 'components/ga.html' %}
+
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

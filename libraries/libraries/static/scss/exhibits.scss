@@ -1,0 +1,49 @@
+// ===================================
+// Main styles for Exhibitions app
+// differs enough from main site to warrant
+// its own file which is mostly a subset
+// of main.scss except for the final
+// "Exhibits-specific" section
+// ===================================
+
+// Fonts
+@import 'fonts/cca-fonts';
+
+// Settings
+@import 'settings/animations';
+@import 'settings/breakpoints';
+@import 'settings/colors';
+@import 'settings/component-specific';
+@import 'settings/font-families';
+@import 'settings/vars';
+
+// Utilities
+@import 'utilities/respond';
+@import 'utilities/clearfix';
+@import 'utilities/text';
+
+// Reset
+@import 'reset/reset';
+@import 'reset/box-sizing';
+
+// -- Footer
+@import 'components/footer/footer-section';
+@import 'components/footer/footer';
+
+// -- Forms
+@import 'components/forms/checkbox';
+@import 'components/forms/label';
+
+// -- Misc
+@import 'components/misc/link';
+@import 'components/misc/rich-text';
+
+// -- Exhibits-specific
+@import 'components/exhibits/settings';
+@import 'components/exhibits/gallery';
+@import 'components/exhibits/header';
+@import 'components/exhibits/main-navigation';
+@import 'components/exhibits/page';
+@import 'components/exhibits/photoswipe';
+@import 'components/exhibits/template';
+@import 'components/exhibits/wrapper';

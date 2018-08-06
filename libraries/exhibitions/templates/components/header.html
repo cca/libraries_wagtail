@@ -1,0 +1,43 @@
+{% load static %}
+<header class="header">
+	<div class="wrapper wrapper--header">
+		<a
+			class="header__home-link"
+			href="/"
+			title="CCA Libraries home"
+		>
+            <!-- TODO: "Libraries" font color needs to be inverted (white) in logo -->
+			<img
+				alt="CCA Libraries Logo"
+				class="header__logo"
+
+				src="{% static 'images/logo.png' %}"
+			/>
+		</a>
+
+        <ul class="main-navigation">
+        	<li class="main-navigation__item">
+        		<a
+        			class="main-navigation__link"
+        			href="/exibitions"
+        			title="Exhibitions"
+        		>
+        			Exhibitions
+        		</a>
+        	</li>
+        </ul>
+
+		<a
+			class="header__nav-link header__nav-link--search js-header-search"
+			href="#search"
+			title="Search"
+		>
+            <!-- TODO: search icon color needs to be inverted (white) -->
+			<img
+				alt="Search Icon"
+				class="header__icon"
+				src="{% static 'images/search-icon.png' %}"
+			/>
+		</a>
+	</div>
+</header>

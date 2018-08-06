@@ -1,0 +1,34 @@
+// ========================================
+// Exhibits site max-width wrapper
+// ========================================
+.wrapper {
+  @include clearfix;
+  margin: 0 auto;
+  max-width: $site-max-width;
+  padding: 0 15px;
+  position: relative;
+}
+
+.wrapper--header {
+    align-items: center;
+    display: flex;
+    padding: 0 10px;
+
+    @include respond($break-medium) {
+        display: block;
+        padding: 0 $wrapper-medium-horizontal-padding;
+    }
+}
+
+.wrapper--search {
+  margin-top: 230px; // search box offset
+
+  @include respond($break-medium) {
+    margin-top: 0;
+    max-width: $site-max-width-search;
+  }
+}
+
+.wrapper--min-height {
+  min-height: 100vh;
+}
