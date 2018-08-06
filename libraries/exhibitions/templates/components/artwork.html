@@ -1,11 +1,14 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-<div>
-    <p>Title: {{ work.title }} </p>
-    <p>Type: {{ work.type }} </p>
-    <p>Creator: {{ work.creator }} </p>
-    <p>Link: {{ work.link }} </p>
-    <p>Image: {% image work.image width-200 %} </p>
-    <p>Embed code: {{ work.embed_code|richtext }}</p>
-    <p>Description: {{ work.description|richtext }}</p>
+<div class="gallery--work js-gallery--work">
+    <div class="gallery--work__image">
+        {% image work.image max-890x890 %}
+    </div>
+
+    <div class="gallery--work__responsibility">
+        {% comment %} title is required but creator is not {% endcomment %}
+        <h3 class="gallery--work__title"><strong>{{ work.title }}</strong></h3>
+        {% if work.creator != '' %}
+            <p class="gallery--work__creator">{{ work.creator }}</p>
+        {% endif %}
+    </div>
 </div>
-<hr>

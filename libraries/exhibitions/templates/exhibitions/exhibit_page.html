@@ -20,13 +20,29 @@
 
     {% include_block page.description %}
 
-    {% for work in page.exhibit_artwork.all %}
-        {% include 'components/artwork.html' %}
-    {% endfor %}
+    <section class="gallery">
+        <h2 class="gallery--title">Gallery</h2>
+
+        <div class="">
+            {% for work in page.exhibit_artwork.all %}
+                {% include 'components/artwork.html' %}
+            {% endfor %}
+        </div>
+    </section>
 
     <section>
         {{ page.epilogue|richtext }}
     </section>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script>
+$('.js-masonry').masonry({
+    "columnWidth": 600,
+    "itemSelector": ".js-gallery--work"
+})
+</script>
 {% endblock %}
