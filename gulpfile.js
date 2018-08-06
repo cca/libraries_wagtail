@@ -25,7 +25,7 @@ const settings = {
 
 	src: {
 		js: [static_root + '/js/src/*.js'],
-		main: static_root + '/scss/main.scss',
+		main: [static_root + '/scss/main.scss', static_root + '/scss/exhibits.scss'],
 		scss: [static_root + '/scss/**/*.scss']
 	}
 };
