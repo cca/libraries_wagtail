@@ -1,0 +1,11 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<div>
+    <p>Title: {{ work.title }} </p>
+    <p>Type: {{ work.type }} </p>
+    <p>Creator: {{ work.creator }} </p>
+    <p>Link: {{ work.link }} </p>
+    <p>Image: {% image work.image width-200 %} </p>
+    <p>Embed code: {{ work.embed_code|richtext }}</p>
+    <p>Description: {{ work.description|richtext }}</p>
+</div>
+<hr>

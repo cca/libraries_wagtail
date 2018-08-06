@@ -1,0 +1,6 @@
+{% load wagtailimages_tags %}
+<h1>FOURSQUARE</h1>
+<h1>{{ page.title }}</h1>
+{% for header in page.header_image.all %}
+    <p>{% image header.image width-640 %}</p>
+{% endfor %}
