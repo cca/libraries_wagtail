@@ -5,13 +5,14 @@
 
 {% block content %}
 
+{% comment %} two templates: one large banner image or four square images {% endcomment %}
+{% if page.display_template == 'banner' %}
+    {% include 'components/banner.html' %}
+{% elif page.display_template == 'foursquare' %}
+    {% include 'components/foursquare.html' %}
+{% endif %}
+
 <div class="wrapper">
-    {% comment %} two templates: one large banner image or four square images {% endcomment %}
-    {% if page.display_template == 'banner' %}
-        {% include 'components/banner.html' %}
-    {% elif page.display_template == 'foursquare' %}
-        {% include 'components/foursquare.html' %}
-    {% endif %}
 
     <p>{{ page.location|richtext }}</p>
     <p>{{ page.dates|richtext }}</p>

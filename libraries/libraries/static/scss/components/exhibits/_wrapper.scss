@@ -5,18 +5,20 @@
   @include clearfix;
   margin: 0 auto;
   max-width: $site-max-width;
-  padding: 0 15px;
+  padding: 0 $wrapper-default-horizontal-padding;
   position: relative;
+
+  @include respond($break-medium) {
+     padding: 0 $wrapper-medium-horizontal-padding;
+  }
 }
 
 .wrapper--header {
     align-items: center;
     display: flex;
-    padding: 0 10px;
 
     @include respond($break-medium) {
         display: block;
-        padding: 0 $wrapper-medium-horizontal-padding;
     }
 }
 

@@ -1,6 +1,10 @@
 {% load wagtailimages_tags %}
-<h1>BANNER</h1>
-<h1>{{ page.title }}</h1>
-{% for header in page.header_image.all %}
-    <p>{% image header.image width-640 %}</p>
-{% endfor %}
+
+<div class="banner">
+    <div class="banner--image">
+        {% image page.header_image.all.0.image width-1360 %}
+    </div>
+    <div class="banner--title">
+        <h1>{{ page.title }}</h1>
+    </div>
+</div>
