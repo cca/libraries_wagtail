@@ -11,6 +11,11 @@ img {
     margin-bottom: 2em;
 }
 
+.gallery--works {
+    // stop images from being wider than phone screen
+    max-width: 100%;
+}
+
 .gallery--title {
     font-family: $font-family-sans-serif;
     font-size: 150%;
@@ -23,6 +28,8 @@ img {
 }
 
 .gallery--work {
+    margin-bottom: 4px;
+
     @include respond($break-medium) {
         display: inline-block;
         position: relative;

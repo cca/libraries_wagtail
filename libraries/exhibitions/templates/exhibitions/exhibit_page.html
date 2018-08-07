@@ -14,17 +14,47 @@
 
 <div class="wrapper">
 
-    <p>{{ page.location|richtext }}</p>
-    <p>{{ page.dates|richtext }}</p>
-    <p>{{ page.creators|richtext }}</p>
-    <p>{{ page.reception|richtext }}</p>
+    <div class="wrapper--details">
 
-    {% include_block page.description %}
+        <dl class="metadata">
+            {% if page.location|striptags != '' %}
+                <div class="metadata--element">
+                    <dt>Location</dt>
+                    <dd>{{page.location|richtext}}</dd>
+                </div class="metadata--element">
+            {% endif %}
+
+            {% if page.dates|striptags != '' %}
+                <div class="metadata--element">
+                    <dt>Date(s)</dt>
+                    <dd>{{page.dates|richtext}}</dd>
+                </div>
+            {% endif %}
+
+            {% if page.creators|striptags != '' %}
+                <div class="metadata--element">
+                    <dt>Creator(s)</dt>
+                    <dd>{{page.creators|richtext}}</dd>
+                </div>
+            {% endif %}
+
+            {% if page.reception|striptags != '' %}
+                <div class="metadata--element">
+                    <dt>Reception</dt>
+                    <dd>{{page.reception|richtext}}</dd>
+                </div>
+            {% endif %}
+        </dl>
+
+        <div class="description">
+            {% include_block page.description %}
+        </div>
+    </div>
 
     <section class="gallery">
         <h2 class="gallery--title">Gallery</h2>
 
-        <div class="js-masonry">
+        <div class="gallery--works js-masonry">
             {% for work in page.exhibit_artwork.all %}
                 {% include 'components/artwork.html' %}
             {% endfor %}

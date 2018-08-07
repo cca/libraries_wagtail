@@ -1,0 +1,53 @@
+// ===================================
+// Metadata related to exhibit
+// Description | Location, Dates, Creator, Reception
+// ===================================
+
+.wrapper--details {
+    margin-bottom: 2em;
+
+    @include respond($break-medium) {
+        display: flex;
+    }
+}
+
+.metadata {
+    @include respond($break-medium) {
+        display: flex;
+        flex: 1;
+        flex-wrap: wrap;
+        order: 2;
+        width: 50%;
+    }
+}
+
+.metadata--element {
+    border-top: 1px solid $grey-border;
+    padding: 1em 0em;
+
+    @include respond($break-medium) {
+        border: 0;
+        border-left: 1px solid $grey-border;
+        flex: 0 50%;
+        margin-bottom: 2em;
+        padding: 1em;
+    }
+
+    dt {
+        font-family: $font-family-sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 1em 0;
+    }
+}
+
+.description {
+    border-top: 1px solid $black;
+    padding-top: 2em;
+
+    @include respond($break-medium) {
+        border: 0;
+        flex: 1;
+        order: 1;
+    }
+}
