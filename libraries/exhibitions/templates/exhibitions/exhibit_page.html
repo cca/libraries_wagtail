@@ -23,16 +23,18 @@
     <section class="gallery">
         <h2 class="gallery--title">Gallery</h2>
 
-        <div class="">
+        <div class="js-masonry">
             {% for work in page.exhibit_artwork.all %}
                 {% include 'components/artwork.html' %}
             {% endfor %}
         </div>
     </section>
 
-    <section>
-        {{ page.epilogue|richtext }}
-    </section>
+    {% if page.epilogue %}
+        <section class="epilogue">
+            {{ page.epilogue|richtext }}
+        </section>
+    {% endif %}
 </div>
 
 {% endblock %}
@@ -40,9 +42,13 @@
 {% block extra_js %}
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <script>
-$('.js-masonry').masonry({
-    "columnWidth": 600,
-    "itemSelector": ".js-gallery--work"
+$(()=>{
+    $('.js-masonry').masonry({
+        "columnWidth": 600,
+        "fitWidth": true,
+        "gutter": 4,
+        "itemSelector": ".js-gallery--work"
+    })
 })
 </script>
 {% endblock %}

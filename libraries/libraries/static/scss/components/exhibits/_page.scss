@@ -12,3 +12,8 @@
   text-rendering: geometricPrecision;
   // scss-lint:enable DuplicateProperty
 }
+
+.epilogue {
+    border-top: 1px solid black(.3);
+    padding: 2em 0 3em;
+}

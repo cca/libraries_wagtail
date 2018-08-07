@@ -8,6 +8,7 @@ img {
 
 .gallery {
     border-top: 1px solid $black;
+    margin-bottom: 2em;
 }
 
 .gallery--title {
@@ -17,12 +18,35 @@ img {
     margin: 40px 0 30px;
 }
 
+.gallery--work {
+    @include respond($break-medium) {
+        display: inline-block;
+        position: relative;
+    }
+}
+
 .gallery--work__responsibility {
+    background: white;
     line-height: 1.45;
-    margin: 1em 0 3em;
+    padding: 1em 0 3em;
 
     @include respond($break-medium) {
+      bottom: 4em;
       display: none;
+      float: left;
+      min-height: 4em;
+      padding: 1em .5em 0;
+      position: relative;
+      transition: height 2s linear;
+      width: 33%;
+    }
+}
+
+.gallery--work:hover {
+    .gallery--work__responsibility {
+        @include respond($break-medium) {
+          display: inline-block;
+        }
     }
 }
 
