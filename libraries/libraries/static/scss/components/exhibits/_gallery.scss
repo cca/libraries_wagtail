@@ -36,20 +36,28 @@ img {
     }
 }
 
+.gallery--work__image {
+    z-index: 1;
+}
+
 .gallery--work__responsibility {
     background: white;
     line-height: 1.45;
     padding: 1em 0 3em;
 
     @include respond($break-medium) {
-      bottom: 4em;
       display: none;
       float: left;
+      font-size: 12px;
+      margin-top: 0;
       min-height: 4em;
+      max-height: 5em;
+      text-overflow: ellipsis;
       padding: 1em .5em 0;
       position: relative;
-      transition: height 2s linear;
+      transition: margin-top .3s linear;
       width: 33%;
+      z-index: 2;
     }
 }
 
@@ -57,11 +65,12 @@ img {
     .gallery--work__responsibility {
         @include respond($break-medium) {
           display: inline-block;
+          margin-top: -4em;
         }
     }
 }
 
 .gallery--work__title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
 }
