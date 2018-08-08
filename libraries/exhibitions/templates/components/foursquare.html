@@ -1,7 +1,19 @@
 {% load wagtailimages_tags %}
 <!-- NOTE: see CSS https://cca-staging.cca.edu/academics/test-division/test-program/ -->
-<h1>FOURSQUARE</h1>
-<h1>{{ page.title }}</h1>
-{% for header in page.header_image.all %}
-    <p>{% image header.image width-640 %}</p>
-{% endfor %}
+
+<div class="foursquare">
+    <div class="foursquare--images">
+        {% for header in page.header_image.all %}
+            {% image header.image fill-400x400 class="foursquare--images__image" %}
+        {% endfor %}
+    </div>
+    <div class="foursquare--frontmatter">
+        <div class="foursquare--frontmatter__title">
+            <h1>{{ page.title }}</h1>
+        </div>
+        {% comment %}
+            for the future, if we want a frontmatter blurb or subtitle
+            <div class="foursquare--frontmatter__intro"></div>
+        {% endcomment %}
+    </div>
+</div>
