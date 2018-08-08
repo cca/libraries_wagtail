@@ -13,12 +13,17 @@
     padding: 1em 0 .5em;
 
     @include respond($break-medium) {
-        font-size: 250%;
+        font-size: 350%;
     }
 }
 
 .frontmatter {
     margin-bottom: 2em;
+
+    @include respond($break-medium) {
+        font-size: 110%;
+        max-width: 50%;
+    }
 }
 
 .exhibits--list {
@@ -26,10 +31,33 @@
     flex-wrap: wrap;
 }
 
+.exhibits--list__exhibit {
+    @include respond($break-medium) {
+        border-right: 1px solid $grey-border;
+        flex: 1;
+        margin-bottom: 2em;
+        padding: 0 1.5em;
+
+        &:first-of-type {
+            padding: 0 1.5em 0 0;
+        }
+    }
+
+    // no border on the last exhibits in each row
+    &:last-of-type,
+    &:nth-of-type(4) {
+        border: 0
+    }
+}
+
 .exhibits--list__image {
     display: block;
     margin: 0 auto;
     z-index: 1;
+
+    @include respond($break-medium) {
+        margin: 0;
+    }
 }
 
 .exhibits--list__title {
@@ -39,6 +67,7 @@
     font-family: $font-family-sans-serif;
     font-size: 120%;
     font-weight: 700;
+    line-height: 1.4;
     margin: -2em 0 0;
     max-width: 80%;
     padding: 1em 2em 1em 0;
@@ -50,6 +79,10 @@
 .exhibits--list__description {
     display: block;
     margin-bottom: 2em;
+
+    @include respond($break-medium) {
+        font-size: 80%;
+    }
 }
 
 .epilogue {
