@@ -1,7 +1,9 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 <div class="gallery--work js-gallery--work">
     <div class="gallery--work__image">
-        {% image work.image max-600x600 %}
+        {% image work.image original as full_image %}
+        {% image work.image max-600x600 as preview %}
+        <img src="{{preview.url}}" alt="{{preview.alt}}" width="{{preview.width}}" height="{{preview.height}}" data-src="{{full_image.url}}" />
     </div>
 
     <div class="gallery--work__responsibility">

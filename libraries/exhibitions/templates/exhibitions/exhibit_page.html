@@ -54,7 +54,7 @@
     <section class="gallery">
         <h2 class="gallery--title">Gallery</h2>
 
-        <div class="gallery--works js-masonry">
+        <div class="gallery--works js-masonry js-lightgallery">
             {% for work in page.exhibit_artwork.all %}
                 {% include 'components/artwork.html' %}
             {% endfor %}
@@ -80,6 +80,16 @@ $(()=>{
         "gutter": 4,
         "itemSelector": ".js-gallery--work"
     })
+})
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/js/lightgallery.min.js"></script>
+<script>
+$(() => {
+    let options = {
+        selector: '.gallery--work__image img'
+    }
+    $('.js-lightgallery').lightGallery(options);
 })
 </script>
 {% endblock %}
