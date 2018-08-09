@@ -36,7 +36,6 @@
     z-index: 2;
 
     @include respond($break-medium) {
-
         max-width: 50%;
     }
 }
@@ -52,7 +51,7 @@
 
     @include respond($break-medium) {
         font-size: 250%;
-        margin: 250px -2em;
+        margin: 45% -2em 0;
         max-width: 80%;
         padding: 1em;
     }
