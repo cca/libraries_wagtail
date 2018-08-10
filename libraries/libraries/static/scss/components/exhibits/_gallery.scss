@@ -37,11 +37,12 @@ img {
     }
 }
 
-.gallery--work__image {
+.gallery--work__image,
+.gallery--work__html {
     z-index: 1;
 }
 
-.gallery--work__responsibility {
+.gallery--work__metadata {
     background: $white;
     line-height: 1.45;
     padding: 1em 0 3em;

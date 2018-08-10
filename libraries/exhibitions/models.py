@@ -149,6 +149,9 @@ class HeaderImage(Orderable):
 class ExhibitArtwork(Orderable):
     page = ParentalKey(ExhibitPage, related_name='exhibit_artwork')
 
+    # TODO: helpPanel once upgraded to Wagtail 2.1+
+    # explaining how this choice changes the meaning of following fields
+    # e.g. "image" becomes the thumbnail for other choices
     type_choices = (
         ('image', 'Image'),
         ('audio', 'Audio'),

@@ -3,15 +3,57 @@
 // styles http://sachinchoolur.github.io/lightGallery
 // ===================================
 
+// TODO: should this be a separate file loaded after
+// or combined with lightGallery CSS? Makes all the
+// selector overrides a lot easier, also just logical.
+
 // we will need to use IDs to override lightGallery styles
 // scss-lint:disable IdSelector, ImportantRule
 #lg-counter {
     color: $turquoise !important;
+    font-size: 18px;
 }
 
-.lg-sub-html {
+$sub-html-padding: 40px;
+
+// 1st selector just needed for specificity
+.lg-outer .lg-sub-html {
+    color: $white;
+    display: flex;
+    padding: 0 $sub-html-padding 1em;
+    text-align: left;
+
+    .gallery--work__responsibility {
+        flex: 1 0 50%;
+        padding: $sub-html-padding 2em;
+    }
+
+    .gallery--work__creator {
+        font-size: 14px;
+        margin: 10px 0 0;
+        max-width: 50%;
+    }
+
     // show description
     .gallery--work__description {
         display: block;
+        flex: 1 0 50%;
+        font-size: 14px;
+        padding: $sub-html-padding 2em;
+
+        // dark gray line inbetween responsibility & description
+        &:before {
+            border-left: 1px solid lighten($black, 30%);
+            content: '';
+            height: 60px;
+            position: absolute;
+            top: calc(50% - 20px);
+            transform: translate(-40px, -14px) rotate(20deg);
+        }
+    }
+
+    .gallery--work__title {
+        font-family: $font-family-sans-serif;
+        font-size: 20px;
     }
 }
