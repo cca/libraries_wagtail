@@ -1,0 +1,11 @@
+linters:
+
+    Indentation:
+        enabled: true
+        width: 4
+
+    NameFormat:
+        enabled: false
+
+    SpaceBetweenParens:
+        enabled: false
