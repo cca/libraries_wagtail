@@ -46,7 +46,7 @@
     // no border on the last exhibits in each row
     &:last-of-type,
     &:nth-of-type(4) {
-        border: 0
+        border: 0;
     }
 }
 

@@ -3,14 +3,14 @@
 // which is also included
 // ===================================
 .page {
-  background: $white;
-  font-family: $font-family-serif;
-  font-smoothing: antialiased;
-  min-width: 360px;
-  text-rendering: optimizeLegibility;
-  // scss-lint:disable DuplicateProperty
-  text-rendering: geometricPrecision;
-  // scss-lint:enable DuplicateProperty
+    background: $white;
+    font-family: $font-family-serif;
+    font-smoothing: antialiased;
+    min-width: 360px;
+    text-rendering: optimizeLegibility;
+    // scss-lint:disable DuplicateProperty
+    text-rendering: geometricPrecision;
+    // scss-lint:enable DuplicateProperty
 }
 
 .epilogue {

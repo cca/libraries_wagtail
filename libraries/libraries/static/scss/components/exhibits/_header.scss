@@ -4,16 +4,16 @@
 // ===================================
 
 .header {
-  @include clearfix();
-  background: $black;
-  height: $header-height-small;
-  margin: 0 auto;
-  max-width: $site-max-width;
-  width: 100%;
-
-  @include respond($break-medium) {
+    @include clearfix();
+    background: $black;
     height: $header-height-small;
-  }
+    margin: 0 auto;
+    max-width: $site-max-width;
+    width: 100%;
+
+    @include respond($break-medium) {
+        height: $header-height-small;
+    }
 }
 
 .header__home-link {
@@ -26,13 +26,13 @@
         max-width: 240px;
         position: absolute;
         transform: translateY(33%);
-        transition: opacity 0.3s ease;
+        transition: opacity .3s ease;
         width: 50%;
     }
 }
 
 .header__home-link:hover {
-    opacity: 0.5;
+    opacity: .5;
 }
 
 .header__logo {
@@ -47,15 +47,15 @@
     float: right;
     height: $header-height-small;
     position: relative;
-    transition: background 0.3s ease;
+    transition: background .3s ease;
     width: $header-height-small;
 
     @include respond($break-medium) {
         // borders for search icon which is still visible
         border: 1px solid transparent;
         border-right: 0;
-        margin-right: 20px;
         display: none;
+        margin-right: 20px;
     }
 }
 

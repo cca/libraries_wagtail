@@ -23,7 +23,7 @@
 
 .metadata--element {
     border-top: 1px solid $grey-border;
-    padding: 1em 0em;
+    padding: 1em 0;
 
     @include respond($break-medium) {
         border: 0;

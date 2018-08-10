@@ -4,7 +4,7 @@ linters:
         enabled: true
         width: 4
 
-    NameFormat:
+    SelectorFormat:
         enabled: false
 
     SpaceBetweenParens:

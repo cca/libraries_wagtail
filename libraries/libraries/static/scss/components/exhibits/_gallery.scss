@@ -28,6 +28,7 @@ img {
 }
 
 .gallery--work {
+    cursor: pointer;
     margin-bottom: 4px;
 
     @include respond($break-medium) {
@@ -41,23 +42,23 @@ img {
 }
 
 .gallery--work__responsibility {
-    background: white;
+    background: $white;
     line-height: 1.45;
     padding: 1em 0 3em;
 
     @include respond($break-medium) {
-      display: inline-block;
-      float: left;
-      font-size: 12px;
-      margin-top: -4em;
-      min-height: 4em;
-      max-height: 5em;
-      text-overflow: ellipsis;
-      padding: 1em .5em 0;
-      position: relative;
-      transition: margin-top .3s linear;
-      width: 40%;
-      z-index: 2;
+        display: inline-block;
+        float: left;
+        font-size: 12px;
+        margin-top: -4em;
+        max-height: 5em;
+        min-height: 4em;
+        padding: 1em .5em 0;
+        position: relative;
+        text-overflow: ellipsis;
+        transition: margin-top .3s linear;
+        width: 40%;
+        z-index: 2;
     }
 }
 
