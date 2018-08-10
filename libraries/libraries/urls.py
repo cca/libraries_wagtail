@@ -11,6 +11,7 @@ from brokenlinks import views as brokenlinks_views
 from sersol_api import views as sersol_views
 
 from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
@@ -29,6 +30,9 @@ urlpatterns = [
 
     # Serials Solution API proxy
     url(r'^sersol/$', sersol_views.sersol, name='sersol_api'),
+
+    # XML sitemap
+    url('^sitemap\.xml$', sitemap),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
