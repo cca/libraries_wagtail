@@ -1,0 +1,17 @@
+// ===================================
+// Overrides/edits to lightGallery.js
+// styles http://sachinchoolur.github.io/lightGallery
+// ===================================
+
+// we will need to use IDs to override lightGallery styles
+// scss-lint:disable IdSelector, ImportantRule
+#lg-counter {
+    color: $turquoise !important;
+}
+
+.lg-sub-html {
+    // show description
+    .gallery--work__description {
+        display: block;
+    }
+}
