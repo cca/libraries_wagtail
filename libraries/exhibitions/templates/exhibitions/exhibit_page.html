@@ -71,7 +71,8 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+{% comment %} TODO: combine/organize these scripts {% endcomment %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
 <script>
 $(()=>{
     $('.js-masonry').masonry({
@@ -82,13 +83,18 @@ $(()=>{
     })
 })
 </script>
+{% comment %}
+don't need to load this CSS in the head when it won't be used
+until the user enters lightGallery
+{% endcomment %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/js/lightgallery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lg-zoom/1.1.0/lg-zoom.min.js"></script>
 <script>
 $(() => {
     let options = {
-        selector: '.gallery--work__image img'
+        selector: '.js-gallery--work',
+        subHtmlSelectorRelative: true
     }
     $('.js-lightgallery').lightGallery(options);
 })

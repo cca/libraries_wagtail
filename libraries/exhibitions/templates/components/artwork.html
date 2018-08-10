@@ -4,17 +4,15 @@
 TODO: conditions for different work types (image, audio, video, embed)
 {% endcomment %}
 
-<div class="gallery--work js-gallery--work">
+{% image work.image original as full_image %}
+<div class="gallery--work js-gallery--work"
+    data-src="{{ full_image.url }}" data-width="{{ full_image.width }}"
+    data-sub-html=".js-caption">
     <div class="gallery--work__image">
-        {% image work.image original as full_image %}
-        {% image work.image max-600x600 as preview %}
-        <img src="{{ preview.url }}" alt="{{ preview.alt }}"
-        width="{{ preview.width }}" height="{{ preview.height }}"
-        data-src="{{ full_image.url }}" data-width="{{ full_image.width }}"
-        data-sub-html=".gallery--work__responsibility" />
+        {% image work.image max-600x600 %}
     </div>
 
-    <div class="gallery--work__responsibility">
+    <div class="gallery--work__responsibility js-caption">
         {% comment %} title is required but creator is not {% endcomment %}
         <h3 class="gallery--work__title"><strong>{{ work.title }}</strong></h3>
         {% if work.creator != '' %}
