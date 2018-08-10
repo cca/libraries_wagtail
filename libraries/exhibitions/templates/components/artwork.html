@@ -20,5 +20,12 @@ TODO: conditions for different work types (image, audio, video, embed)
         {% if work.creator != '' %}
             <p class="gallery--work__creator">{{ work.creator }}</p>
         {% endif %}
+
+        {% comment %}
+        description only shows in lightGallery overlay
+        {% endcomment %}
+        {% if work.description|striptags != '' %}
+            <div class="gallery--work__description">{{ work.description|richtext }}</div>
+        {% endif %}
     </div>
 </div>

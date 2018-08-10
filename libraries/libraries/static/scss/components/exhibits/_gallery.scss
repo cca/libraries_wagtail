@@ -62,6 +62,11 @@ img {
     }
 }
 
+// not shown initially, lightGallery displays in fullscreen mode
+.gallery--work__description {
+    display: none;
+}
+
 .gallery--work__title {
     font-size: 14px;
     font-weight: 700;
