@@ -1,7 +1,15 @@
 {% load wagtailcore_tags %}
 
-<div class="blog-post__row">
+<div class="blog-post__row {% spaceless %}
+{% for block in value %}
+	{% if block.block_type == 'distribution' %}
+		{{block.value}}
+	{% endif %}
+{% endfor %}
+{% endspaceless %}">
 	{% for block in value %}
-        {% include_block block with row=True %}
-    {% endfor %}
+		{% if block.block_type != 'distribution' %}
+			{% include_block block with row=True %}
+		{% endif %}
+	{% endfor %}
 </div>

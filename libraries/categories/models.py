@@ -12,7 +12,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.search import index
 
-from wagtail.core.blocks import StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock
+from wagtail.core.blocks import ChoiceBlock, StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 
@@ -67,6 +67,16 @@ class EmbedHTML(RawHTMLBlock):
 
 # two blocks combined in one row
 class RowBlock(StreamBlock):
+    distribution = ChoiceBlock(
+        blank=False,
+        choices=(
+            ('left', 'left side bigger'),
+            ('right', 'right side bigger'),
+            ('equal', 'equal size sides'),
+        ),
+        min_num=1,
+        max_num=1,
+    )
     paragraph = RichTextBlock(
         features=settings.RICHTEXT_ADVANCED,
         template="categories/blocks/paragraph.html",
@@ -103,7 +113,7 @@ class BaseStreamBlock(StreamBlock):
     pullquote = PullQuoteBlock()
     snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
-    row = RowBlock(max_num=2)
+    row = RowBlock(max_num=3)
 
 # AboutUsPage has a much simpler template
 class AboutUsStreamBlock(StreamBlock):

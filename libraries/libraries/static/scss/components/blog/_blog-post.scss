@@ -114,24 +114,44 @@
       border-left: 2px solid $blue;
   }
 
-  .blog-post__row {
+.blog-post__row {
     @include respond($break-large) {
-      align-items: center;
-      display: flex;
+        align-items: center;
+        display: flex;
 
-      // fix bug with blog rows: _every_ descendent first-child gets the margin
-      // without the child ">" selector, screws up e.g. <p>text<i>italics</i>text<p>
-      > *:first-child {
-        flex: 1 0 60%;
-        margin-right: 20px;
-      }
+        // fix bug with blog rows: _every_ descendent first-child gets the margin
+        // without the child ">" selector, screws up e.g. <p>text<i>italics</i>text<p>
+        > *:first-child {
+            flex: 1 0 60%;
+            margin-right: 20px;
+        }
 
-      > *:nth-child(2) {
-        flex: 1 0 40%;
-        padding-right: 0;
-      }
+        > *:nth-child(2) {
+            flex: 1 0 40%;
+            padding-right: 0;
+        }
+
+        &.right > *:first-child {
+            flex: 1 0 40%;
+            padding-right: 20px;
+        }
+
+        &.right > *:nth-child(2) {
+            flex: 1 0 60%;
+            margin-right: 0;
+        }
+
+        &.equal > *:first-child {
+            flex: 1 0 50%;
+            padding-right: 0;
+        }
+
+        &.equal > *:nth-child(2) {
+            flex: 1 0 50%;
+            margin-right: 20px;
+        }
     }
-  }
+}
 
     .blog-post__quote-text {
       font-size: 18px;
