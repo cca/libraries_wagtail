@@ -11,7 +11,11 @@ from wagtail.search import index
 
 from categories.models import BaseStreamBlock
 
-# Create your models here.
+# logic for showing/hiding appropriate art work fields based on type
+@hooks.register('insert_editor_js')
+def editor_js():
+    file = settings.STATIC_URL + 'js/exhibits-admin.js'
+    return '<script src="{0}"></script>'.format(file)
 
 # Typical setup: Exhibits Index can only have Exhibit children,
 # Exhibits can only have the Exhibits Index as a parent
