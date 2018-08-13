@@ -3,9 +3,11 @@ from django.db import models
 
 from modelcluster.fields import ParentalKey
 
+from wagtail.core import hooks
 from wagtail.core.models import Orderable, Page
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
@@ -181,11 +183,19 @@ class ExhibitArtwork(Orderable):
         null=True,
         blank=True,
         on_delete=models.CASCADE,
-        related_name='+'
+        related_name='+',
+    )
+    media = models.ForeignKey(
+        'wagtaildocs.Document',
+        help_text='Video or audio to embed. Only needed for video/audio types.',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
     )
     embed_code = models.TextField(
         blank=True,
-        help_text='Optional, use this for HTML embeds, videos, audio, etc.',
+        help_text='Can be used for YouTube/Vimeo videos. ONLY PASTE THE EMBED URL e.g. https://youtube.com/embed/KbjGqRdPF7s and not the full <iframe> wrapped HTML.',
     )
     description = RichTextField(
         blank=True,
@@ -194,11 +204,12 @@ class ExhibitArtwork(Orderable):
     )
 
     panels = [
-        FieldPanel('type'),
+        FieldPanel('type', classname='js-type'),
         FieldPanel('title'),
         FieldPanel('creator'),
         FieldPanel('link'),
         ImageChooserPanel('image'),
-        FieldPanel('embed_code'),
+        DocumentChooserPanel('media', classname='js-media'),
+        FieldPanel('embed_code', classname='js-embed_code'),
         FieldPanel('description'),
     ]
