@@ -93,8 +93,19 @@ until the user enters lightGallery
 <script>
 $(() => {
     let options = {
+        hideBarsDelay: 3000,
         selector: '.js-gallery--work',
-        subHtmlSelectorRelative: true
+        subHtmlSelectorRelative: true,
+        youtubePlayerParams: {
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0
+        },
+        vimeoPlayerParams: {
+            byline: false,
+            portrait: false,
+            title: false
+        }
     }
     $('.js-lightgallery').lightGallery(options);
 })
