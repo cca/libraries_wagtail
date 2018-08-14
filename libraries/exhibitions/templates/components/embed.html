@@ -1,0 +1,21 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% if work.embed_code != '' %}
+<div class="gallery--work js-gallery--work" data-iframe="true"
+    data-src="{{ work.embed_code }}?modestbranding=1&rel=0&showinfo=0&controls=0"
+    data-sub-html=".js-caption">
+    <div class="gallery--work__html">
+        {% if work.image %}
+            {% image work.image max-600x600 %}
+
+        {% comment %}
+        for YouTube we can find a thumbnail, not possible for Vimeo without an API call
+        {% endcomment %}
+        {% elif 'https://www.youtube.com/embed/' in work.embed_code %}
+            <img src="https://i3.ytimg.com/vi/{{ work.embed_code | cut:'https://www.youtube.com/embed/' }}/0.jpg" alt="{{ work.title }}">
+
+        {% else %}
+            <iframe class="responsive-embed" width="560" height="315" src="{{ work.embed_code }}?modestbranding=1&rel=0&showinfo=0&controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% endif %}
+    </div>
+{% endif %}
+{% comment %} starting div is closed in the parent template {% endcomment %}
