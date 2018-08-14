@@ -7,7 +7,7 @@ from modelcluster.fields import ParentalKey
 from wagtail.core import hooks
 from wagtail.core.models import Orderable, Page
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, HelpPanel, InlinePanel, StreamFieldPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
@@ -120,6 +120,18 @@ class ExhibitPage(Page):
 
         StreamFieldPanel('description'),
 
+        HelpPanel(content="""
+<style scoped>
+p { font-size: 1.2em; }
+</style>
+<p>
+    Right now, two "types" of content are supported: images and HTML embed codes. Gallery images are restricted to a 600x600 space with their aspect ratio retained but their full size is visible in the fullscreen viewer. The work's description also displays. If you provide a link URL, the title in the fullscreen viewer will be hyperlinked to it.
+</p>
+<p>
+    For embed codes, <em>only enter the URL</em> contained in the code, usually as the "src" attribute of an <code>&lt;iframe&gt;</code> element. You can still add an image to the work; it will be used as the thumbnail in the gallery. If you <em>don't</em> add an image and it's a YouTube embed, Wagtail grabs a 480x360 thumbnail from YouTube. For embeds from other sources, we can work on building specific handlers that do something similar. Right now, if you don't specify an image and it's not a YouTube URL, the iframe itself is shown. It's strongly recommended to provide an image in these cases to avoid weird layout problems.
+</p>
+        """, heading='Information on Adding Artworks'),
+
         InlinePanel('exhibit_artwork', label='Exhibit pieces'),
 
         FieldPanel('epilogue'),
@@ -156,9 +168,6 @@ class HeaderImage(Orderable):
 class ExhibitArtwork(Orderable):
     page = ParentalKey(ExhibitPage, related_name='exhibit_artwork')
 
-    # TODO: helpPanel once upgraded to Wagtail 2.1+
-    # explaining how this choice changes the meaning of following fields
-    # e.g. "image" becomes the thumbnail for other choices
     type_choices = (
         ('image', 'Image'),
         # ('audio', 'Audio'),
