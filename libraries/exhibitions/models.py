@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.shortcuts import redirect
 
 from modelcluster.fields import ParentalKey
 
@@ -160,8 +161,8 @@ class ExhibitArtwork(Orderable):
     # e.g. "image" becomes the thumbnail for other choices
     type_choices = (
         ('image', 'Image'),
-        ('audio', 'Audio'),
-        ('video', 'Video'),
+        # ('audio', 'Audio'),
+        # ('video', 'Video'),
         ('html', 'Embed code (HTML)'),
     )
     type = models.CharField(

@@ -42,6 +42,11 @@ img {
     z-index: 1;
 }
 
+// don't show HTML5 videos, handled by lightGallery
+.gallery--work__video.media {
+    display: none;
+}
+
 .gallery--work__metadata {
     background: $white;
     line-height: 1.45;

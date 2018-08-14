@@ -57,9 +57,3 @@ $sub-html-padding: 40px;
         font-size: 20px;
     }
 }
-
-.lg-has-iframe {
-    // stop lightGallery controls from overlapping YouTube/iFrame controls
-    // = height of .lgtoolbar (10px padding each side, 27px line height)
-    padding-top: 47px;
-}

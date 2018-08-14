@@ -96,18 +96,24 @@ $(() => {
         hideBarsDelay: 3000,
         selector: '.js-gallery--work',
         subHtmlSelectorRelative: true,
-        youtubePlayerParams: {
-            modestbranding: 1,
-            rel: 0,
-            showinfo: 0
-        },
         vimeoPlayerParams: {
             byline: false,
             portrait: false,
             title: false
         }
     }
-    $('.js-lightgallery').lightGallery(options);
+    $lg = $('.js-lightgallery').lightGallery(options);
+    console.log($lg)
+    $lg.on('onAfterAppendSubHtml.lg', (event, index) => {
+        let slide = $('.js-gallery--work').eq(index)
+        console.log(slide)
+        console.log(slide.find('.lg-video-cont'))
+        if (slide.find('.gallery--work__image').length > 0) {
+            $('#lg-zoom-in, #lg-zoom-out, #lg-actual-size').show()
+        } else (
+            $('#lg-zoom-in, #lg-zoom-out, #lg-actual-size').hide()
+        )
+    })
 })
 </script>
 {% endblock %}
