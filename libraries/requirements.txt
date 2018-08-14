@@ -20,7 +20,8 @@ requests==2.18.4
 six==1.11.0
 Unidecode==0.4.21
 urllib3==1.22
-wagtail==2.1
+wagtail==2.2.1
+Wand==0.4.4
 webencodings==0.5.1
 Willow==1.1
 xmltodict==0.11.0
