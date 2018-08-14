@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.shortcuts import redirect
+from django.http import FileResponse
 
 from modelcluster.fields import ParentalKey
 
@@ -19,6 +19,15 @@ from categories.models import BaseStreamBlock
 def editor_js():
     file = settings.STATIC_URL + 'js/exhibits-admin.js'
     return '<script src="{0}"></script>'.format(file)
+
+# TODO: don't force all documents to be downloaded with HTTP header
+# Content-Disposition: attachment (this doesn't work right now)
+@hooks.register('before_serve_document')
+def before_serve_document(document, request):
+    if request.GET.get('nodownload', '') != '':
+        response = FileResponse(document.file)
+        del response['Content-Disposition']
+        return response
 
 # Typical setup: Exhibits Index can only have Exhibit children,
 # Exhibits can only have the Exhibits Index as a parent
