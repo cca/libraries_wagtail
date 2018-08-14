@@ -60,7 +60,17 @@ TODO: conditions for different work types (image, audio, video, embed)
     <div class="gallery--work__metadata js-caption">
         {% comment %} title is required but creator is not {% endcomment %}
         <div class="gallery--work__responsibility">
-            <h3 class="gallery--work__title"><strong>{{ work.title }}</strong></h3>
+
+            {% if work.link != '' %}
+                <h3 class="gallery--work__title gallery--work__unlinked-title">
+                    <strong>{{ work.title }}</strong>
+                </h3>
+                <h3 class="gallery--work__title gallery--work__linked-title">
+                    <a href="{{ work.link }}"><strong>{{ work.title }}</strong></a>
+                </h3>
+            {% else %}
+                <h3 class="gallery--work__title"><strong>{{ work.title }}</strong></h3>
+            {% endif %}
             {% if work.creator != '' %}
                 <p class="gallery--work__creator">{{ work.creator }}</p>
             {% endif %}

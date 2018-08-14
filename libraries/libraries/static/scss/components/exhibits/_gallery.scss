@@ -69,7 +69,8 @@ img {
 }
 
 // not shown initially, lightGallery displays in fullscreen mode
-.gallery--work__description {
+.gallery--work__description,
+.gallery--work__linked-title {
     display: none;
 }
 
