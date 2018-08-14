@@ -1,10 +1,13 @@
 // exhibits app code, mostly lightGallery.js edits
 $(() => {
-    $('.js-masonry').masonry({
-        "columnWidth": 600,
-        "fitWidth": true,
-        "gutter": 4,
-        "itemSelector": ".js-gallery--work"
+    let gallery = $('.js-masonry')
+    gallery.imagesLoaded(() => {
+        gallery.masonry({
+            "columnWidth": 600,
+            "fitWidth": true,
+            "gutter": 4,
+            "itemSelector": ".js-gallery--work"
+        })
     })
 
     let options = {
