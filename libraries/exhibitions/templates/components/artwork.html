@@ -13,27 +13,39 @@ TODO: conditions for different work types (image, audio, video, embed)
     </div>
 
 {% elif work.type == 'html' %}
-<div class="gallery--work js-gallery--work" data-iframe="true" data-src="{{ work.embed_code }}" data-html=".gallery--work__embed"
+<div class="gallery--work js-gallery--work" data-iframe="true"
+    data-src="{{ work.embed_code }}?modestbranding=1&rel=0&showinfo=0&controls=0"
     data-sub-html=".js-caption">
     <div class="gallery--work__html">
         {% if work.image %}
             {% image work.image max-600x600 %}
+        {% comment %}
+        TODO: investigate Vimeo poster image
+        {% endcomment %}
+        {% elif 'https://www.youtube.com/embed/' in work.embed_code %}
+            <img src="https://i3.ytimg.com/vi/{{ work.embed_code | cut:'https://www.youtube.com/embed/' }}/0.jpg" alt="{{ work.title }}">
         {% else %}
-            <iframe class="responsive-embed" width="560" height="315" src="{{ work.embed_code }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe class="responsive-embed" width="560" height="315" src="{{ work.embed_code }}?modestbranding=1&rel=0&showinfo=0&controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         {% endif %}
     </div>
 
 {% comment %} these types not supported yet {% endcomment %}
 
 {% elif work.type == 'video' %}
-<div class="gallery--work js-gallery--work" data-src="..."
-    data-sub-html=".js-caption">
+<div class="gallery--work js-gallery--work" data-sub-html=".js-caption"
+    data-html=".gallery--work__video.media">
     <div class="gallery--work__video">
     {% if work.image %}
         {% image work.image max-600x600 %}
     {% else %}
         <img src="..." alt="video icon" />
     {% endif %}
+    </div>
+    <div class="gallery--work__video media">
+        <video class="lg-video-object lg-html5" controls preload="none">
+            <source src="{{ work.media.url }}" type="video/mp4">
+             Your browser does not support HTML5 video.
+        </video>
     </div>
 
 {% elif work.type == 'audio' %}
