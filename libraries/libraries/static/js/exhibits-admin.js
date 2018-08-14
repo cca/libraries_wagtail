@@ -1,5 +1,7 @@
 $(function(){
-    $('.js-media').hide()
+    // hide media & embed selectors originally, only show if they're selected
+    let css = `<style>.js-media, .js-embed_code { display: none; }</style>`
+    $('body').append(css)
 
     $('#id_exhibit_artwork-FORMS').change('.js-type', ev => {
         let select = $(ev.target)
@@ -7,13 +9,13 @@ $(function(){
         let form = $(select).prevUntil('ul.fields')
 
         if (type == 'audio') {
-            $('.js-embed_code').hide()
+            form.find('.js-embed_code').hide()
         } else if (type === 'html') {
-            $('.js-embed_code').show()
+            form.find('.js-embed_code').show()
         } else if (type === 'image') {
-            $('.js-embed_code').hide()
+            form.find('.js-embed_code').hide()
         } else if (type === 'video') {
-            $('.js-embed_code').hide()
+            form.find('.js-embed_code').hide()
         }
     })
 })
