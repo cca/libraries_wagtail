@@ -1,5 +1,5 @@
 {% extends "exhibits-base.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}exhibit{% endblock %}
 
@@ -71,49 +71,9 @@
 {% endblock %}
 
 {% block extra_js %}
-{% comment %} TODO: combine/organize these scripts {% endcomment %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
-<script>
-$(()=>{
-    $('.js-masonry').masonry({
-        "columnWidth": 600,
-        "fitWidth": true,
-        "gutter": 4,
-        "itemSelector": ".js-gallery--work"
-    })
-})
-</script>
-{% comment %}
-don't need to load this CSS in the head when it won't be used
-until the user enters lightGallery
-{% endcomment %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/js/lightgallery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lg-zoom/1.1.0/lg-zoom.min.js"></script>
-<script>
-$(() => {
-    let options = {
-        hideBarsDelay: 3000,
-        selector: '.js-gallery--work',
-        subHtmlSelectorRelative: true,
-        vimeoPlayerParams: {
-            byline: false,
-            portrait: false,
-            title: false
-        }
-    }
-    $lg = $('.js-lightgallery').lightGallery(options);
-    console.log($lg)
-    $lg.on('onAfterAppendSubHtml.lg', (event, index) => {
-        let slide = $('.js-gallery--work').eq(index)
-        console.log(slide)
-        console.log(slide.find('.lg-video-cont'))
-        if (slide.find('.gallery--work__image').length > 0) {
-            $('#lg-zoom-in, #lg-zoom-out, #lg-actual-size').show()
-        } else (
-            $('#lg-zoom-in, #lg-zoom-out, #lg-actual-size').hide()
-        )
-    })
-})
-</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/js/lightgallery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lg-zoom/1.1.0/lg-zoom.min.js"></script>
+<script src="{% static 'js/exhibits.min.js' %}"></script>
 {% endblock %}

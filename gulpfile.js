@@ -24,6 +24,7 @@ const settings = {
 	 */
 
 	src: {
+		exhibits: [static_root + '/js/exhibits.js'],
 		js: [static_root + '/js/src/*.js'],
 		main: [static_root + '/scss/main.scss', static_root + '/scss/exhibits.scss'],
 		scss: [static_root + '/scss/**/*.scss']
@@ -48,6 +49,14 @@ function scripts () {
 		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest( settings.dist.js ));
+
+	gulp.src(settings.src.exhibits)
+		.pipe(sourcemaps.init())
+		.pipe(concat('exhibits.min.js'))
+		.pipe(babel({ presets: ['env'] }))
+		.pipe(uglify())
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest( settings.dist.js ));
 }
 gulp.task('scripts', scripts);
 
@@ -57,5 +66,8 @@ gulp.task('scripts', scripts);
 gulp.task('build', ['styles', 'scripts']);
 
 gulp.task('default', function() {
-	gulp.watch(settings.src.scss.concat(settings.src.js), ['build'])
+	gulp.watch(settings.src.scss
+		.concat(settings.src.js)
+		.concat(settings.src.exhibits),
+	['build'])
 });
