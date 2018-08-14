@@ -34,13 +34,10 @@
 .exhibits--list__exhibit {
     @include respond($break-medium) {
         border-right: 1px solid $grey-border;
-        flex: 1;
+        flex: 1 0 25%;
         margin-bottom: 2em;
+        max-width: 25%;
         padding: 0 1.5em;
-
-        &:first-of-type {
-            padding: 0 1.5em 0 0;
-        }
     }
 
     // no border on the last exhibits in each row
