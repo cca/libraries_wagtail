@@ -50,8 +50,11 @@ img {
 .gallery--work__metadata {
     background: $white;
     line-height: 1.45;
+    overflow: hidden;
     padding: 1em 0 3em;
 
+    // can't transition height 0->auto so we have to do a transformY hack
+    // see https://css-tricks.com/using-css-transitions-auto-dimensions/
     @include respond($break-medium) {
         display: inline-block;
         float: left;
@@ -62,9 +65,19 @@ img {
         padding: 1em .5em 0;
         position: relative;
         text-overflow: ellipsis;
-        transition: margin-top .3s linear;
+        transform: scaleY(0);
+        // transform: matrix(1, 0, 0, 0, 0, 0);
+        transition: transform .3s ease-in;
         width: 40%;
         z-index: 2;
+    }
+}
+
+@include respond($break-medium) {
+    .gallery--work:hover .gallery--work__metadata {
+        transform: scaleY(1);
+        // identity matrix
+        // transform: matrix(1, 0, 0, 0, 1, 0);
     }
 }
 
