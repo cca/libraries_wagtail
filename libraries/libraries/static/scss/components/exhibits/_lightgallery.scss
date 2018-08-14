@@ -18,6 +18,10 @@ $sub-html-padding: 40px;
 
 // 1st selector just needed for specificity
 .lg-outer .lg-sub-html {
+    p {
+        font-size: 14px;
+    }
+
     color: $white;
     display: flex;
     padding: 0 $sub-html-padding;
