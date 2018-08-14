@@ -22,6 +22,13 @@ $(() => {
     }
     let $lg = $('.js-lightgallery').lightGallery(options);
 
+    $lg.on('onAfterOpen.lg', () => {
+        // add missing tooltips for lightGallery controls
+        ['zoom-in', 'zoom-out', 'actual-size', 'download'].forEach(action => {
+            $('#lg-' + action).attr('title', action.replace('-', ' '))
+        })
+    })
+
     $lg.on('onAfterAppendSubHtml.lg', (event, index) => {
         let slide = $('.js-gallery--work').eq(index)
         let zooms = $('#lg-zoom-in, #lg-zoom-out, #lg-actual-size')
