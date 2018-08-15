@@ -77,3 +77,8 @@ $sub-html-padding: 40px;
         }
     }
 }
+
+// also hide gallery--work__metadata when zoom controls are hidden
+.lg-hide-items .lg-sub-html {
+    display: none;
+}
