@@ -91,3 +91,21 @@ img {
     font-size: 14px;
     font-weight: 700;
 }
+
+// YouTube "play" button
+.ytp-large-play-button {
+    display: none;
+    height: 48px;
+    left: 50%;
+    margin-left: -34px;
+    margin-top: -24px;
+    position: absolute;
+    top: 50%;
+    transition: opacity .25s cubic-bezier(0.0,0.0,0.2,1);
+    width: 68px;
+    z-index: 63
+}
+
+.gallery--work:hover .ytp-large-play-button {
+    display: block;
+}

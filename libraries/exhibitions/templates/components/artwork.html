@@ -22,8 +22,10 @@ TODO: conditions for different work types (image, audio, video, embed)
     data-html=".gallery--work__video.media">
     <div class="gallery--work__video">
     {% if work.image %}
+        {% include 'components/ytp-btn.html' %}
         {% image work.image max-600x600 %}
     {% else %}
+        {% include 'components/ytp-btn.html' %}
         <img src="..." alt="video icon" />
     {% endif %}
     </div>

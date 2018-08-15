@@ -5,12 +5,14 @@
     data-sub-html=".js-caption">
     <div class="gallery--work__html">
         {% if work.image %}
+            {% include 'components/ytp-btn.html' %}
             {% image work.image max-600x600 %}
 
         {% comment %}
         for YouTube we can find a thumbnail, not possible for Vimeo without an API call
         {% endcomment %}
         {% elif 'https://www.youtube.com/embed/' in work.embed_code %}
+            {% include 'components/ytp-btn.html' %}
             <img src="https://i3.ytimg.com/vi/{{ work.embed_code | cut:'https://www.youtube.com/embed/' }}/0.jpg" alt="{{ work.title }}">
 
         {% else %}
