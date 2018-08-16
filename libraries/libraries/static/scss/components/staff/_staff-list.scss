@@ -5,32 +5,34 @@
 .wrapper--staff {
 
     &.wrapper--search {
-      margin-top: 0;
-
-      @include respond($break-medium) {
         margin-top: 0;
-        max-width: 1000px;
-      }
+
+        @include respond($break-medium) {
+            margin-top: 0;
+            max-width: 1000px;
+        }
     }
 
     .search-result__image {
-      height: 60px;
-      width: 60px;
+        height: 60px;
+        width: 60px;
 
-      @include respond($break-medium) {
-        height: 150px;
-        width: 150px;
-      }
+        @include respond($break-medium) {
+            height: 150px;
+            width: 150px;
+        }
     }
 
     .search-list {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 20px 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px 0 0;
 
-      .search-result {
-          flex: 50%;
-      }
+        @include respond($break-medium) {
+            .search-result {
+                max-width: 50%;
+            }
+        }
     }
 
     .rich-text {
