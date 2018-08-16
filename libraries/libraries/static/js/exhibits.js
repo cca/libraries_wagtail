@@ -32,7 +32,6 @@ $(() => {
     $lg.on('onAfterAppendSubHtml.lg', (event, index) => {
         let slide = $('.js-gallery--work').eq(index)
         let zooms = $('#lg-zoom-in, #lg-zoom-out, #lg-actual-size')
-        let linked_title = $('.js-linked-title')
 
         // only show zoom functions for images
         if (slide.find('.gallery--work__image').length > 0) {
