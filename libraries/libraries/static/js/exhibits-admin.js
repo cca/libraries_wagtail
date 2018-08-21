@@ -1,7 +1,6 @@
 $(function(){
-    // hide media & embed selectors originally, only show if they're selected
-    let css = `<style>.js-media, .js-embed_code { display: none; }</style>`
-    $('body').append(css)
+    // hide media entirely for now
+    $('body').append(`<style>.js-media { display: none; }</style>`)
 
     $('#id_exhibit_artwork-FORMS').change('.js-type', ev => {
         let select = $(ev.target)
