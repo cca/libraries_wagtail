@@ -128,7 +128,6 @@
 
         > *:nth-child(2) {
             flex: 1 0 40%;
-            padding-right: 0;
         }
 
         &.right > *:first-child {
@@ -143,7 +142,6 @@
 
         &.equal > *:first-child {
             flex: 1 0 50%;
-            padding-right: 0;
         }
 
         &.equal > *:nth-child(2) {
