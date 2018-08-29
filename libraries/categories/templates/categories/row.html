@@ -8,7 +8,7 @@
 		{{ row.specific.summary|richtext }}
 	</div>
 	<ul class="service-row__items">
-		{% for item in row.get_children.live %}
+		{% for item in row.get_children.live|dictsort:"specific.order" %}
 			{% include 'categories/row-item.html' %}
 		{% endfor %}
 	</ul>

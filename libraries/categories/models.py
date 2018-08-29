@@ -183,6 +183,10 @@ class ServicePage(Page):
         verbose_name='Page content',
         null=True,
     )
+    order = models.IntegerField(
+        default=1,
+        help_text='Defines the sort order in the parent row (lower numbers go first).',
+    )
     search_fields = Page.search_fields + [ index.SearchField('body') ]
 
 
@@ -191,6 +195,7 @@ class ServicePage(Page):
 
 
     class Meta:
+        ordering = ["order", "-last_published_at"]
         verbose_name = 'Complex text page'
 
     content_panels = Page.content_panels + [
@@ -199,6 +204,9 @@ class ServicePage(Page):
             (SnippetChooserPanel('staff'), FieldPanel('display_staff_card'),)
         ),
         StreamFieldPanel('body'),
+    ]
+    promote_panels = Page.promote_panels + [
+        FieldPanel('order')
     ]
 
 
@@ -258,10 +266,18 @@ class SpecialCollectionsPage(Page):
         'categories.SpecialCollectionsPage',
     ]
 
+    order = models.IntegerField(
+        default=1,
+        help_text='Defines the sort order in the parent row (lower numbers go first).',
+    )
+
     # needs an orderable struct of some sort which contains a title, richtext blurb,
     # link to the external collection, and feature image _at least_
     content_panels = Page.content_panels + [
         InlinePanel('special_collections', label='Special Collection')
+    ]
+    promote_panels = Page.promote_panels + [
+        FieldPanel('order')
     ]
 
     # for search results—treat first SpecialCollection image as the page's image
@@ -269,8 +285,13 @@ class SpecialCollectionsPage(Page):
     def main_image(self):
         return self.specific.special_collections.first().image
 
+
     def category(self):
         return get_category(self)
+
+
+    class Meta:
+        ordering = ["order", "-last_published_at"]
 
     # make page searchable by text of child special collections
     search_fields = Page.search_fields + [
@@ -340,6 +361,10 @@ class AboutUsPage(Page):
         on_delete=models.SET_NULL,
         related_name='+',
     )
+    order = models.IntegerField(
+        default=1,
+        help_text='Defines the sort order in the parent row (lower numbers go first).',
+    )
     search_fields = Page.search_fields + [ index.SearchField('body') ]
 
     content_panels = Page.content_panels + [
@@ -349,12 +374,17 @@ class AboutUsPage(Page):
         ),
         StreamFieldPanel('body'),
     ]
+    promote_panels = Page.promote_panels + [
+        FieldPanel('order')
+    ]
 
 
     def category(self):
         return get_category(self)
 
+
     class Meta:
+        ordering = ["order", "-last_published_at"]
         verbose_name = 'Simple text page'
 
 
@@ -384,9 +414,13 @@ class ExternalLink(Page):
         on_delete=models.PROTECT,
         related_name='+',
     )
+    order = models.IntegerField(
+        default=1,
+        help_text='Defines the sort order in the parent row (lower numbers go first).',
+    )
 
     # no need for a promote, search_desc is on content & slug isn't used
-    promote_panels = []
+    promote_panels = [ FieldPanel('order') ]
 
     content_panels = Page.content_panels + [
         FieldPanel('link'),
@@ -398,3 +432,7 @@ class ExternalLink(Page):
     # redirect to external URL
     def serve(self, request):
         return redirect(self.link)
+
+
+    class Meta:
+        ordering = ["order", "-last_published_at"]

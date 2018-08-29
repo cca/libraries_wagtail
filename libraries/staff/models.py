@@ -78,11 +78,18 @@ class StaffListPage(Page, index.Indexed):
         blank=True,
         help_text='Text appears below the list of staff.',
     )
+    order = models.IntegerField(
+        default=1,
+        help_text='Defines the sort order in the parent row (lower numbers go first).',
+    )
 
     content_panels = Page.content_panels + [
         ImageChooserPanel('main_image'),
         InlinePanel('staff_members', label='Staff Member'),
         FieldPanel('post_script'),
+    ]
+    promote_panels = Page.promote_panels + [
+        FieldPanel('order')
     ]
 
     # shouldn't have to do this hacky workaround but index.RelatedFields chokes
@@ -102,6 +109,10 @@ class StaffListPage(Page, index.Indexed):
     search_fields = Page.search_fields + [
         index.SearchField('get_related_staff_for_search')
     ]
+
+
+    class Meta:
+        ordering = ["order", "-last_published_at"]
 
     # for consistency with other child pages in categories app
     def category(self):

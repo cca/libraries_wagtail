@@ -180,11 +180,22 @@ class HoursPage(Page):
         related_name='+',
         help_text="Doesn't display on the page itself but a thumbnail close to 230x115px is used on the 'About Us' page and a smaller thumbnail is also used in search results.",
     )
+    order = models.IntegerField(
+        default=1,
+        help_text='Defines the sort order in the parent row (lower numbers go first).',
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel('intro'),
         ImageChooserPanel('main_image'),
     ]
+    promote_panels = Page.promote_panels + [
+        FieldPanel('order')
+    ]
+
+
+    class Meta:
+        ordering = ["order", "-last_published_at"]
 
     # for consistency with other child pages in categories app
     def category(self):

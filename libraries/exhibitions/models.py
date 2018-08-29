@@ -42,6 +42,10 @@ class ExhibitsIndexPage(Page):
         context['exhibits'] = exhibits
         return context
 
+
+    class Meta:
+        ordering = ["order", "-last_published_at"]
+
     # allow only one instance of this page type
     @classmethod
     def can_create_at(cls, parent):
@@ -58,10 +62,17 @@ class ExhibitsIndexPage(Page):
         features=settings.RICHTEXT_ADVANCED,
         help_text='Bottom text just above the footer (e.g. for licensing, attribution notes).'
     )
+    order = models.IntegerField(
+        default=1,
+        help_text='Defines the sort order in the parent row (lower numbers go first).',
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel('front_matter'),
         FieldPanel('epilogue'),
+    ]
+    promote_panels = Page.promote_panels + [
+        FieldPanel('order')
     ]
 
 
