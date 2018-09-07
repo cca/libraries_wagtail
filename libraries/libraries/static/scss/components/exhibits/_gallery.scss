@@ -62,9 +62,9 @@ img {
         margin-top: -4em;
         max-height: 5em;
         min-height: 4em;
+        overflow: visible;
         padding: 1em .5em 0;
         position: relative;
-        text-overflow: ellipsis;
         transform: scaleY(0);
         // transform: matrix(1, 0, 0, 0, 0, 0);
         transition: transform .3s ease-in;
