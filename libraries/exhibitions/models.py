@@ -238,7 +238,7 @@ class ExhibitArtwork(Orderable):
         FieldPanel('title'),
         FieldPanel('creator'),
         FieldPanel('link'),
-        ImageChooserPanel('image'),
+        ImageChooserPanel('image', classname='js-image'),
         DocumentChooserPanel('media', classname='js-media'),
         FieldPanel('embed_code', classname='js-embed_code'),
         FieldPanel('description'),
