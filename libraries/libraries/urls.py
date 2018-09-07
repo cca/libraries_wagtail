@@ -5,9 +5,10 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
 
-from search import views as search_views
-from hours import views as hours_views
 from brokenlinks import views as brokenlinks_views
+from hours import views as hours_views
+from libraries.views import serve_wagtail_doc
+from search import views as search_views
 from sersol_api import views as sersol_views
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -18,6 +19,8 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 urlpatterns = [
     url(r'^django-admin/', admin.site.urls),
+    # override Wagtail document handling — send file, not a forced download
+    url(r'^documents/(\d+)/(.*)$', serve_wagtail_doc, name='wagtaildocs_serve'),
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
