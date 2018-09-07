@@ -191,7 +191,7 @@ class ExhibitArtwork(Orderable):
     type_choices = (
         ('image', 'Image'),
         # ('audio', 'Audio'),
-        # ('video', 'Video'),
+        ('video', 'Video'),
         ('html', 'Embed code (HTML)'),
     )
     type = models.CharField(

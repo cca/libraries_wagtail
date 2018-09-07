@@ -11,6 +11,7 @@ $(() => {
     })
 
     let options = {
+        autoplayFirstVideo: false,
         hideBarsDelay: 3000,
         selector: '.js-gallery--work',
         subHtmlSelectorRelative: true,
