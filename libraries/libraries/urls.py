@@ -34,6 +34,9 @@ urlpatterns = [
     # Serials Solution API proxy
     url(r'^sersol/$', sersol_views.sersol, name='sersol_api'),
 
+    # Favicon
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/images/favicon.ico', permanent=True)),
+
     # XML sitemap
     url('^sitemap\.xml$', sitemap),
 
