@@ -10,6 +10,7 @@
     "build": "gulp build",
     "scripts": "gulp scripts",
     "sass": "gulp styles",
+    "test": "scss-lint -e libraries/libraries/static/scss/bootstrap -e libraries/libraries/static/scss/reset/_reset.scss libraries/libraries/static/scss",
     "watch": "gulp"
   },
   "repository": {

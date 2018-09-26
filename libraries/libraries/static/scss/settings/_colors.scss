@@ -2,15 +2,15 @@
 // These allow for easy alpha manipulation
 
 @function black($opacity:1) {
-  @return rgba(7, 7, 7, $opacity)
+    @return rgba(7, 7, 7, $opacity);
 }
 
 @function white($opacity:1) {
-  @return rgba(255, 255, 255, $opacity)
+    @return rgba(255, 255, 255, $opacity);
 }
 
 @function purple($opacity:1) {
-  @return rgba(114, 30, 160, $opacity)
+    @return rgba(114, 30, 160, $opacity);
 }
 
 // Main project colours
