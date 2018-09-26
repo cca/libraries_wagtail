@@ -33,6 +33,7 @@ img {
 
     @include respond($break-medium) {
         display: inline-block;
+        overflow: hidden;
         position: relative;
     }
 }
@@ -53,20 +54,14 @@ img {
     overflow: hidden;
     padding: 1em 0 3em;
 
-    // can't transition height 0->auto so we have to do a transformY hack
-    // see https://css-tricks.com/using-css-transitions-auto-dimensions/
     @include respond($break-medium) {
         display: inline-block;
-        float: left;
         font-size: 12px;
-        margin-top: -4em;
-        max-height: 5em;
-        min-height: 4em;
+        left: 0;
         padding: 1em .5em 0;
-        position: relative;
+        position: absolute;
         text-overflow: ellipsis;
-        transform: scaleY(0);
-        // transform: matrix(1, 0, 0, 0, 0, 0);
+        transform: translateY(0);
         transition: transform .3s ease-in;
         width: 40%;
         z-index: 2;
@@ -75,9 +70,7 @@ img {
 
 @include respond($break-medium) {
     .gallery--work:hover .gallery--work__metadata {
-        transform: scaleY(1);
-        // identity matrix
-        // transform: matrix(1, 0, 0, 0, 1, 0);
+        transform: translateY(-100%);
     }
 }
 
