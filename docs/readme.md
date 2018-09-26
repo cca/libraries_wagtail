@@ -2,17 +2,19 @@
 
 There are a few layers to the CCA Libraries site. The outline below shows the basic structure with a few annotations:
 
-- The parenthesis next to a page title contain the name of its model
-- An asterisk \* denotes a _singleton_ page
-- A caret ^ denotes non-page content (doesn't appear in search results, shouldn't be visited directly)
+- The parentheses next to a page's title contain the name of its model
+- An asterisk \* denotes a _singleton_ page (e.g. the home page, various indices)
+- A caret ^ denotes non-page content (doesn't appear in search results, shouldn't be visited directly in a web browser)
 
 ```
 Root (Wagtail abstraction)
     |---Home* (home.HomePage)
         |---Services* (categories.CategoryPage)
-            |---Instructional Technology & Information Literacy^ (categories.RowComponent)
+            |---Instructional Services & Technology^ (categories.RowComponent)
                 |---Child content pages...
             |---Circulation Services^ (categories.RowComponent)
+                |---Child content pages...
+            |---Emerging Projects^ (categories.RowComponent)
                 |---Child content pages...
         |---Collections* (categories.CategoryPage)
             |---Collections^ (categories.RowComponent)
@@ -25,13 +27,18 @@ Root (Wagtail abstraction)
                 |---Child content pages...
         |---Blog*^ (blog.BlogIndex)
             |---All blog posts... (blog.BlogPage)
-        |---Search (no model, search() in search/views.py is the view)
+        |---Exhibits* (exhibitions.ExhibitsIndexPage)
+            |---All digital exhibitions... (exhibitions.ExhibitPage)
+        |---Search (no model, only a view in search/views.py)
+        |---Brokenlinks^ (no model, only a view in brokenlinks/views.py)
+        |---Instagram^ (instagram.Instagram, used on home page)
+        |---Serials Solution API^ (no model, only a view in sersol_api/views.py)
 ```
 
-The grandchild pages of each category (Services, Collections, and About Us), represented above with the phrase "child content pages...", can use one of three page models: ServicePage, AboutUsPage, and SpecialCollectionsPage. Each of these pages can then, in turn, have children of any of those three types.
+The grandchild pages of each main category (Services, Collections, and About Us), represented above with the phrase "child content pages...", can use one of three page models: ServicePage, AboutUsPage, and SpecialCollectionsPage. Each of these pages can then, in turn, have children of any of those three types.
 
 ## Class Names
 
-Again, these are conjectural, not set in stone.
+Class names of various page models, even singleton ones like the blog index.
 
-`home.HomePage`, `categories.CategoryPage`, `categories.RowComponent`, `categories.AboutUsPage`, `categories.ExternalLink`, `categories.ServicePage`, `categories.SpecialCollectionsPage`, `blog.BlogPage`, `hours.HoursPage`, `staff.StaffListPage`.
+`home.HomePage`, `categories.CategoryPage`, `categories.RowComponent`, `categories.AboutUsPage`, `categories.ExternalLink`, `categories.ServicePage`, `categories.SpecialCollectionsPage`, `blog.BlogIndexPage`, `blog.BlogPage`, `hours.HoursPage`, `staff.StaffListPage`, `exhibitions.ExhibitsIndexPage`, `exhibitions.ExhibitPage`.

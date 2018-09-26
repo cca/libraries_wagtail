@@ -10,8 +10,6 @@ I've found upgrading Wagtail to be a little less straightforward than I thought,
 - collect the new static files `python libraries/manage.py collectstatic`
 - restart the gunicorn server (`service supervisord stop; sleep 2; service supervisord start`)
 
-All those final steps around static files feel wonky but that's what's worked for me.
-
 ## Wagtail 2.0 / Django 2.0 update
 
 We will likely not need to revisit this but several things changed and the upgrade process wasn't _quite_ straightforward so it's worth documenting a few things. Here was my basic process:
@@ -23,8 +21,6 @@ We will likely not need to revisit this but several things changed and the upgra
 > wagtail updatemodulepaths
 > python manage.py migrate
 > python manage.py collectstatic
-> # static files will 404 on the admin side without this, I don't quite understand
-> rsync -avz --delete libraries/static/ libraries/libraries/static/
 ```
 
 - update `django.core.urlresolvers` to `django.urls` wherever it occurs

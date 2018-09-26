@@ -1,6 +1,6 @@
 # Starting a Wagtail site
 
-Here's the basic steps to starting this project. We'll assume you're in the root of the project (e.g. the parent of this "docs" directory). You'll need python, virtualenv, postgres, and node (or nvm) installed. See [the Wagtail "getting started" doc](http://docs.wagtail.io/en/v1.10.1/getting_started/tutorial.html) for more. There's a "bootstrap.sh" script that does all this.
+Here's the basic steps to starting this project. We'll assume you're in the root of the project (e.g. the parent of this "docs" directory). You'll need python, virtualenv, postgres, and node (or nvm) installed. See [the Wagtail "getting started" doc](http://docs.wagtail.io/en/v1.10.1/getting_started/tutorial.html) for more.
 
 ```sh
 > # create a virtual environment using the python3 interpreter
@@ -21,10 +21,12 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > python libraries/manage.py createcachetable libraries_wagtail_cache
 ```
 
+There's a "bootstrap.sh" script that does all this but I list the steps above for precision's sake.
+
 
 ## Database & Search
 
-The database and search settings vary the most across local/dev/production environments. We define them in the libraries/settings/local_settings.py file (applied before base settings) and libraries/settings/local.py files (applied after base settings, not used right now). Here's an example local_settings.py:
+The database and search settings vary the most across local/dev/production environments. We define them in the libraries/settings/local_settings.py file (applied before base settings) and libraries/settings/local.py files. Here's an example local_settings.py for using a local postgres database:
 
 ```python
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,11 +38,20 @@ BASE_URL = 'https://localhost'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'libraries_cca_edu',
+        'USER': 'libuser',
+        'PASSWORD': 'password', # can be left blank for no password
+        'HOST': 'localhost',
+    },
+    'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 ```
+
+I recommend using a postgres database rather than a sqlite3 one simply because it's closer to what the production site does, even if it means employing a large stack during local development.
 
 The site comes with settings for Elasticsearch but doesn't enable it by default. To enable it, install Elasticsearch, start the ES server, and add a passage like this to libraries/settings/local_settings.py:
 
