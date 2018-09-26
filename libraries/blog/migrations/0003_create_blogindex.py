@@ -23,6 +23,7 @@ def create_blogindex(apps, schema_editor):
 
     blogindex = BlogIndex(
         title="CCA Libraries Blog",
+        draft_title="CCA Libraries Blog",
         slug='blog',
         content_type=blogindex_content_type,
         depth=3,
@@ -53,7 +54,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('blog', '0002_blogindex'),
         ('home', '0002_create_homepage'),
-        ('wagtailcore', '0035_page_last_published_at'),
+        ('wagtailcore', '0040_page_draft_title'),
     ]
 
     operations = [

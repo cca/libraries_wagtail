@@ -12,7 +12,7 @@ npm run build
 # wagtail setup
 python libraries/manage.py migrate
 python libraries/manage.py createsuperuser
-python manage.py createcachetable
+python libraries/manage.py createcachetable
 
 # postgres setup
 createuser libuser
