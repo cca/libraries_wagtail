@@ -1,6 +1,6 @@
 # Starting a Wagtail site
 
-Here's the basic steps to starting this project. We'll assume you're in the root of the project (e.g. the parent of this "docs" directory). See [the Wagtail "getting started" doc](http://docs.wagtail.io/en/v1.10.1/getting_started/tutorial.html) for more. There's a "bootstrap.sh" script that does all this.
+Here's the basic steps to starting this project. We'll assume you're in the root of the project (e.g. the parent of this "docs" directory). You'll need python, virtualenv, postgres, and node (or nvm) installed. See [the Wagtail "getting started" doc](http://docs.wagtail.io/en/v1.10.1/getting_started/tutorial.html) for more. There's a "bootstrap.sh" script that does all this.
 
 ```sh
 > # create a virtual environment using the python3 interpreter
@@ -66,9 +66,9 @@ Want to recreate the production or development database? The basic steps are:
 > ssh {{production_server}} 'pg_dump -h db_host -U db_user db_name > dump.sql'
 > scp {{production_server}}:dump.sql .
 > # delete any existing postgres db, create a new empty one, execute the dumped SQL
-> dropdb libraries_wagtail
-> createdb libraries_wagtail
-> psql libraries_wagtail < dump.sql
+> dropdb libraries_cca_edu
+> createdb libraries_cca_edu --owner libuser
+> psql libraries_cca_edu < dump.sql
 ```
 
 It might be a little less straightforward than that but it's close.
