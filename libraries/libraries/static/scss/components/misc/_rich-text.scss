@@ -8,11 +8,12 @@
         margin: 15px 0;
 
         @include respond($break-medium) {
-          font-size: 18px;
+            font-size: 18px;
         }
     }
 
-    ul, ol {
+    ul,
+    ol {
         list-style: inherit;
         margin: 0 0 24px;
         padding-left: 2em;

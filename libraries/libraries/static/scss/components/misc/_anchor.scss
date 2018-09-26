@@ -6,6 +6,6 @@
     visibility: hidden;
 
     @include respond($break-medium) {
-      top: -1 * $header-height-large;
+        top: -1 * $header-height-large;
     }
 }

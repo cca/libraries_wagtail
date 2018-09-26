@@ -4,29 +4,29 @@
 // ========================================
 
 .page {
-  background: $white;
-  font-family: $font-family-sans-serif;
-  font-smoothing: antialiased;
-  min-width: 360px;
-  padding-top: $header-height-small;
-  text-rendering: optimizeLegibility;
-  // scss-lint:disable DuplicateProperty
-  text-rendering: geometricPrecision;
-  // scss-lint:enable DuplicateProperty
+    background: $white;
+    font-family: $font-family-sans-serif;
+    font-smoothing: antialiased;
+    min-width: 360px;
+    padding-top: $header-height-small;
+    text-rendering: optimizeLegibility;
+    // scss-lint:disable DuplicateProperty
+    text-rendering: geometricPrecision;
+    // scss-lint:enable DuplicateProperty
 
-  @include respond($break-medium) {
-    padding-top: $header-height-large;
-  }
+    @include respond($break-medium) {
+        padding-top: $header-height-large;
+    }
 }
 
 .page--overlay::after {
-  animation: fade-in 0.3s ease;
-  background: black(0.6);
-  bottom: 0;
-  content: '';
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 99;
+    animation: fade-in .3s ease;
+    background: black(.6);
+    bottom: 0;
+    content: '';
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 99;
 }

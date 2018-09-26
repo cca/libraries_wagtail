@@ -3,55 +3,55 @@
 // ========================================
 
 .wrapper {
-  @include clearfix;
-  margin: 0 auto;
-  max-width: $site-max-width;
-  padding: 0 15px;
-  position: relative;
+    @include clearfix;
+    margin: 0 auto;
+    max-width: $site-max-width;
+    padding: 0 15px;
+    position: relative;
 
-  @include respond($break-medium) {
-    padding: 0 $wrapper-medium-horizontal-padding;
-  }
+    @include respond($break-medium) {
+        padding: 0 $wrapper-medium-horizontal-padding;
+    }
 }
 
 .wrapper--header {
-  padding: 0;
+    padding: 0;
 
-  @include respond($break-medium) {
-    padding: 0 $wrapper-medium-horizontal-padding;
-  }
+    @include respond($break-medium) {
+        padding: 0 $wrapper-medium-horizontal-padding;
+    }
 }
 
 .wrapper--padding-top {
-  padding-top: 30px;
+    padding-top: 30px;
 }
 
 .wrapper--collections {
-  padding: 0;
+    padding: 0;
 
-  @include respond($break-medium) {
-    padding: 0 $wrapper-medium-horizontal-padding;
-    position: relative;
-  }
+    @include respond($break-medium) {
+        padding: 0 $wrapper-medium-horizontal-padding;
+        position: relative;
+    }
 }
 
 .wrapper--search {
-  margin-top: 230px; // search box offset
+    margin-top: 230px; // search box offset
 
-  @include respond($break-medium) {
-    margin-top: 0;
-    max-width: $site-max-width-search;
-  }
+    @include respond($break-medium) {
+        margin-top: 0;
+        max-width: $site-max-width-search;
+    }
 }
 
 .wrapper--blog {
-  padding: 0;
+    padding: 0;
 
-  @include respond($break-large) {
-    padding: 0 15px;
-  }
+    @include respond($break-large) {
+        padding: 0 15px;
+    }
 }
 
 .wrapper--min-height {
-  min-height: 100vh;
+    min-height: 100vh;
 }

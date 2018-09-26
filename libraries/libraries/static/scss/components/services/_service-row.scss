@@ -4,34 +4,34 @@
 // ===================================
 
 .service-row {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 
-  &:not(:last-of-type) {
-    border-bottom: 2px solid $black;
-    margin: 0 0 15px;
+    &:not(:last-of-type) {
+        border-bottom: 2px solid $black;
+        margin: 0 0 15px;
 
-    @include respond($break-medium) {
-      margin: 0 0 30px;
-      padding: 0 0 15px;
+        @include respond($break-medium) {
+            margin: 0 0 30px;
+            padding: 0 0 15px;
+        }
     }
-  }
 }
 
-  .service-row__title {
+.service-row__title {
     flex: 0 0 100%;
     font-size: 20px;
     font-weight: 700;
     margin: 0 0 15px;
 
     @include respond($break-medium) {
-      font-size: 28px;
-      margin: 0 0 30px;
+        font-size: 28px;
+        margin: 0 0 30px;
     }
-  }
+}
 
-  .service-row__summary {
-    border-bottom: 1px solid black(0.1);
+.service-row__summary {
+    border-bottom: 1px solid black(.1);
     flex: 0 0 100%;
     font-family: $font-family-serif;
     font-size: 13px;
@@ -41,25 +41,25 @@
     padding: 0 0 15px;
 
     @include respond($break-medium) {
-      border-bottom: 0;
-      border-right: 1px solid black(0.1);
-      flex: 0 0 26%;
-      font-size: 12px;
-      line-height: 1.6em;
-      margin-right: 24px;
-      padding-right: 24px;
+        border-bottom: 0;
+        border-right: 1px solid black(.1);
+        flex: 0 0 26%;
+        font-size: 12px;
+        line-height: 1.6em;
+        margin-right: 24px;
+        padding-right: 24px;
     }
 
     @include respond($break-large) {
-      flex: 0 0 23%;
+        flex: 0 0 23%;
     }
-  }
+}
 
-  .service-row__items {
+.service-row__items {
     display: flex;
     flex-wrap: wrap;
 
     @include respond($break-medium) {
-      flex: 1 0 50%;
+        flex: 1 0 50%;
     }
-  }
+}

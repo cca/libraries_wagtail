@@ -4,15 +4,17 @@
 
 .rich-text,
 .service-row-item__text-wrapper {
+    // scss-lint:disable QualifyingElement
     a[href] {
-      border-bottom: 2px solid transparent;
-      color: $lightblue;
-      display: inline-block;
-      text-decoration: none;
-      transition: border 0.3s ease;
+        border-bottom: 2px solid transparent;
+        color: $lightblue;
+        display: inline-block;
+        text-decoration: none;
+        transition: border .3s ease;
     }
 
     a[href]:hover {
-      border-bottom-color: $lightblue;
+        border-bottom-color: $lightblue;
     }
+    // scss-lint:enable QualifyingElement
 }

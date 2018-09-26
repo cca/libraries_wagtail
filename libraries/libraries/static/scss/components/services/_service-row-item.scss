@@ -4,108 +4,111 @@
 // ===================================
 
 .service-row-item {
-  align-items: flex-start;
-  align-self: flex-start;
-  display: flex;
-  flex: 0 0 100%;
-  flex-wrap: wrap;
-
-  &:not(:nth-of-type(3n)) {
-    border-bottom: 1px solid black(0.1);
-    margin: 0 0 15px;
-  }
-
-  // scss-lint:disable DeclarationOrder
-  @include respond($break-medium) {
-    flex: 0 0 30%;
+    align-items: flex-start;
+    align-self: flex-start;
+    display: flex;
+    flex: 0 0 100%;
+    flex-wrap: wrap;
 
     &:not(:nth-of-type(3n)) {
-      border-bottom: 0;
-      border-right: 1px solid black(0.1);
-      margin-right: 24px;
-      padding-right: 24px;
+        border-bottom: 1px solid black(.1);
+        margin: 0 0 15px;
     }
-  }
+
+    // scss-lint:disable DeclarationOrder
+    @include respond($break-medium) {
+        flex: 0 0 30%;
+
+        &:not(:nth-of-type(3n)) {
+            border-bottom: 0;
+            border-right: 1px solid black(.1);
+            margin-right: 24px;
+            padding-right: 24px;
+        }
+    }
   // scss-lint:enable DeclarationOrder
 }
-  // vary color based on category
-  .page--services .service-row-item__title {
-      border-bottom: 2px solid $blue;
-  }
-  .page--about-us .service-row-item__title {
-      border-bottom: 2px solid $green;
-  }
-  .page--collections .service-row-item__title {
-      border-bottom: 2px solid $purple;
-  }
 
-  .service-row-item__title {
+// vary color based on category
+.page--services .service-row-item__title {
+    border-bottom: 2px solid $blue;
+}
+
+.page--about-us .service-row-item__title {
+    border-bottom: 2px solid $green;
+}
+
+.page--collections .service-row-item__title {
+    border-bottom: 2px solid $purple;
+}
+
+.service-row-item__title {
     cursor: pointer;
     display: inline-block;
     font-size: 17px;
     font-weight: 700;
     line-height: 1.2em;
     margin: 0 0 8px;
-    opacity: 0.8;
+    opacity: .8;
     padding: 0 0 2px;
+
+    @include respond($break-medium) {
+        padding: 0 0 5px;
+    }
 
     // stop RowComponent headings from inheriting generic link styles
     a {
         color: inherit;
         text-decoration: none;
     }
+}
 
-    @include respond($break-medium) {
-      padding: 0 0 5px;
-    }
-  }
-
-  .service-row-item__title:hover {
+.service-row-item__title:hover {
     opacity: 1;
-  }
+}
 
-  .service-row-item__text {
+.service-row-item__text {
     flex: 0 0 100%;
     font-family: $font-family-serif;
     font-size: 12px;
     font-weight: 300;
     line-height: 1.4em;
     margin: 0 0 15px;
-  }
+}
 
-  .service-row-item__image-wrapper {
+.service-row-item__image-wrapper {
     flex: 0 1 30%;
     margin: 0 0 15px;
-  }
+}
 
-  // take up full width available
-  .service-row-item__image-wrapper--large {
+// take up full width available
+.service-row-item__image-wrapper--large {
     flex: 0 1 100%;
     margin: 0 0 15px;
-  }
+}
 
-    .service-row-item__image {
-      display: block;
-      height: auto;
-      width: 100%;
-    }
+.service-row-item__image {
+    display: block;
+    height: auto;
+    width: 100%;
+}
 
-  .service-row-item__text-wrapper {
+.service-row-item__text-wrapper {
     flex: 1 0 50%;
     margin: 0 0 15px;
     padding: 0 0 0 10px;
-  }
+}
 
-    .service-row-item__name {
-      font-family: $font-family-serif;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.2em;
-      margin: 0 0 5px;
-    }
+.service-row-item__name {
+    font-family: $font-family-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2em;
+    margin: 0 0 5px;
+}
 
-    .service-row-item__position {
-      font-family: $font-family-serif;
-      font-size: 11px;
-      line-height: 1.2em;
-    }
+.service-row-item__position {
+    font-family: $font-family-serif;
+    font-size: 11px;
+    line-height: 1.2em;
+}

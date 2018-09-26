@@ -5,58 +5,58 @@
 // ===========================================
 
 .search-box {
-  background: $white;
-  padding: 20px;
+    background: $white;
+    padding: 20px;
 
-  @include respond($break-medium) {
-    border: 1px solid black(0.1);
-  }
+    @include respond($break-medium) {
+        border: 1px solid black(.1);
+    }
+
+    // Pass-through to the <input> component
+    .search-input__input {
+        margin-bottom: 20px;
+    }
 }
 
-  .search-box__title {
+.search-box__title {
     font-size: 18px;
     font-weight: 700;
     margin: 0 0 10px;
 
     @include respond($break-medium) {
-      font-size: 22px;
-      margin: 0 0 15px;
+        font-size: 22px;
+        margin: 0 0 15px;
     }
-  }
+}
 
-  // Pass-through to the <input> component
-  .search-box .search-input__input {
-    margin-bottom: 20px;
-  }
-
-  .search-box__type-label {
+.search-box__type-label {
     display: block;
     font-family: $font-family-serif;
     font-size: 13px;
     margin: 0 0 20px;
 
     @include respond($break-medium) {
-      display: inline-block;
-      margin: 0 15px 0 0;
+        display: inline-block;
+        margin: 0 15px 0 0;
     }
 
     &:last-of-type {
-      margin: 0;
+        margin: 0;
     }
-  }
+}
 
-    .search-box__type-input {
-      margin: 0 5px 0 0;
-    }
+.search-box__type-input {
+    margin: 0 5px 0 0;
+}
 
-  .search-box__number-results {
+.search-box__number-results {
     display: none;
     font-family: $font-family-serif;
     font-size: 14px;
     padding: 25px 0 0;
-  }
+}
 
-  // Only show this on the search page
-  .page--search .search-box__number-results {
+// Only show this on the search page
+.page--search .search-box__number-results {
     display: block;
-  }
+}

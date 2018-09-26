@@ -3,17 +3,17 @@
 // ===========================================
 
 .search-input {
-  position: relative;
+    position: relative;
 }
 
-  .search-input__input {
-    border: 1px solid black(0.1);
+.search-input__input {
+    border: 1px solid black(.1);
     font-size: 16px;
     padding: 12px;
     width: 100%;
-  }
+}
 
-  .search-input__submit {
+.search-input__submit {
     background: transparent;
     border: 0;
     cursor: pointer;
@@ -23,17 +23,17 @@
     right: 2px;
     text-indent: 200%; // image replacement
     top: 2px;
-    transition: opacity 0.3s ease;
+    transition: opacity .3s ease;
     white-space: nowrap; // image replacement
     width: 40px;
-  }
+}
 
-  .search-input__submit:hover,
-  .search-input__submit:focus {
-    opacity: 0.5;
-  }
+.search-input__submit:hover,
+.search-input__submit:focus {
+    opacity: .5;
+}
 
-  .search-input__submit::after {
+.search-input__submit::after {
     background-image: url('/static/images/search-icon.png');
     background-repeat: no-repeat;
     background-size: 33px 33px;
@@ -43,4 +43,4 @@
     right: 5px;
     top: 3px;
     width: 33px;
-  }
+}
