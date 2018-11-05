@@ -24,12 +24,12 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # Allowed Hosts
 ALLOWED_HOSTS = [
-	'127.0.0.1',
-	'localhost',
-	'libraries.cca.edu',
-	'10.16.8.23',
-	'libraries-dev.cca.edu',
-	'10.16.8.37',
+    '127.0.0.1',
+    'localhost',
+    'libraries.cca.edu',
+    '10.16.8.23',
+    'libraries-dev.cca.edu',
+    '10.16.8.37',
 ]
 
 # Application definition
@@ -42,13 +42,14 @@ INSTALLED_APPS = [
     'instagram',
     'staff',
     'hours',
-	'sersol_api',
-	'brokenlinks',
-	'exhibitions',
+    'sersol_api',
+    'brokenlinks',
+    'exhibitions',
 
+    'wagtail.api.v2',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
-	'django.contrib.sitemaps',
+    'django.contrib.sitemaps',
     'wagtail.embeds',
     'wagtail.sites',
     'wagtail.users',
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     'wagtail.core',
 
     'modelcluster',
+    'rest_framework',
     'taggit',
 
     'django.contrib.admin',

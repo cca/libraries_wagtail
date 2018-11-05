@@ -11,6 +11,8 @@ from libraries.views import serve_wagtail_doc
 from search import views as search_views
 from sersol_api import views as sersol_views
 
+from .api import api_router
+
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.core import urls as wagtail_urls
@@ -23,6 +25,7 @@ urlpatterns = [
     url(r'^documents/(\d+)/(.*)$', serve_wagtail_doc, name='wagtaildocs_serve'),
 
     url(r'^admin/', include(wagtailadmin_urls)),
+    url(r'^api/v2/', api_router.urls),
     url(r'^documents/', include(wagtaildocs_urls)),
 
     url(r'^search/$', search_views.search, name='search'),

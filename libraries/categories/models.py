@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 
 from modelcluster.fields import ParentalKey
 
+from wagtail.api import APIField
+
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import FieldPanel, FieldRowPanel, InlinePanel, StreamFieldPanel
@@ -208,6 +210,9 @@ class ServicePage(Page):
     promote_panels = Page.promote_panels + [
         FieldPanel('order')
     ]
+    api_fields = [
+        APIField('body'),
+    ]
 
 
 # does not have a matching template, should never be visited on its own
@@ -376,6 +381,9 @@ class AboutUsPage(Page):
     ]
     promote_panels = Page.promote_panels + [
         FieldPanel('order')
+    ]
+    api_fields = [
+        APIField('body'),
     ]
 
 
