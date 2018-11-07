@@ -14,9 +14,9 @@ idna==2.6
 l18n==2016.6.4
 olefile==0.45.1
 Pillow==4.3.0
-psycopg2==2.7.3.2
+psycopg2==2.7.5
 pytz==2018.3
-requests==2.18.4
+requests==2.20
 six==1.11.0
 Unidecode==0.4.21
 urllib3==1.22
