@@ -3,116 +3,116 @@
 // ========================================
 
 .blog-post {
-  padding: 0 15px 15px;
+    padding: 0 15px 15px;
 
-  @include respond($break-medium) {
-    max-width: 640px;
-    padding: 0 30px 30px;
-    width: 80%;
-  }
+    @include respond($break-medium) {
+        max-width: 640px;
+        padding: 0 30px 30px;
+        width: 80%;
+    }
 
-  @include respond($break-large) {
-    left: 260px;
-    position: relative;
-  }
+    @include respond($break-large) {
+        left: 260px;
+        position: relative;
+    }
 }
 
-  .blog-post__image {
+.blog-post__image {
     display: block;
     height: auto;
     margin: 0 0 20px;
     width: 100%;
-  }
+}
 
-  .blog-post__image-description {
+.blog-post__image-description {
     font-family: $font-family-serif;
     font-size: 12px;
     line-height: 1.3em;
     margin: 0 0 15px;
-    opacity: 0.6;
+    opacity: .6;
     position: relative;
     top: -10px;
 
     @include respond($break-medium) {
-      width: 60%;
+        width: 60%;
     }
-  }
+}
 
-  .blog-post__title-wrapper {
+.blog-post__title-wrapper {
     margin: 0 0 20px;
     padding: 0 15px;
-  }
+}
 
-  // vary color by section
-  .page--blog-page .blog-post__title-wrapper,
-  .page--about-us .blog-post__title-wrapper {
-      border-left: 2px solid $green;
-  }
+// vary color by section
+.page--blog-page .blog-post__title-wrapper,
+.page--about-us .blog-post__title-wrapper {
+    border-left: 2px solid $green;
+}
 
-  .page--services .blog-post__title-wrapper {
-      border-left: 2px solid $purple;
-  }
+.page--collections .blog-post__title-wrapper {
+    border-left: 2px solid $purple;
+}
 
-  .page--services .blog-post__title-wrapper {
-      border-left: 2px solid $blue;
-  }
+.page--services .blog-post__title-wrapper {
+    border-left: 2px solid $blue;
+}
 
-    .blog-post__date {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      margin: 0 0 5px;
-    }
+.blog-post__date {
+    display: block;
+    font-size: 11px;
+    letter-spacing: .2em;
+    margin: 0 0 5px;
+}
 
-    .blog-post__title {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      width: 60%;
+.blog-post__title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    width: 60%;
 
-      @include respond($break-medium) {
+    @include respond($break-medium) {
         font-size: 28px;
         width: 100%;
-      }
     }
+}
 
-  .blog-post__subtitle {
+.blog-post__subtitle {
     font-family: $font-family-sans-serif;
     font-size: 16px;
     font-weight: 700;
     margin: 0 0 15px;
 
     @include respond($break-medium) {
-      font-size: 20px;
+        font-size: 20px;
     }
-  }
+}
 
-  .blog-post__paragraph {
+.blog-post__paragraph {
     font-family: $font-family-serif;
     font-size: 13px;
     font-weight: 300;
     line-height: 1.4em;
     margin: 0 0 15px;
-  }
+}
 
-  .blog-post__quote {
+.blog-post__quote {
     margin: 0 0 20px;
     padding: 0 15px;
-  }
+}
 
-  // vary color by section
-  .page--blog-page .blog-post__quote,
-  .page--about-us .blog-post__quote {
-      border-left: 2px solid $green;
-  }
+// vary color by section
+.page--blog-page .blog-post__quote,
+.page--about-us .blog-post__quote {
+    border-left: 2px solid $green;
+}
 
-  .page--services .blog-post__quote {
-      border-left: 2px solid $purple;
-  }
+.page--collections .blog-post__quote {
+    border-left: 2px solid $purple;
+}
 
-  .page--services .blog-post__quote {
-      border-left: 2px solid $blue;
-  }
+.page--services .blog-post__quote {
+    border-left: 2px solid $blue;
+}
 
 .blog-post__row {
     @include respond($break-large) {
@@ -151,71 +151,71 @@
     }
 }
 
-    .blog-post__quote-text {
-      font-size: 18px;
-      line-height: 1.2em;
-    }
+.blog-post__quote-text {
+    font-size: 18px;
+    line-height: 1.2em;
+}
 
-    .blog-post__quote-text--quotemark {
-      margin: 0 0 10px;
-    }
+.blog-post__quote-text--quotemark {
+    margin: 0 0 10px;
+}
 
-    .blog-post__quote-text--quotemark::before {
-      content: '\201c';
-    }
+.blog-post__quote-text--quotemark::before {
+    content: '\201c';
+}
 
-    .blog-post__quote-text--quotemark::after {
-      content: '\201d';
-    }
+.blog-post__quote-text--quotemark::after {
+    content: '\201d';
+}
 
-      .blog-post__quote-cite-name {
-        display: block;
-        font-family: $font-family-serif;
-        font-size: 10px;
-        font-weight: 700;
-      }
+.blog-post__quote-cite-name {
+    display: block;
+    font-family: $font-family-serif;
+    font-size: 10px;
+    font-weight: 700;
+}
 
-      .blog-post__quote-cite-position {
-        display: block;
-        font-family: $font-family-serif;
-        font-size: 10px;
-        line-height: 12px;
-      }
+.blog-post__quote-cite-position {
+    display: block;
+    font-family: $font-family-serif;
+    font-size: 10px;
+    line-height: 12px;
+}
 
-  .blog-post__snippet {
+.blog-post__snippet {
     background: $grey;
     margin: 0 0 20px;
     padding: 15px;
 
+    @include respond($break-medium) {
+        padding: 20px;
+    }
+
     p:last-child {
         margin: 0;
     }
+}
+
+// vary color by section
+.page--blog-page .blog-post__snippet,
+.page--about-us .blog-post__snippet {
+    border-left: 2px solid $green;
+}
+
+.page--collections .blog-post__snippet {
+    border-left: 2px solid $purple;
+}
+
+.page--services .blog-post__snippet {
+    border-left: 2px solid $blue;
+}
+
+.blog-post__snippet-text {
+    font-family: $font-family-serif;
+    font-size: 12px;
+    line-height: 1.4em;
 
     @include respond($break-medium) {
-      padding: 20px;
-    }
-  }
-
-  // vary color by section
-  .page--blog-page .blog-post__snippet,
-  .page--about-us .blog-post__snippet {
-      border-left: 2px solid $green;
-  }
-
-  .page--services .blog-post__snippet {
-      border-left: 2px solid $purple;
-  }
-
-  .page--services .blog-post__snippet {
-      border-left: 2px solid $blue;
-  }
-
-    .blog-post__snippet-text {
-      font-family: $font-family-serif;
-      font-size: 12px;
-      line-height: 1.4em;
-
-      @include respond($break-medium) {
         font-size: 14px;
-      }
     }
+}
