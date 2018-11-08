@@ -3,7 +3,7 @@
 // ========================================
 
 .blog-post-pagination {
-    border-top: 1px solid black(0.1);
+    border-top: 1px solid black(.1);
     display: flex;
     margin: 60px 0 0;
     padding: 20px 0 0;
@@ -42,16 +42,16 @@
     color: inherit;
     display: flex;
     text-decoration: none;
-    transition: opacity 0.3s ease;
+    transition: opacity .3s ease;
 
     @include respond($break-medium) {
-       display: block;
-       width: 60%;
+        display: block;
+        width: 60%;
     }
 }
 
 .blog-post-pagination__link:hover {
-    opacity: 0.7;
+    opacity: .7;
 }
 
 .blog-post-pagination__link--next {
@@ -78,7 +78,7 @@
     display: none;
     font-size: 16px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: .1em;
     margin: 0 0 7px;
 
     @include respond($break-medium) {

@@ -6,36 +6,36 @@
 // ========================================
 
 .header-search-box {
-  display: none;
-  position: absolute;
-  top: $header-height-small;
-  width: 100%;
+    display: none;
+    position: absolute;
+    top: $header-height-small;
+    width: 100%;
 
-  @include respond($break-medium) {
-    right: 0;
-    top: $header-height-large - 10px;
-    width: 500px;
-  }
+    @include respond($break-medium) {
+        right: 0;
+        top: $header-height-large - 10px;
+        width: 500px;
+    }
+
+    // Header specific overrides
+    .search-box__title {
+        display: none;
+
+        @include respond($break-medium) {
+            display: block;
+        }
+    }
 }
 
 .header-search-box--is-active {
-  display: block;
+    display: block;
 }
 
 // Hide the header search-box on the search
 // page (> medium viewport) becuase there
 // is a standalone search-box
 .page--search .header-search-box {
-  @include respond($break-medium) {
-    display: none;
-  }
-}
-
-// Header specific overrides
-.header-search-box .search-box__title {
-  display: none;
-
-  @include respond($break-medium) {
-    display: block;
-  }
+    @include respond($break-medium) {
+        display: none;
+    }
 }

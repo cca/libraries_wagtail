@@ -3,17 +3,17 @@
 // ===================================
 
 .footer {
-  background: $grey;
-  padding: 15px 0;
-  z-index: 100;
-  position: relative;
+    background: $grey;
+    padding: 15px 0;
+    position: relative;
+    z-index: 100;
 }
 
-  .footer__sections {
+.footer__sections {
     display: flex;
     flex-wrap: wrap;
 
     @include respond($break-medium) {
-      flex-wrap: nowrap;
+        flex-wrap: nowrap;
     }
-  }
+}

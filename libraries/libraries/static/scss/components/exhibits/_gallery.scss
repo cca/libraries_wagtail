@@ -94,9 +94,9 @@ img {
     margin-top: -24px;
     position: absolute;
     top: 50%;
-    transition: opacity .25s cubic-bezier(0.0,0.0,0.2,1);
+    transition: opacity .25s cubic-bezier(0, 0, .2, 1);
     width: 68px;
-    z-index: 63
+    z-index: 63;
 }
 
 .gallery--work:hover .ytp-large-play-button {

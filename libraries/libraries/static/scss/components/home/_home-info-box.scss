@@ -5,20 +5,20 @@
 // ===================================
 
 .home-info-box {
-  align-items: stretch;
-  background: black(0.65);
-  display: flex;
-  flex-wrap: wrap;
-  padding: 18px;
+    align-items: stretch;
+    background: black(.65);
+    display: flex;
+    flex-wrap: wrap;
+    padding: 18px;
 
-  @include respond($break-large) {
-    flex-wrap: nowrap;
-    padding: 30px;
-  }
+    @include respond($break-large) {
+        flex-wrap: nowrap;
+        padding: 30px;
+    }
 }
 
-  .home-info-box__item {
-    border-bottom: 2px solid white(0.4);
+.home-info-box__item {
+    border-bottom: 2px solid white(.4);
     color: $white;
     flex: 1 0 100%;
     margin: 0 0 20px;
@@ -26,27 +26,27 @@
     position: relative;
 
     &:last-of-type {
-      border-bottom: 0;
-      margin-bottom: 0;
+        border-bottom: 0;
+        margin-bottom: 0;
     }
 
     // scss-lint:disable DeclarationOrder
     @include respond($break-medium) {
-      border-bottom: 0;
-      flex: 1 0 50%;
-      padding: 0 40px 0 30px;
+        border-bottom: 0;
+        flex: 1 0 50%;
+        padding: 0 40px 0 30px;
     }
 
     @include respond($break-large) {
-      flex: 1 0 20%;
-      margin: 0;
+        flex: 1 0 20%;
+        margin: 0;
     }
     // scss-lint:enable DeclarationOrder
-  }
+}
 
-  .home-info-box__item:nth-of-type(2)::after,
-  .home-info-box__item:nth-of-type(3)::after,
-  .home-info-box__item:nth-of-type(4)::after {
+.home-info-box__item:nth-of-type(2)::after,
+.home-info-box__item:nth-of-type(3)::after,
+.home-info-box__item:nth-of-type(4)::after {
     background: $blue; // services
     content: '';
     height: calc(100% - 20px); // margin offset
@@ -56,49 +56,49 @@
     width: 2px;
 
     @include respond($break-medium) {
-      height: 100%;
+        height: 100%;
     }
-  }
+}
 
-  .home-info-box__item:nth-of-type(3)::after {
+.home-info-box__item:nth-of-type(3)::after {
     background: $purple; // collections
-  }
+}
 
-  .home-info-box__item:nth-of-type(4)::after {
+.home-info-box__item:nth-of-type(4)::after {
     background: $green; // about us
-  }
+}
 
-    .home-info-box__item-title {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      margin: 0 0 10px;
+.home-info-box__item-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    margin: 0 0 10px;
 
-      @include respond($break-medium) {
+    @include respond($break-medium) {
         font-size: 24px;
         margin: 0 0 20px;
-      }
     }
+}
 
-      .home-info-box__item-link {
-        border-bottom: 1px solid $white;
-        color: inherit;
-        display: inline-block;
-        line-height: 1.3em;
-        opacity: 0.8;
-        text-decoration: none;
-      }
+.home-info-box__item-link {
+    border-bottom: 1px solid $white;
+    color: inherit;
+    display: inline-block;
+    line-height: 1.3em;
+    opacity: .8;
+    text-decoration: none;
+}
 
-      .home-info-box__item-link:hover {
-        opacity: 1;
-      }
+.home-info-box__item-link:hover {
+    opacity: 1;
+}
 
-    .home-info-box__item-text {
-      font-size: 13px;
-      letter-spacing: 0.04em;
-      line-height: 20px;
+.home-info-box__item-text {
+    font-size: 13px;
+    letter-spacing: .04em;
+    line-height: 20px;
 
-      @include respond($break-medium) {
+    @include respond($break-medium) {
         font-size: 14px;
-      }
     }
+}

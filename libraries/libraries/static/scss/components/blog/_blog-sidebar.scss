@@ -3,44 +3,44 @@
 // ========================================
 
 .blog-sidebar {
-  padding: 0 0 15px;
+    padding: 0 0 15px;
 
-  @include respond($break-large) {
-    border-right: 1px solid black(0.1);
-    padding: 0 20px 15px 0;
-    position: fixed;
-    transition: top 0;
-    width: 260px;
-  }
+    @include respond($break-large) {
+        border-right: 1px solid black(.1);
+        padding: 0 20px 15px 0;
+        position: fixed;
+        transition: top 0;
+        width: 260px;
+    }
 }
 
-  .blog-sidebar__content {
+.blog-sidebar__content {
     display: none;
 
     @include respond($break-large) {
 
-      // We use important here to *make sure* the
-      // sidebar is visable on large screens. This
-      // saves us having to handle this in JS becuase
-      // of the mobile toggle.
+        // We use important here to *make sure* the
+        // sidebar is visable on large screens. This
+        // saves us having to handle this in JS because
+        // of the mobile toggle.
 
-      // scss-lint:disable ImportantRule
-      display: block !important;
-      // scss-lint:enable ImportantRule
+        // scss-lint:disable ImportantRule
+        display: block !important;
+        // scss-lint:enable ImportantRule
     }
-  }
+}
 
-    .blog-sidebar__list {
-      padding: 0 15px;
+.blog-sidebar__list {
+    padding: 0 15px;
 
-      @include respond($break-medium) {
+    @include respond($break-medium) {
         display: flex;
         flex-wrap: wrap;
-      }
+    }
 
-      @include respond($break-large) {
+    @include respond($break-large) {
         max-height: calc(100vh - 200px);
         overflow: auto;
         padding: 0;
-      }
     }
+}

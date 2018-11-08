@@ -3,169 +3,169 @@
 // ===================================
 
 .footer-section {
-  border-bottom: 1px solid black(0.2);
-  flex: 1 0 100%;
-  margin: 0 0 15px;
-  padding: 10px 0 15px;
+    border-bottom: 1px solid black(.2);
+    flex: 1 0 100%;
+    margin: 0 0 15px;
+    padding: 10px 0 15px;
 
-  @include respond($break-small) {
-    flex: 1 0 50%;
-  }
-
-  @include respond($break-medium) {
-    border-bottom: 0;
-    flex: 1 0 32%;
-    padding-right: 10px;
-  }
-
-  @include respond($break-large) {
-    &:not(.footer-section--info) {
-      padding-right: 40px;
+    @include respond($break-small) {
+        flex: 1 0 50%;
     }
-  }
 
-  &:last-of-type {
-    border-bottom: 0;
-  }
+    @include respond($break-medium) {
+        border-bottom: 0;
+        flex: 1 0 32%;
+        padding-right: 10px;
+    }
+
+    @include respond($break-large) {
+        &:not(.footer-section--info) {
+            padding-right: 40px;
+        }
+    }
+
+    &:last-of-type {
+        border-bottom: 0;
+    }
 }
 
 .footer-section--links {
-  @include respond($break-medium) {
-    flex: 0 0 30%;
-  }
+    @include respond($break-medium) {
+        flex: 0 0 30%;
+    }
 
-  @include respond($break-large) {
-    flex: 0 0 24%;
-  }
+    @include respond($break-large) {
+        flex: 0 0 24%;
+    }
 }
 
 .footer-section--info {
-  @include respond($break-medium) {
-    display: flex;
-    flex-wrap: wrap;
-    order: 3;
+    @include respond($break-medium) {
+        display: flex;
+        flex-wrap: wrap;
+        order: 3;
 
-    .footer-section__title {
-      margin: 0;
-      flex: 0 0 100%;
+        .footer-section__title {
+            flex: 0 0 100%;
+            margin: 0;
+        }
     }
-  }
 }
 
-  .footer-section__title {
+.footer-section__title {
     font-size: 16px;
     font-weight: 700;
     margin: 0 0 15px;
-  }
+}
 
-  .footer-section__link {
+.footer-section__link {
     color: inherit;
     display: block;
     font-family: $font-family-serif;
     font-size: 12px;
     line-height: 1.5em;
     margin: 0 0 10px;
-  }
+}
 
-  .footer-section__link:hover {
-    opacity: 0.7;
-  }
+.footer-section__link:hover {
+    opacity: .7;
+}
 
-  .footer-section__link--question {
+.footer-section__link--question {
     font-family: $font-family-sans-serif;
     font-size: 14px;
     font-weight: 700;
     margin: 0 0 10px;
-  }
+}
 
-  .footer-section__text {
+.footer-section__text {
     font-family: $font-family-serif;
     font-size: 12px;
     line-height: 1.6em;
     margin: 0 0 15px;
-  }
+}
 
-  .footer-section__sites {
+.footer-section__sites {
     display: flex;
     font-family: $font-family-serif;
     font-size: 12px;
-  }
+}
 
-    .footer-section__site {
-      flex: 1 0 50%;
-    }
+.footer-section__site {
+    flex: 1 0 50%;
+}
 
-      .footer-section__site-name {
-        font-weight: 700;
-        line-height: 1.5em;
-        margin: 0 0 6px;
-      }
+.footer-section__site-name {
+    font-weight: 700;
+    line-height: 1.5em;
+    margin: 0 0 6px;
+}
 
-      .footer-section__site-address {
-        margin: 0 0 6px;
-      }
+.footer-section__site-address {
+    margin: 0 0 6px;
+}
 
-  .footer-section__content {
+.footer-section__content {
     @include respond($break-large) {
-      flex: 1 0 50%;
-      order: 2;
+        flex: 1 0 50%;
+        order: 2;
     }
-  }
+}
 
-  .footer-section__links {
+.footer-section__links {
     margin-left: -10px;
 
     @include respond($break-medium) {
-      flex: 1 0 50%;
+        flex: 1 0 50%;
     }
-  }
+}
 
-    .footer-section__social-link {
-      color: inherit;
-      display: block;
-      font-family: $font-family-serif;
-      font-size: 13px;
-      padding: 0 10px 14px;
-      text-decoration: underline;
-    }
+.footer-section__social-link {
+    color: inherit;
+    display: block;
+    font-family: $font-family-serif;
+    font-size: 13px;
+    padding: 0 10px 14px;
+    text-decoration: underline;
 
-    .footer-section__social-link.icon-only {
-      color: transparent;
-      display: inline-block;
-      font-size: 0;
-    }
+    &.icon-only {
+        color: transparent;
+        display: inline-block;
+        font-size: 0;
 
-    .footer-section__social-link.koha.button {
-      display: table;
-      margin-bottom: 10px;
-      margin-left: 7px;
-    }
-
-    .footer-section__social-link:hover {
-      opacity: 0.7;
-    }
-
-    .footer-section__social-link.icon-only::before {
-      background-repeat: no-repeat;
-      background-size: 20px 20px;
-      content: '';
-      display: inline-block;
-      height: 26px;
-      position: relative;
-      width: 20px;
+        &::before {
+            background-repeat: no-repeat;
+            background-size: 20px 20px;
+            content: '';
+            display: inline-block;
+            height: 26px;
+            position: relative;
+            width: 20px;
+        }
     }
 
-    .footer-section__social-link.facebook::before {
-      background-image: url('/static/images/facebook-icon.png');
-      top: 3px;
+    &.koha.button {
+        display: table;
+        margin-bottom: 10px;
+        margin-left: 7px;
     }
 
-    .footer-section__social-link.instagram::before {
-      background-image: url('/static/images/instagram-icon.png');
-      top: 4px;
+    &:hover {
+        opacity: .7;
     }
 
-    .footer-section__social-link.twitter::before {
-      background-image: url('/static/images/twitter-icon.png');
-      top: 5px;
+    &.facebook::before {
+        background-image: url('/static/images/facebook-icon.png');
+        top: 3px;
     }
+
+    &.instagram::before {
+        background-image: url('/static/images/instagram-icon.png');
+        top: 4px;
+    }
+
+    &.twitter::before {
+        background-image: url('/static/images/twitter-icon.png');
+        top: 5px;
+    }
+}

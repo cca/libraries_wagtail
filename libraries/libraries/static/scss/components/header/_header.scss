@@ -4,31 +4,31 @@
 // ===================================
 
 .header {
-  @include clearfix();
-  background: $white;
-  border-bottom: 1px solid $header-border-color;
-  height: $header-height-small;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 100;
+    @include clearfix();
+    background: $white;
+    border-bottom: 1px solid $header-border-color;
+    height: $header-height-small;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
 
-  @include respond($break-medium) {
-    height: $header-height-large;
-  }
+    @include respond($break-medium) {
+        height: $header-height-large;
+    }
 }
 
 // Make the header 1px smaller on the home
 // to remove white border under buttons (hack).
 .page--home .header {
-  height: $header-height-small - 1px;
+    height: $header-height-small - 1px;
 
-  @include respond($break-medium) {
-    height: $header-height-large - 1px;
-  }
+    @include respond($break-medium) {
+        height: $header-height-large - 1px;
+    }
 }
 
-  .header__home-link {
+.header__home-link {
     display: block;
     height: auto;
     left: 10px;
@@ -36,102 +36,102 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    transition: opacity 0.3s ease;
+    transition: opacity .3s ease;
     width: 50%;
-  }
+}
 
-  .header__home-link:hover {
-    opacity: 0.5;
-  }
+.header__home-link:hover {
+    opacity: .5;
+}
 
-    .header__logo {
-      height: auto;
-      width: 100%;
-    }
+.header__logo {
+    height: auto;
+    width: 100%;
+}
 
-  .header__nav-link {
+.header__nav-link {
     border-bottom: 3px solid transparent;
     border-left: 1px solid $header-border-color;
     display: block;
     float: right;
     height: $header-height-small;
     position: relative;
-    transition: background 0.3s ease;
+    transition: background .3s ease;
     width: $header-height-small;
 
     @include respond($break-medium) {
-      // borders for search icon which is
-      // still visible
-      border: 1px solid transparent;
-      display: none;
+        // borders for search icon which is
+        // still visible
+        border: 1px solid transparent;
+        display: none;
     }
-  }
+}
 
-  .header__nav-link:not(.header__nav-link--is-active):hover {
+.header__nav-link:not(.header__nav-link--is-active):hover {
     border-bottom: 3px solid $black;
-  }
+}
 
-  .header__nav-link--is-active {
+.header__nav-link--is-active {
     border-bottom-color: $white;
 
     @include respond($break-medium) {
-      background: $white;
-      border-left-color: black(0.1);
-      border-right-color: black(0.1);
-      border-top-color: black(0.1);
-      z-index: 999;
+        background: $white;
+        border-left-color: black(.1);
+        border-right-color: black(.1);
+        border-top-color: black(.1);
+        z-index: 999;
     }
-  }
+}
 
-  // Search modifier
-  .header__nav-link--search {
+// Search modifier
+.header__nav-link--search {
     @include respond($break-medium) {
-      background: $white;
-      display: block;
-      height: $header-height-large - 20px;
-      position: absolute;
-      right: 0;
-      top: 19px; // show border bottom
-      width: 50px;
+        background: $white;
+        display: block;
+        height: $header-height-large - 20px;
+        position: absolute;
+        right: 0;
+        top: 19px; // show border bottom
+        width: 50px;
 
-      &.header__nav-link--is-active {
-        height: $header-height-large - 28px;
-      }
+        &.header__nav-link--is-active {
+            height: $header-height-large - 28px;
+        }
     }
-  }
+}
 
-  .page--search .header__nav-link--search.header__nav-link--is-active {
+.page--search .header__nav-link--search.header__nav-link--is-active {
     @include respond($break-medium) {
-      border-bottom: 3px solid $black;
-      border-left: 0;
-      border-right: 0;
-      border-top: 0;
-      bottom: 4px; // border adjustment
-      top: auto;
+        border-bottom: 3px solid $black;
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
+        bottom: 4px; // border adjustment
+        top: auto;
 
-      .header__icon {
-        top: -1px;
-      }
+        .header__icon {
+            top: -1px;
+        }
     }
-  }
+}
 
-  // Hide the search icon on the home page
-  .page--home .header__nav-link--search {
+// Hide the search icon on the home page
+.page--home .header__nav-link--search {
     display: none;
-  }
+}
 
-    .header__icon {
-      height: 40px;
-      left: 50%;
-      position: absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 40px;
+.header__icon {
+    height: 40px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
 
-      @include respond($break-medium) {
+    @include respond($break-medium) {
         height: 30px;
         top: 6px;
         transform: translateX(-50%);
         width: 30px;
-      }
     }
+}

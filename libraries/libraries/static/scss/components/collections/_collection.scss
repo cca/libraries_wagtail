@@ -3,43 +3,41 @@
 // ========================================
 
 .collection {
-  @include clearfix();
+    @include clearfix();
 
-  @include respond($break-medium) {
-    margin: 0 0 20px;
-    position: relative;
-  }
-
-  // Cant add classes in mustache templates
-  // so alternating like this
-  &:nth-of-type(even) {
-    .collection__content {
-      float: left;
-
-      @include respond($break-large) {
-        left: 0;
-        right: auto;
-      }
+    @include respond($break-medium) {
+        margin: 0 0 20px;
+        position: relative;
     }
-  }
+
+    // Cant add classes in mustache templates
+    // so alternating like this
+    &:nth-of-type(even) .collection__content {
+        float: left;
+
+        @include respond($break-large) {
+            left: 0;
+            right: auto;
+        }
+    }
 }
 
-  .collection__image {
+.collection__image {
     background-position: center center;
     background-size: cover;
     height: 200px;
     width: 100%;
 
     @include respond($break-medium) {
-      height: 300px;
+        height: 300px;
     }
 
     @include respond($break-large) {
-      height: 400px;
+        height: 400px;
     }
-  }
+}
 
-  .collection__content {
+.collection__content {
     background: $white;
     float: right;
     padding: 15px 15px 0;
@@ -48,54 +46,54 @@
     width: calc(100% - 40px);
 
     @include respond($break-large) {
-      bottom: 0;
-      float: none;
-      padding: 25px;
-      position: absolute;
-      right: 0;
-      top: auto;
-      width: 40%;
+        bottom: 0;
+        float: none;
+        padding: 25px;
+        position: absolute;
+        right: 0;
+        top: auto;
+        width: 40%;
     }
-  }
+}
 
-    .collection__title {
-      font-size: 24px;
-      font-weight: bold;
-      line-height: 1.3em;
-      margin: 0 0 10px;
-      padding: 0 0 3px;
-      text-decoration: none;
+.collection__title {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.3em;
+    margin: 0 0 10px;
+    padding: 0 0 3px;
+    text-decoration: none;
 
-      // title links should appear like regular headings
-      a {
-          color: inherit;
-          text-decoration: none;
-      }
-
-      @include respond($break-large) {
+    @include respond($break-large) {
         font-size: 28px;
-      }
     }
 
-    .collection__title a:hover {
-      opacity: 0.7;
-    }
+    // title links should appear like regular headings
+    a {
+        color: inherit;
+        text-decoration: none;
 
-    // vary color by section
-    .page--collections .collection__title-text {
-      border-bottom: 2px solid $purple;
+        &:hover {
+            opacity: .7;
+        }
     }
+}
 
-    .page--about-us .collection__title-text {
-      border-bottom: 2px solid $green;
-    }
+// vary color by section
+.page--collections .collection__title-text {
+    border-bottom: 2px solid $purple;
+}
 
-    .page--services .collection__title-text {
-      border-bottom: 2px solid $blue;
-    }
+.page--about-us .collection__title-text {
+    border-bottom: 2px solid $green;
+}
 
-    .collection__text {
-      font-family: $font-family-serif;
-      font-size: 14px;
-      line-height: 1.4em;
-    }
+.page--services .collection__title-text {
+    border-bottom: 2px solid $blue;
+}
+
+.collection__text {
+    font-family: $font-family-serif;
+    font-size: 14px;
+    line-height: 1.4em;
+}

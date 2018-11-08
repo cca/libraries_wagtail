@@ -4,27 +4,27 @@
 // ===================================
 
 .home-hero {
-  background-image: url('/static/images/home-hero-bg.png');
-  background-position: top center;
-  background-size: cover;
-  margin: 0 0 $home-hero-default-bottom-margin;
-  padding: 100px 0 30px;
-  position: relative;
+    background-image: url('/static/images/home-hero-bg.png');
+    background-position: top center;
+    background-size: cover;
+    margin: 0 0 $home-hero-default-bottom-margin;
+    padding: 100px 0 30px;
+    position: relative;
 
-  @include respond($break-medium) {
-    margin: 0 0 $home-hero-medium-bottom-margin;
-  }
+    @include respond($break-medium) {
+        margin: 0 0 $home-hero-medium-bottom-margin;
+    }
 
-  @include respond($break-large) {
-    margin: 0 0 $home-hero-large-bottom-margin;
-  }
+    @include respond($break-large) {
+        margin: 0 0 $home-hero-large-bottom-margin;
+    }
 }
 
-  .home-hero__search-box {
+.home-hero__search-box {
     margin: 0 auto 20px;
     max-width: 560px;
 
     @include respond($break-medium) {
-      margin-bottom: 70px;
+        margin-bottom: 70px;
     }
-  }
+}

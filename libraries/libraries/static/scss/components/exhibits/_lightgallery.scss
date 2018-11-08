@@ -25,7 +25,7 @@ $sub-html-padding: 40px;
     transition: background-color .3s ease-in;
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, .8);
     }
 
     p {
@@ -65,16 +65,20 @@ $sub-html-padding: 40px;
         font-family: $font-family-sans-serif;
         font-size: 20px;
     }
+
     .gallery--work__unlinked-title {
         display: none;
     }
+
     .gallery--work__linked-title {
         display: block;
 
+        // scss-lint:disable SelectorDepth
         a {
             color: $turquoise;
             text-decoration: none;
         }
+        // scss-lint:enable SelectorDepth
     }
 }
 

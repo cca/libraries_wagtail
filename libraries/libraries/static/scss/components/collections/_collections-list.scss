@@ -3,9 +3,9 @@
 // ========================================
 
 .collections-list {
-  @include respond($break-medium) {
-    left: 230px;
-    position: relative;
-    width: calc(100% - 230px);
-  }
+    @include respond($break-medium) {
+        left: 230px;
+        position: relative;
+        width: calc(100% - 230px);
+    }
 }

@@ -13,11 +13,11 @@
     position: relative;
 
     @include respond($break-medium) {
-      margin-top: -1 * $home-hero-medium-bottom-margin + 4px;
-      padding: 0 $wrapper-medium-horizontal-padding;
+        margin-top: -1 * $home-hero-medium-bottom-margin + 4px;
+        padding: 0 $wrapper-medium-horizontal-padding;
     }
 
     @include respond($break-large) {
-      margin-top: -1 * $home-hero-large-bottom-margin + 4px;
+        margin-top: -1 * $home-hero-large-bottom-margin + 4px;
     }
 }

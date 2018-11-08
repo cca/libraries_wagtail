@@ -5,32 +5,32 @@
 // ===================================
 
 .home-info-box-times {
-  color: $white;
-  flex: 1 0 100%;
-  padding: 0 0 30px;
-  position: relative;
+    color: $white;
+    flex: 1 0 100%;
+    padding: 0 0 30px;
+    position: relative;
 
-  @include respond($break-medium) {
-    flex: 0 0 50%;
-    order: 3;
-    padding: 0;
-  }
+    @include respond($break-medium) {
+        flex: 0 0 50%;
+        order: 3;
+        padding: 0;
+    }
 
-  @include respond($break-large) {
-    flex: 0 0 20%;
-  }
+    @include respond($break-large) {
+        flex: 0 0 20%;
+    }
 }
 
-  .home-info-box-times__title {
+.home-info-box-times__title {
     font-size: 22px;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: .06em;
     margin: 0 0 20px;
-    opacity: 0.8;
+    opacity: .8;
     padding: 0 0 0 5px;
-  }
+}
 
-  .home-info-box-times__title::before {
+.home-info-box-times__title::before {
     background-image: url('/static/images/clock-icon.png');
     background-size: 25px 25px;
     content: '';
@@ -40,40 +40,40 @@
     position: relative;
     top: 5px;
     width: 25px;
-  }
+}
 
-  .home-info-box-times__timetable {
-    border-top: 1px solid white(0.4);
+.home-info-box-times__timetable {
+    border-top: 1px solid white(.4);
     display: flex;
     flex-wrap: wrap;
     font-family: $font-family-serif;
     font-size: 14px;
-    letter-spacing: 0.04em;
+    letter-spacing: .04em;
     line-height: 20px;
     margin: 0 0 5px;
     padding: 10px 0 0;
-  }
+}
 
-    .home-info-box-times__timetable-name,
-    .home-info-box-times__timetable-times {
-      border-bottom: 1px solid white(0.4);
-      flex: 1 0 50%;
-      margin: 0 0 10px;
-      padding: 0 0 10px;
-    }
+.home-info-box-times__timetable-name,
+.home-info-box-times__timetable-times {
+    border-bottom: 1px solid white(.4);
+    flex: 1 0 50%;
+    margin: 0 0 10px;
+    padding: 0 0 10px;
+}
 
-    .home-info-box-times__timetable-times {
-      flex: 1 0 50%;
-      font-weight: 300;
-      text-align: right;
-    }
+.home-info-box-times__timetable-times {
+    flex: 1 0 50%;
+    font-weight: 300;
+    text-align: right;
+}
 
-  .home-info-box-times__link {
+.home-info-box-times__link {
     color: inherit;
     font-family: $font-family-serif;
     font-size: 14px;
-  }
+}
 
-  .home-info-box-times__link:hover {
-    opacity: 0.7;
-  }
+.home-info-box-times__link:hover {
+    opacity: .7;
+}
