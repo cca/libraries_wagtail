@@ -5,11 +5,11 @@ lib/
 package-lock.json
 pip-selfcheck.json
 *.pyc
-libraries/db.sqlite3
 libraries/media
-libraries/libraries/settings/local_settings.py
-libraries/libraries/settings/local.py
-libraries/share/
+local_settings.py
+local.py
+logs/
+*.log
 node_modules/
 # ignore collectstatic location in root of project
 static/
@@ -17,7 +17,6 @@ static/
 !libraries/libraries/static
 libraries/libraries/static/css
 libraries/libraries/static/fonts
-python
 # putting these below !libraries/libraries/static helps Atom out
 *.min.css
 *.min.css.map
