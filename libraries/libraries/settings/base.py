@@ -107,6 +107,94 @@ ROOT_URLCONF = 'libraries.urls'
 
 LOGIN_REDIRECT_URL = 'wagtailadmin_home'
 
+# logging
+LOGGING_DIR = os.path.join(BASE_DIR, 'logs')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(message)s',
+        },
+        'standard': {
+            'format': '[%(asctime)s] %(levelname)s %(name)s:%(lineno)s %(message)s',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
+        },
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s %(module)s:%(lineno)s %(process)d %(thread)d %(message)s',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'filters': ['require_debug_true'],
+            'formatter': 'standard',
+        },
+        'log_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'all.log'),
+            'maxBytes': 1024*1024*10,  # 10M
+            'backupCount': 14,
+            'formatter': 'standard',
+        },
+        'django_request_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'django_error.log'),
+            'maxBytes': 1024*1024*10,  # 10M
+            'backupCount': 7,
+            'formatter': 'standard',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            #'filters': ['require_debug_false'],
+            'include_html': True,
+        },
+        'mgmt_cmd_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'mgmt_cmd.log'),
+            'maxBytes': 1024*1024*10,  # 10M
+            'backupCount': 7,
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['django_request_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'mgmt_cmd.script': {
+            'handlers': ['mgmt_cmd_file', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'py.warnings': {
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        '': {
+            'handlers': ['log_file', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

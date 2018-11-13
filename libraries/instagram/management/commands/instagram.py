@@ -1,7 +1,11 @@
+import logging
+
 from django.core.management.base import BaseCommand, CommandError
 from instagram.api import get_instagram
 from instagram.models import Instagram
 from django.conf import settings
+
+logger = logging.getLogger('mgmt_cmd.script')
 
 
 class Command(BaseCommand):
@@ -9,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if not hasattr(settings, 'INSTAGRAM_ACCESS_TOKEN'):
-            self.stderr.write(self.style.ERROR('Error: No INSTAGRAM_ACCESS_TOKEN in settings, exiting.'))
+            logger.error('No INSTAGRAM_ACCESS_TOKEN in settings, exiting.')
             exit(1)
         else:
             # returns dict in form { html, image, text, username }
@@ -28,5 +32,4 @@ class Command(BaseCommand):
                 self.stdout.write(insta['text'])
 
             else:
-                self.stdout.write(self.style.ERROR('Error retrieving latest Instagram.'))
-                self.stdout.write('Type: %s | Message: %s ' % (insta['error_type'], insta['error_message']))
+                logger.error('Unable to retrieved latest Instagram. IG Error Type: ""%s". Message: "%s"' % (insta['error_type'], insta['error_message']))
