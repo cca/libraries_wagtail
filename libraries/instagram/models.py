@@ -15,3 +15,11 @@ class Instagram(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class InstagramOAuthToken(models.Model):
+    date_added = models.DateTimeField(auto_now=True)
+    token = models.CharField(max_length=51)
+
+    def __str__(self):
+        return self.token
