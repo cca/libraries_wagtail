@@ -1,7 +1,10 @@
 import json
 import re
 import requests
+
 from django.conf import settings
+
+from .models import InstagramOAuthToken
 
 # @me -> <a href=link>@me</a> etc.
 def linkify_text(text):
@@ -28,13 +31,10 @@ def linkify_text(text):
     return html
 
 
-def get_oauth_token():
-    # @TODO
-    pass
-
-
 def get_instagram():
-    url = 'https://api.instagram.com/v1/users/self/media/recent?access_token=' + settings.INSTAGRAM_ACCESS_TOKEN
+    # just grab the latest OAuth token we have
+    token = InstagramOAuthToken.objects.last().token
+    url = 'https://api.instagram.com/v1/users/self/media/recent?access_token=' + token
     response = requests.get(url)
     insta = json.loads(response.text)
 

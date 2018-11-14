@@ -179,7 +179,7 @@ LOGGING = {
             'propagate': False,
         },
         'mgmt_cmd.script': {
-            'handlers': ['mgmt_cmd_file', 'console'],
+            'handlers': ['mail_admins', 'mgmt_cmd_file', 'console'],
             'level': 'DEBUG',
             'propagate': False,
         },

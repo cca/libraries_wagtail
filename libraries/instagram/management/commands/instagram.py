@@ -1,23 +1,25 @@
 import logging
 
 from django.core.management.base import BaseCommand, CommandError
-from instagram.api import get_instagram
-from instagram.models import Instagram
 from django.conf import settings
+
+from instagram.api import get_instagram
+from instagram.models import Instagram, InstagramOAuthToken
 
 logger = logging.getLogger('mgmt_cmd.script')
 
 
 class Command(BaseCommand):
-    help = 'pulls latest @ccalibraries instagram post'
+    help = 'pulls the latest Instagram post. Meant to run as a scheduled job.'
 
     def handle(self, *args, **options):
-        if not hasattr(settings, 'INSTAGRAM_ACCESS_TOKEN'):
-            logger.error('No INSTAGRAM_ACCESS_TOKEN in settings, exiting.')
+        if len(InstagramOAuthToken.objects.all()) == 0:
+            logger.error('No Instagram OAuth tokens in database, run `python manage.py get_oauth_token` and follow the instructions to add one.')
             exit(1)
         else:
             # returns dict in form { html, image, text, username }
             insta = get_instagram()
+            # TODO: we should check for duplicates and not insert here if so
 
             if 'html' in insta:
                 # new Instagram from API response
@@ -28,8 +30,7 @@ class Command(BaseCommand):
                     username=insta['username'],
                 )
 
-                self.stdout.write(self.style.SUCCESS('Latest Instagram retrieved successfully:'))
-                self.stdout.write(insta['text'])
+                logger.info('Latest Instagram retrieved successfully: "{0}"'.format(insta['text']))
 
             else:
-                logger.error('Unable to retrieved latest Instagram. IG Error Type: ""%s". Message: "%s"' % (insta['error_type'], insta['error_message']))
+                logger.critical('Unable to retrieved latest Instagram. IG Error Type: "{0}". Message: "{1}"'.format(insta['error_type'], insta['error_message']))
