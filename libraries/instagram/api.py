@@ -34,7 +34,7 @@ def linkify_text(text):
 def get_instagram():
     # just grab the latest OAuth token we have
     token = InstagramOAuthToken.objects.last().token
-    url = 'https://api.instagram.com/v1/users/self/media/recent?access_token=' + token
+    url = 'https://api.instagram.com/v1/users/self/media/recent?count=1&access_token=' + token
     response = requests.get(url)
     insta = json.loads(response.text)
 
@@ -45,6 +45,7 @@ def get_instagram():
         output = {
             # link hashtags & usernames as they'd appear on IG itself
             'html': linkify_text(text),
+            'id': gram['id'],
             'image': gram['images']['low_resolution']['url'],
             'text': text,
             # we should already know this but just for ease of use

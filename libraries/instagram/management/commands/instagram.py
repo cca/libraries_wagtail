@@ -19,13 +19,18 @@ class Command(BaseCommand):
         else:
             # returns dict in form { html, image, text, username }
             insta = get_instagram()
-            # TODO: we should check for duplicates and not insert here if so
 
-            if 'html' in insta:
+            # do we already have this one?
+            if len(Instagram.objects.filter(ig_id=insta['id'])) > 0:
+                logger.info('No new Instagram posts; we already have the most recent one.')
+                exit(0)
+
+            elif 'html' in insta:
                 # new Instagram from API response
                 Instagram.objects.create(
                     text=insta['text'],
                     html=insta['html'],
+                    ig_id=insta['id'],
                     image=insta['image'],
                     username=insta['username'],
                 )

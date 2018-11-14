@@ -3,6 +3,7 @@ from django.db import models
 # neither a snippet nor a page, the data here is added via scheduled management cmd
 class Instagram(models.Model):
     date_added = models.DateTimeField(auto_now=True)
+    ig_id = models.TextField(blank=False, default='UNKNOWN')
     text = models.TextField(blank=True)
     html = models.TextField(
         blank=True,
