@@ -8,6 +8,7 @@ I've found upgrading Wagtail to be a little less straightforward than I thought,
 - `git pull` to get repo updates and `pip install -r libraries/requirements.txt` to update Wagtail
 - at this point, the live version of the site is still running on the old Wagtail code
 - collect the new static files `python libraries/manage.py collectstatic`
+- perform any needed database migrations `python libraries/manage.py migrate`
 - restart the gunicorn server (`service supervisord stop; sleep 2; service supervisord start`)
 
 ## Wagtail 2.0 / Django 2.0 update
@@ -25,7 +26,7 @@ We will likely not need to revisit this but several things changed and the upgra
 
 - update `django.core.urlresolvers` to `django.urls` wherever it occurs
 - delete `django.contrib.auth.middleware.SessionAuthenticationMiddleware` from the `MIDDLEWARE` setting if it's present; it was removed in Django 2.0
-- if urls.py has the line `url(r'^django-admin/', include(admin.site.urls))` the `incude()` method can be removed such that it's simply "admin.site.urls"
+- if urls.py has the line `url(r'^django-admin/', include(admin.site.urls))` the `include()` method can be removed such that it's simply "admin.site.urls"
 - look for uses of `models.ForeignKey` which don't specify the now-required `on_delete` parameter
 
 Useful docs:
