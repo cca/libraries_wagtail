@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
 from brokenlinks import views as brokenlinks_views
 from hours import views as hours_views
@@ -39,6 +39,8 @@ urlpatterns = [
 
     # Favicon
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/images/favicon.ico', permanent=True)),
+    # Robots.txt
+    url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 
     # XML sitemap
     url('^sitemap\.xml$', sitemap),
