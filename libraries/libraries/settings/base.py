@@ -114,6 +114,9 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'filters': {
+        'quiet_down_elasticsearch': {
+            '()': 'libraries.log.QuietDownElasticsearch',
+        },
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
         },
@@ -145,6 +148,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGGING_DIR, 'all.log'),
+            'filters': ['quiet_down_elasticsearch'],
             'maxBytes': 1024*1024*10,  # 10M
             'backupCount': 14,
             'formatter': 'standard',
