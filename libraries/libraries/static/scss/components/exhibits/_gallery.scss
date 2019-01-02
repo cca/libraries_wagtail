@@ -43,7 +43,8 @@ img {
     z-index: 1;
 }
 
-// don't show HTML5 videos, handled by lightGallery
+// don't show HTML5 videos & audio, handled by lightGallery
+.gallery--work__audio.media,
 .gallery--work__video.media {
     display: none;
 }
@@ -85,20 +86,40 @@ img {
     font-weight: 700;
 }
 
-// YouTube "play" button
-.ytp-large-play-button {
-    display: none;
-    height: 48px;
+.gallery__play-button {
     left: 50%;
-    margin-left: -34px;
-    margin-top: -24px;
     position: absolute;
     top: 50%;
-    transition: opacity .25s cubic-bezier(0, 0, .2, 1);
-    width: 68px;
     z-index: 63;
+    opacity: 0;
+    transition: opacity .3s ease-in;
+    transform: translate(-50%, -50%);
+
+    .gallery--work:hover & {
+        opacity: 1;
+    }
+
+    // YouTube "play" button
+    &--ytp {
+        height: 48px;
+        width: 68px;
+    }
+
+    // Audio "play" button
+    &--audio {
+        background: rgba(black, 0.7);
+        border-radius: 50%;
+        fill: white;
+        height: 66px;
+        width: 66px;
+        padding: 10px;
+    }
 }
 
-.gallery--work:hover .ytp-large-play-button {
-    display: block;
+// center <audio> element in opened gallery
+.gallery--work__audio-container {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
 }
