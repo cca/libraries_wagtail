@@ -5,7 +5,7 @@
         {% if work.image %}
             {% image work.image max-600x600 %}
         {% else %}
-            <img src="{% static 'images/audio-fallback.jpg' %}" alt="audio icon" />
+            <img class="gallery__fallback-image" src="{% static 'images/audio-fallback.jpg' %}" alt="audio icon" />
         {% endif %}
     </div>
     <div class="gallery--work__audio media" id="js-{{work.title|slugify}}">
