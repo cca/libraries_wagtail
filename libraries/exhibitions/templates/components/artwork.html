@@ -38,19 +38,7 @@ TODO: conditions for different work types (image, audio, video, embed)
     </div>
 
 {% elif work.type == 'audio' %}
-    <div class="gallery--work__audio">
-    {% if work.image %}
-        {% image work.image max-600x600 %}
-    {% else %}
-        <img src="..." alt="audio icon" />
-    {% endif %}
-    </div>
-    <div class="gallery--work__audio media">
-        <audio class="lg-html5" controls src="{{ work.media.file.url }}">
-             Your browser does not support HTML5 audio.
-        </audio>
-    </div>
-
+    {% include 'components/audio.html' %}
 {% endif %}
 
     <div class="gallery--work__metadata js-caption">

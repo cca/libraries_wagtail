@@ -190,7 +190,7 @@ class ExhibitArtwork(Orderable):
 
     type_choices = (
         ('image', 'Image'),
-        # ('audio', 'Audio'),
+        ('audio', 'Audio'),
         ('video', 'Video'),
         ('html', 'Embed code (HTML)'),
     )
