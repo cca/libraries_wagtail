@@ -20,8 +20,12 @@ class Command(BaseCommand):
             # returns dict in form { html, image, text, username }
             insta = get_instagram()
 
+            # did we get an error?
+            if insta.get('error_type') is not None:
+                logger.critical('Unable to retrieved latest Instagram. IG Error Type: "{0}". Message: "{1}"'.format(insta['error_type'], insta['error_message']))
+
             # do we already have this one?
-            if len(Instagram.objects.filter(ig_id=insta['id'])) > 0:
+            elif len(Instagram.objects.filter(ig_id=insta['id'])) > 0:
                 logger.info('No new Instagram posts; we already have the most recent one.')
                 exit(0)
 
