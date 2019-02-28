@@ -5,7 +5,6 @@ lib/
 pip-selfcheck.json
 *.pyc
 libraries/media
-local_settings.py
 local.py
 logs/
 *.log
