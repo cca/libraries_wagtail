@@ -1,12 +1,10 @@
-'use strict';
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourcemaps');
-const postcss = require('gulp-postcss');
-const concat = require('gulp-concat');
-const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
-const autoprefixer = require('autoprefixer');
+const { src, dest, parallel, watch } = require('gulp')
+const sass = require('gulp-sass')
+const postcss = require('gulp-postcss')
+const concat = require('gulp-concat')
+const babel = require('gulp-babel')
+const uglify = require('gulp-uglify')
+const autoprefixer = require('autoprefixer')
 
 const static_root = 'libraries/libraries/static'
 const settings = {
@@ -31,43 +29,40 @@ const settings = {
 	}
 };
 
-function styles () {
-	gulp.src(settings.src.main)
-		.pipe(sourcemaps.init())
+// tasks for each major set of files (main site CSS, main site JS, exhibits JS)
+function allCSS () {
+	return src(settings.src.main, { sourcemaps: true })
 		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
 		.pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
-		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest(settings.dist.css));
+		.pipe(dest(settings.dist.css));
 }
-gulp.task('styles', styles);
 
-function scripts () {
-	gulp.src(settings.src.js)
-		.pipe(sourcemaps.init())
+function mainJS () {
+	return src(settings.src.js, { sourcemaps: true })
 		.pipe(concat('main.min.js'))
 		.pipe(babel({ presets: ['env'] }))
 		.pipe(uglify())
-		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest( settings.dist.js ));
+		.pipe(dest(settings.dist.js));
+}
 
-	gulp.src(settings.src.exhibits)
-		.pipe(sourcemaps.init())
+function exhibitsJS() {
+	return src(settings.src.exhibits, { sourcemaps: true })
 		.pipe(concat('exhibits.min.js'))
 		.pipe(babel({ presets: ['env'] }))
 		.pipe(uglify())
-		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest( settings.dist.js ));
+		.pipe(dest(settings.dist.js));
 }
-gulp.task('scripts', scripts);
 
-/**
- * Build does not comb your code
- */
-gulp.task('build', ['styles', 'scripts']);
+// watch each main set of files & run its associated task
+function defaultTask() {
+	watch(settings.src.exhibits, exhibitsJS)
+	watch(settings.src.js, mainJS)
+	watch(settings.src.scss, allCSS)
+}
 
-gulp.task('default', function() {
-	gulp.watch(settings.src.scss
-		.concat(settings.src.js)
-		.concat(settings.src.exhibits),
-	['build'])
-});
+// expose all tasks
+exports.js = mainJS
+exports.css = allCSS
+exports.exhibits = exhibitsJS
+exports.build = parallel(allCSS, mainJS, exhibitsJS)
+exports.default = defaultTask

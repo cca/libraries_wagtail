@@ -2,7 +2,6 @@ bin/
 include/
 lib/
 .Python
-package-lock.json
 pip-selfcheck.json
 *.pyc
 libraries/media
