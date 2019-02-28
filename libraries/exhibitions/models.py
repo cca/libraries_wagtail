@@ -34,6 +34,7 @@ def before_serve_document(document, request):
 class ExhibitsIndexPage(Page):
     parent_page_types = ['home.HomePage']
     subpage_types = ['exhibitions.ExhibitPage']
+    max_count = 1
 
     # put list of all published exhibits in the page's context
     def get_context(self, request):

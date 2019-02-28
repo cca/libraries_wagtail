@@ -170,6 +170,7 @@ def get_hours_for_lib(libname, for_date=datetime.date.today()):
 class HoursPage(Page):
     parent_page_types = ['categories.RowComponent']
     subpage_types = []
+    max_count = 1
 
     intro = RichTextField(features=settings.RICHTEXT_ADVANCED, blank=True)
     main_image = models.ForeignKey(

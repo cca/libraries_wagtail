@@ -65,6 +65,8 @@ class StaffPageStaffMembers(Orderable):
 class StaffListPage(Page, index.Indexed):
     parent_page_types = ['categories.RowComponent']
     subpage_types = []
+    max_count = 1
+
     main_image = models.ForeignKey(
         'wagtailimages.Image',
         help_text="Doesn't display on the page itself but a thumbnail close to 230x115px is used on the 'About Us' page and a smaller thumbnail is also used in search results.",

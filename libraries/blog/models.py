@@ -26,6 +26,7 @@ def all_blog_posts():
 class BlogIndex(Page):
     parent_page_types = ['home.HomePage']
     subpage_types = ['blog.BlogPage']
+    max_count = 1
 
     # override serve to redirect to latest blog post if index is visited
     def serve(self, request):
