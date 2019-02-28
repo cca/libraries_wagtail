@@ -7,7 +7,7 @@ django-modelcluster==4.2
 django-taggit==0.23.0
 django-treebeard==4.2.0
 djangorestframework==3.7.7
-draftjs-exporter==2.0.0
+draftjs-exporter==2.1.5
 elasticsearch==5.4.0
 html5lib==0.999999999
 idna==2.6
@@ -20,7 +20,7 @@ requests==2.21.0
 six==1.11.0
 Unidecode==0.4.21
 urllib3==1.24.1
-wagtail==2.3
+wagtail==2.4
 Wand==0.4.4
 webencodings==0.5.1
 Willow==1.1
