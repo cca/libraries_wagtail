@@ -1,4 +1,5 @@
 from django.contrib import admin
-from .models import Instagram
+from .models import *
 
 admin.site.register(Instagram)
+admin.site.register(InstagramOAuthToken)
