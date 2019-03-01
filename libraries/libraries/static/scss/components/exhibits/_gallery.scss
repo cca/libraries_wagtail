@@ -16,12 +16,12 @@ img {
 
     &__play-button {
         left: 50%;
+        opacity: 0;
         position: absolute;
         top: 50%;
-        z-index: 63;
-        opacity: 0;
-        transition: opacity .3s ease-in;
         transform: translate(-50%, -50%);
+        transition: opacity .3s ease-in;
+        z-index: 63;
 
         .gallery--work:hover & {
             opacity: 1;
@@ -35,12 +35,12 @@ img {
 
         // Audio "play" button
         &--audio {
-            background: rgba(black, 0.7);
+            background: rgba(black, .7);
             border-radius: 50%;
             fill: white;
             height: 56px;
-            width: 56px;
             padding: 13px;
+            width: 56px;
         }
     }
 }
@@ -122,8 +122,8 @@ img {
 
 // center <audio> element in opened gallery
 .gallery--work__audio-container {
+    left: 50%;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    left: 50%;
 }
