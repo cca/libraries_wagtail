@@ -1,5 +1,8 @@
 linters:
 
+    ColorKeyword:
+        enabled: false
+
     Indentation:
         enabled: true
         width: 4

@@ -5,7 +5,13 @@
 .page {
     background: $white;
     font-family: $font-family-serif;
-    font-smoothing: antialiased;
+    // non-standard, autoprefixer can't handle this property because the values
+    // differ with each implementation (W3C, Firefox, Chrome)
+    // scss-lint:disable PropertySpelling
+    font-smooth: always;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    // scss-lint:enable PropertySpelling
     min-width: 360px;
     text-rendering: optimizeLegibility;
     // scss-lint:disable DuplicateProperty
