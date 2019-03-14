@@ -5,7 +5,6 @@
 
 {% block content %}
 
-{% comment %} two templates: one large banner image or four square images {% endcomment %}
 {% if page.display_template == 'banner' %}
     {% include 'components/banner.html' %}
 {% elif page.display_template == 'foursquare' %}
@@ -54,7 +53,7 @@
     <section class="gallery">
         <h2 class="gallery--title">Gallery</h2>
 
-        <div class="gallery--works js-masonry js-lightgallery">
+        <div class="gallery--works js-masonry js-lightgallery" data-masonry='{ "columnWidth": {{ page.column_width }}, "fitWidth": false, "gutter": {{ page.gallery_spacing }}, "itemSelector": ".js-gallery--work" }'>
             {% for work in page.exhibit_artwork.all %}
                 {% include 'components/artwork.html' %}
             {% endfor %}

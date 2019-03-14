@@ -1,16 +1,11 @@
 // exhibits app code, mostly lightGallery.js edits
 $(() => {
+    // Masonry.js https://masonry.desandro.com
+    // Options are declared in a data attribute on this element
     let gallery = $('.js-masonry')
-    gallery.imagesLoaded(() => {
-        gallery.masonry({
-            "columnWidth": 600,
-            "fitWidth": true,
-            "gutter": 4,
-            "itemSelector": ".js-gallery--work"
-        })
-    })
+    gallery.imagesLoaded(() => gallery.masonry())
 
-    let options = {
+    let lgOptions = {
         autoplayFirstVideo: false,
         hideBarsDelay: 3000,
         selector: '.js-gallery--work',
@@ -21,16 +16,16 @@ $(() => {
             title: false
         }
     }
-    let $lg = $('.js-lightgallery').lightGallery(options);
+    let lg = $('.js-lightgallery').lightGallery(lgOptions);
 
-    $lg.on('onAfterOpen.lg', () => {
+    lg.on('onAfterOpen.lg', () => {
         // add missing tooltips for lightGallery controls
         ['zoom-in', 'zoom-out', 'actual-size', 'download'].forEach(action => {
             $('#lg-' + action).attr('title', action.replace('-', ' '))
         })
     })
 
-    $lg.on('onAfterAppendSubHtml.lg', (event, index) => {
+    lg.on('onAfterAppendSubHtml.lg', (event, index) => {
         let slide = $('.js-gallery--work').eq(index)
         let zooms = $('#lg-zoom-in, #lg-zoom-out, #lg-actual-size')
 

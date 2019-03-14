@@ -7,7 +7,7 @@ from modelcluster.fields import ParentalKey
 from wagtail.core import hooks
 from wagtail.core.models import Orderable, Page
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import FieldPanel, HelpPanel, InlinePanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, HelpPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
@@ -81,6 +81,7 @@ class ExhibitPage(Page):
     parent_page_types = ['exhibitions.ExhibitsIndexPage']
     subpage_types = [] # no children allowed
 
+    # theme choices
     display_choices = (
         ('banner', 'Single header image'),
         ('foursquare', 'Four square header images'),
@@ -91,9 +92,29 @@ class ExhibitPage(Page):
         help_text='There are two layouts for the header; one large banner image or four square images set to the left of the title.',
         max_length=20,
     )
+    gallery_columns = models.IntegerField(
+        default=2,
+        help_text='Recommended to be 2 or 3. Other numbers may cause odd layouts.'
+    )
+    gallery_spacing = models.IntegerField(
+        default=4,
+        help_text='Horizontal padding (in pixels) between works in the gallery.'
+    )
+    # offer CCA brand fonts where possible, monospace is only one we don't have
+    font_choices = (
+        ('serif', 'Default (The Serif/Merriweather)'),
+        ('sans-serif', 'Sans Serif (Brown/Raleway)'),
+        ('stencil', 'Stencil (Le Corbusier/Stardos Stencil)'),
+        ('monospace', 'Monospace (Consolas)'),
+    )
+    main_body_font = models.CharField(
+        choices=font_choices,
+        default='serif',
+        help_text='Font applied to the Description & other details (location/reception/etc.) below.',
+        max_length=50
+    )
 
-    # background color (do we still want this? doesn't seem useful…)
-
+    # details about exhibition
     location = RichTextField(
         blank=True,
         features=settings.RICHTEXT_BASIC,
@@ -125,19 +146,32 @@ class ExhibitPage(Page):
         help_text='Footer text (e.g. for licensing, attribution)',
     )
     content_panels = Page.content_panels + [
-        FieldPanel('display_template'),
-        InlinePanel(
-            'header_image',
-            help_text='For the "Single header image" template only the first image is shown. For "Four square header images" all 4 images are shown in the order specified here.',
-            label='Header Image',
-            min_num=1,
-            max_num=4,
+        MultiFieldPanel(
+            [
+                FieldPanel('display_template'),
+                InlinePanel(
+                    'header_image',
+                    help_text='For the "Single header image" template only the first image is shown. For "Four square header images" all 4 images are shown in the order specified here.',
+                    label='Header Image',
+                    min_num=1,
+                    max_num=4,
+                ),
+                FieldPanel('gallery_columns'),
+                FieldPanel('gallery_spacing'),
+                FieldPanel('main_body_font'),
+            ],
+            heading='Theme',
         ),
 
-        FieldPanel('location'),
-        FieldPanel('dates'),
-        FieldPanel('creators'),
-        FieldPanel('reception'),
+        MultiFieldPanel(
+            [
+                FieldPanel('location'),
+                FieldPanel('dates'),
+                FieldPanel('creators'),
+                FieldPanel('reception'),
+            ],
+            heading='Exhibition details'
+        ),
 
         StreamFieldPanel('description'),
 
@@ -146,10 +180,10 @@ class ExhibitPage(Page):
 p { font-size: 1.2em; }
 </style>
 <p>
-    Gallery images are restricted to a 600x600 space with their aspect ratio retained but their full size is visible in the fullscreen viewer. The work's description also displays. If you provide a link URL, the title in the fullscreen viewer will be hyperlinked to it.
+    Gallery images are restricted to a 630x630 space with their aspect ratio retained but their full size is visible in the fullscreen viewer. The work's description also displays. If you provide a link URL, the title in the fullscreen viewer will be hyperlinked to it.
 </p>
 <p>
-    For embed codes, <em>only enter the URL</em> contained in the code, usually as the "src" attribute of an <code>&lt;iframe&gt;</code> element. You can still add an image to the work; it will be used as the thumbnail in the gallery. If you <em>don't</em> add an image and it's a YouTube embed, Wagtail grabs a 480x360 thumbnail from YouTube. For embeds from other sources, we can work on building specific handlers that do something similar. Right now, if you don't specify an image and it's not a YouTube URL, the iframe itself is shown. It's strongly recommended to provide an image in these cases to avoid weird layout problems.
+    For embed codes, <strong>only enter the URL contained in the code</strong>, usually as the "src" attribute of an <code>&lt;iframe&gt;</code> element. You can still add an image to the work; it will be used as the thumbnail in the gallery. If you <em>don't</em> add an image and it's a YouTube embed, Wagtail grabs a 480x360 thumbnail from YouTube. For embeds from other sources, we can work on building specific handlers that do something similar. Right now, if you don't specify an image and it's not a YouTube URL, the embedded content itself is shown. It's strongly recommended to provide an image in these cases to avoid layout problems.
 </p>
         """, heading='Information on Adding Artworks'),
 
@@ -157,6 +191,17 @@ p { font-size: 1.2em; }
 
         FieldPanel('epilogue'),
     ]
+
+    @property
+    def column_width(self):
+        """
+        The maximum size of each gallery column based on the values for number
+        of columns and spacing in between those columns (gutter).
+        """
+        # col width = width of container (1260) minus space taken up by gutters
+        # (one fewer gutter than no. columns) divided by no. columns
+        width = (1260 - (self.gallery_columns - 1) * self.gallery_spacing) / self.gallery_columns
+        return width
 
     # index related ExhibitArtworks
     search_fields = Page.search_fields + [

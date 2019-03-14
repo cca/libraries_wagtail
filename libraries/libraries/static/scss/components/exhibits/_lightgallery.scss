@@ -7,16 +7,17 @@
 // or combined with lightGallery CSS? Makes all the
 // selector overrides a lot easier, also just logical.
 
-// we will need to use IDs to override lightGallery styles
+// we have to use an ID here to override lightGallery CSS
 // scss-lint:disable IdSelector, ImportantRule
 #lg-counter {
     color: $turquoise !important;
     font-size: 18px;
 }
+// scss-lint:enable IdSelector, ImportantRule
 
 $sub-html-padding: 40px;
 
-// 1st selector just needed for specificity
+// 1st selector needed just for specificity
 .lg-outer .lg-sub-html {
     color: $white;
     display: flex;

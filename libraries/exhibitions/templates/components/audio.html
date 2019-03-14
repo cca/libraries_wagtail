@@ -1,14 +1,16 @@
 {% load wagtailimages_tags static %}
-<div class="gallery--work js-gallery--work" data-sub-html=".js-caption" data-html="#js-{{work.title|slugify}}">
+<div class="gallery--work js-gallery--work"
+    data-sub-html=".js-caption" data-html="#js-{{ work.title|slugify }}"
+    style="width:{{ page.column_width }}px;">
     <div class="gallery--work__audio">
         {% include "components/audio-btn.html" %}
         {% if work.image %}
-            {% image work.image max-600x600 %}
+            {% image work.image max-630x630 %}
         {% else %}
             <img class="gallery__fallback-image" src="{% static 'images/audio-fallback.jpg' %}" alt="audio icon" />
         {% endif %}
     </div>
-    <div class="gallery--work__audio media" id="js-{{work.title|slugify}}">
+    <div class="gallery--work__audio media" id="js-{{ work.title|slugify }}">
         <div class="gallery--work__audio-container">
             <audio class="lg-html5" controls src="{{ work.media.file.url }}" controlsList="nodownload">
                 Your browser does not support HTML5 audio.
