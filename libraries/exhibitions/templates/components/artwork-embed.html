@@ -1,4 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags %}
+
 {% if work.embed_code != '' %}
 <div class="gallery--work js-gallery--work" data-iframe="true"
     data-src="{{ work.embed_code }}?modestbranding=1&rel=0&showinfo=0&controls=0"
@@ -20,4 +21,3 @@
         {% endif %}
     </div>
 {% endif %}
-{% comment %} starting div is closed in the parent template {% endcomment %}

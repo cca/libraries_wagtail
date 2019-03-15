@@ -1,44 +1,17 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% comment %}
-Note that "data-width" attribute on galler works is for lightGallery while the explicitly-declared widths in the "style" attribute are to help the Masonry layout handle a variable number of columns.
+Note that "data-width" attribute on gallery works is for lightGallery while the explicitly-declared widths in the "style" attribute are to help the Masonry layout handle a variable number of columns.
 {% endcomment %}
 
 {% if work.type == 'image' %}
-{% image work.image original as full_image %}
-<div class="gallery--work js-gallery--work"
-    data-src="{{ full_image.url }}" data-width="{{ full_image.width }}" data-sub-html=".js-caption"
-    style="width:{{ page.column_width }}px;">
-    <div class="gallery--work__image">
-        {% image work.image max-630x630 %}
-    </div>
-
+    {% include 'components/artwork-image.html' %}
 {% elif work.type == 'html' %}
-{% include 'components/embed.html' %}
-
+    {% include 'components/artwork-embed.html' %}
 {% elif work.type == 'video' %}
-<div class="gallery--work js-gallery--work"
-    data-sub-html=".js-caption" data-html="#js-{{work.title|slugify}}"
-    style="width:{{ page.column_width }}px;">
-    <div class="gallery--work__video">
-    {% if work.image %}
-        {% include 'components/ytp-btn.html' %}
-        {% image work.image max-630x630 %}
-    {% else %}
-        {% include 'components/ytp-btn.html' %}
-        <img src="..." alt="video icon" />
-    {% endif %}
-    </div>
-    <div class="gallery--work__video media" id="js-{{ work.title|slugify }}">
-        <video class="lg-video-object lg-html5" controls preload="none"
-            poster="{{ work.image.file.url }}">
-            <source src="{{ work.media.file.url }}" type="video/mp4">
-             Your browser does not support HTML5 video.
-        </video>
-    </div>
-
+    {% include 'components/artwork-video.html' %}
 {% elif work.type == 'audio' %}
-    {% include 'components/audio.html' %}
+    {% include 'components/artwork-audio.html' %}
 {% endif %}
 
 {% comment %} all types share the same metadata structure {% endcomment %}

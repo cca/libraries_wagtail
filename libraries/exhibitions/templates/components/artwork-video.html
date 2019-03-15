@@ -1,0 +1,16 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="gallery--work js-gallery--work"
+    data-sub-html=".js-caption" data-html="#js-{{work.title|slugify}}"
+    style="width:{{ page.column_width }}px;">
+    <div class="gallery--work__video">
+        {% include 'components/ytp-btn.html' %}
+        {% image work.image max-630x630 %}
+    </div>
+    <div class="gallery--work__video media" id="js-{{ work.title|slugify }}">
+        <video class="lg-video-object lg-html5" controls preload="none"
+            poster="{{ work.image.file.url }}">
+            <source src="{{ work.media.file.url }}" type="video/mp4">
+             Your browser does not support HTML5 video.
+        </video>
+    </div>
