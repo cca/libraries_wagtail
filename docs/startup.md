@@ -26,7 +26,7 @@ There's a "bootstrap.sh" script that does all this but I list the steps above fo
 
 ## Database & Search
 
-The database and search settings vary the most across local/dev/production environments. We define them in the libraries/settings/local_settings.py file (applied before base settings) and libraries/settings/local.py files. Here's an example local_settings.py for using a local postgres database:
+The database and search settings vary the most across local/dev/production environments. We define them in the libraries/libraries/settings/local.py file. Here's an example of local postgres and sqlite databases:
 
 ```python
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -51,9 +51,9 @@ DATABASES = {
 }
 ```
 
-I recommend using a postgres database rather than a sqlite3 one simply because it's closer to what the production site does, even if it means employing a large stack during local development.
+I recommend using a postgres database rather than a sqlite3 one simply because it's closer to what the production site does, even if it means employing a larger stack during local development.
 
-The site comes with settings for Elasticsearch but doesn't enable it by default. To enable it, install Elasticsearch, start the ES server, and add a passage like this to libraries/settings/local_settings.py:
+The site comes with settings for Elasticsearch but doesn't enable it by default. To enable it, install Elasticsearch, start the ES server, and add a passage like this to libraries/libraries/settings/local.py:
 
 ```python
 from .elasticsearch import *
@@ -92,12 +92,3 @@ Wagtail automatically updates the search index and publishes scheduled pages. As
 # download latest Instagram post (at least daily, scheduling not hugely important)
 * 4 * * * workon libraries; /opt/virtualenvs/libraries/bin/python /opt/libraries_wagtail/libraries/manage.py instagram
 ```
-
-## Startup on dev server (libraries-dev.cca.edu vm-lib-django-02.cca.edu) do these as root (sudo)
-
-* cd /opt/libraries_wagtail
-* `git pull`
-* use libraries virtualenv `workon libraries`
-* run a migration `./manage.py migrate`
-* restart supervisord: `service supervisord stop` then `service supervisord start`
-* (optional) restart nginx `service nginx restart`

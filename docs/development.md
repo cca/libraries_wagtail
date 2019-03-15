@@ -3,7 +3,7 @@
 Basic outline for working on the site:
 
 - Pick an app or feature to work on & checkout a logically-named branch based on the `dev` branch
-    + `iss##` for work related to a GitHub issue is a naming conveniont
+    + `iss##` for work related to a GitHub issue is a naming convention
 - If model or database changes happen, run `makemigrations -n short_name`
     + Try to _always_ name migrations so it's possible infer what it's doing from the filename
     + If you make multiple migrations for the same feature/issue, combine them _before pushing to GitHub_ with `squashmigrations app_name first_number last_number`
@@ -32,7 +32,7 @@ These should be run from inside the "libraries" directory as it is the root of t
 > # rebuild the site styles and scripts
 > npm run build
 > # continually watch for SASS changes & recompile to CSS
-> npx run gulp
+> npm run watch
 ```
 
 We use [Gulp](http://gulpjs.com/) for our front-end build tool because that was what Torchbox's designer used, but could easily switch to something else. Note that tools like autoprefixer are solving some bugs though so switching might result in some style problems (e.g. the radio buttons on the home page search box need autoprefixer).
