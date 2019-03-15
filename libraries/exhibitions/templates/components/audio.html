@@ -1,6 +1,7 @@
 {% load wagtailimages_tags static %}
 <div class="gallery--work js-gallery--work"
     data-sub-html=".js-caption" data-html="#js-{{ work.title|slugify }}"
+    data-download-url="{{ work.media.file.url }}"
     style="width:{{ page.column_width }}px;">
     <div class="gallery--work__audio">
         {% include "components/audio-btn.html" %}
