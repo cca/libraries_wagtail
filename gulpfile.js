@@ -40,7 +40,7 @@ function allCSS () {
 function mainJS () {
 	return src(settings.src.js, { sourcemaps: true })
 		.pipe(concat('main.min.js'))
-		.pipe(babel({ presets: ['env'] }))
+		.pipe(babel({ presets: ['@babel/preset-env'] }))
 		.pipe(uglify())
 		.pipe(dest(settings.dist.js));
 }
@@ -48,7 +48,7 @@ function mainJS () {
 function exhibitsJS() {
 	return src(settings.src.exhibits, { sourcemaps: true })
 		.pipe(concat('exhibits.min.js'))
-		.pipe(babel({ presets: ['env'] }))
+		.pipe(babel({ presets: ['@babel/preset-env'] }))
 		.pipe(uglify())
 		.pipe(dest(settings.dist.js));
 }
