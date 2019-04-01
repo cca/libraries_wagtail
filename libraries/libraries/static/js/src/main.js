@@ -351,7 +351,6 @@ document.addEventListener('DOMContentLoaded', main);
       this.update();
 
       // append to main wrapper & not body
-      document.querySelector('main').style.position = 'relative';
       document.querySelector('main').appendChild(this.element);
     };
 
