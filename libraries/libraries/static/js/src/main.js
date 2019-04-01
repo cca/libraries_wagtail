@@ -1,5 +1,3 @@
-'use strict';
-
 function main() {
 
   // These need to match with the breakpoints
@@ -257,6 +255,10 @@ document.addEventListener('DOMContentLoaded', main);
   function init() {
     bindEvents();
     loop();
+    window.addEventListener('touchstart', () => {
+        // doesn't work for touch devices, disable everything
+        unbindEvents();
+    })
   }
 
   // Bind events that are needed
@@ -264,8 +266,14 @@ document.addEventListener('DOMContentLoaded', main);
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('touchmove', onTouchMove);
     document.addEventListener('touchstart', onTouchMove);
-
     window.addEventListener('resize', onWindowResize);
+  }
+
+  function unbindEvents() {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('touchstart', onTouchMove);
+    window.removeEventListener('resize', onWindowResize);
   }
 
   function onWindowResize(e) {
