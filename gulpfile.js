@@ -41,7 +41,7 @@ function mainJS () {
 	return src(settings.src.js, { sourcemaps: true })
 		.pipe(concat('main.min.js'))
 		.pipe(babel({ presets: ['@babel/preset-env'] }))
-		.pipe(uglify())
+		.pipe(uglify({ output: { comments: 'some' } }))
 		.pipe(dest(settings.dist.js));
 }
 
