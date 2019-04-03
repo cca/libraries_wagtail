@@ -63,7 +63,8 @@ img {
 
 .gallery--work {
     cursor: pointer;
-    margin-bottom: 4px;
+    // overriden by the "gallery_spacing" value, here only as a reminder
+    // margin-bottom: 4px;
 
     @include respond($break-medium) {
         display: inline-block;

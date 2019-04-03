@@ -51,6 +51,7 @@
     </div>
 
     <section class="gallery">
+        <style scoped>.gallery--work { margin-bottom: {{ page.gallery_spacing }}px; }</style>
         <h2 class="gallery--title">Gallery</h2>
 
         <div class="gallery--works js-masonry js-lightgallery" data-masonry='{ "columnWidth": {{ page.column_width }}, "fitWidth": false, "gutter": {{ page.gallery_spacing }}, "itemSelector": ".js-gallery--work" }'>

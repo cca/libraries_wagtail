@@ -137,7 +137,7 @@ class ExhibitPage(Page):
     )
     description = StreamField(
         BaseStreamBlock(),
-        verbose_name='Introduction/Description',
+        verbose_name='Description',
         null=True,
     )
     epilogue = RichTextField(
@@ -151,7 +151,7 @@ class ExhibitPage(Page):
                 FieldPanel('display_template'),
                 InlinePanel(
                     'header_image',
-                    help_text='For the "Single header image" template only the first image is shown. For "Four square header images" all 4 images are shown in the order specified here.',
+                    help_text='For the "Single header image" template only the first image is shown. For "Four square header images" 4 images are shown in the order specified here.',
                     label='Header Image',
                     min_num=1,
                     max_num=4,
@@ -165,27 +165,29 @@ class ExhibitPage(Page):
 
         MultiFieldPanel(
             [
+                StreamFieldPanel('description'),
                 FieldPanel('location'),
                 FieldPanel('dates'),
                 FieldPanel('creators'),
                 FieldPanel('reception'),
             ],
-            heading='Exhibition details'
+            heading='Exhibition details',
         ),
 
-        StreamFieldPanel('description'),
-
-        HelpPanel(content="""
+        HelpPanel(
+            content="""
 <style scoped>
 p { font-size: 1.2em; }
 </style>
 <p>
-    Gallery images are restricted to a 630x630 space with their aspect ratio retained but their full size is visible in the fullscreen viewer. The work's description also displays. If you provide a link URL, the title in the fullscreen viewer will be hyperlinked to it.
+    Gallery images are restricted to a 630x630 space <em>with their aspect ratio retained</em> but their full size is visible in the fullscreen viewer. There's no reason to upload an image larger than 2,000 pixels since most screens will not be that large. The work's description also displays. If you provide a link URL, the title in the fullscreen viewer will be hyperlinked to it.
 </p>
 <p>
     For embed codes, <strong>only enter the URL contained in the code</strong>, usually as the "src" attribute of an <code>&lt;iframe&gt;</code> element. You can still add an image to the work; it will be used as the thumbnail in the gallery. If you <em>don't</em> add an image and it's a YouTube embed, Wagtail grabs a 480x360 thumbnail from YouTube. For embeds from other sources, we can work on building specific handlers that do something similar. Right now, if you don't specify an image and it's not a YouTube URL, the embedded content itself is shown. It's strongly recommended to provide an image in these cases to avoid layout problems.
 </p>
-        """, heading='Information on Adding Artworks'),
+            """,
+            heading='Information on Adding Artworks',
+        ),
 
         InlinePanel('exhibit_artwork', label='Exhibit pieces'),
 
@@ -205,6 +207,12 @@ p { font-size: 1.2em; }
 
     # index related ExhibitArtworks
     search_fields = Page.search_fields + [
+        index.SearchField('description'),
+        index.SearchField('location'),
+        index.SearchField('dates'),
+        index.SearchField('reception'),
+        index.SearchField('creators'),
+        index.SearchField('epilogue'),
         index.RelatedFields('exhibit_artwork', [
             index.SearchField('title'),
             index.SearchField('creator'),
@@ -219,7 +227,7 @@ class HeaderImage(Orderable):
 
     image = models.ForeignKey(
         'wagtailimages.Image',
-        help_text='Header image',
+        help_text='Single header images should be ≥ 1360px wide; they will be strecthed if not. Foursquare images are sized to a 400x400 square but you can upload larger images.',
         null=False,
         blank=False,
             on_delete=models.CASCADE,
