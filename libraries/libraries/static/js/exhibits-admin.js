@@ -26,4 +26,12 @@ $(function(){
 
     // trigger the above logic on page load
     $('#id_exhibit_artwork-FORMS .js-type').trigger('change')
+
+    // auto-tag images with the slugified title of the exhibition
+    // fires whenever we're on the "Upload" tab
+    $(document).on('click', '.modal-content a[href="#upload"]', () => {
+        var title = $('#id_title').val()
+        // handy URLify function is already present
+        $('#id_tags').tagit('createTag', URLify(title))
+    })
 })
