@@ -2,8 +2,8 @@
 
 {% if work.embed_code != '' %}
 <div class="gallery--work js-gallery--work" data-iframe="true"
-    data-src="{{ work.embed_code }}?modestbranding=1&rel=0&showinfo=0&controls=0"
-    data-sub-html=".js-caption" style="width:{{page.column_width}}px;">
+    data-src="{{ work.embed_code }}" data-sub-html=".js-caption"
+    style="width:{{page.column_width}}px;">
     <div class="gallery--work__html">
         {% if work.image %}
             {% include 'components/ytp-btn.html' %}

@@ -10,12 +10,25 @@ $(() => {
         hideBarsDelay: 3000,
         selector: '.js-gallery--work',
         subHtmlSelectorRelative: true,
+        youtubePlayerParams: {
+            modestbranding: 1,
+            showinfo: 0,
+            rel: 0,
+            controls: 0
+        },
         vimeoPlayerParams: {
             byline: false,
             portrait: false,
             title: false
         }
     }
+    // remove data-iframe from embeds that look like YouTube or Vimeo
+    $('.js-gallery--work').each((idx, el) => {
+        let re = /(youtube\.com|youtu\.be|vimeo\.com)/
+        if ($(el).data('src').match(re)) {
+            $(el).removeAttr('data-iframe')
+        }
+    })
     let lg = $('.js-lightgallery').lightGallery(lgOptions);
 
     lg.on('onAfterOpen.lg', () => {
