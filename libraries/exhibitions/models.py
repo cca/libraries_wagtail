@@ -183,7 +183,7 @@ p { font-size: 1.2em; }
     Gallery images are restricted to a 630x630 space <em>with their aspect ratio retained</em> but their full size is visible in the fullscreen viewer. There's no reason to upload an image larger than 2,000 pixels since most screens will not be that large. The work's description also displays. If you provide a link URL, the title in the fullscreen viewer will be hyperlinked to it.
 </p>
 <p>
-    For embed codes, <strong>only enter the URL contained in the code</strong>, usually as the "src" attribute of an <code>&lt;iframe&gt;</code> element. You can still add an image to the work; it will be used as the thumbnail in the gallery. If you <em>don't</em> add an image and it's a YouTube embed, Wagtail grabs a 480x360 thumbnail from YouTube. For embeds from other sources, we can work on building specific handlers that do something similar. Right now, if you don't specify an image and it's not a YouTube URL, the embedded content itself is shown. It's strongly recommended to provide an image in these cases to avoid layout problems.
+    For YouTube or Vimeo, select type <b>Embed code</b> and fill in the URL for the video (no need for <code>&lt;iframe&gt;</code> HTML). For other sources, you need <strong>only enter the URL contained in the code</strong>, usually as the "src" attribute of an <code>&lt;iframe&gt;</code> element. For these works, you may still specify an image; it will be used as the thumbnail. If you <em>don't</em> add an image and it's a YouTube embed, Wagtail grabs a 480x360 thumbnail from YouTube. However, it's strongly recommended to provide an image in these cases to avoid layout problems.
 </p>
             """,
             heading='Information on Adding Artworks',
@@ -204,6 +204,25 @@ p { font-size: 1.2em; }
         # (one fewer gutter than no. columns) divided by no. columns
         width = (1260 - (self.gallery_columns - 1) * self.gallery_spacing) / self.gallery_columns
         return width
+
+    @property
+    def contains_video(self):
+        if len(self.exhibit_artwork.filter(type='video')) > 0:
+            return True
+
+        for code in [work.embed_code for work in self.exhibit_artwork.filter(type='html')]:
+            if 'vimeo.com' in code or 'youtube.com' in code or 'youtu.be' in code:
+                return True
+
+        return False
+
+    @property
+    def contains_vimeo(self):
+        for code in [work.embed_code for work in self.exhibit_artwork.filter(type='html')]:
+            if 'vimeo.com' in code:
+                return True
+
+        return False
 
     # index related ExhibitArtworks
     search_fields = Page.search_fields + [
@@ -279,7 +298,7 @@ class ExhibitArtwork(Orderable):
     )
     embed_code = models.TextField(
         blank=True,
-        help_text='Can be used for YouTube/Vimeo videos. ONLY PASTE THE EMBED URL e.g. https://youtube.com/embed/KbjGqRdPF7s and not the full <iframe> wrapped HTML.',
+        help_text='Also used for YouTube or Vimeo. Just copy the URL of the video e.g. https://www.youtube.com/watch?v=F1B9Fk_SgI0 and not the full <iframe> wrapped HTML.',
     )
     description = RichTextField(
         blank=True,
@@ -297,3 +316,7 @@ class ExhibitArtwork(Orderable):
         FieldPanel('embed_code', classname='js-embed_code'),
         FieldPanel('description'),
     ]
+
+
+    def __str__(self):
+        return self.title

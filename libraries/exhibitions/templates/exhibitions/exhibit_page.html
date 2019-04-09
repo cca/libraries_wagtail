@@ -75,7 +75,12 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/js/lightgallery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/lg-zoom/1.1.0/lg-zoom.min.js"></script>
+{% if page.contains_video %}
 <script src="//cdnjs.cloudflare.com/ajax/libs/lg-video/1.2.2/lg-video.min.js"></script>
+{% endif %}
+{% if page.contains_vimeo %}
+<script src="//f.vimeocdn.com/js/froogaloop2.min.js"></script>
+{% endif %}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
 <script src="{% static 'js/exhibits.min.js' %}"></script>
 {% endblock %}

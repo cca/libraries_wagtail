@@ -10,24 +10,33 @@ $(() => {
         hideBarsDelay: 3000,
         selector: '.js-gallery--work',
         subHtmlSelectorRelative: true,
+        // video player settings
+        // showinfo & rel settings can no longer make the embedded player
+        // minimalist so I think we should just show the controls
+        // https://developers.google.com/youtube/player_parameters
         youtubePlayerParams: {
-            modestbranding: 1,
-            showinfo: 0,
-            rel: 0,
-            controls: 0
+            disablekb: 1,
+            modestbranding: 1
+            // origin: location.hostname
         },
+        // note that many Vimeo videos override whatever defaults we request
+        // https://developer.vimeo.com/api/oembed/videos
         vimeoPlayerParams: {
-            byline: false,
-            portrait: false,
-            title: false
+            byline: 0,
+            // leave '#' off color hex code
+            color: '17bfb3',
+            dnt: 1,
+            portrait: 0,
+            title: 0
         }
     }
-    // remove data-iframe from embeds that look like YouTube or Vimeo
-    $('.js-gallery--work').each((idx, el) => {
+    // special handling for embedded videos
+    $('.js-gallery--work[data-iframe]').each((idx, el) => {
         let re = /(youtube\.com|youtu\.be|vimeo\.com)/
-        if ($(el).data('src').match(re)) {
-            $(el).removeAttr('data-iframe')
-        }
+        let $el = $(el)
+        let src = $el.data('src')
+        // remove data-iframe from embeds that look like YouTube or Vimeo
+        if (src.match(re)) $el.removeAttr('data-iframe')
     })
     let lg = $('.js-lightgallery').lightGallery(lgOptions);
 
