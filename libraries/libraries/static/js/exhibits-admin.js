@@ -1,9 +1,10 @@
 $(function(){
-    $('#id_exhibit_artwork-FORMS').change('.js-type ', ev => {
-        let select = $(ev.target).find('select')
+    $('#id_exhibit_artwork-FORMS').on('change', '.js-type', ev => {
+        let select = $(ev.currentTarget).find('select')
         let type = select.val()
         let fields = select.parents('ul.fields')
 
+        // required/unneeded fields logic for different work types
         if (type === 'audio') {
             fields.find('.js-embed_code').hide()
             fields.find('.js-media').show()
@@ -26,6 +27,12 @@ $(function(){
 
     // trigger the above logic on page load
     $('#id_exhibit_artwork-FORMS .js-type').trigger('change')
+
+    // when a new artwork is added, trigger its change event to enforce logic
+    $('#id_exhibit_artwork-ADD').on('click', () => {
+        $('li[id^=inline_child_exhibit_artwork-]').last()
+            .find('.js-type').trigger('change')
+    })
 
     // auto-tag images with the slugified title of the exhibition
     // fires whenever we're on the "Upload" tab
