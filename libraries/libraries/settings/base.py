@@ -147,8 +147,11 @@ LOGGING = {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
-            #'filters': ['require_debug_false'],
-            'include_html': True,
+            'filters': ['require_debug_false'],
+            'include_html': False,
+            # Django docs are wrong, even if you have a EMAIL_BACKEND setting
+            # you _have_ to specify one here to make AdminEmailHandler work
+            'email_backend': 'django.core.mail.backends.smtp.EmailBackend',
         },
         'mgmt_cmd_file': {
             'level': 'DEBUG',
