@@ -35,7 +35,22 @@ These should be run from inside the "libraries" directory as it is the root of t
 > npm run watch
 ```
 
-We use [Gulp](http://gulpjs.com/) for our front-end build tool because that was what Torchbox's designer used, but could easily switch to something else. Note that tools like autoprefixer are solving some bugs though so switching might result in some style problems (e.g. the radio buttons on the home page search box need autoprefixer).
+We use [Gulp](http://gulpjs.com/) for our front-end build tool. Note that tools like autoprefixer are solving some bugs though so switching might result in some style problems (e.g. the radio buttons on the home page search box need autoprefixer).
+
+## Artists' Bookreader
+
+The [Libraries' version of the Internet Archive bookreader](https://github.com/cca/libraries_bookreader) is included as a git submodule under the libraries/libraries/static directory. It is a static HTML/JS/CSS app that needs it's own node modules for a build process installed by running `npm i` inside of it. What's more, _that_ project includes the original bookreader as a nested submodule. This means that changes to the bookreader involve submodule commands.
+
+```sh
+> # update both submodules
+> git pull --recurse-submodules
+> # compile the bookreader's static assets
+> cd libraries/libraries/static/bookreader; npm run build
+> # move the compiled assets into place
+> manage.py collectstatic
+```
+
+It may be easiest to set up a git alias that always pulls in submodule changes (e.g. `git config --local alias.pul 'pull --recurse-submodules'`), but remember that you'll still need to build the app.
 
 ## Migration Tricks
 
