@@ -30,14 +30,14 @@ const settings = {
 };
 
 // tasks for each major set of files (main site CSS, main site JS, exhibits JS)
-function allCSS () {
+function allCSS() {
 	return src(settings.src.main, { sourcemaps: true })
 		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
 		.pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
 		.pipe(dest(settings.dist.css));
 }
 
-function mainJS () {
+function mainJS() {
 	return src(settings.src.js, { sourcemaps: true })
 		.pipe(concat('main.min.js'))
 		.pipe(babel({ presets: ['@babel/preset-env'] }))
