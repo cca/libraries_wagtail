@@ -1,5 +1,5 @@
 {% load static wagtailuserbar %}
-
+{% spaceless %}
 <!DOCTYPE html>
 <html class="no-js" lang="en">
     <head>{% include 'components/head/head.html' %}</head>
@@ -28,3 +28,4 @@
         {% block extra_js %}{% endblock %}
     </body>
 </html>
+{% endspaceless %}
