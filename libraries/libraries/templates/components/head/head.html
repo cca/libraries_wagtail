@@ -1,0 +1,23 @@
+{% load static %}
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ page.title }}{% endif %}
+{% endblock %} | CCA Libraries</title>
+{% if self.search_description %}
+    <meta name="description" content="{{self.search_description}}" />
+    <meta property="og:description" content="{{self.search_description}}"/>
+{% endif %}
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+{% include 'components/head/seo.html' %}
+
+{# Global stylesheets #}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+
+{% block extra_css %}
+    {# Override this in templates to add extra stylesheets #}
+{% endblock %}
