@@ -1,5 +1,4 @@
 import logging
-import webbrowser
 
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
@@ -18,8 +17,7 @@ class Command(BaseCommand):
             logger.error('Need both an INSTAGRAM_CLIENT_ID & INSTAGRAM_REDIRECT_URI in settings.')
             exit(1)
         else:
-            self.stdout.write('Accept the prompt, then copy the OAuth token out of the URL that you are redirected to.')
-            webbrowser.open("https://api.instagram.com/oauth/authorize/?client_id={0}&redirect_uri={1}&response_type=token".format(settings.INSTAGRAM_CLIENT_ID, settings.INSTAGRAM_REDIRECT_URI))
+            self.stdout.write('Visit https://api.instagram.com/oauth/authorize/?client_id={}&redirect_uri={}&response_type=token in a web browser, accept the prompt, then copy the OAuth token out of the URL that you are redirected to.'.format(settings.INSTAGRAM_CLIENT_ID, settings.INSTAGRAM_REDIRECT_URI))
             token = input('OAuth token:')
 
             if len(token) > 0:
