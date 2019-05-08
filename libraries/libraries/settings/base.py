@@ -246,6 +246,22 @@ WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
 
 # sets of HTML tags allowed in various rich text fields
 # full list here:
-# docs.wagtail.io/en/v1.12/advanced_topics/customisation/page_editing_interface.html#rich-text-features
-RICHTEXT_BASIC = ['bold', 'italic', 'link', 'document-link']
-RICHTEXT_ADVANCED = RICHTEXT_BASIC + ['h3', 'ol', 'ul', 'image', 'embed', 'hr']
+# docs.wagtail.io/en/v2.5/advanced_topics/customisation/page_editing_interface.html#rich-text-features
+RICHTEXT_BASIC = [
+    'bold',
+    'document-link',
+    'italic',
+    'link',
+    'strikethrough',
+    'subscript',
+    'superscript',
+]
+RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
+    'code',
+    'embed',
+    'h3',
+    'hr',
+    'image',
+    'ol',
+    'ul',
+]
