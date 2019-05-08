@@ -67,6 +67,10 @@ class EmbedHTML(RawHTMLBlock):
         help_text='Use this sparingly, if possible.',
     )
 
+    class Meta:
+        template = "categories/blocks/embed.html"
+
+
 # two blocks combined in one row
 class RowBlock(StreamBlock):
     distribution = ChoiceBlock(
@@ -94,7 +98,7 @@ class RowBlock(StreamBlock):
         template="categories/blocks/snippet.html")
 
     class Meta:
-        help_text = "First child block is given 40% of the row width while the 2nd gets 60%."
+        help_text = "Use a 'distribution' block to choose how the row's columns are balanced."
         icon = 'form'
         template = "categories/blocks/row.html"
 
