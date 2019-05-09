@@ -1,5 +1,5 @@
 {% extends "exhibits-base.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load static libraries_tags wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}exhibits-index{% endblock %}
 
@@ -29,4 +29,34 @@
     </section>
 </div>
 
+{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org/",
+    "@type": "WebPage",
+    "@id": "{{ request.site.root_url }}{% pageurl page %}",
+	"name": "{{ page.title }} | CCA Libraries",
+	"datePublished": "{{ page.first_published_at|date:"c" }}",
+	"dateModified": "{{ page.last_published_at|date:"c" }}",
+    {% if page.front_matter %}
+    "description": "{{ page.front_matter|striptags|condense_whitespace|truncatewords:200 }}",
+    {% else %}
+    "description": "{{ page.search_description }}",
+    {% endif %}
+	"license": "https://creativecommons.org/licenses/by/4.0/",
+    "publisher": {
+		"@type": "Library",
+        "@id": "{{ request.site.root_url }}",
+		"name": "California College of the Arts Libraries",
+        "image": {
+			"@type": "ImageObject",
+			"height": 140,
+			"url": "{% static 'images/logo.png' %}",
+			"width": 1000
+		}
+	}
+}
+</script>
 {% endblock %}

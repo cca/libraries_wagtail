@@ -1,5 +1,5 @@
 {% extends "exhibits-base.html" %}
-{% load static wagtailcore_tags wagtailimages_tags %}
+{% load static libraries_tags wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}exhibit{% endblock %}
 
@@ -83,4 +83,94 @@
 {% endif %}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
 <script src="{% static 'js/exhibits.min.js' %}"></script>
+{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org/",
+    "@type": "WebPage",
+    "@id": "{{ request.site.root_url }}{% pageurl page %}",
+	"name": "{{ page.title }} | CCA Libraries Exhibitions",
+    {% image page.header_image.first.image original as main_image %}
+	{% if main_image %}
+	"primaryImageOfPage": {
+		"@type": "ImageObject",
+		"height": {{ main_image.height }},
+		"url": "{{ request.site.root_url }}{{ main_image.url }}",
+		"width": {{ main_image.width }}
+	},
+	{% endif %}
+	"author": {
+		"@type": "Person",
+		"name": "{{ page.owner.first_name }} {{ page.owner.last_name }}"
+	},
+	"datePublished": "{{ page.first_published_at|date:"c" }}",
+	"dateModified": "{{ page.last_published_at|date:"c" }}",
+    "mainEntity": {
+        "@type": "ExhibitionEvent",
+        {% if page.location %}
+        "location": {
+            "@type": "Place",
+            "address": "{{ page.location|richtext|striptags }}"
+        },
+        {% endif %}
+        {# @TODO Schema.org wants a well-formatted date & this is just text #}
+        {% if page.dates %} "startDate": "{{ page.dates|striptags }}", {% endif %}
+        {% if main_image %}
+    	"image": {
+    		"@type": "ImageObject",
+    		"height": {{ main_image.height }},
+    		"url": "{{ request.site.root_url }}{{ main_image.url }}",
+    		"width": {{ main_image.width }}
+    	},
+    	{% endif %}
+        {% if page.specific.description %}
+        "description": "{{ page.specific.description|striptags|condense_whitespace|truncatewords:200 }}",
+        {% else %}
+        "description": "{{ page.search_description }}",
+        {% endif %}
+        {# iterate over all the artworks #}
+        "workFeatured": [
+        {% for work in page.exhibit_artwork.all %}
+            {
+                "@type": "CreativeWork",
+                {% if work.creator != '' %}
+                "creator": {
+                    "@type": "Person",
+                    "name": "{{ work.creator }}"
+                },
+                {% endif %}
+                {% if work.description|striptags != '' %}
+                "description": "{{ work.description|striptags }}",
+                {% endif %}
+                {% image work.image original as img %}
+                {% if img %}
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "{{ request.site.root_url }}{{ img.url }}",
+                    "height": {{ img.height }},
+                    "width": {{ img.width }}
+                },
+                {% endif %}
+                "name": "{{ work.title }}"
+            }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+        ],
+        "name": "{{ page.title }}"
+    },
+	"license": "https://creativecommons.org/licenses/by/4.0/",
+    "publisher": {
+		"@type": "Library",
+        "@id": "{{ request.site.root_url }}",
+		"name": "California College of the Arts Libraries",
+        "image": {
+			"@type": "ImageObject",
+			"height": 140,
+			"url": "{% static 'images/logo.png' %}",
+			"width": 1000
+		}
+	}
+}
+</script>
 {% endblock %}

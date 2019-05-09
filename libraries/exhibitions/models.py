@@ -111,6 +111,7 @@ class ExhibitPage(Page):
         features=settings.RICHTEXT_BASIC,
         help_text='E.g. Simpson, Meyer',
     )
+    # @TODO if we split this into two date fields we can fix the schema.org data
     dates = RichTextField(
         blank=True,
         features=settings.RICHTEXT_BASIC,

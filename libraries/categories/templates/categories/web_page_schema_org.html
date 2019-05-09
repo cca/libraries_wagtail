@@ -23,7 +23,7 @@
 	"datePublished": "{{ page.first_published_at|date:"c" }}",
 	"dateModified": "{{ page.last_published_at|date:"c" }}",
     {% if page.body %}
-    "description": "{{ page.body|striptags|condense_whitespace|truncatewords_html:200 }}",
+    "description": "{{ page.body|striptags|condense_whitespace|truncatewords:200 }}",
     {% else %}
     "description": "{{ page.search_description }}",
     {% endif %}
