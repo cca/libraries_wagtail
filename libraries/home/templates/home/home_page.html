@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load libraries_tags wagtailcore_tags wagtailimages_tags %}
+{% load static libraries_tags wagtailcore_tags wagtailimages_tags %}
 
 {% block schema_org %}
 {% image page.main_image original as main_image %}
@@ -7,10 +7,10 @@
 {
     "@context": "http://schema.org/",
     "@type": "WebPage",
-    "@id": "{{ request.site.root_url }}",
 	"name": "CCA Libraries Home Page",
 	"primaryImageOfPage": {
 		"@type": "ImageObject",
+        "@id": "{{ request.site.root_url }}{{ main_image.url }}",
 		"height": {{ main_image.height }},
 		"url": "{{ request.site.root_url }}{{ main_image.url }}",
 		"width": {{ main_image.width }}
@@ -19,19 +19,54 @@
 	"dateModified": "{{ page.last_published_at|date:"c" }}",
     "description": "{{ page.search_description }}",
 	"license": "https://creativecommons.org/licenses/by/4.0/",
-    "mainEntityOfPage": {
+    "mainEntity": {
 		"@type": "Library",
-		"name": "California College of the Arts Libraries"
+        "@id": "{{ request.site.root_url }}",
+		"name": "California College of the Arts Libraries",
+        "areaServed": [
+            {
+                "@type": "City",
+                "name": "Oakland"
+            }, {
+                "@type": "City",
+                "name": "San Francisco"
+            }
+        ],
+        "address": [
+            {
+                "@type": "PostalAddress",
+                "addressLocality": "Oakland",
+                "addressRegion": "CA",
+                "streetAddress": "5212 Broadway",
+                "postalCode": "94618",
+                "telephone": "510-594-3658"
+            }, {
+                "@type": "PostalAddress",
+                "addressLocality": "San Francisco",
+                "addressRegion": "CA",
+                "streetAddress": "1111 8th St",
+                "postalCode": "94107",
+                "telephone": "415-703-9574"
+            }
+        ],
+        "parentOrganization": {
+            "@type": "CollegeOrUniversity",
+            "@id": "https://www.cca.edu/",
+            "name": "California College of the Arts"
+        },
+        "logo": {
+			"@type": "ImageObject",
+            "@id": "{% static 'images/logo.png' %}",
+			"height": 140,
+			"url": "{% static 'images/logo.png' %}",
+			"width": 1000
+		},
+        "image": {
+            "@id": "{% static 'images/logo.png' %}"
+        }
 	},
 	"publisher": {
-		"@type": "Library",
-		"name": "California College of the Arts Libraries",
-		"logo": {
-			"@type": "ImageObject",
-			"height": 140,
-			"url": "https://libraries.cca.edu/static/images/logo.png",
-			"width": 1000
-		}
+		"@id": "{{ request.site.root_url }}"
 	}
 }
 </script>
