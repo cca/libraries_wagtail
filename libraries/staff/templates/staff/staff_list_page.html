@@ -2,32 +2,29 @@
 {% load libraries_tags wagtailcore_tags wagtailimages_tags %}
 
 {% block schema_org %}
-{% image page.main_image original as main_image %}
 <script type="application/ld+json">
 {
     "@context": "http://schema.org/",
     "@type": "WebPage",
     "@id": "{{ request.site.root_url }}{% pageurl page %}",
 	"name": "Staff List | CCA Libraries",
+    {% if page.main_image %}
+    {% image page.main_image original as main_image %}
 	"primaryImageOfPage": {
 		"@type": "ImageObject",
 		"height": {{ main_image.height }},
 		"url": "{{ request.site.root_url }}{{ main_image.url }}",
 		"width": {{ main_image.width }}
 	},
+    {% endif %}
 	"datePublished": "{{ page.first_published_at|date:"c" }}",
 	"dateModified": "{{ page.last_published_at|date:"c" }}",
     "description": "{{ page.search_description }}",
 	"license": "https://creativecommons.org/licenses/by/4.0/",
-	"publisher": {
+    "publisher": {
 		"@type": "Library",
-		"name": "California College of the Arts Libraries",
-		"logo": {
-			"@type": "ImageObject",
-			"height": 140,
-			"url": "https://libraries.cca.edu/static/images/logo.png",
-			"width": 1000
-		}
+        "@id": "{{ request.site.root_url }}",
+		"name": "California College of the Arts Libraries"
 	}
 }
 </script>

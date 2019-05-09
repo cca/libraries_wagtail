@@ -11,13 +11,8 @@
     "description": "{{ person.bio|striptags }}",
     "worksFor": {
         "@type": "Library",
-        "name": "California College of the Arts Libraries",
-        "logo": {
-            "@type": "ImageObject",
-            "height": 140,
-            "url": "https://libraries.cca.edu/static/images/logo.png",
-            "width": 1000
-        }
+        "@id": "{{ request.site.root_url }}",
+        "name": "California College of the Arts Libraries"
     }
 }
 </script>
