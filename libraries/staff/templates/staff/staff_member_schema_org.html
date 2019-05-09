@@ -1,0 +1,23 @@
+{% load wagtailcore_tags %}
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org/",
+    "@type": "Person",
+    "name": "{{ person.name }}",
+    "image": [ "{{ request.site.root_url }}{{ img.url }}" ],
+    "email": "{{ person.email }}",
+    "telephone": "{{ person.phone }}",
+    "jobTitle": "{{ person.position }}",
+    "description": "{{ person.bio|striptags }}",
+    "worksFor": {
+        "@type": "Organization",
+        "name": "California College of the Arts Libraries",
+        "logo": {
+            "@type": "ImageObject",
+            "height": 140,
+            "url": "https://libraries.cca.edu/static/images/logo.png",
+            "width": 1000
+        }
+    }
+}
+</script>

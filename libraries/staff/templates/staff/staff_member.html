@@ -2,7 +2,9 @@
 
 {% with staff_member.staff_member as person %}
 
-    {% image person.main_image fill-150x150 class="search-result__image" %}
+    {# staff_member_schema_org.html needs an img object to pull a URL from #}
+    {% image person.main_image fill-150x150 as img %}
+    <img {{ img.attrs }} class="search-result__image" />
 
     <div class="search-result__content">
         <a class="anchor" id="{{ person.slug }}"></a>
@@ -11,6 +13,7 @@
         <p class="search-result__text">{{ person.position }} | {{ person.email }}{% if person.phone %} | {{ person.phone }}{% endif %}</p><br>
 
         <div class="search-result__text">{{ person.bio|richtext }}</div>
+        {% include 'staff/staff_member_schema_org.html' %}
     </div>
 
 {% endwith %}

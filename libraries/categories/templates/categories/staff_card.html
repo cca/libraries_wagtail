@@ -1,7 +1,9 @@
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 <div class="about-us-staff-card">
     <div class="about-us-text rich-text">
-        {% image person.main_image fill-150x150 %}
+        {# staff_member_schema_org.html needs an img object to pull a URL from #}
+        {% image person.main_image fill-150x150 as img %}
+        <img {{ img.attrs }} />
 
         <h2>{{ person.name }}</h2>
 
@@ -10,4 +12,5 @@
             {% if person.phone %} | {{ person.phone }}{% endif %}
         </p>
     </div>
+    {% include 'staff/staff_member_schema_org.html' %}
 </div>
