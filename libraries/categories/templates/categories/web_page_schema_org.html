@@ -1,0 +1,42 @@
+{% load libraries_tags wagtailcore_tags wagtailimages_tags %}
+
+{# generic schema.org data which we should be able to use for most pages #}
+{% image page.main_image original as main_image %}
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org/",
+    "@type": "WebPage",
+    "@id": "{{ request.site.root_url }}{% pageurl page %}",
+	"name": "{{ page.title }}",
+	{% if page.main_image %}
+	"primaryImageOfPage": {
+		"@type": "ImageObject",
+		"height": {{ main_image.height }},
+		"url": "{{ request.site.root_url }}{{ main_image.url }}",
+		"width": {{ main_image.width }}
+	},
+	{% endif %}
+	"author": {
+		"@type": "Person",
+		"name": "{{ page.owner.first_name }} {{ page.owner.last_name }}"
+	},
+	"datePublished": "{{ page.first_published_at|date:"c" }}",
+	"dateModified": "{{ page.last_published_at|date:"c" }}",
+    {% if page.body %}
+    "description": "{{ page.body|striptags|condense_whitespace|truncatewords_html:200 }}",
+    {% else %}
+    "description": "{{ page.search_description }}",
+    {% endif %}
+	"license": "https://creativecommons.org/licenses/by/4.0/",
+	"publisher": {
+		"@type": "Organization",
+		"name": "California College of the Arts Libraries",
+		"logo": {
+			"@type": "ImageObject",
+			"height": 140,
+			"url": "https://libraries.cca.edu/static/images/logo.png",
+			"width": 1000
+		}
+	}
+}
+</script>
