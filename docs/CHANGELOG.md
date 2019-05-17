@@ -2,7 +2,7 @@
 
 ## 2.1
 
-This version number is made up! But it's certainly not 1.0, we just haven't done changelogs until now.
+**2019-05-17** — This version number is made up! But it's certainly not 1.0, we just haven't done changelogs until now.
 
 ### Features
 
