@@ -10,9 +10,32 @@
     "jobTitle": "{{ person.position }}",
     "description": "{{ person.bio|striptags }}",
     "worksFor": {
-        "@type": "Library",
+		"@type": "Library",
         "@id": "{{ request.site.root_url }}",
-        "name": "California College of the Arts Libraries"
-    }
+		"name": "California College of the Arts Libraries",
+        "address": [
+            {
+                "@type": "PostalAddress",
+                "addressLocality": "Oakland",
+                "addressRegion": "CA",
+                "streetAddress": "5212 Broadway",
+                "postalCode": "94618",
+                "telephone": "510-594-3658"
+            }, {
+                "@type": "PostalAddress",
+                "addressLocality": "San Francisco",
+                "addressRegion": "CA",
+                "streetAddress": "1111 8th St",
+                "postalCode": "94107",
+                "telephone": "415-703-9574"
+            }
+        ],
+        "image": {
+			"@type": "ImageObject",
+			"height": 140,
+			"url": "{% static 'images/logo.png' %}",
+			"width": 1000
+		}
+	}
 }
 </script>
