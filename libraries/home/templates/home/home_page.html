@@ -17,7 +17,7 @@
 	},
 	"datePublished": "{{ page.first_published_at|date:"c" }}",
 	"dateModified": "{{ page.last_published_at|date:"c" }}",
-    "description": "{{ page.search_description }}",
+    "description": "{{ page.search_description|escapejs }}",
 	"license": "https://creativecommons.org/licenses/by/4.0/",
     "mainEntity": {
 		"@type": "Library",

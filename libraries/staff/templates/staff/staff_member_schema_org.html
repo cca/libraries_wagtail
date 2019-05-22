@@ -3,12 +3,12 @@
 {
     "@context": "http://schema.org/",
     "@type": "Person",
-    "name": "{{ person.name }}",
+    "name": "{{ person.name|escapejs }}",
     "image": [ "{{ request.site.root_url }}{{ img.url }}" ],
-    "email": "{{ person.email }}",
+    "email": "{{ person.email|escapejs }}",
     "telephone": "{{ person.phone }}",
-    "jobTitle": "{{ person.position }}",
-    "description": "{{ person.bio|striptags }}",
+    "jobTitle": "{{ person.position|escapejs }}",
+    "description": "{{ person.bio|striptags|escapejs }}",
     "worksFor": {
 		"@type": "Library",
         "@id": "{{ request.site.root_url }}",

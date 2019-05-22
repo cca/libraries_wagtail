@@ -1,4 +1,4 @@
-{% load libraries_tags wagtailcore_tags wagtailimages_tags %}
+{% load static libraries_tags wagtailcore_tags wagtailimages_tags %}
 
 {# generic schema.org data which we should be able to use for most pages #}
 {% image page.main_image original as main_image %}
@@ -7,7 +7,7 @@
     "@context": "http://schema.org/",
     "@type": "WebPage",
     "@id": "{{ request.site.root_url }}{% pageurl page %}",
-	"name": "{{ page.title }} | CCA Libraries",
+	"name": "{{ page.title|escapejs }} | CCA Libraries",
 	{% if page.main_image %}
 	"primaryImageOfPage": {
 		"@type": "ImageObject",
@@ -18,14 +18,14 @@
 	{% endif %}
 	"author": {
 		"@type": "Person",
-		"name": "{{ page.owner.first_name }} {{ page.owner.last_name }}"
+		"name": "{{ page.owner.first_name|escapejs }} {{ page.owner.last_name|escapejs }}"
 	},
 	"datePublished": "{{ page.first_published_at|date:"c" }}",
 	"dateModified": "{{ page.last_published_at|date:"c" }}",
     {% if page.body %}
-    "description": "{{ page.body|striptags|condense_whitespace|truncatewords:200 }}",
+    "description": "{{ page.body|stripjs|striptags|condense_whitespace|escapejs|truncatewords:200 }}",
     {% else %}
-    "description": "{{ page.search_description }}",
+    "description": "{{ page.search_description|escapejs }}",
     {% endif %}
 	"license": "https://creativecommons.org/licenses/by/4.0/",
     "publisher": {

@@ -91,7 +91,7 @@
     "@context": "http://schema.org/",
     "@type": "WebPage",
     "@id": "{{ request.site.root_url }}{% pageurl page %}",
-	"name": "{{ page.title }} | CCA Libraries Exhibitions",
+	"name": "{{ page.title|escapejs }} | CCA Libraries Exhibitions",
     {% image page.header_image.first.image original as main_image %}
 	{% if main_image %}
 	"primaryImageOfPage": {
@@ -103,7 +103,7 @@
 	{% endif %}
 	"author": {
 		"@type": "Person",
-		"name": "{{ page.owner.first_name }} {{ page.owner.last_name }}"
+		"name": "{{ page.owner.first_name|escapejs }} {{ page.owner.last_name|escapejs }}"
 	},
 	"datePublished": "{{ page.first_published_at|date:"c" }}",
 	"dateModified": "{{ page.last_published_at|date:"c" }}",
@@ -112,11 +112,11 @@
         {% if page.location %}
         "location": {
             "@type": "Place",
-            "address": "{{ page.location|richtext|striptags }}"
+            "address": "{{ page.location|richtext|striptags|escapejs }}"
         },
         {% endif %}
         {# @TODO Schema.org wants a well-formatted date & this is just text #}
-        {% if page.dates %} "startDate": "{{ page.dates|striptags }}", {% endif %}
+        {% if page.dates %} "startDate": "{{ page.dates|striptags|escapejs }}", {% endif %}
         {% if main_image %}
     	"image": {
     		"@type": "ImageObject",
@@ -125,10 +125,10 @@
     		"width": {{ main_image.width }}
     	},
     	{% endif %}
-        {% if page.specific.description %}
-        "description": "{{ page.specific.description|striptags|condense_whitespace|truncatewords:200 }}",
+        {% if page.description %}
+        "description": "{{ page.description|stripjs|striptags|condense_whitespace|escapejs|truncatewords:200 }}",
         {% else %}
-        "description": "{{ page.search_description }}",
+        "description": "{{ page.search_description|escapejs }}",
         {% endif %}
         {# iterate over all the artworks #}
         "workFeatured": [
@@ -142,7 +142,7 @@
                 },
                 {% endif %}
                 {% if work.description|striptags != '' %}
-                "description": "{{ work.description|striptags }}",
+                "description": "{{ work.description|striptags|escapejs }}",
                 {% endif %}
                 {% image work.image original as img %}
                 {% if img %}
@@ -157,7 +157,7 @@
             }{% if not forloop.last %},{% endif %}
         {% endfor %}
         ],
-        "name": "{{ page.title }}"
+        "name": "{{ page.title|escapejs }}"
     },
 	"license": "https://creativecommons.org/licenses/by/4.0/",
     "publisher": {
