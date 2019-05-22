@@ -1,5 +1,9 @@
 <section class="blog-post__embed">
+    {% if '<iframe' in value %}
     <div class="embed-responsive embed-responsive-4by3">
         {{ value }}
     </div>
+    {% else %}
+        {{ value }}
+    {% endif %}
 </section>
