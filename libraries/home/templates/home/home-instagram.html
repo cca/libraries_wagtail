@@ -25,7 +25,13 @@
 			</a>
 		</h3>
 		<p class="home-news-item__text">
+			{% comment %}
+			fixes problem with hash tag <a>s & Django spaceless filter, spaces after
+			anchor tag were being stripped causing them to appear smushed together
+			{% endcomment %}
+			{% endspaceless %}
 			{{ instagram.html|safe }}
+			{% spaceless %}
 		</p>
 	</div>
 </div>
