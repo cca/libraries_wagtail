@@ -1,7 +1,6 @@
 {% load wagtailcore_tags %}
 
 {% if instagram %}
-
 <div class="home-news-item home-news-item--instagram">
 	<div class="home-news-item__image-wrapper home-news-item__image-wrapper--instagram">
 		<a href="https://www.instagram.com/{{ instagram.username }}/">
@@ -20,20 +19,11 @@
 				class="home-news-item__link"
 				title="Read full article"
 				href="https://www.instagram.com/{{ instagram.username }}/"
-			>
-				Instagram
-			</a>
+			>Instagram</a>
 		</h3>
 		<p class="home-news-item__text">
-			{% comment %}
-			fixes problem with hash tag <a>s & Django spaceless filter, spaces after
-			anchor tag were being stripped causing them to appear smushed together
-			{% endcomment %}
-			{% endspaceless %}
 			{{ instagram.html|safe }}
-			{% spaceless %}
 		</p>
 	</div>
 </div>
-
 {% endif %}
