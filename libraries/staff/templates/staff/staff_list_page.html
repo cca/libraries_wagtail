@@ -70,8 +70,8 @@
                 {% endfor %}
             </ul>
 
-            {% if page.specific.post_script %}
-                {{ page.specific.post_script|richtext }}
+            {% if page.post_script %}
+                <div class="postscript">{{ page.post_script|richtext }}</div>
             {% endif %}
         </div>
     </div>

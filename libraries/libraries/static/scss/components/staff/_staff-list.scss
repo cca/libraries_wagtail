@@ -13,29 +13,48 @@
         }
     }
 
-    .search-result__image {
-        height: 60px;
-        width: 60px;
-
-        @include respond($break-medium) {
-            height: 150px;
-            width: 150px;
-        }
-    }
-
     .search-list {
-        display: flex;
-        flex-wrap: wrap;
         padding: 20px 0 0;
 
         @include respond($break-medium) {
+            display: flex;
+            flex-wrap: wrap;
+
             .search-result {
+                // @TODO shouldn't this be a flex directive not width based?
                 max-width: 50%;
             }
         }
     }
 
-    .rich-text {
+    .search-result {
+        display: block;
+
+        @include respond($break-medium) {
+            display: flex;
+        }
+    }
+
+    .search-result__image {
+        display: block;
+        height: 150px;
+        margin: 0 auto 20px;
+        width: 150px;
+
+        @include respond($break-medium) {
+            display: flex;
+            margin: 0;
+        }
+    }
+
+    // slightly bump text size on mobile for readability
+    .postscript,
+    .search-result__text {
+        font-size: 14px;
         margin-bottom: 1em;
+    }
+
+    .search-result__title {
+        font-size: 20px;
     }
 }

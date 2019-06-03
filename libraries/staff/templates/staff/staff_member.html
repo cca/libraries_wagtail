@@ -10,7 +10,7 @@
         <a class="anchor" id="{{ person.slug }}"></a>
         <h2 class="search-result__title">{{ person.name }}</h2>
 
-        <p class="search-result__text">{{ person.position }} | {{ person.email }}{% if person.phone %} | {{ person.phone }}{% endif %}</p><br>
+        <p class="search-result__text">{{ person.position }} | {{ person.email }}{% if person.phone %} | {{ person.phone }}{% endif %}</p>
 
         <div class="search-result__text">{{ person.bio|richtext }}</div>
         {% include 'staff/staff_member_schema_org.html' %}
