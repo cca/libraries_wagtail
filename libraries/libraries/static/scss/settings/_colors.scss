@@ -1,4 +1,4 @@
-// Project colour mixins
+// Project color mixins
 // These allow for easy alpha manipulation
 
 @function black($opacity:1) {
@@ -23,3 +23,6 @@ $lightblue: rgba(0, 162, 206, 1);
 $purple: purple();
 $green: rgba(183, 191, 16, 1);
 $turquoise: rgba(23, 191, 179, 1);
+// these are copied from Portal & used to recreate its "cards" feature
+$ccaLightGray: #A7AAB0;
+$ccaVeryLightGray: #EDEEEE;

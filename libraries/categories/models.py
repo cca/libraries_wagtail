@@ -14,7 +14,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.search import index
 
-from wagtail.core.blocks import ChoiceBlock, StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock
+from wagtail.core.blocks import ChoiceBlock, StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock, DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 
@@ -48,6 +48,17 @@ class LinkedImageBlock(StructBlock):
     class Meta:
         icon = "link"
         template = "categories/blocks/linked-image.html"
+
+# for Portal-like card with thumbnail image, linked title, & body
+class CardBlock(StructBlock):
+    thumbnail = ImageChooserBlock()
+    link = URLBlock()
+    title = CharBlock()
+    body = RichTextBlock(features=settings.RICHTEXT_BASIC)
+
+    class Meta:
+        icon = 'form'
+        template = 'categories/blocks/card.html'
 
 
 class PullQuoteBlock(StructBlock):
@@ -90,6 +101,7 @@ class RowBlock(StreamBlock):
     )
     image = ImageBlock()
     linked_image = LinkedImageBlock()
+    card = CardBlock()
     pullquote = PullQuoteBlock()
     # questionable that this should be advanced HTML but we use callouts a lot
     snippet = RichTextBlock(
@@ -99,7 +111,7 @@ class RowBlock(StreamBlock):
 
     class Meta:
         help_text = "Use a 'distribution' block to choose how the row's columns are balanced."
-        icon = 'form'
+        icon = 'grip'
         template = "categories/blocks/row.html"
 
 
@@ -116,6 +128,7 @@ class BaseStreamBlock(StreamBlock):
     )
     image = ImageBlock()
     linked_image = LinkedImageBlock()
+    card = CardBlock()
     pullquote = PullQuoteBlock()
     snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")

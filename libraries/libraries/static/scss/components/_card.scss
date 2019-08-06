@@ -1,0 +1,107 @@
+// modified from Portal's static/styles/portal/sass/partials/components/_cards.scss
+.card {
+  border: 1px solid $ccaLightGray;
+  margin: 1em auto;
+  overflow: hidden;
+  position: relative;
+
+    &--carousel{
+        border: none;
+    }
+
+    &--no-border {
+        border: none;
+    }
+
+  @include respond($break-medium) {
+    height: 400px;
+    width: 50%;
+  }
+
+  &--no-border {
+    border: none;
+  }
+
+  &--no-fixed-height {
+    height: auto;
+  }
+
+  &--sidebar {
+    margin-bottom: 2em;
+  }
+
+  &__title {
+    background-color: rgba($ccaVeryLightGray, .9);
+    bottom: 0;
+    color: $blue;
+    cursor: pointer;
+    font: 14px $font-family-sans-serif;
+    left: 0;
+    margin: 0;
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+  }
+
+
+  &__header {
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+
+    &--no-title-color:hover .card__title {
+      color: inherit;
+    }
+
+    &:hover {
+      .card__title {
+        color: $turquoise;
+      }
+    }
+  }
+
+  &__link {
+    display: block;
+  }
+
+  &__thumb {
+    height: auto;
+    width: 100%;
+  }
+
+  &__body {
+    padding: 5px 5px 15px 10px;
+
+    * {
+      font-size: 14px;
+    }
+  }
+
+  // libraries don't use tags yet but preserve in case we want to later
+  &__tags {
+    display: flex;
+    flex-flow: row wrap;
+
+    @include respond($break-medium) {
+      position: absolute;
+      bottom: 15px;
+    }
+  }
+
+  &__links-list {
+    li {
+      line-height: 1.75;
+      padding-top: 7px;
+    }
+  }
+}
+
+.card--carousel .card__title,
+.card--sidebar .card__title {
+  background-color: rgba($blue, .9);
+  color: $white;
+
+  @include respond($break-medium) {
+    font-size: 18px;
+  }
+}
