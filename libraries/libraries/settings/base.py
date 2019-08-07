@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'wagtail.api.v2',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
+    'wagtail.contrib.styleguide',
     'django.contrib.sitemaps',
     'wagtail.embeds',
     'wagtail.sites',
