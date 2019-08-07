@@ -59,7 +59,7 @@ function main() {
     );
   }
 
-  // Non-anon function becuase we use it seperatly
+  // Non-anon function becuase we use it separately
   function hamburgerClickHandler(e) {
     e ? e.preventDefault() : null;
 
@@ -97,13 +97,10 @@ function main() {
 
   // -- Page helper class -- \\
 
-  // Add a class of the page name for help with
-  // main navigation. We do this because of the
-  // simplicity of mustache templages.
+  // Add a class of the page name for help with main navigation.
   var pageName = window.location.pathname.replace(/\//g,'');
 
-  // Search pages can contain query params
-  // so the pageName isn't pure
+  // Search pages can contain query params so the pageName isn't pure
   var isSearchPage = pageName.indexOf('search') > -1;
 
   // The home page uri is `/` so pageName is

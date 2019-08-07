@@ -24,5 +24,37 @@ $purple: purple();
 $green: rgba(183, 191, 16, 1);
 $turquoise: rgba(23, 191, 179, 1);
 // these are copied from Portal & used to recreate its "cards" feature
+// see portal/static/styles/portal/sass/partials/_variables.scss
+// Colors from CCA Marketing & Communications Styleguide
+// (prefixed with `cca` not to conflict with Bootstrap colors)
+
+// Primary Colors
+$ccaTeal:  #00BFB3;
+$black: #000000;
+$white: #FFF;
+
+// Secondary Colors
+$ccaCoolGray:  #888B8D;
+$ccaWarmGray: #6E6259;
+$ccaBeige: #DFD1A7;
+
+// Supporting Accent Colors
+$ccaRed: #CF4520;
+$ccaBlue: #007096;
+$ccaOldBlue: #005776;
+$ccaPurple: #563d82;
+$ccaPink: #F1BDC8;
+$ccaGreen: #98bf10;
+$ccaYellow: #FFC845;
+$ccaOrange: #E57200;
+
+// New Brand Colors
+$ccaNewPink: #FF585D;
+$ccaNewGreen: #228848;
+
+// Modified Colors for Portal:
 $ccaLightGray: #A7AAB0;
 $ccaVeryLightGray: #EDEEEE;
+$ccaLightBeige: #FDFAF3;
+$ccaVeryDarkGray: #222222;
+$ccaMedGray:  #CCC;

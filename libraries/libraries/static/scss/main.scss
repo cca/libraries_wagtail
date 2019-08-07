@@ -10,12 +10,15 @@
 @import 'settings/vars';
 
 // Utilities
-@import 'utilities/respond';
+@import 'utilities/bluebg';
 @import 'utilities/clearfix';
+@import 'utilities/respond';
 @import 'utilities/text';
 @import 'bootstrap/variables';
 @import 'bootstrap/code'; // depends on vars above
 @import 'bootstrap/responsive-embed';
+@import 'bootstrap/mixins/responsive-visibility';
+@import 'bootstrap/responsive-utilities';
 
 // Reset
 @import 'reset/reset';

@@ -26,6 +26,8 @@
 
 .about-us-text-wrapper {
     flex: 1 0 100%;
+    // fix embedded fixed-width iframes overflowing on mobile
+    overflow: hidden;
 
     @include respond($break-medium) {
         flex: 2 0 30%;
