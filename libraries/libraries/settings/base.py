@@ -16,34 +16,33 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS = [
-    # our app
-    'home',
-    'search',
+    # our apps
     'blog',
-    'categories',
-    'instagram',
-    'staff',
-    'hours',
-    'sersol_api',
     'brokenlinks',
+    'categories',
     'exhibitions',
+    'home',
+    'hours',
+    'instagram',
+    'search',
+    'sersol_api',
+    'staff',
 
-    # wagtail/django apps
     'wagtail.api.v2',
     'wagtail.contrib.forms',
+    'wagtail.admin',
     'wagtail.contrib.redirects',
     'wagtail.contrib.styleguide',
-    'django.contrib.sitemaps',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
+    'wagtail.core',
     'wagtail.documents',
+    'wagtail.embeds',
     'wagtail.images',
     'wagtail.search',
-    'wagtail.admin',
-    'wagtail.core',
+    'wagtail.sites',
+    'wagtail.snippets',
+    'wagtail.users',
 
+    'django_cas_ng',
     'modelcluster',
     'rest_framework',
     'taggit',
@@ -51,8 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sessions',
+    'django.contrib.sitemaps',
     'django.contrib.staticfiles',
 ]
 
@@ -65,6 +65,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_cas_ng.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -74,6 +75,19 @@ MIDDLEWARE = [
 
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+# CAS Authentication github.com/cca/libraries_wagtail/issues/76
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'django_cas_ng.backends.CASBackend',
+]
+
+CAS_CREATE_USER = False
+CAS_FORCE_CHANGE_USERNAME_CASE = 'lower'
+CAS_LOGOUT_COMPLETELY = True
+CAS_SERVER_URL = 'https://sso.cca.edu/cas/login'
+LOGIN_URL = 'cas_ng_login'
+WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 
 # db cache for production, dummy for dev
 # https://docs.djangoproject.com/en/1.11/topics/cache/

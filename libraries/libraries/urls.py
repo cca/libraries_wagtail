@@ -5,6 +5,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView, TemplateView
 
+from django_cas_ng.views import LoginView, LogoutView
+
 from brokenlinks import views as brokenlinks_views
 from hours import views as hours_views
 from libraries.views import serve_wagtail_doc
@@ -19,10 +21,18 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 
+admin.site.site_header = 'CCA Libraries Administration'
+admin.autodiscover()
+
 urlpatterns = [
     url(r'^django-admin/', admin.site.urls),
     # override Wagtail document handling — send file, not a forced download
     url(r'^documents/(\d+)/(.*)$', serve_wagtail_doc, name='wagtaildocs_serve'),
+
+    # CAS login urls
+    # NOTE: ^admin/logout/$ must appear before ^admin/ or it's impossible to logout
+    url(r'^login/$', LoginView.as_view(), name='cas_ng_login'),
+    url(r'^admin/logout/$', LogoutView.as_view(), name='cas_ng_logout'),
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^api/v2/', api_router.urls),
