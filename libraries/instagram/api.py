@@ -2,8 +2,6 @@ import json
 import re
 import requests
 
-from django.conf import settings
-
 from .models import InstagramOAuthToken
 
 # @me -> <a href=link>@me</a> etc.
