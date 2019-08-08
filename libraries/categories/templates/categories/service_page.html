@@ -29,11 +29,26 @@
 				{% if page.specific.display_staff_card %}
 					{% include 'categories/staff_card.html' with person=page.staff %}
 				{% endif %}
+
+				{% for block in page.sidebar_cards %}
+					{% include_block block %}
+				{% endfor %}
+				{% if page.resources %}
+					{% include 'categories/sidebar-resources.html' %}
+				{% endif %}
 			</div>
 
 			<article class="about-us-text-wrapper">
                 <div class="about-us-text">
 					{% include_block page.body with service_page=True %}
+
+					{% comment %} on mobile we want these at the bottom {% endcomment %}
+					{% for card in page.sidebar_cards %}
+						{% include_block card with mobile=True %}
+					{% endfor %}
+					{% if page.resources %}
+						{% include 'categories/sidebar-resources.html' with mobile=True %}
+					{% endif %}
 				</div>
             </article>
 		</div>

@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+{% comment %} we inline the if-else because Django doesn't allow "set" tag {% endcomment %}
+<div class="card card--no-border card--no-fixed-height card--sidebar bg-blue {% if mobile %}visible-xs visible-sm{% else %}hidden-xs hidden-sm{% endif %}">
+    <div class="card__body">
+        <p><strong>Resources</strong></p>
+        <ul class="list-unstyled card__links-list">
+        {% for resource in page.resources %}
+            <li><a href="{{ resource.value.url }}">{{ resource.value.text }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>

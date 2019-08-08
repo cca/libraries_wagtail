@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django import forms
+from django.forms import ChoiceField
 from django.shortcuts import redirect, render
 
 from modelcluster.fields import ParentalKey
@@ -14,21 +14,44 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.search import index
 
-from wagtail.core.blocks import ChoiceBlock, StructBlock, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock
+from wagtail.core.blocks import ChoiceBlock, StructBlock, StructValue, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 
+# see docs.wagtail.io/en/v2.6.1/topics/streamfield.html#custom-value-class-for-structblock
+class LinkStructValue(StructValue):
+    def url(self):
+        external_url = self.get('external_url')
+        page = self.get('page')
+        if external_url:
+            return external_url
+        elif page:
+            return page.url
+
+        return ''
+
+# can be external link or internal page
+class LinkBlock(StructBlock):
+    text = CharBlock(label="Link text", required=True)
+    # apparently you cannot validate a StructBlock so impossible to make exactly
+    # one of these required
+    external_url = URLBlock(label='External URL', required=False)
+    page = PageChooserBlock(label='Internal web page', required=False)
+
+    class Meta:
+        icon = "link"
+        value_class = LinkStructValue
 
 # we don't use this right now but it's here waiting to be added
 # to ImageBlock() if need be
 class ImageFormatChoiceBlock(FieldBlock):
-    field = forms.ChoiceField(choices=(
+    field = ChoiceField(choices=(
         ('left', 'Wrap left'),
         ('right', 'Wrap right'),
         ('mid', 'Mid width'),
         ('full', 'Full width'),
     ))
 
-
+# @TODO convert to LinkedImageBlock, no reason to have both of these
 class ImageBlock(StructBlock):
     image = ImageChooserBlock()
     caption = RichTextBlock(features=settings.RICHTEXT_BASIC, required=False)
@@ -43,6 +66,7 @@ class LinkedImageBlock(StructBlock):
     image = ImageChooserBlock()
     caption = RichTextBlock(features=settings.RICHTEXT_BASIC, required=False)
     # alignment = ImageFormatChoiceBlock()
+    # @TODO convert to LinkBlock
     link = URLBlock()
 
     class Meta:
@@ -51,14 +75,22 @@ class LinkedImageBlock(StructBlock):
 
 # for Portal-like card with thumbnail image, linked title, & body
 class CardBlock(StructBlock):
-    thumbnail = ImageChooserBlock()
-    link = URLBlock()
-    title = CharBlock()
+    thumbnail = ImageChooserBlock(help_text="Should be 3x2 aspect ratio but may be stretched if used in a row without an equal distribution. Resized to roughly 345x230.")
+    link = LinkBlock()
     body = RichTextBlock(features=settings.RICHTEXT_BASIC)
 
     class Meta:
         icon = 'form'
         template = 'categories/blocks/card.html'
+
+
+class SidebarCardBlock(StructBlock):
+    image = ImageChooserBlock(required=False, help_text="Square, resized to 400x400. If you don't specify an image & select a Page below, the Page's Main Image will be used.")
+    link = LinkBlock()
+
+    class Meta:
+        icon = 'form'
+        template = 'categories/blocks/sidebar-card.html'
 
 
 class PullQuoteBlock(StructBlock):
@@ -71,7 +103,6 @@ class PullQuoteBlock(StructBlock):
         template = "categories/blocks/quote.html"
 
 
-# no need for a template as raw HTML is what we want
 class EmbedHTML(RawHTMLBlock):
     html = RawHTMLBlock(
         "Embed code or raw HTML",
@@ -80,7 +111,6 @@ class EmbedHTML(RawHTMLBlock):
 
     class Meta:
         template = "categories/blocks/embed.html"
-
 
 # two blocks combined in one row
 class RowBlock(StreamBlock):
@@ -202,11 +232,25 @@ class ServicePage(Page):
         verbose_name='Page content',
         null=True,
     )
+    sidebar_cards = StreamField(
+        StreamBlock([('card', SidebarCardBlock())], required=False),
+        verbose_name='Cards in the right-hand column',
+        blank=True, null=True,
+    )
+    resources = StreamField(
+        StreamBlock([('link', LinkBlock())], required=False),
+        verbose_name='List of resource links',
+        blank=True, null=True,
+    )
     order = models.IntegerField(
         default=1,
         help_text='Defines the sort order in the parent row (lower numbers go first).',
     )
-    search_fields = Page.search_fields + [ index.SearchField('body') ]
+    search_fields = Page.search_fields + [
+        index.SearchField('body'),
+        index.SearchField('sidebar_cards'),
+        index.SearchField('resources'),
+     ]
 
 
     def category(self):
@@ -214,7 +258,6 @@ class ServicePage(Page):
 
 
     class Meta:
-        ordering = ["order", "-last_published_at"]
         verbose_name = 'Complex text page'
 
     content_panels = Page.content_panels + [
@@ -223,6 +266,8 @@ class ServicePage(Page):
             (SnippetChooserPanel('staff'), FieldPanel('display_staff_card'),)
         ),
         StreamFieldPanel('body'),
+        StreamFieldPanel('sidebar_cards'),
+        StreamFieldPanel('resources'),
     ]
     promote_panels = Page.promote_panels + [
         FieldPanel('order')
@@ -230,7 +275,6 @@ class ServicePage(Page):
     api_fields = [
         APIField('body'),
     ]
-
 
 # does not have a matching template, should never be visited on its own
 # but only used as a component of a CategoryPage
@@ -311,10 +355,6 @@ class SpecialCollectionsPage(Page):
     def category(self):
         return get_category(self)
 
-
-    class Meta:
-        ordering = ["order", "-last_published_at"]
-
     # make page searchable by text of child special collections
     search_fields = Page.search_fields + [
         index.RelatedFields('special_collections', [
@@ -367,6 +407,16 @@ class AboutUsPage(Page):
         verbose_name='Page content',
         null=True,
     )
+    sidebar_cards = StreamField(
+        StreamBlock([('card', SidebarCardBlock())], required=False),
+        verbose_name='Cards in the right-hand column',
+        blank=True, null=True,
+    )
+    resources = StreamField(
+        StreamBlock([('link', LinkBlock())], required=False),
+        verbose_name='List of resource links',
+        blank=True, null=True,
+    )
     main_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -387,7 +437,11 @@ class AboutUsPage(Page):
         default=1,
         help_text='Defines the sort order in the parent row (lower numbers go first).',
     )
-    search_fields = Page.search_fields + [ index.SearchField('body') ]
+    search_fields = Page.search_fields + [
+        index.SearchField('body'),
+        index.SearchField('sidebar_cards'),
+        index.SearchField('resources'),
+    ]
 
     content_panels = Page.content_panels + [
         ImageChooserPanel('main_image'),
@@ -395,6 +449,8 @@ class AboutUsPage(Page):
             (SnippetChooserPanel('staff'), FieldPanel('display_staff_card'),)
         ),
         StreamFieldPanel('body'),
+        StreamFieldPanel('sidebar_cards'),
+        StreamFieldPanel('resources'),
     ]
     promote_panels = Page.promote_panels + [
         FieldPanel('order')
@@ -409,7 +465,6 @@ class AboutUsPage(Page):
 
 
     class Meta:
-        ordering = ["order", "-last_published_at"]
         verbose_name = 'Simple text page'
 
 
@@ -457,7 +512,3 @@ class ExternalLink(Page):
     # redirect to external URL
     def serve(self, request):
         return redirect(self.link)
-
-
-    class Meta:
-        ordering = ["order", "-last_published_at"]

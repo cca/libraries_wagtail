@@ -1,20 +1,17 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% comment %} based on Portal's "card" template {% endcomment %}
-<div class="card">
+<section class="card">
     <h4 class="card__header">
-        <a class="card__link" href="{{ value.link }}">
-            {% image value.thumbnail fill-600x400 as thumbnail %}
-            <img class="card__thumb" src="{{ thumbnail.url }}" alt="image.alt" />
-            <span class="card__title">
-                {{ value.title|truncatewords:20 }}
-            </span>
+        <a class="card__link" href="{{ value.link.url }}">
+            {% image value.thumbnail fill-600x400 class="card__thumb" %}
+            <span class="card__title">{{ value.link.text|truncatewords:20 }}</span>
         </a>
     </h4>
     <div class="card__body">
         {% comment %}
-        this is a bit of a "magic number" but this should _usually_ result
+        truncated on a bit of a "magic number" but this _usually_ results
         in too-long blocks of text being truncated on the last line
         {% endcomment %}
-        <p>{{ value.body|richtext|truncatewords:55 }}</p>
+        {{ value.body|richtext|truncatewords:55 }}
     </div>
-</div>
+</section>

@@ -18,12 +18,18 @@
 			{{ page.title }}
 		</h1>
 		<div class="about-us-content">
-            {% if page.specific.main_image or page.specific.display_staff_card %}
+            {% if page.main_image or page.display_staff_card or page.sidebar_cards or page.resources %}
     			<div class="about-us-image-wrapper">
-                    {% image page.specific.main_image width-404 class="about-us-image" %}
+                    {% image page.main_image width-404 class="about-us-image" %}
 
-                    {% if page.specific.display_staff_card %}
+                    {% if page.display_staff_card %}
     					{% include 'categories/staff_card.html' with person=page.staff %}
+    				{% endif %}
+                    {% for block in page.sidebar_cards %}
+    					{% include_block block %}
+    				{% endfor %}
+    				{% if page.resources %}
+    					{% include 'categories/sidebar-resources.html' %}
     				{% endif %}
     			</div>
             {% endif %}
@@ -34,6 +40,14 @@
                         {% include_block block %}
                     </div>
                 {% endfor %}
+
+                {% comment %} on mobile we want these at the bottom {% endcomment %}
+                {% for card in page.sidebar_cards %}
+                    {% include_block card with mobile=True %}
+                {% endfor %}
+                {% if page.resources %}
+                    {% include 'categories/sidebar-resources.html' with mobile=True %}
+                {% endif %}
             </div>
 		</div>
 	</div>
