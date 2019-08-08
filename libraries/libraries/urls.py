@@ -32,6 +32,7 @@ urlpatterns = [
     # CAS login urls
     # NOTE: ^admin/logout/$ must appear before ^admin/ or it's impossible to logout
     url(r'^login/$', LoginView.as_view(), name='cas_ng_login'),
+    url(r'^admin/login/', LoginView.as_view(), name='cas_ng_login'),
     url(r'^admin/logout/$', LogoutView.as_view(), name='cas_ng_logout'),
 
     url(r'^admin/', include(wagtailadmin_urls)),
