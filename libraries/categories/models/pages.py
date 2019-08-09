@@ -1,175 +1,18 @@
 from django.conf import settings
 from django.db import models
-from django.forms import ChoiceField
-from django.shortcuts import redirect, render
 
-from modelcluster.fields import ParentalKey
+from django.shortcuts import redirect, render
 
 from wagtail.api import APIField
 
-from wagtail.core.models import Page, Orderable
+from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import FieldPanel, FieldRowPanel, InlinePanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, FieldRowPanel, StreamFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.search import index
 
-from wagtail.core.blocks import ChoiceBlock, StructBlock, StructValue, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock
-from wagtail.images.blocks import ImageChooserBlock
-
-# see docs.wagtail.io/en/v2.6.1/topics/streamfield.html#custom-value-class-for-structblock
-class LinkStructValue(StructValue):
-    def url(self):
-        external_url = self.get('external_url')
-        page = self.get('page')
-        if external_url:
-            return external_url
-        elif page:
-            return page.url
-
-        return ''
-
-# can be external link or internal page
-class LinkBlock(StructBlock):
-    text = CharBlock(label="Link text", required=True)
-    # apparently you cannot validate a StructBlock so impossible to make exactly
-    # one of these required
-    external_url = URLBlock(label='External URL', required=False)
-    page = PageChooserBlock(label='Internal web page', required=False)
-
-    class Meta:
-        icon = "link"
-        value_class = LinkStructValue
-
-# we don't use this right now but it's here waiting to be added
-# to ImageBlock() if need be
-class ImageFormatChoiceBlock(FieldBlock):
-    field = ChoiceField(choices=(
-        ('left', 'Wrap left'),
-        ('right', 'Wrap right'),
-        ('mid', 'Mid width'),
-        ('full', 'Full width'),
-    ))
-
-# @TODO convert to LinkedImageBlock, no reason to have both of these
-class ImageBlock(StructBlock):
-    image = ImageChooserBlock()
-    caption = RichTextBlock(features=settings.RICHTEXT_BASIC, required=False)
-    # alignment = ImageFormatChoiceBlock()
-
-    class Meta:
-        icon = "image"
-        template = "categories/blocks/image.html"
-
-
-class LinkedImageBlock(StructBlock):
-    image = ImageChooserBlock()
-    caption = RichTextBlock(features=settings.RICHTEXT_BASIC, required=False)
-    # alignment = ImageFormatChoiceBlock()
-    # @TODO convert to LinkBlock
-    link = URLBlock()
-
-    class Meta:
-        icon = "link"
-        template = "categories/blocks/linked-image.html"
-
-# for Portal-like card with thumbnail image, linked title, & body
-class CardBlock(StructBlock):
-    thumbnail = ImageChooserBlock(help_text="Should be 3x2 aspect ratio but may be stretched if used in a row without an equal distribution. Resized to roughly 345x230.")
-    link = LinkBlock()
-    body = RichTextBlock(features=settings.RICHTEXT_BASIC)
-
-    class Meta:
-        icon = 'form'
-        template = 'categories/blocks/card.html'
-
-
-class SidebarCardBlock(StructBlock):
-    image = ImageChooserBlock(required=False, help_text="Square, resized to 400x400. If you don't specify an image & select a Page below, the Page's Main Image will be used.")
-    link = LinkBlock()
-
-    class Meta:
-        icon = 'form'
-        template = 'categories/blocks/sidebar-card.html'
-
-
-class PullQuoteBlock(StructBlock):
-    quote = TextBlock("quote title")
-    name = CharBlock(required=False)
-    position = CharBlock(required=False, label="Position or affiliation")
-
-    class Meta:
-        icon = "openquote"
-        template = "categories/blocks/quote.html"
-
-
-class EmbedHTML(RawHTMLBlock):
-    html = RawHTMLBlock(
-        "Embed code or raw HTML",
-        help_text='Use this sparingly, if possible.',
-    )
-
-    class Meta:
-        template = "categories/blocks/embed.html"
-
-# two blocks combined in one row
-class RowBlock(StreamBlock):
-    distribution = ChoiceBlock(
-        blank=False,
-        choices=(
-            ('left', 'left side bigger'),
-            ('right', 'right side bigger'),
-            ('equal', 'equal size sides'),
-        ),
-        min_num=1,
-        max_num=1,
-    )
-    paragraph = RichTextBlock(
-        features=settings.RICHTEXT_ADVANCED,
-        template="categories/blocks/paragraph.html",
-        icon="pilcrow",
-    )
-    image = ImageBlock()
-    linked_image = LinkedImageBlock()
-    card = CardBlock()
-    pullquote = PullQuoteBlock()
-    # questionable that this should be advanced HTML but we use callouts a lot
-    snippet = RichTextBlock(
-        features=settings.RICHTEXT_ADVANCED,
-        label="Callout",
-        template="categories/blocks/snippet.html")
-
-    class Meta:
-        help_text = "Use a 'distribution' block to choose how the row's columns are balanced."
-        icon = 'grip'
-        template = "categories/blocks/row.html"
-
-
-class BaseStreamBlock(StreamBlock):
-    subheading = CharBlock(
-        icon="title",
-        classname="title",
-        template="categories/blocks/subheading.html"
-    )
-    paragraph = RichTextBlock(
-        features=settings.RICHTEXT_ADVANCED,
-        template="categories/blocks/paragraph.html",
-        icon="pilcrow",
-    )
-    image = ImageBlock()
-    linked_image = LinkedImageBlock()
-    card = CardBlock()
-    pullquote = PullQuoteBlock()
-    snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
-    html = EmbedHTML(label="Embed code")
-    row = RowBlock(max_num=3)
-
-# AboutUsPage has a much simpler template
-class AboutUsStreamBlock(StreamBlock):
-    paragraph = RichTextBlock(
-        features=settings.RICHTEXT_ADVANCED,
-        icon="pilcrow",
-    )
+from categories.models.blocks import *
 
 # helper method—for child pages, return their category i.e. parent CategoryPage
 # one of: services, collections, about us
@@ -317,75 +160,6 @@ class RowComponent(Page):
         request.GET['DRAFT'] = True
         ctx = CategoryPage.get_context(parent, request)
         return render(request, 'categories/category_page.html', context=ctx)
-
-# Another child of RowComponent but with a very different structure & template
-class SpecialCollectionsPage(Page):
-    parent_page_types = [
-        'categories.RowComponent',
-        'categories.ServicePage',
-        'categories.AboutUsPage',
-        'categories.SpecialCollectionsPage',
-    ]
-    subpage_types = [
-        'categories.ServicePage',
-        'categories.AboutUsPage',
-        'categories.SpecialCollectionsPage',
-    ]
-
-    order = models.IntegerField(
-        default=1,
-        help_text='Defines the sort order in the parent row (lower numbers go first).',
-    )
-
-    # needs an orderable struct of some sort which contains a title, richtext blurb,
-    # link to the external collection, and feature image _at least_
-    content_panels = Page.content_panels + [
-        InlinePanel('special_collections', label='Special Collection')
-    ]
-    promote_panels = Page.promote_panels + [
-        FieldPanel('order')
-    ]
-
-    # for search results—treat first SpecialCollection image as the page's image
-    @property
-    def main_image(self):
-        return self.specific.special_collections.first().image
-
-
-    def category(self):
-        return get_category(self)
-
-    # make page searchable by text of child special collections
-    search_fields = Page.search_fields + [
-        index.RelatedFields('special_collections', [
-            index.SearchField('title'),
-            index.SearchField('blurb'),
-        ]),
-    ]
-
-
-class SpecialCollection(Orderable):
-    page = ParentalKey(SpecialCollectionsPage, related_name='special_collections')
-    title = models.CharField(max_length=255)
-    blurb = RichTextField(features=settings.RICHTEXT_BASIC)
-    # URLField lets this link be either internal or external
-    # Per Teri on 2017-08-09: some Spaces on a SpecColl page have no links
-    link = models.URLField(blank=True)
-    image = models.ForeignKey(
-        'wagtailimages.Image',
-        help_text='Close to a 2.25-by-1 aspect ratio is bst, image is sized to 910x400px at its largest.',
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-        related_name='+'
-    )
-
-    panels = [
-        FieldPanel('title'),
-        FieldPanel('blurb'),
-        FieldPanel('link'),
-        ImageChooserPanel('image'),
-    ]
 
 # ServicePage & AboutUsPage are two different templates for the same
 # sort of grandchild content (CategoryPage > RowComponent > Service/AboutUsPage)
