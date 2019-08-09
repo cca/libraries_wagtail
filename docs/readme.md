@@ -18,7 +18,7 @@ Root (Wagtail abstraction)
                 |---Child content pages...
         |---Collections* (categories.CategoryPage)
             |---Collections^ (categories.RowComponent)
-                |---Special Collections (categories.SpecialCollectionsPage)
+                |---Various special collections (categories.SpecialCollectionsPage)
                 |---Child content pages...
         |---About Us* (categories.CategoryPage)
             |---About Us^ (categories.RowComponent)

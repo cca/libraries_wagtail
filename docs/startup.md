@@ -23,10 +23,11 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 
 There's a "bootstrap.sh" script that does all this but I list the steps above for precision's sake.
 
+## Settings, Database, & Search
 
-## Database & Search
+The database and search settings vary the most across local/dev/production environments. We define them in the libraries/libraries/settings/local.py file. I've included an example local.py in the "docs" folder with all the confidential items changed, it can be a useful guide when configuring the site.
 
-The database and search settings vary the most across local/dev/production environments. We define them in the libraries/libraries/settings/local.py file. Here's an example of local postgres and sqlite databases:
+We should use a postgres database rather than a sqlite3 one because it's closer to what the production site uses. Here are examples of local postgres and sqlite databases:
 
 ```python
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -50,8 +51,6 @@ DATABASES = {
     }
 }
 ```
-
-I recommend using a postgres database rather than a sqlite3 one simply because it's closer to what the production site does, even if it means employing a larger stack during local development.
 
 The site comes with settings for Elasticsearch but doesn't enable it by default. To enable it, install Elasticsearch, start the ES server, and add a passage like this to libraries/libraries/settings/local.py:
 
