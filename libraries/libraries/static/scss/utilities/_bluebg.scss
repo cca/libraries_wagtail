@@ -1,26 +1,26 @@
 @mixin blue-background {
-  background-color: $ccaBlue;
-  color: white;
-
-  h4 {
+    background-color: $ccaBlue;
     color: $white;
-  }
 
-  a {
-    border-bottom: solid 3px $ccaTeal;
-    color: $white;
-    margin: 0.5em 0;
-    padding: 0;
-    text-decoration: none;
-
-    &:hover {
-      background-color: $ccaTeal;
-      border-bottom: none;
-      color: $white;
-      margin: 0 -0.25em;
-      padding: 0.5em 0.25em;
+    h4 {
+        color: $white;
     }
-  }
+
+    a {
+        border-bottom: solid 3px $ccaTeal;
+        color: $white;
+        margin: .5em 0;
+        padding: 0;
+        text-decoration: none;
+
+        &:hover {
+            background-color: $ccaTeal;
+            border-bottom: 0;
+            color: $white;
+            margin: 0 -.25em;
+            padding: .5em .25em;
+        }
+    }
 }
 
 .bg-blue {

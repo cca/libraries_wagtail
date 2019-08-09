@@ -1,100 +1,98 @@
 // modified from Portal's static/styles/portal/sass/partials/components/_cards.scss
 .card {
-  border: 1px solid $ccaLightGray;
-  height: 400px;
-  margin: 1em auto;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-
-  @include respond($break-medium) {
-    width: 50%;
-  }
-
-  &--carousel{
-    border: none;
-  }
-
-  &--no-border {
-    border: none;
-  }
-
-  &--no-fixed-height {
-    height: auto;
-  }
-
-  &--sidebar {
-    margin: 0 0 2em 0;
-    line-height: 20px;
+    border: 1px solid $ccaLightGray;
+    height: 400px;
+    margin: 1em auto;
+    overflow: hidden;
+    position: relative;
     width: 100%;
 
     @include respond($break-medium) {
-        width: 70%;
-    }
-  }
-
-  &__title {
-    background-color: rgba($ccaVeryLightGray, .9);
-    bottom: 0;
-    color: $blue;
-    cursor: pointer;
-    font: 14px $font-family-sans-serif;
-    left: 0;
-    margin: 0;
-    padding: 10px;
-    position: absolute;
-    width: 100%;
-  }
-
-
-  &__header {
-    margin-top: 0;
-    margin-bottom: 0;
-    position: relative;
-
-    &--no-title-color:hover .card__title {
-      color: inherit;
+        width: 50%;
     }
 
-    &:hover {
-      .card__title {
-        color: $turquoise;
-      }
+    &--carousel {
+        border: 0;
     }
-  }
 
-  &__link {
-    display: block;
-  }
-
-  &__thumb {
-    height: auto;
-    width: 100%;
-  }
-
-  &__body {
-    padding: 5px 5px 15px 10px;
-
-    * {
-      font-size: 14px;
+    &--no-border {
+        border: 0;
     }
-  }
 
-  &__links-list {
-    li {
-      line-height: 1.75;
-      padding-top: 7px;
+    &--no-fixed-height {
+        height: auto;
     }
-  }
+
+    &--sidebar {
+        line-height: 20px;
+        margin: 0 0 2em;
+        width: 100%;
+
+        @include respond($break-medium) {
+            width: 70%;
+        }
+    }
+
+    &__title {
+        background-color: rgba($ccaVeryLightGray, .9);
+        bottom: 0;
+        color: $blue;
+        cursor: pointer;
+        font: 14px $font-family-sans-serif;
+        left: 0;
+        margin: 0;
+        padding: 10px;
+        position: absolute;
+        width: 100%;
+    }
+
+
+    &__header {
+        margin-bottom: 0;
+        margin-top: 0;
+        position: relative;
+
+        &--no-title-color:hover .card__title {
+            color: inherit;
+        }
+
+        &:hover .card__title {
+            color: $turquoise;
+        }
+    }
+
+    &__link {
+        display: block;
+    }
+
+    &__thumb {
+        height: auto;
+        width: 100%;
+    }
+
+    &__body {
+        padding: 5px 5px 15px 10px;
+
+        * {
+            font-size: 14px;
+        }
+    }
+
+    &__links-list {
+        li {
+            line-height: 1.75;
+            padding-top: 7px;
+        }
+    }
 }
 
 .card--carousel .card__title,
 .card--sidebar .card__title {
-  background-color: rgba($blue, .9);
-  color: $white;
-  font-size: 18px;
+    background-color: rgba($blue, .9);
+    color: $white;
+    font-size: 18px;
 
-  @include respond($break-medium) {
-    font-size: 14px;
-  }
+    @include respond($break-medium) {
+        font-size: 14px;
+    }
 }
