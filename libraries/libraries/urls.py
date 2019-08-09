@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 from django.conf import settings
 from django.urls import include, path, re_path
 from django.contrib import admin
@@ -19,8 +17,6 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.core import urls as wagtail_urls
 
-# @TODO modernize this file, use django.urls.path()
-# see https://docs.djangoproject.com/en/2.2/ref/urls/
 admin.site.site_header = 'CCA Libraries Administration'
 admin.autodiscover()
 
