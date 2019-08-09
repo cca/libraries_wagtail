@@ -1,11 +1,15 @@
+import logging
+
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 from wagtail.core import hooks
 from wagtail.documents.models import document_served, get_document_model
 
+# @TODO track document downloads
+logger = logging.getLogger('')
 
-def serve_wagtail_doc(request, document_id, document_filename):
+def serve_wagtail_doc(request, id, filename):
     """
     Replacement for ``wagtail.documents.views.serve``
     Wagtail's default document view serves everything as an attachment.
@@ -13,13 +17,13 @@ def serve_wagtail_doc(request, document_id, document_filename):
     """
     # these first two passages copied from wagtail/documents/views/serve.py
     Document = get_document_model()
-    doc = get_object_or_404(Document, id=document_id)
+    doc = get_object_or_404(Document, id=id)
 
     # We want to ensure that the document filename provided in the URL matches
     # the one associated with the considered document_id. If not we can't be
     # sure that the document the user wants to access is the one corresponding
     # to the <document_id, document_filename> pair.
-    if doc.filename != document_filename:
+    if doc.filename != filename:
         raise Http404('This document does not match the given filename.')
 
     for fn in hooks.get_hooks('before_serve_document'):

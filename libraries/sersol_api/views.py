@@ -1,7 +1,7 @@
-from django.http import JsonResponse
 import requests
 import xmltodict
 
+from django.http import JsonResponse
 
 # proxy for the Serials Solutions XML API
 # used by the library catalog to show KB holdings alongside print
