@@ -121,6 +121,11 @@ LOGGING = {
         },
     },
     'formatters': {
+        # CSV file
+        'document': {
+            'format': '"%(asctime)s",%(message)s',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
+        },
         'simple': {
             'format': '%(levelname)s %(message)s',
         },
@@ -148,6 +153,14 @@ LOGGING = {
             'maxBytes': 1024*1024*10,  # 10M
             'backupCount': 14,
             'formatter': 'standard',
+        },
+        'document_log_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'documents.csv'),
+            'maxBytes': 1024*1024*10,  # 10M
+            'backupCount': 14,
+            'formatter': 'document',
         },
         'django_request_file': {
             'level': 'DEBUG',
@@ -179,6 +192,11 @@ LOGGING = {
         'django.request': {
             'handlers': ['django_request_file'],
             'level': 'DEBUG',
+            'propagate': False,
+        },
+        'document': {
+            'handlers': ['document_log_file'],
+            'level': 'INFO',
             'propagate': False,
         },
         'mgmt_cmd.script': {

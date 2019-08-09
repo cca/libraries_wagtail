@@ -6,8 +6,8 @@ from django.shortcuts import get_object_or_404
 from wagtail.core import hooks
 from wagtail.documents.models import document_served, get_document_model
 
-# @TODO track document downloads
-logger = logging.getLogger('')
+# logger specifically for tracking document downloads
+logger = logging.getLogger('document')
 
 def serve_wagtail_doc(request, id, filename):
     """
@@ -33,4 +33,6 @@ def serve_wagtail_doc(request, id, filename):
 
     # Send document_served signal
     document_served.send(sender=Document, instance=doc, request=request)
+    # message should be valid CSV if possible
+    logger.info('{},"{}","{}"'.format(id, filename, request.headers['User-Agent']))
     return HttpResponseRedirect(doc.file.url)
