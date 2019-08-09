@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.2.0
+
+Portal-like "Cards", sidebar resources, CAS login. A few design bug fixes.
+
+### Features
+
+- [#78](https://github.com/cca/libraries_wagtail/issues/78) New "Card" block with thumbnail image, linked title, and body text
+- [#79](https://github.com/cca/libraries_wagtail/issues/79) Right-side (appears below main image, staff member) resource links and cards similar to above
+- [#76](https://github.com/cca/libraries_wagtail/issues/76) CAS logins, no more need for a Wagtail-specific password
+
+### Bugfixes
+
+- Django security updates (v2.2.4)
+- Fix some issues with mobile views on pages with fixed-width iframe embeds that overflow their wrapper's bounds and stretch the page. Semi-related, fix some `RowBlock` display issues with simpler flexbox code.
+
+### Misc
+
+- Restructrure categories/models into a folder with multiple files
+- New `LinkBlock` is useful when a link can be either internal/external but is lacking good validation (see [#80](https://github.com/cca/libraries_wagtail/issues/80))
+- Enable Wagtail style guide on admin side
+
 ## 2.1.1
 
 **2019-06-03** - several bugfixes, a few for problems introduced in the last release.
