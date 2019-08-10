@@ -9,6 +9,7 @@ Portal-like "Cards", sidebar resources, CAS login. A few design bug fixes.
 - [#78](https://github.com/cca/libraries_wagtail/issues/78) New "Card" block with thumbnail image, linked title, and body text
 - [#79](https://github.com/cca/libraries_wagtail/issues/79) Right-side (appears below main image, staff member) resource links and cards similar to above
 - [#76](https://github.com/cca/libraries_wagtail/issues/76) CAS logins, no more need for a Wagtail-specific password
+- Wagtail Document accesses are now tracked by a special CSV logger.
 
 ### Bugfixes
 
