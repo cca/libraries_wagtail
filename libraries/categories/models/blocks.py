@@ -1,5 +1,7 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.forms import ChoiceField
+from django.forms.utils import ErrorList
 
 from wagtail.core.blocks import ChoiceBlock, StructBlock, StructValue, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
@@ -23,6 +25,32 @@ class LinkBlock(StructBlock):
     # one of these required
     external_url = URLBlock(label='External URL', required=False)
     page = PageChooserBlock(label='Internal web page', required=False)
+
+    # override clean() method to add custom validation
+    def clean(self, value):
+        # build up a list of (name, value) tuples to be passed to the StructValue constructor
+        result = []
+        errors = {}
+        for name, val in value.items():
+            try:
+                result.append((name, self.child_blocks[name].clean(val)))
+            except ValidationError as e:
+                errors[name] = ErrorList([e])
+
+        if value['external_url'] and value['page']:
+            e = ErrorList([ValidationError('Links cannot have both an external URL and an internal page.')])
+            # we put the error in both the child blocks to aid with display
+            errors['external_url'] = errors['page'] = e
+        elif not value['external_url'] and not value['page']:
+            e = ErrorList([ValidationError('Links must have either an external URL or an internal page.')])
+            errors['external_url'] = e
+
+        if errors:
+            # The message here is arbitrary - StructBlock.render_form will suppress it
+            # and delegate the errors contained in the 'params' dict to the child blocks instead
+            raise ValidationError('Validation error in StructBlock', params=errors)
+
+        return self._to_struct_value(result)
 
     class Meta:
         icon = "link"
