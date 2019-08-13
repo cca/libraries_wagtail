@@ -89,5 +89,5 @@ Wagtail automatically updates the search index and publishes scheduled pages. As
 
 ```sh
 # download latest Instagram post (at least daily, scheduling not hugely important)
-* 4 * * * workon libraries; /opt/virtualenvs/libraries/bin/python /opt/libraries_wagtail/libraries/manage.py instagram
+0 4 * * * workon libraries; /opt/virtualenvs/libraries/bin/python /opt/libraries_wagtail/libraries/manage.py instagram
 ```
