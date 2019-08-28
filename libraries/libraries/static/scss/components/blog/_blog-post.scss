@@ -121,23 +121,25 @@
 
         // fix bug with blog rows: _every_ descendent first-child gets the margin
         // without the child ">" selector, screws up e.g. <p>text<i>italics</i>text<p>
-        > *:first-child {
-            flex: 60%;
+        > *:first-child,
+        &.equal > * {
+            flex: 50%;
             margin-right: 20px;
         }
 
-        > *:nth-child(2),
-        &.right > *:first-child {
-            flex: 40%;
-        }
-
-        &.right > *:nth-child(2) {
-            flex: 60%;
+        > *:nth-child(2) {
+            flex: 50%;
             margin-right: 0;
         }
 
-        &.equal > * {
-            flex: 50%;
+        &.left > *:first-child,
+        &.right > *:nth-child(2) {
+            flex: 60%;
+        }
+
+        &.right > *:first-child,
+        &.left > *:nth-child(2) {
+            flex: 40%;
         }
     }
 }
