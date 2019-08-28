@@ -2,7 +2,7 @@
 
 ## 2.2.0
 
-Portal-like "Cards", sidebar resources, CAS login. A few design bug fixes.
+**2019-08-28** — Portal-like "Card" blocks for main body content, sidebar resources, CAS login. A few design bug fixes.
 
 ### Features
 
@@ -14,10 +14,12 @@ Portal-like "Cards", sidebar resources, CAS login. A few design bug fixes.
 ### Bugfixes
 
 - Django security updates (v2.2.4)
+- Update most python dependencies
 - Fix some issues with mobile views on pages with fixed-width iframe embeds that overflow their wrapper's bounds and stretch the page. Semi-related, fix some `RowBlock` display issues with simpler flexbox code.
 
 ### Misc
 
+- `RowBlock` layout defaults to equal-size columns instead of 60/40 left-biased. **NOTE:** this will change the behavior of existing rows without a "distribution" child block!
 - Restructrure categories/models into a folder with multiple files
 - New `LinkBlock` is useful when a link can be either internal/external but is lacking good validation (see [#80](https://github.com/cca/libraries_wagtail/issues/80))
 - Enable Wagtail style guide on admin side
