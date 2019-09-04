@@ -7,6 +7,9 @@
 			{% image result.main_image fill-105x70 as img %}
 		{% elif result.image %}
 			{% image result.image fill-105x70 as img %}
+		{% comment %} for ExhibitPages {% endcomment %}
+		{% elif result.header_image.first %}
+			{% image result.header_image.first.image fill-105x70 as img %}
 		{% endif %}
 		{# @TODO if there's no search image should we provide a filler icon? #}
 		<div
