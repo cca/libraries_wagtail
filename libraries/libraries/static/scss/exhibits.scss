@@ -36,6 +36,14 @@
 @import 'components/forms/checkbox';
 @import 'components/forms/label';
 
+// -- Search
+// These are a subset of the main site's search components plus one
+// Exhibits-specific file of overrides.
+@import 'components/header/header-search-box';
+@import 'components/search/search-box';
+@import 'components/search/search-input';
+@import 'components/exhibits/search';
+
 // -- Misc
 @import 'components/misc/link';
 @import 'components/misc/rich-text';

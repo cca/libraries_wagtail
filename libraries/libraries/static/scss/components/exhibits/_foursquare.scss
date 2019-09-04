@@ -15,7 +15,7 @@
 .foursquare--images {
     // need 0 size or white space between images disrupts layout
     font-size: 0;
-    z-index: 1;
+    z-index: $exhib-banner-img-z;
 
     @include respond($break-medium) {
         // again, fixes slight gap between <header> & <main> on medium screens
@@ -33,7 +33,7 @@
 .foursquare--frontmatter {
     max-width: 80%;
     position: relative;
-    z-index: 2;
+    z-index: $exhib-banner-title-z;
 
     @include respond($break-medium) {
         max-width: 50%;

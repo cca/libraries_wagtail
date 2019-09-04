@@ -1,4 +1,4 @@
-{% load wagtailuserbar %}
+{% load static wagtailuserbar %}
 {% comment %}
 based substantially off of libraries/templates/base.html
 but must necessarily differ e.g. with the main CSS file
@@ -27,6 +27,7 @@ but must necessarily differ e.g. with the main CSS file
 			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 			crossorigin="anonymous"
 		></script>
+        <script type="text/javascript" src="{% static 'js/main.min.js' %}"></script>
 
         {% include 'components/ga.html' %}
 

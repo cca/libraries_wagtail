@@ -34,6 +34,18 @@
     }
 }
 
+.page--overlay::after {
+    animation: fade-in .3s ease;
+    background: black(.6);
+    bottom: 0;
+    content: '';
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: $exhib-page-overlay-z;
+}
+
 .epilogue {
     border-top: 1px solid black(.3);
     padding: 2em 0 3em;

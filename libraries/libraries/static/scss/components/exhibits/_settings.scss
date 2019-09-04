@@ -2,3 +2,10 @@ $grey-border: lighten($black, 75%);
 $site-max-width: 1360px;
 $wrapper-default-horizontal-padding: 15px;
 $wrapper-medium-horizontal-padding: 50px;
+
+// we need elements to layer in this order: search box on top of everything, page
+// overlay grays out everything else, banner title sits on top of its bg image
+$exhib-banner-img-z: 1;
+$exhib-banner-title-z: 2;
+$exhib-page-overlay-z: 99;
+$exhib-search-box-z: 100;

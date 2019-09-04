@@ -17,7 +17,7 @@
 }
 
 .banner--image {
-    z-index: 1;
+    z-index: $exhib-banner-img-z;
 }
 
 .banner--title {
@@ -30,7 +30,7 @@
     max-width: 80%;
     padding: 1em $wrapper-default-horizontal-padding 0;
     position: relative;
-    z-index: 2;
+    z-index: $exhib-banner-title-z;
 
     @include respond($break-medium) {
         font-size: 250%;

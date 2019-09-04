@@ -1,5 +1,5 @@
 {% load static %}
-<header class="header">
+<header class="header js-header">
 	<div class="wrapper wrapper--header">
 		<a
 			class="header__home-link"
@@ -37,5 +37,9 @@
 				src="{% static 'images/search-icon-inverted.png' %}"
 			/>
 		</a>
+
+		<div class="header-search-box js-header-search-box">
+			{% include 'components/search/search-box.html' %}
+		</div>
 	</div>
 </header>
