@@ -25,6 +25,19 @@ There's a "bootstrap.sh" script that does all this but I list the steps above fo
 
 ## Settings, Database, & Search
 
+To get appropriate Postgres & Elasticsearch versions on a Mac, I recommend using Homebrew. These steps were sufficient for me but note that the version numbers may need to be tweaked.
+
+```sh
+> brew tap homebrew/services homebrew/cask homebrew/cask-versions
+> brew install postgres@9.4
+> brew install libpq # pg_* utilities such as pg_restore, need to put them on your path
+> set -U fish_user_paths $fish_user_paths /usr/local/opt/libpq/bin
+> brew cask install homebrew/cask-versions/adoptopenjdk8 # prerequisite for elasticsearch
+> brew install elasticsearch@5.6
+```
+
+Once those are installed, you can manage them with the `brew services` commands. I typically run `brew services start --all` to fire up both before I start development and then `brew services stop --all` to shut them down afterwards. Leaving them running in the background does no harm.
+
 The database and search settings vary the most across local/dev/production environments. We define them in the libraries/libraries/settings/local.py file. I've included an example local.py in the "docs" folder with all the confidential items changed, it can be a useful guide when configuring the site.
 
 We should use a postgres database rather than a sqlite3 one because it's closer to what the production site uses. Here are examples of local postgres and sqlite databases:
