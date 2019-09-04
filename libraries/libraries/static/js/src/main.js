@@ -61,10 +61,10 @@ function main() {
 
   // Non-anon function becuase we use it separately
   function hamburgerClickHandler(e) {
-    e ? e.preventDefault() : null;
+    e ? e.preventDefault() : null; // jshint ignore:line
 
     // on the search page we need toggle the search box
-    isSearchPage ? toggleSearch() : toggleSearch(false);
+    isSearchPage ? toggleSearch() : toggleSearch(false); // jshint ignore:line
     toggleNavigation();
     $page.toggleClass(
       pageOverlayCls,
@@ -106,9 +106,7 @@ function main() {
   // The home page uri is `/` so pageName is
   // an empty string
   if (pageName.length > 0) {
-    isSearchPage ?
-      $page.addClass('page--search') :
-      $page.addClass('page--' + pageName);
+    isSearchPage ? $page.addClass('page--search') : $page.addClass('page--' + pageName); // jshint ignore:line
   } else {
     $page.addClass('page--home');
   }
