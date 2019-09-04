@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+**DATE** - Enable the header search box in the Exhibits app. Also, the `search description` field (on the Promote panel of Wagtail admin) is now required for Exhibit pages.
+
 ## 2.2.0
 
 **2019-08-28** — Portal-like "Card" blocks for main body content, sidebar resources, CAS login. A few design bug fixes.
