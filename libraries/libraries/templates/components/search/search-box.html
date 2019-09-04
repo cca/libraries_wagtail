@@ -13,8 +13,8 @@
 		class="search-box__type-label"
 	>
 		<input
-			{# default only if not a site search #}
-			{% if not site_search %}
+			{# different search defaults depending on context #}
+			{% if not site_search and not exhibits %}
 				checked="checked"
 			{% endif %}
 			class="search-box__type-input"
@@ -31,7 +31,7 @@
 		class="search-box__type-label"
 	>
 		<input
-			{% if site_search %}
+			{% if site_search or exhibits %}
 				checked="checked"
 			{% endif %}
 			class="search-box__type-input"

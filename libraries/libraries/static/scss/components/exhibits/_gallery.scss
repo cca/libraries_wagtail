@@ -45,11 +45,6 @@ img {
     }
 }
 
-.gallery--works {
-    // stop images from being wider than phone screen
-    max-width: 100%;
-}
-
 .gallery--title {
     font-family: $font-family-sans-serif;
     font-size: 150%;
@@ -65,6 +60,8 @@ img {
     cursor: pointer;
     // overriden by the "gallery_spacing" value, here only as a reminder
     // margin-bottom: 4px;
+    // stop images from being wider than phone screen
+    max-width: 100%;
 
     @include respond($break-medium) {
         display: inline-block;
@@ -87,7 +84,7 @@ img {
 .gallery--work__metadata {
     background: $white;
     overflow: hidden;
-    padding: 1em 0 3em;
+    padding: 1em 0 2em;
 
     @include respond($break-medium) {
         display: inline-block;

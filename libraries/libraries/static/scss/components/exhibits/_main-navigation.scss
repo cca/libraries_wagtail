@@ -1,6 +1,5 @@
 // ========================================
 // Main website navigation in the header.
-// On mobile it is a dropdown menu.
 // ========================================
 .main-navigation {
     background: $black;
@@ -42,7 +41,7 @@
     color: inherit;
     display: block;
     font-size: 14px;
-    padding: 20px 20px 20px 16px; // border offset
+    padding: 20px 20px 18px 16px; // border offset
     text-decoration: none;
 
     @include respond($break-medium) {

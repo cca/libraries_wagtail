@@ -1,8 +1,5 @@
 {% load static wagtailuserbar %}
-{% comment %}
-based substantially off of libraries/templates/base.html
-but must necessarily differ e.g. with the main CSS file
-{% endcomment %}
+{# based on libraries/templates/base.html but different CSS #}
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -14,7 +11,7 @@ but must necessarily differ e.g. with the main CSS file
     <body class="page js-page {% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
-        {% include 'components/header.html' %}
+        {% include 'components/header.html' with exhibits=True %}
 
         <main role="main">
             {% block content %}{% endblock %}

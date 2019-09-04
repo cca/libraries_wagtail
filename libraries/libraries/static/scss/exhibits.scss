@@ -17,6 +17,7 @@
 @import 'settings/component-specific';
 @import 'settings/font-families';
 @import 'settings/vars';
+@import 'components/exhibits/settings';
 
 // Utilities
 @import 'utilities/respond';
@@ -49,7 +50,6 @@
 @import 'components/misc/rich-text';
 
 // -- Exhibits-specific
-@import 'components/exhibits/settings';
 @import 'components/exhibits/banner';
 @import 'components/exhibits/details';
 @import 'components/exhibits/foursquare';
