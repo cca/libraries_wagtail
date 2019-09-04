@@ -41,4 +41,7 @@ $(function(){
         // handy URLify function is already present
         $('#id_tags').tagit('createTag', URLify(title))
     })
+
+    // make search description appear required (does not actually force requirement)
+    $('#id_search_description').attr('required', true).closest('li').addClass('required')
 })
