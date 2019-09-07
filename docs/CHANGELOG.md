@@ -2,7 +2,7 @@
 
 ## 2.2.1
 
-**DATE** - Enable the header search box in the Exhibits app. Also, the `search description` field (on the Promote panel of Wagtail admin) is now required for Exhibit pages.
+**2019-09-06** - Enable the header search box in the Exhibits app. Also, the `search description` field (on the Promote panel of Wagtail admin) is now required for Exhibit pages.
 
 ## 2.2.0
 
