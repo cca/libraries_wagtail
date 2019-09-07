@@ -1,10 +1,10 @@
 {% load wagtailimages_tags %}
 
-<div class="banner">
+<div id="banner" class="banner">
     <div class="banner--image">
         {% image page.header_image.all.0.image width-1360 %}
     </div>
-    <div class="banner--title">
+    <div id="title" class="banner--title">
         <h1>{{ page.title }}</h1>
     </div>
 </div>

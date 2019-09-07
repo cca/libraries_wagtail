@@ -45,12 +45,12 @@
             {% endif %}
         </dl>
 
-        <div class="description">
+        <div id="description" class="description">
             {% include_block page.description %}
         </div>
     </div>
 
-    <section class="gallery">
+    <section id="gallery" class="gallery">
         <style scoped>.gallery--work { margin-bottom: {{ page.gallery_spacing }}px; }</style>
         <h2 class="gallery--title">Gallery</h2>
 
@@ -62,7 +62,7 @@
     </section>
 
     {% if page.epilogue %}
-        <section class="epilogue">
+        <section id="epilogue" class="epilogue">
             {{ page.epilogue|richtext }}
         </section>
     {% endif %}
