@@ -10,10 +10,6 @@
     margin: 0 auto;
     max-width: $site-max-width;
     width: 100%;
-
-    @include respond($break-medium) {
-        height: $header-height-small;
-    }
 }
 
 .header__home-link {
@@ -70,11 +66,12 @@
         height: $header-height-large - 20px;
         position: absolute;
         right: 0;
+        top: 0;
         width: 50px;
+    }
 
-        &.header__nav-link--is-active {
-            height: $header-height-large - 28px;
-        }
+    &.header__nav-link--is-active {
+        display: none;
     }
 }
 
