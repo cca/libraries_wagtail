@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'wagtail.users',
 
     'django_cas_ng',
+    'django_extensions',
     'modelcluster',
     'rest_framework',
     'taggit',
