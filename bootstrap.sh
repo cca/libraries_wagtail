@@ -21,3 +21,10 @@ python libraries/manage.py createcachetable
 
 # run dev server
 python libraries/manage.py runserver
+
+# imagemagick needed for animated GIF support
+if test $(uname) = 'Darwin'; then
+    brew install imagemagick
+elif test $(uname) = 'Linux'; then
+    sudo apt-get install libmagickwand-dev
+fi

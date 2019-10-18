@@ -21,6 +21,8 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > python libraries/manage.py createcachetable libraries_wagtail_cache
 ```
 
+Finally, to get animated GIF support from Wand you need to install the imagemagick library [as described in its documentation](http://docs.wand-py.org/en/latest/guide/install.html). I've found that this works fine locally on my Macbook but causes severe problems on our server as large amounts of memory are taken up to generate GIF derivatives.
+
 There's a "bootstrap.sh" script that does all this but I list the steps above for precision's sake.
 
 ## Settings, Database, & Search
