@@ -1,0 +1,88 @@
+@import './alert-mixins';
+
+.alert-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $space-ms;
+  margin-bottom: $space-sm;
+
+  &__icon {
+    height: 24px;
+    width: 24px;
+    margin-right: $space-sm;
+    float: left;
+
+    @include icon;
+
+    &--alert {
+      @include alert-icon;
+
+      background-color: $white;
+    }
+
+    &--notification {
+      @include notification-icon;
+
+      background-color: $black;
+    }
+  }
+
+  &__header {
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0;
+    margin-right: $space-sm;
+    display: inline;
+    font-size: 18px;
+  }
+
+  a {
+    color: $white;
+    text-decoration: underline;
+    font-size: 18px;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  b,
+  strong {
+    @include brown-regular;
+  }
+
+  &--alert {
+    background-color: #E00;
+    color: $white;
+
+    a {
+      color: $white;
+
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+
+  &--notification {
+    background-color: $ccaYellow;
+    color: $black;
+
+    a {
+      color: $black;
+
+      &:hover {
+        color: $black;
+      }
+    }
+  }
+}
+
+.alert-page {
+  &__title {
+    margin-top: 0;
+  }
+}

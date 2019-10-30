@@ -1,0 +1,9 @@
+{% show_alert_banner as show_alert_banner %}
+{% show_notification_banner as show_notification_banner %}
+{% if show_alert_banner %}
+    {% alert_banner as alert %}
+    {% include "components/alert_banner.html" with type="alert" url=alert.url banner_link_text=alert.alert_banner_link_text text=alert.alert_banner_text %}
+{% elif show_notification_banner %}
+    {% notification_banner as alert %}
+    {% include "components/alert_banner.html" with type="notification" url=alert.url banner_link_text=alert.notification_banner_link_text text=alert.notification_banner_text%}
+{% endif %}

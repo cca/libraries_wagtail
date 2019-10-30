@@ -1,0 +1,13 @@
+@mixin alert-icon {
+  -webkit-mask-image: url("../../../images/exclamation-circle.svg");
+  mask-image: url("../../../images/exclamation-circle.svg");
+}
+
+@mixin brown-bold {
+  font-family: "lineto-brown-bold", sans-serif;
+}
+
+@mixin notification-icon {
+  -webkit-mask-image: url("../../../images/info-circle-outline.svg");
+  mask-image: url("../../../images/info-circle-outline.svg");
+}

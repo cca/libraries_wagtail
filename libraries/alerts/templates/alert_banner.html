@@ -1,0 +1,16 @@
+{% comment %}
+portal_tags were loaded here
+{% endcomment %}
+<div class="alert-banner alert-banner{% if type == "alert" %}--alert{% else %}--notification{% endif %}">
+
+    <div class="alert-banner__alert" role="alert" aria-live="assertive">
+        <h1 class="sr-only">CCA Alert Banner</h1>
+        <div
+            class="alert-banner__icon alert-banner__icon{% if type == "alert" %}--alert{% else %}--notification{% endif %}"></div>
+        {{text |safe}}
+        {% if alert.show_read_more %}
+            <a href="{{url}}" class="alert-banner__link">{{banner_link_text}}</a>
+        {% endif %}
+    </div>
+
+</div>
