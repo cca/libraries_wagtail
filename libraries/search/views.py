@@ -31,7 +31,8 @@ def search(request):
         summon_url = 'https://cca.summon.serialssolutions.com/'
         # going to /search (no query) -> Summon home page
         if search_query:
-            return redirect(summon_url + '?q=' + search_query, permanent=True)
+            # disable Book Review content type by default issue #87
+            return redirect(summon_url + '?fvf=ContentType,Book%20Review,t&q=' + search_query, permanent=True)
         else:
             return redirect(summon_url)
     elif type == 'catalog':
