@@ -12,9 +12,16 @@
         }
     }
 
+    ul {
+        list-style: disc;
+    }
+
+    ol {
+        list-style: decimal;
+    }
+
     ul,
     ol {
-        list-style: inherit;
         margin: 0 0 24px;
         padding-left: 2em;
 
