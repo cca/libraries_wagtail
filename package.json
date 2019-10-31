@@ -13,6 +13,9 @@
     "test": "scss-lint -e libraries/libraries/static/scss/bootstrap -e libraries/libraries/static/scss/reset/_reset.scss libraries/libraries/static/scss",
     "watch": "gulp"
   },
+  "browserslist": [
+      "defaults"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cca/libraries_wagtail.git"
