@@ -2,6 +2,7 @@
 // Main website navigation in the header.
 // On mobile it is a dropdown menu.
 // ========================================
+$mainnav-border-bottom: 3px;
 
 .main-navigation {
     background: $white;
@@ -15,7 +16,7 @@
         float: right;
         margin-right: 20px;
         position: relative;
-        top: -4px; // border offset
+        top: -1px; // border offset
         width: auto;
     }
 }
@@ -45,7 +46,7 @@
     }
 
     @include respond($break-medium) {
-        border-bottom: 3px solid transparent;
+        border-bottom: $mainnav-border-bottom solid transparent;
         border-left: 0;
         display: inline-block;
         padding: 0 13px;
@@ -116,7 +117,7 @@
 
     @include respond($break-medium) {
         font-size: 16px;
-        height: $header-height-large;
+        height: $header-height-large - $mainnav-border-bottom;
         line-height: $header-height-large + 10;
         padding: 0;
     }
