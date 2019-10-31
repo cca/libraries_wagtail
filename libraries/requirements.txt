@@ -9,6 +9,7 @@ django-modelcluster==4.2
 django-taggit==0.23.0
 django-treebeard==4.3
 djangorestframework==3.10.2
+djangorestframework-simplejwt==4.3.0
 draftjs-exporter==2.1.6
 elasticsearch==5.4.0
 html5lib==1.0.1
@@ -18,6 +19,7 @@ lxml==4.4.1
 olefile==0.46
 Pillow==6.1.0
 psycopg2-binary==2.8.3
+PyJWT==1.7.1
 python-cas==1.4.0
 pytz==2019.2
 requests==2.22.0
