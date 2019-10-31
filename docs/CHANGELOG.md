@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.3.0
+
+**DATE** - Add Alerts app that syncs with major alerts published on Portal & displays them in a loud, red banner.
+
+### Features
+
+- [#49](https://github.com/cca/libraries_wagtail/issues/49) Alerts app that lets us add our own alerts but also publishes ones from Portal (along with cca.edu). Code largely copied from cca.edu basis.
+- [#87](https://github.com/cca/libraries_wagtail/issues/87) disable Book Review content type in Summon searches by default
+
+### Bugfixes
+
+- Ordered lists now display appropriately (they were displaying the same as unordered lists).
+- Slight adjustment to main header height
+- Uninstall Wand to disable animated GIF support. This is posing a server stability problem.
+
+### Misc
+
+- Update a few `npm` packages & a bunch of `pip` requirements
+- Searches are logged now
+
 ## 2.2.1
 
 **2019-09-06** - Enable the header search box in the Exhibits app. Also, the `search description` field (on the Promote panel of Wagtail admin) is now required for Exhibit pages.
