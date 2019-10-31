@@ -66,6 +66,7 @@ urlpatterns = [
 
 router = DefaultRouter()
 router.registry.extend(alerts_router.registry)
+urlpatterns += router.urls
 
 if settings.DEBUG or settings.BASE_URL == 'http://localhost':
     from django.conf.urls.static import static
