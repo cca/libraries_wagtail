@@ -15,6 +15,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     # our apps
+    'alerts',
     'blog',
     'brokenlinks',
     'categories',

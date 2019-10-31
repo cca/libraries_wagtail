@@ -42,8 +42,3 @@ BROKENLINKS_HASH = {
 # Instagram app
 INSTAGRAM_CLIENT_ID = {{ client ID }}
 INSTAGRAM_REDIRECT_URI = {{ redirect URI }}
-
-# CCA.edu API settings (for alerts)
-CCA_EDU_API_BASE_URL = {{ https://www.cca.edu/api/v1/ }}
-CCA_EDU_API_USER = {{ user }}
-CCA_EDU_API_PASS = {{ password }}
