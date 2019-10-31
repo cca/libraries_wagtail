@@ -3,9 +3,6 @@ from django.urls import include, path, re_path
 from django.contrib import admin
 from django.views.generic import RedirectView, TemplateView
 
-from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenVerifyView
-
 from django_cas_ng.views import LoginView, LogoutView
 
 from brokenlinks import views as brokenlinks_views
@@ -13,7 +10,6 @@ from hours import views as hours_views
 from libraries.views import serve_wagtail_doc
 from search import views as search_views
 from sersol_api import views as sersol_views
-from alerts.api.routers import router as alerts_router
 
 from .api import api_router
 
@@ -39,8 +35,7 @@ urlpatterns = [
     path('admin/', include(wagtailadmin_urls)),
     # @TODO can we do this using just Wagtail REST APIs instead of Django REST framework?
     path('api/v2/', api_router.urls),
-    path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('api/v1/', include('alerts.urls')),
 
     path('search/', search_views.search, name='search'),
     path('hours/', hours_views.hours, name='hours'),
@@ -64,9 +59,7 @@ urlpatterns = [
     re_path(r'', include(wagtail_urls)),
 ]
 
-router = DefaultRouter()
-router.registry.extend(alerts_router.registry)
-urlpatterns += router.urls
+
 
 if settings.DEBUG or settings.BASE_URL == 'http://localhost':
     from django.conf.urls.static import static
