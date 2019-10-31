@@ -82,6 +82,12 @@ AUTHENTICATION_BACKENDS = [
     'django_cas_ng.backends.CASBackend',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
 CAS_CREATE_USER = False
 CAS_FORCE_CHANGE_USERNAME_CASE = 'lower'
 CAS_LOGOUT_COMPLETELY = True
