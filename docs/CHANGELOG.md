@@ -19,6 +19,7 @@
 
 - Update a few `npm` packages & a bunch of `pip` requirements
 - Searches are logged now
+- [#88](https://github.com/cca/libraries_wagtail/issues/88) Convert to using `pipenv` for package/virtualenv management
 
 ## 2.2.1
 
