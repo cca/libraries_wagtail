@@ -34,6 +34,10 @@
     }
 }
 
+.page--with-alert main {
+    margin-top: $alert-max-height;
+}
+
 .page--overlay::after {
     animation: fade-in .3s ease;
     background: black(.6);

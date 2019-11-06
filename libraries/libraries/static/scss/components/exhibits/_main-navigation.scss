@@ -11,7 +11,7 @@
         float: right;
         margin-right: 20px;
         position: relative;
-        top: -4px; // border offset
+        top: -1px; // border offset
         width: auto;
     }
 }
@@ -24,7 +24,7 @@
     transition: border .3s ease;
 
     @include respond($break-medium) {
-        border-bottom: 3px solid transparent;
+        border-bottom: $nav-border-bottom solid transparent;
         display: inline-block;
         padding: 0 13px;
         // to make bottom border align perfectly with black header bar
@@ -46,7 +46,7 @@
 
     @include respond($break-medium) {
         font-size: 16px;
-        height: $header-height-small;
+        height: $header-height-small - $nav-border-bottom;
         line-height: $header-height-small + 10;
         padding: 0;
     }

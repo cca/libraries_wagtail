@@ -20,8 +20,17 @@
     text-rendering: geometricPrecision;
     // scss-lint:enable DuplicateProperty
 
+    // push page body down if alert banner is present, not necessary on home page
+    &--with-alert:not(.page--home) {
+        padding-top: $header-height-small + $alert-max-height;
+    }
+
     @include respond($break-medium) {
         padding-top: $header-height-large;
+
+        &--with-alert:not(.page--home) {
+            padding-top: $header-height-large + $alert-max-height;
+        }
     }
 }
 

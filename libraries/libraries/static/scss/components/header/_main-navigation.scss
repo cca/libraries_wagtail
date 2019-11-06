@@ -23,6 +23,8 @@ $mainnav-border-bottom: 3px;
 
 .main-navigation--is-active {
     display: block;
+    // needed to pull main nav above alert icon
+    z-index: 100;
 }
 
 // On the home page the search icon is
