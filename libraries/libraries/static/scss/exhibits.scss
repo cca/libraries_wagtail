@@ -20,8 +20,9 @@
 @import 'components/exhibits/settings';
 
 // Utilities
-@import 'utilities/respond';
 @import 'utilities/clearfix';
+@import 'utilities/respond';
+@import 'utilities/sronly';
 @import 'utilities/text';
 
 // Reset
@@ -60,3 +61,6 @@
 @import 'components/exhibits/main-navigation';
 @import 'components/exhibits/page';
 @import 'components/exhibits/wrapper';
+
+// -- Alerts
+@import 'components/alerts/alert-banner';
