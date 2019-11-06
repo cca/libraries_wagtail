@@ -2,10 +2,11 @@
 
 ## 2.3.0
 
-**DATE** - Add Alerts app that syncs with major alerts published on Portal & displays them in a loud, red banner.
+**DATE** - Update to Wagtail 2.7 with its improved editing interface, add Alerts app that syncs with major alerts published on Portal & displays them in a loud, red banner.
 
 ### Features
 
+- **Wagtail 2.7**! Huge improvement for StreamField editor & a bunch of smaller niceties. Read [the release notes](https://docs.wagtail.io/en/v2.7/releases/2.7.html) for details.
 - [#49](https://github.com/cca/libraries_wagtail/issues/49) Alerts app that lets us add our own alerts but also publishes ones from Portal (along with cca.edu). Code largely copied from cca.edu basis.
 - [#87](https://github.com/cca/libraries_wagtail/issues/87) disable Book Review content type in Summon searches by default
 
@@ -13,7 +14,7 @@
 
 - Ordered lists now display appropriately (they were displaying the same as unordered lists).
 - Slight adjustment to main header height
-- Uninstall Wand to disable animated GIF support. This is posing a server stability problem.
+- Uninstall Wand to disable animated GIF support. They posed a server stability problem.
 
 ### Misc
 
