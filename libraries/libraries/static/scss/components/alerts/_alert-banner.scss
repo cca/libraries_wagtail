@@ -4,12 +4,16 @@
     color: $white;
     display: flex;
     font-family: $font-family-sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 400;
     justify-content: center;
     margin-bottom: 4px;
     max-height: $alert-max-height;
     padding: 16px;
+
+    @include respond($break-medium) {
+        font-size: 18px;
+    }
 
     &__icon {
         background-color: $white;
