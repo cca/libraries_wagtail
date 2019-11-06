@@ -1,15 +1,12 @@
 # Starting a Wagtail site
 
-Here's the basic steps to starting this project. We'll assume you're in the root of the project (e.g. the parent of this "docs" directory). You'll need python, virtualenv, postgres, and node (or nvm) installed. See [the Wagtail "getting started" doc](http://docs.wagtail.io/en/v1.10.1/getting_started/tutorial.html) for more.
+Here's the basic steps to starting this project. We'll assume you're in the root of the project (e.g. the parent of this "docs" directory). You'll need python, pipenv, postgres, and node (or nvm) installed. See [the Wagtail "getting started" doc](http://docs.wagtail.io/en/v1.10.1/getting_started/tutorial.html) for more.
 
 ```sh
-> # create a virtual environment using the python3 interpreter
-> virtualenv -p python3 .
-> # activate the environment—you'll do this every time you want to work on the project
-> # use "activate.fish" below for Fish shell
-> source bin/activate
+> # create and enter a virtual environment using pipenv
+> pipenv shell --three
 > # install Wagtail & other dependencies in the environment's packages
-> pip install -r libraries/requirements.txt
+> pipenv install
 > # install npm dependencies (used for front-end build processes)
 > npm install
 > # build/minify the frontend assets
