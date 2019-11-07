@@ -282,6 +282,8 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
+# https://docs.wagtail.io/en/latest/advanced_topics/settings.html#wagtaildocs-serve-method
+WAGTAILDOCS_SERVE_METHOD = 'direct'
 
 # sets of HTML tags allowed in various rich text fields
 # full list here:
