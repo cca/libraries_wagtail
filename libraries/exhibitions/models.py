@@ -29,6 +29,12 @@ class ExhibitsIndexPage(Page):
     subpage_types = ['exhibitions.ExhibitPage']
     max_count = 1
 
+    # for search results only, use header_image of most recently published exhibition
+    @property
+    def main_image(self):
+        exhibit = ExhibitPage.objects.live().order_by('-first_published_at').first()
+        return exhibit.header_image.first().image
+
     # put list of all published exhibits in the page's context
     def get_context(self, request):
         exhibits = list(ExhibitPage.objects.live().order_by('-first_published_at'))
