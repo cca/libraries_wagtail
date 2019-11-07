@@ -50,7 +50,7 @@
 }
 
 .header__nav-link {
-    border-bottom: 3px solid transparent;
+    border-bottom: $nav-border-bottom solid transparent;
     border-left: 1px solid $header-border-color;
     display: block;
     float: right;
@@ -60,15 +60,14 @@
     width: $header-height-small;
 
     @include respond($break-medium) {
-        // borders for search icon which is
-        // still visible
+        // borders for search icon which is still visible
         border: 1px solid transparent;
         display: none;
     }
 }
 
 .header__nav-link:not(.header__nav-link--is-active):hover {
-    border-bottom: 3px solid $black;
+    border-bottom: $nav-border-bottom solid $black;
 }
 
 .header__nav-link--is-active {
@@ -102,7 +101,7 @@
 
 .page--search .header__nav-link--search.header__nav-link--is-active {
     @include respond($break-medium) {
-        border-bottom: 3px solid $black;
+        border-bottom: $nav-border-bottom solid $black;
         border-left: 0;
         border-right: 0;
         border-top: 0;

@@ -15,6 +15,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     # our apps
+    'alerts',
     'blog',
     'brokenlinks',
     'categories',
@@ -80,6 +81,12 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'django_cas_ng.backends.CASBackend',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 CAS_CREATE_USER = False
 CAS_FORCE_CHANGE_USERNAME_CASE = 'lower'
@@ -275,6 +282,8 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
+# https://docs.wagtail.io/en/latest/advanced_topics/settings.html#wagtaildocs-serve-method
+WAGTAILDOCS_SERVE_METHOD = 'direct'
 
 # sets of HTML tags allowed in various rich text fields
 # full list here:

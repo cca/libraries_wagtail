@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Group 8</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M9.625,17.2571563 L10.25,17.2571563 L10.25,12.7428438 L9.625,12.7428438 C9.2798125,12.7428438 9,12.4630313 9,12.1178438 L9,10.625 C9,10.2798125 9.2798125,10 9.625,10 L13.125,10 C13.4701875,10 13.75,10.2798125 13.75,10.625 L13.75,17.2571563 L14.375,17.2571563 C14.7201875,17.2571563 15,17.5369687 15,17.8821563 L15,19.375 C15,19.7201875 14.7201875,20 14.375,20 L9.625,20 C9.2798125,20 9,19.7201875 9,19.375 L9,17.8821563 C9,17.5369687 9.2798125,17.2571563 9.625,17.2571563 Z M12,4 C10.7573438,4 9.75,5.00734375 9.75,6.25 C9.75,7.49265625 10.7573438,8.5 12,8.5 C13.2426562,8.5 14.25,7.49265625 14.25,6.25 C14.25,5.00734375 13.242625,4 12,4 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="(w|p)-Notification---Dashboard" transform="translate(-67.000000, -169.000000)">
+            <g id="Group-8" transform="translate(68.000000, 170.000000)">
+                <rect id="Rectangle" stroke="#000000" stroke-width="2" x="0" y="0" width="24" height="24" rx="12"></rect>
+                <g id="Icons/Info" transform="translate(0.000000, 0.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#000000" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

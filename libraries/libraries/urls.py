@@ -17,6 +17,7 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.core import urls as wagtail_urls
 
+
 admin.site.site_header = 'CCA Libraries Administration'
 admin.autodiscover()
 
@@ -28,11 +29,13 @@ urlpatterns = [
     # CAS login urls
     # NOTE: ^admin/logout/$ must appear before ^admin/ or it's impossible to logout
     path('login/', LoginView.as_view(), name='cas_ng_login'),
-    path('admin/login/', LoginView.as_view(), name='cas_ng_login'),
+    path('admin/login/', LoginView.as_view()),
     path('admin/logout/', LogoutView.as_view(), name='cas_ng_logout'),
 
     path('admin/', include(wagtailadmin_urls)),
+    # @TODO can we do this using just Wagtail REST APIs instead of Django REST framework?
     path('api/v2/', api_router.urls),
+    path('api/v1/', include('alerts.urls')),
 
     path('search/', search_views.search, name='search'),
     path('hours/', hours_views.hours, name='hours'),
@@ -55,6 +58,8 @@ urlpatterns = [
     # the list:
     re_path(r'', include(wagtail_urls)),
 ]
+
+
 
 if settings.DEBUG or settings.BASE_URL == 'http://localhost':
     from django.conf.urls.static import static

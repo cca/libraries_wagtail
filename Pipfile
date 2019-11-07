@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django-cas-ng = "==3.6.0"
+django-extensions = "==2.2.5"
+djangorestframework-simplejwt = "==4.3.0"
+elasticsearch = "==5.4.0"
+l18n = "==2018.5"
+olefile = "==0.46"
+psycopg2-binary = "==2.8.4"
+soupsieve = "==1.9.5"
+wagtail = "==2.7"
+xmltodict = "==0.12.0"
+django_managepy_anywhere = "==2.0"
+
+[requires]
+python_version = "3.7"

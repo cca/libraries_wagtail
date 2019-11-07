@@ -1,15 +1,12 @@
 # Starting a Wagtail site
 
-Here's the basic steps to starting this project. We'll assume you're in the root of the project (e.g. the parent of this "docs" directory). You'll need python, virtualenv, postgres, and node (or nvm) installed. See [the Wagtail "getting started" doc](http://docs.wagtail.io/en/v1.10.1/getting_started/tutorial.html) for more.
+Here's the basic steps to starting this project. We'll assume you're in the root of the project (e.g. the parent of this "docs" directory). You'll need python, pipenv, postgres, and node (or nvm) installed. See [the Wagtail "getting started" doc](http://docs.wagtail.io/en/v1.10.1/getting_started/tutorial.html) for more.
 
 ```sh
-> # create a virtual environment using the python3 interpreter
-> virtualenv -p python3 .
-> # activate the environment—you'll do this every time you want to work on the project
-> # use "activate.fish" below for Fish shell
-> source bin/activate
+> # create and enter a virtual environment using pipenv
+> pipenv shell --three
 > # install Wagtail & other dependencies in the environment's packages
-> pip install -r libraries/requirements.txt
+> pipenv install
 > # install npm dependencies (used for front-end build processes)
 > npm install
 > # build/minify the frontend assets
@@ -20,6 +17,8 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > # create the cache table—only relevant for production
 > python libraries/manage.py createcachetable libraries_wagtail_cache
 ```
+
+Finally, to get animated GIF support from Wand you need to install the imagemagick library [as described in its documentation](http://docs.wand-py.org/en/latest/guide/install.html). I've found that this works fine locally on my Macbook but causes severe problems on our server as large amounts of memory are taken up to generate GIF derivatives.
 
 There's a "bootstrap.sh" script that does all this but I list the steps above for precision's sake.
 

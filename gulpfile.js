@@ -33,7 +33,7 @@ const settings = {
 function allCSS() {
 	return src(settings.src.main, { sourcemaps: true })
 		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-		.pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
+		.pipe(postcss([ autoprefixer() ]))
 		.pipe(dest(settings.dist.css));
 }
 

@@ -1,4 +1,4 @@
-from __future__ import absolute_import, unicode_literals
+import logging
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import redirect, render
@@ -8,6 +8,8 @@ from wagtail.search.models import Query
 
 from categories.models import RowComponent
 from exhibitions.models import ExhibitPage
+
+logger = logging.getLogger(__name__)
 
 
 def search(request):
@@ -31,21 +33,26 @@ def search(request):
         summon_url = 'https://cca.summon.serialssolutions.com/'
         # going to /search (no query) -> Summon home page
         if search_query:
-            return redirect(summon_url + '?q=' + search_query, permanent=True)
+            logger.info('Summon search, query: {}'.format(search_query))
+            # disable Book Review content type by default issue #87
+            return redirect(summon_url + '?fvf=ContentType,Book%20Review,t&q=' + search_query, permanent=True)
         else:
             return redirect(summon_url)
     elif type == 'catalog':
+        logger.info('Koha search, query: {}'.format(search_query))
         koha_url = 'https://library.cca.edu/cgi-bin/koha/opac-search.pl?&q='
         return redirect(koha_url + search_query, permanent=True)
 
     # Search
     if type == 'services' and search_query:
+        logger.info('Wagtail search, query: {}'.format(search_query))
         # exclude RowComponent pages
         search_results = Page.objects.not_type(RowComponent).live().search(search_query)
         query = Query.get(search_query)
         # Record hit
         query.add_hit()
     elif type == 'exhibits' and search_query:
+        logger.info('Exhibits search, query: {}'.format(search_query))
         search_results = Page.objects.type(ExhibitPage).live().search(search_query)
         query = Query.get(search_query)
         query.add_hit()

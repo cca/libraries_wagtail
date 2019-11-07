@@ -37,11 +37,11 @@
 }
 
 .header__nav-link {
-    border-bottom: 3px solid transparent;
+    border-bottom: $nav-border-bottom solid transparent;
     border-left: 1px solid $grey-border;
     display: block;
     float: right;
-    height: $header-height-small;
+    height: $header-height-small - $nav-border-bottom;
     position: relative;
     transition: background .3s ease;
     width: $header-height-small;
@@ -56,7 +56,7 @@
 }
 
 .header__nav-link:hover {
-    border-bottom: 3px solid $white;
+    border-bottom: $nav-border-bottom solid $white;
 }
 
 // Search modifier

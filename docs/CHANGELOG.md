@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.3.0
+
+**DATE** - Update to Wagtail 2.7 with its improved editing interface, add Alerts app that syncs with major alerts published on Portal & displays them in a loud, red banner.
+
+### Features
+
+- **Wagtail 2.7**! Huge improvement for StreamField editor & a bunch of smaller niceties. Read [the release notes](https://docs.wagtail.io/en/v2.7/releases/2.7.html) for details.
+- [#49](https://github.com/cca/libraries_wagtail/issues/49) Alerts app that lets us add our own alerts but also publishes ones from Portal (along with cca.edu). Code largely copied from cca.edu basis.
+- [#87](https://github.com/cca/libraries_wagtail/issues/87) disable Book Review content type in Summon searches by default
+
+### Bugfixes
+
+- Ordered lists now display appropriately (they were displaying the same as unordered lists).
+- Slight adjustment to main header height
+- Uninstall Wand to disable animated GIF support. They posed a server stability problem.
+
+### Misc
+
+- Update a few `npm` packages & a bunch of `pip` requirements
+- Searches are logged now
+- [#88](https://github.com/cca/libraries_wagtail/issues/88) Convert to using `pipenv` for package/virtualenv management
+
 ## 2.2.1
 
 **2019-09-06** - Enable the header search box in the Exhibits app. Also, the `search description` field (on the Promote panel of Wagtail admin) is now required for Exhibit pages.

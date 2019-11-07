@@ -1,0 +1,53 @@
+.alert-banner {
+    align-items: center;
+    background-color: #E00;
+    color: $white;
+    display: flex;
+    font-family: $font-family-sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    justify-content: center;
+    margin-bottom: 4px;
+    max-height: $alert-max-height;
+    padding: 16px;
+
+    @include respond($break-medium) {
+        font-size: 18px;
+    }
+
+    &__icon {
+        background-color: $white;
+        float: left;
+        height: 24px;
+        margin-right: 8px;
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+        mask-position: center;
+        -webkit-mask-position: center;
+        mask-size: contain;
+        -webkit-mask-size: contain;
+        -webkit-mask-image: url("/static/images/exclamation-circle.svg");
+        mask-image: url("/static/images/exclamation-circle.svg");
+        width: 24px;
+    }
+
+    &__header {
+        text-transform: uppercase;
+    }
+
+    p {
+        display: inline;
+        margin-right: 8px;
+        margin: 0;
+    }
+
+    a {
+        color: $white;
+        font-weight: 400;
+        text-decoration: underline;
+    }
+
+    b {
+        font-weight: 600;
+    }
+}

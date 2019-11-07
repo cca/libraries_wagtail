@@ -1,4 +1,4 @@
-{% load static wagtailuserbar %}
+{% load alert_tags static wagtailuserbar %}
 <!DOCTYPE html>
 <html class="no-js" lang="en">
     <head>
@@ -6,7 +6,8 @@
         {% block schema_org %}{% endblock %}
     </head>
 
-    <body class="page js-page {% block body_class %}{% endblock %}">
+    {% show_alert_banner as show_alert %}
+    <body class="page js-page {% block body_class %}{% endblock %} {% if show_alert %}page--with-alert{% endif %}">
         {% wagtailuserbar %}
 
         {% include 'components/header/header.html' %}

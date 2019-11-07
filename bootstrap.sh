@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # python & virtualenv setup
-virtualenv -p python3 .
-source bin/activate
-pip install -r libraries/requirements.txt
+pipenv shell --three
+pipenv install
 
-# build frontend assets
-command -v nvm && nvm install
+# install node (using either nvm or n) & build frontend assets
+command -v nvm >/dev/null && nvm install
+command -v n >/dev/null && n stable
 npm install
 npm run build
 
@@ -19,5 +19,11 @@ python libraries/manage.py migrate
 python libraries/manage.py createsuperuser
 python libraries/manage.py createcachetable
 
-# run dev server
-python libraries/manage.py runserver
+# imagemagick needed for animated GIF support
+if test $(uname) = 'Darwin'; then
+    brew install imagemagick
+elif test $(uname) = 'Linux'; then
+    sudo apt-get install libmagickwand-dev
+fi
+
+echo 'Copy libraries/libraries/settings/local.py.template to local.py and edit it accordingly.'
