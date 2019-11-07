@@ -2,7 +2,7 @@
 
 ## 2.3.0
 
-**DATE** - Update to Wagtail 2.7 with its improved editing interface, add Alerts app that syncs with major alerts published on Portal & displays them in a loud, red banner.
+**2019-11-07** - Update to Wagtail 2.7 with its improved editing interface, add Alerts app that syncs with major alerts published on Portal & displays them in a loud, red banner.
 
 ### Features
 
