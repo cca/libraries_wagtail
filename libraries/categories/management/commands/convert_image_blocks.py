@@ -55,7 +55,7 @@ def convertBlocksOfModel(model, streamfield):
         page_was_changed = False
         new_stream_data = [convertBlock(block) for block in getattr(page, streamfield).stream_data]
         if page_was_changed:
-            logger.info("{} had Image or LinkedImaged blocks which were converted.".format(page.title))
+            logger.info("{} had Image or LinkedImage blocks which were converted.".format(page.title))
             stream_block = page.body.stream_block
             page.body = StreamValue(stream_block, new_stream_data, is_lazy=True)
             page.save()
