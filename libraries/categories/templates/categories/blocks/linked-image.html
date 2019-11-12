@@ -1,7 +1,7 @@
 {% load wagtailimages_tags wagtailcore_tags %}
 
 <div class="blog-post__image_wrapper">
-    <a href="{{ value.link }}">
+    {% if value.url %}<a href="{{ value.url }}">{% endif %}
         {% if row and service_page %}
             {# image inside a row block on a ServicePage #}
             {% image value.image width-420 class="blog-post__image" %}
@@ -15,7 +15,7 @@
             {# full width BlogPage image #}
             {% image value.image width-600 class="blog-post__image" %}
         {% endif %}
-    </a>
+    {% if value.url %}</a>{% endif %}
 
     {% if value.caption %}
         <section class="blog-post__image-description">

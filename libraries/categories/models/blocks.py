@@ -56,37 +56,18 @@ class LinkBlock(StructBlock):
         icon = "link"
         value_class = LinkStructValue
 
-# we don't use this right now but it's here waiting to be added
-# to ImageBlock() if need be
-class ImageFormatChoiceBlock(FieldBlock):
-    field = ChoiceField(choices=(
-        ('left', 'Wrap left'),
-        ('right', 'Wrap right'),
-        ('mid', 'Mid width'),
-        ('full', 'Full width'),
-    ))
-
-# @TODO convert to LinkedImageBlock, no reason to have both of these
-class ImageBlock(StructBlock):
-    image = ImageChooserBlock()
-    caption = RichTextBlock(features=settings.RICHTEXT_BASIC, required=False)
-    # alignment = ImageFormatChoiceBlock()
-
-    class Meta:
-        icon = "image"
-        template = "categories/blocks/image.html"
-
 
 class LinkedImageBlock(StructBlock):
     image = ImageChooserBlock()
     caption = RichTextBlock(features=settings.RICHTEXT_BASIC, required=False)
-    # alignment = ImageFormatChoiceBlock()
-    # @TODO convert to LinkBlock
-    link = URLBlock()
+    external_url = URLBlock(label='External URL', required=False, help_text='Only one of these (external URL or internal page) is needed. You can leave both blank if you don\'t want the image to be linked.')
+    page = PageChooserBlock(label='Internal web page', required=False)
 
     class Meta:
-        icon = "link"
+        icon = "image"
         template = "categories/blocks/linked-image.html"
+        # we can reuse this from LinkBlock because we also have page, ext URL
+        value_class = LinkStructValue
 
 # for Portal-like card with thumbnail image, linked title, & body
 class CardBlock(StructBlock):
@@ -144,7 +125,6 @@ class RowBlock(StreamBlock):
         template="categories/blocks/paragraph.html",
         icon="pilcrow",
     )
-    image = ImageBlock()
     linked_image = LinkedImageBlock()
     card = CardBlock()
     pullquote = PullQuoteBlock()
@@ -171,7 +151,6 @@ class BaseStreamBlock(StreamBlock):
         template="categories/blocks/paragraph.html",
         icon="pilcrow",
     )
-    image = ImageBlock()
     linked_image = LinkedImageBlock()
     card = CardBlock()
     pullquote = PullQuoteBlock()
