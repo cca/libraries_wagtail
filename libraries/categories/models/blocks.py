@@ -15,8 +15,7 @@ class LinkStructValue(StructValue):
             return external_url
         elif page:
             return page.url
-
-        return ''
+        return None
 
 # can be external link or internal page
 class LinkBlock(StructBlock):
