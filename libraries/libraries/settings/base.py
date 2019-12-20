@@ -94,6 +94,7 @@ CAS_LOGOUT_COMPLETELY = True
 CAS_SERVER_URL = 'https://sso.cca.edu/cas/login'
 LOGIN_URL = 'cas_ng_login'
 WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
+WAGTAIL_PASSWORD_RESET_ENABLED = False
 
 # db cache for production, dummy for dev
 # https://docs.djangoproject.com/en/1.11/topics/cache/
