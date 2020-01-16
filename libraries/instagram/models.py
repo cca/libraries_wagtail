@@ -9,7 +9,7 @@ class Instagram(models.Model):
         blank=True,
         help_text='Text of gram with hashtags & usernames converted to <a> links'
     )
-    image = models.URLField(blank=False)
+    image = models.URLField(blank=False, max_length=500)
     # stackoverflow.com/questions/15470180/character-limit-on-instagram-usernames
     username = models.CharField(blank=False, max_length=30)
 
