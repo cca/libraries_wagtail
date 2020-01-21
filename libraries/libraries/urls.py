@@ -23,6 +23,8 @@ admin.autodiscover()
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
+    # manual redirect — cannot redirect from /media/documents path otherwise
+    path('/media/documents/FacultyLIB-ETSGuide-2018-19.pdf', RedirectView.as_view(url='/media/documents/FacultyLIB-ETSGuide.pdf', permanent=True))
     # override Wagtail document handling — send file, not a forced download
     path('documents/<int:id>/<filename>', serve_wagtail_doc, name='wagtaildocs_serve'),
 
