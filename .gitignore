@@ -1,6 +1,3 @@
-bin/
-include/
-lib/
 .Python
 pip-selfcheck.json
 *.pyc
@@ -10,7 +7,7 @@ logs/
 *.log
 node_modules/
 # ignore collectstatic location in root of project
-static/
+libraries/static/
 # track actual static files but not (proprietary) fonts
 !libraries/libraries/static
 libraries/libraries/static/css
