@@ -7,6 +7,7 @@ Basic outline for working on the site:
 - If model or database changes happen, run `makemigrations -n short_name`
     + Try to _always_ name migrations so it's possible infer what it's doing from the filename
     + If you make multiple migrations for the same feature/issue, combine them _before pushing to GitHub_ with `squashmigrations app_name first_number last_number`
+    + It is recommended to indicate that a commit requires running migrations, e.g. by appending `(MIGRATE)` to the end of the first line of the commit message
 - Feel free to `git push origin $BRANCH` to save intermediary changes to GitHub
 - Once a feature is complete, checkout `dev` & `git merge $BRANCH` into it
 - Once `dev` has been tested on another instance of the site, checkout master & `git merge dev`
