@@ -1,3 +1,4 @@
+{% load wagtailcore_tags %}
 <ul class="home-info-box">
 	{% include 'home/home-info-box-times.html' %}
 
@@ -12,9 +13,9 @@
 				Services
 			</a>
 		</h2>
-		<p class="home-info-box__item-text">
-			{{page.services_text}}
-		</p>
+		<div class="home-info-box__item-text">
+			{{ page.services_text|richtext }}
+		</div>
 	</li>
 	<li class="home-info-box__item">
 		<h2 class="home-info-box__item-title">
@@ -26,15 +27,9 @@
 				Collections
 			</a>
 		</h2>
-		<p class="home-info-box__item-text">
-			{{page.collections_text}}
-		</p>
-		<br>
-		<p class="home-info-box__item-text">
-			<a class="home-info-box__item-link" href="https://library.cca.edu/cgi-bin/koha/opac-course-reserves.pl">
-				Course Reserves >>
-			</a>
-		</p>
+		<div class="home-info-box__item-text">
+			{{ page.collections_text|richtext }}
+		</div>
 	</li>
 	<li class="home-info-box__item">
 		<h2 class="home-info-box__item-title">
@@ -46,8 +41,8 @@
 				About Us
 			</a>
 		</h2>
-		<p class="home-info-box__item-text">
-			{{page.about_us_text}}
-		</p>
+		<div class="home-info-box__item-text">
+			{{ page.about_us_text|richtext }}
+		</div>
 	</li>
 </ul>
