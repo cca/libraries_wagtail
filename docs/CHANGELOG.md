@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.4.0
+
+**2020-XX-XX** - Emergency update to highlight teaching & learning online resources. Update to Wagtail 2.8, update other dependencies.
+
+### Features
+
+- The **Services** box on the Libraries home page is highlighted in yellow. Rich text can be entered in the home page boxes now, allowing us to link to resources.
+- **Wagtail 2.8** update, read [the release notes](https://docs.wagtail.io/en/v2.8/releases/2.8.html) for details. No significant changes.
+- As part of the above, review & update Python dependencies (update to Django 3.0, django-cas-ng 4.1.1) and update the CCA Libraries version of the Internet Archive Bookreader.
+
+### Bugfixes
+
+- Convert all image blocks to linked image blocks, reduce number of blocks
+- URLS longer than 200 characters break the Instagram app
+- Validate hours API JSON parameters
+
 ## 2.3.0
 
 **2019-11-07** - Update to Wagtail 2.7 with its improved editing interface, add Alerts app that syncs with major alerts published on Portal & displays them in a loud, red banner.
