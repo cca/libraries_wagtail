@@ -44,12 +44,18 @@
     // scss-lint:enable DeclarationOrder
 }
 
+// SP2020 - alert appearance for Services to draw attention to OTL LibGuide
+.home-info-box__item:nth-of-type(2) {
+    background: $ccaYellow;
+    color: $black;
+}
+
 .home-info-box__item:nth-of-type(2)::after,
 .home-info-box__item:nth-of-type(3)::after,
 .home-info-box__item:nth-of-type(4)::after {
     background: $blue; // services
     content: '';
-    height: calc(100% - 20px); // margin offset
+    height: 100%;
     left: 0;
     position: absolute;
     top: 0;
@@ -72,11 +78,11 @@
     font-size: 18px;
     font-weight: 700;
     letter-spacing: .06em;
-    margin: 0 0 10px;
+    margin: 2px 0 10px;
 
     @include respond($break-medium) {
         font-size: 24px;
-        margin: 0 0 20px;
+        margin: 2px 0 20px;
     }
 }
 
@@ -87,6 +93,11 @@
     line-height: 1.3em;
     opacity: .8;
     text-decoration: none;
+}
+
+// SP2020 - alert appearance for Services to draw attention to OTL LibGuide
+.home-info-box__item:nth-of-type(2) .home-info-box__item-link {
+    border-bottom-color: $black;
 }
 
 .home-info-box__item-link:hover {
