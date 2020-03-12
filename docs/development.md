@@ -16,7 +16,6 @@ Many features are difficult to test without a full database and media files rese
 
 - pull down all documents and images (including renditions)
 - dump the production postgres database & load it into a local one
-- reset everyone's passwords to `password`
 
 Note that you'll need to fill the postgres DB password into the script to make it work, or be prepared to insert the correct password when it runs.
 

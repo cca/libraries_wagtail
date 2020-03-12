@@ -28,6 +28,3 @@ rsync -avz --progress live:~/$dt.dump.sql $static_destination
 createuser $user 2>/dev/null
 createdb $db 2>/dev/null
 pg_restore --clean -h localhost -U $user -d ${db} ${static_destination}/${dt}.dump.sql
-
-# reset everyone's passwords to 'password' for local development
-pipenv run ${local_wagtail}/libraries/manage.py pw_reset
