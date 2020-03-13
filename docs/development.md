@@ -65,3 +65,7 @@ Sometimes when we create a model, we want to immediately create an instance of i
 - if we generate child pages, we must make sure the migration lists the migration generating the parent page as a dependency (see how create_categories depends upon create_homepage)
 - we can disallow certain page types from being created manually at all if we a) generate them during migrations & b) ensure no other model lists them in its `subpage_types`
 - `slug`s must be unique & therefore make a good hook when writing the `remove_xxx` method which undoes the effects of the migration
+
+## Python versions
+
+We have python 3.5.2 on our server right now, which means we cannot update to Django 3.0 (requires more recent version). Unfortunately, I've been unable to install 3.5.2 on my mac development laptop, I believe due to [pyenv/pyenv#1325](https://github.com/pyenv/pyenv/issues/1325) (a problem with using an older version of openssl via homebrew). I tried uninstalling openssl@1.1.1 and using direct references to the 1.0.1 version in the build flags, nothing worked. So I am testing on 3.5.3 even though we are a minor version behind on the server. Hopefully, when we move to GCP, this problem will cease to exist. Either way, moving to containers is going to make managing dependency nightmares like this easier.

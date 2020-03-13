@@ -8,7 +8,7 @@
 
 - The **Services** box on the Libraries home page is highlighted in yellow. Rich text can be entered in the home page boxes now, allowing us to link to resources.
 - **Wagtail 2.8** update, read [the release notes](https://docs.wagtail.io/en/v2.8/releases/2.8.html) for details. No significant changes.
-- As part of the above, review & update Python dependencies (update to Django 3.0, django-cas-ng 4.1.1) and update the CCA Libraries version of the Internet Archive Bookreader.
+- As part of the above, review & update Python dependencies (update to Django 2.2.11, django-cas-ng 4.1.1) and update the CCA Libraries version of the Internet Archive Bookreader.
 
 ### Bugfixes
 

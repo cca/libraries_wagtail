@@ -3,14 +3,10 @@
 Here's the basic steps to starting this project. We'll assume you're in the root of the project (e.g. the parent of this "docs" directory). You'll need python, pipenv, postgres, and node (or nvm) installed. See [the Wagtail "getting started" doc](http://docs.wagtail.io/en/v1.10.1/getting_started/tutorial.html) for more.
 
 ```sh
-> # create and enter a virtual environment using pipenv
-> pipenv shell --three
-> # install Wagtail & other dependencies in the environment's packages
-> pipenv install
-> # install npm dependencies (used for front-end build processes)
-> npm install
-> # build/minify the frontend assets
-> npm run build
+> # create virtualenv & install dependencies, enter virtualenv
+> pipenv install && pipenv shell
+> # install npm dependencies and build front-end assets
+> npm install && npm run build
 > # create the site database & an admin user
 > python libraries/manage.py migrate
 > python libraries/manage.py createsuperuser
