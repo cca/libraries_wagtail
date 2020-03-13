@@ -2,7 +2,7 @@
 
 ## 2.4.0
 
-**2020-XX-XX** - Emergency update to highlight teaching & learning online resources. Update to Wagtail 2.8, update other dependencies.
+**2020-03-13** - Emergency update to highlight teaching & learning online resources. Update to Wagtail 2.8, update other dependencies.
 
 ### Features
 
