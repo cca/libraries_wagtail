@@ -1,5 +1,4 @@
 -i https://pypi.org/simple
-asgiref==3.2.3
 beautifulsoup4==4.6.0
 certifi==2019.11.28
 chardet==3.0.4
@@ -9,8 +8,8 @@ django-managepy-anywhere==2.0
 django-modelcluster==5.0.1
 django-taggit==1.2.0
 django-treebeard==4.3.1
-django==3.0.4
-djangorestframework-simplejwt==4.4.0
+django==2.2.11
+djangorestframework-simplejwt==4.3.0
 djangorestframework==3.11.0
 draftjs-exporter==2.1.7
 elasticsearch==5.4.0
