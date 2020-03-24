@@ -24,9 +24,9 @@ To get appropriate Postgres & Elasticsearch versions on a Mac, I recommend using
 
 ```sh
 > brew tap homebrew/services homebrew/cask homebrew/cask-versions
-> brew install postgres@9.4
-> brew install libpq # pg_* utilities such as pg_restore, need to put them on your path
-> set -U fish_user_paths $fish_user_paths /usr/local/opt/libpq/bin
+> brew install postgresql@9.4
+> # put the pg_* utilities such as pg_restore on your path
+> set -U fish_user_paths "/usr/local/opt/postgresql@9.4/bin" $fish_user_paths
 > brew cask install homebrew/cask-versions/adoptopenjdk8 # prerequisite for elasticsearch
 > brew install elasticsearch@5.6
 ```
