@@ -1,14 +1,20 @@
-import json
+import logging
 import re
 import requests
 
+from django.conf import settings
+
 from .models import InstagramOAuthToken
+
+# these functions will be used inside management scripts exclusively
+logger = logging.getLogger('mgmt_cmd.script')
+
 
 # @me -> <a href=link>@me</a> etc.
 def linkify_text(text):
     html = text
     username_regex = r"(^|\s)(@[a-zA-Z0-9._]+)"
-    hashtag_regex = r"(^|\s)(#[a-zA-Z0-9]+)"
+    hashtag_regex = r"(^|\s)(#[a-zA-Z0-9_]+)"
     ig_url = 'https://www.instagram.com/'
 
 
@@ -32,34 +38,92 @@ def linkify_text(text):
 def get_instagram():
     # just grab the latest OAuth token we have
     token = InstagramOAuthToken.objects.last().token
-    url = 'https://api.instagram.com/v1/users/self/media/recent?count=1&access_token=' + token
+    url = 'https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink,thumbnail_url,username&access_token=' + token
     response = requests.get(url)
-    insta = json.loads(response.text)
+    insta = response.json()
 
     if 'data' in insta:
         gram = insta['data'][0]
-        text = gram['caption']['text']
+        text = gram['caption']
 
         output = {
             # link hashtags & usernames as they'd appear on IG itself
             'html': linkify_text(text),
             'id': gram['id'],
-            'image': gram['images']['low_resolution']['url'],
+            'image': gram['media_url'],
             'text': text,
-            # we should already know this but just for ease of use
-            'username': gram['user']['username'],
+            'username': gram['username'],
         }
 
-    elif 'meta' in insta:
+    elif 'error' in insta:
         output = {
-            'error_type': insta['meta']['error_type'],
-            'error_message': insta['meta']['error_message']
+            'error_type': insta['error']['type'],
+            'error_message': insta['error']['message']
         }
 
     else:
         output = {
             'error_type': 'GenericError',
-            'error_message': 'No "meta" object containing an error type or message was present in the Instagram API response. This likely means a network connection problem or that Instagram changed the structure of their error messages.'
+            'error_message': 'No "error" object containing an error type or message was present in the Instagram API response. This likely means a network connection problem or that Instagram changed the structure of their error messages.'
         }
 
     return output
+
+
+def get_token_from_code(code):
+    """ Turn a code from the app's redirect URI into a long-lived OAuth access token.
+
+    Parameters
+    ----------
+    code : str
+        the "code" parameter in the app's redirect URI, DO NOT include the final two
+        "#_" characters
+
+    Returns
+    -------
+    boolean
+        True if token was successfully obtained, False if an error occurred.
+    """
+    if len(code) == 0:
+        logger.info('No response code provided.')
+        return False
+
+    data = {
+        "client_id": settings.INSTAGRAM_APP_ID,
+        "client_secret": settings.INSTAGRAM_APP_SECRET,
+        "code": code,
+        "grant_type": "authorization_code",
+        "redirect_uri": settings.INSTAGRAM_REDIRECT_URI
+    }
+    logger.info('obtaining short-lived Instagram access token')
+    response = requests.post('https://api.instagram.com/oauth/access_token', data=data)
+    shortlived_token = response.json().get("access_token")
+    if not shortlived_token:
+        logger.error('Failed to acquire shortlived access token. Response JSON: {}'.format(response.json()))
+        return False
+
+    # https://developers.facebook.com/docs/instagram-basic-display-api/reference/access_token
+    # exchange this worthless shortlived token for a long-lived one
+    # Facebook is GREAT at API design, by the way, really love their work
+    logger.info('obtaining long-lived Instagram access token')
+    ll_response = requests.get('https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret={}&access_token={}'.format(settings.INSTAGRAM_APP_SECRET, shortlived_token))
+    token = ll_response.json().get("access_token")
+
+    if token:
+        InstagramOAuthToken.objects.create(token=token)
+        return True
+    logger.error('Failed to acquire long-lived OAuth token. Response JSON: {}'.format(response.json()))
+    return False
+
+
+def refresh_token(token):
+    """ refresh Instagram long-lived access token
+    where the word "refresh" means "replace", it is not the same token """
+    response = requests.get('https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token={}'.format(token))
+    new_token = response.json().get("access_token")
+    if new_token:
+        InstagramOAuthToken.objects.create(token=new_token)
+        logger.info('Successfully refreshed long-lived Instagram access token.')
+        return new_token
+    logger.critical('Unable to refresh long-lived Instagram access token. Response JSON: {}'.format(response.json()))
+    return None

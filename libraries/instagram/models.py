@@ -20,7 +20,7 @@ class Instagram(models.Model):
 
 class InstagramOAuthToken(models.Model):
     date_added = models.DateTimeField(auto_now=True)
-    token = models.CharField(max_length=51)
+    token = models.CharField(max_length=300)
 
     def __str__(self):
         return self.token
