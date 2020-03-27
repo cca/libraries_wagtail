@@ -7,13 +7,13 @@
     // scss-lint:disable QualifyingElement
     a[href] {
         border-bottom: 2px solid transparent;
-        color: $lightblue;
+        color: $ccaBlue;
         text-decoration: none;
         transition: border .3s ease;
     }
 
     a[href]:hover {
-        border-bottom-color: $lightblue;
+        border-bottom-color: $ccaBlue;
     }
     // scss-lint:enable QualifyingElement
 }

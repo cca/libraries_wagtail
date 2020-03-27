@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.4.1
+
+**2020-03-27** — Another somewhat rushed release, to get our Libraryh3lp chat presence on the website.
+
+### Features
+
+- [#96](https://github.com/cca/libraries_wagtail/issues/96) Libraryh3lp chat tab appears on every page when we're signed in
+
+### Bugfixes
+
+- [#97](https://github.com/cca/libraries_wagtail/issues/97) update Instagram APIs to use new Facebook graph ones, new way of obtaining OAuth access tokens and different data structure
+- [#93](https://github.com/cca/libraries_wagtail/issues/93) fix a variety of accessibility issues identified by audits (link color contrast, search input label, aspect ratio of hamburger icon)
+
 ## 2.4.0
 
 **2020-03-13** - Emergency update to highlight teaching & learning online resources. Update to Wagtail 2.8, update other dependencies.
