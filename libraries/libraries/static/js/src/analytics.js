@@ -1,4 +1,4 @@
-Array.from(document.querySelectorAll('a[href^="/documents/"]')).forEach(function(a) {
+Array.from(document.querySelectorAll('a[href^="/documents/"]')).forEach((a) => {
     a.addEventListener('click', function(ev){
         var u = new URL(a.href)
           , path = u.pathname.split('/')
@@ -6,4 +6,4 @@ Array.from(document.querySelectorAll('a[href^="/documents/"]')).forEach(function
           , name = path[3]
         ga('send', 'event', 'download', id, name)
     })
-})
+});
