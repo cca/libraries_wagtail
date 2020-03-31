@@ -1,3 +1,15 @@
+function rainbowText(element) {
+    let text = element.innerText
+    let len = text.length
+    element.innerHTML = '';
+    for (let i = 0; i < len; i++) {
+        let charElem = document.createElement("span")
+        charElem.style.color = "hsl(" + (360 * i / text.length) + ",80%,50%)"
+        charElem.innerHTML = text[i]
+        element.appendChild(charElem)
+    }
+}
+
 /*! @preserve
  * Fairy Dust Cursor.js
  * - 90's cursors collection
@@ -20,6 +32,7 @@
         // doesn't work for touch devices, disable everything
         unbindEvents();
     })
+    Array.from(document.querySelectorAll('.main-navigation__link, .search-box__title, .home-news-item__link, .home-news-item__link')).forEach(el => rainbowText(el))
   }
 
   // Bind events that are needed
