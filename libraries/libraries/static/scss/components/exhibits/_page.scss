@@ -2,6 +2,8 @@
 // Overrides of main site _page.scss
 // which is also included
 // ===================================
+$text-selectors: '.blog-post__image-description, .blog-post__paragraph, .blog-post__quote-cite-name, .blog-post__quote-cite-position, .blog-post__snippet-text';
+
 .page {
     background: $white;
     // default to serif (Merriweather/The Serif) font
@@ -21,16 +23,31 @@
     // scss-lint:enable DuplicateProperty
 
     // override font based on the value of main_body_font
+    // Due to the way inheritance works, we need to reiterate all the blocks (see
+    // variable with list of selectors) that have a font-family defined on them
+    // There is definitely a cleaner way to do this.
     .font--monospace {
         font-family: $font-family-monospace;
+
+        #{$text-selectors} {
+            font-family: $font-family-monospace;
+        }
     }
 
     .font--sans-serif {
         font-family: $font-family-sans-serif;
+
+        #{$text-selectors} {
+            font-family: $font-family-sans-serif;
+        }
     }
 
     .font--stencil {
         font-family: $font-family-stencil;
+
+        #{$text-selectors} {
+            font-family: $font-family-stencil;
+        }
     }
 }
 

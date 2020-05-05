@@ -50,6 +50,10 @@
 @import 'components/misc/link';
 @import 'components/misc/rich-text';
 
+// -- Blog
+// Has necessary block styles for callouts, blockquotes
+@import 'components/blog/blog-post';
+
 // -- Exhibits-specific
 @import 'components/exhibits/banner';
 @import 'components/exhibits/details';
