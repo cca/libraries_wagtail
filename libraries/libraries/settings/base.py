@@ -122,6 +122,12 @@ LOGGING = {
         'quiet_down_elasticsearch': {
             '()': 'libraries.log.QuietDownElasticsearch',
         },
+        'is_404_error': {
+            '()': 'libraries.log.is404Error',
+        },
+        'is_not_404_error': {
+            '()': 'libraries.log.isNot404Error',
+        },
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
         },
@@ -132,20 +138,25 @@ LOGGING = {
     'formatters': {
         # CSV file
         'document': {
-            'format': '"%(asctime)s",%(message)s',
+            'format': '"{asctime}",{message}',
             'datefmt': "%Y-%m-%d %H:%M:%S",
+            'style': '{',
+        },
+        # django.request logging provides additional HTTP info we're interested in
+        'http': {
+            'format': '[{asctime}] {levelname} {name}:{lineno} {status_code} {message}',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
+            'style': '{',
         },
         'simple': {
-            'format': '%(levelname)s %(message)s',
+            'format': '{levelname} {message}',
+            'style': '{',
         },
         'standard': {
-            'format': '[%(asctime)s] %(levelname)s %(name)s:%(lineno)s %(message)s',
+            'format': '[{asctime}] {levelname} {name}:{lineno} {message}',
             'datefmt': "%Y-%m-%d %H:%M:%S",
+            'style': '{',
         },
-        'verbose': {
-            'format': '[%(asctime)s] %(levelname)s %(module)s:%(lineno)s %(process)d %(thread)d %(message)s',
-            'datefmt': "%Y-%m-%d %H:%M:%S",
-        }
     },
     'handlers': {
         'console': {
@@ -175,9 +186,19 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGGING_DIR, 'django_error.log'),
+            'filters': ['is_not_404_error'],
             'maxBytes': 1024*1024*10,  # 10M
             'backupCount': 7,
-            'formatter': 'standard',
+            'formatter': 'http',
+        },
+        'not_found_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, '404.log'),
+            'filters': ['is_404_error'],
+            'maxBytes': 1024*1024*10,  # 10M
+            'backupCount': 7,
+            'formatter': 'http',
         },
         'mail_admins': {
             'level': 'ERROR',
@@ -194,12 +215,12 @@ LOGGING = {
             'filename': os.path.join(LOGGING_DIR, 'mgmt_cmd.log'),
             'maxBytes': 1024*1024*10,  # 10M
             'backupCount': 7,
-            'formatter': 'verbose',
+            'formatter': 'standard',
         },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['django_request_file'],
+            'handlers': ['django_request_file', 'not_found_file'],
             'level': 'DEBUG',
             'propagate': False,
         },
