@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static libraries_tags wagtailcore_tags wagtailimages_tags %}
+{% wagtail_site as current_site %}
 
 {% block schema_org %}
 {% image page.main_image original as main_image %}
@@ -9,10 +10,10 @@
     "@type": "BlogPosting",
 	"mainEntityOfPage": {
 	    "@type": "WebPage",
-	    "@id": "{{ request.site.root_url }}{% pageurl page %}"
+	    "@id": "{{ current_site.root_url }}{% pageurl page %}"
 	},
 	"name": "{{ page.title|escapejs }} | CCA Libraries News",
-	"image": [ "{{ request.site.root_url }}{{ main_image.url }}" ],
+	"image": [ "{{ current_site.root_url }}{{ main_image.url }}" ],
 	"author": {
 		"@type": "Person",
 		"name": "{{ page.owner.first_name|escapejs }} {{ page.owner.last_name|escapejs }}"
@@ -29,7 +30,7 @@
 	"license": "https://creativecommons.org/licenses/by/4.0/",
     "publisher": {
 		"@type": "Library",
-        "@id": "{{ request.site.root_url }}",
+        "@id": "{{ current_site.root_url }}",
 		"name": "California College of the Arts Libraries",
         "address": [
             {

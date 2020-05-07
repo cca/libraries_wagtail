@@ -1,5 +1,6 @@
 {% extends "exhibits-base.html" %}
 {% load static libraries_tags wagtailcore_tags wagtailimages_tags %}
+{% wagtail_site as current_site %}
 
 {% block body_class %}exhibit{% endblock %}
 
@@ -90,14 +91,14 @@
 {
     "@context": "http://schema.org/",
     "@type": "WebPage",
-    "@id": "{{ request.site.root_url }}{% pageurl page %}",
+    "@id": "{{ current_site.root_url }}{% pageurl page %}",
 	"name": "{{ page.title|escapejs }} | CCA Libraries Exhibitions",
     {% image page.header_image.first.image original as main_image %}
 	{% if main_image %}
 	"primaryImageOfPage": {
 		"@type": "ImageObject",
 		"height": {{ main_image.height }},
-		"url": "{{ request.site.root_url }}{{ main_image.url }}",
+		"url": "{{ current_site.root_url }}{{ main_image.url }}",
 		"width": {{ main_image.width }}
 	},
 	{% endif %}
@@ -121,7 +122,7 @@
     	"image": {
     		"@type": "ImageObject",
     		"height": {{ main_image.height }},
-    		"url": "{{ request.site.root_url }}{{ main_image.url }}",
+    		"url": "{{ current_site.root_url }}{{ main_image.url }}",
     		"width": {{ main_image.width }}
     	},
     	{% endif %}
@@ -148,7 +149,7 @@
                 {% if img %}
                 "image": {
                     "@type": "ImageObject",
-                    "url": "{{ request.site.root_url }}{{ img.url }}",
+                    "url": "{{ current_site.root_url }}{{ img.url }}",
                     "height": {{ img.height }},
                     "width": {{ img.width }}
                 },
@@ -162,7 +163,7 @@
 	"license": "https://creativecommons.org/licenses/by/4.0/",
     "publisher": {
 		"@type": "Library",
-        "@id": "{{ request.site.root_url }}",
+        "@id": "{{ current_site.root_url }}",
 		"name": "California College of the Arts Libraries",
         "address": [
             {

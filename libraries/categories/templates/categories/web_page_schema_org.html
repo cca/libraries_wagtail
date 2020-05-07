@@ -1,4 +1,5 @@
 {% load static libraries_tags wagtailcore_tags wagtailimages_tags %}
+{% wagtail_site as current_site %}
 
 {# generic schema.org data which we should be able to use for most pages #}
 {% image page.main_image original as main_image %}
@@ -6,13 +7,13 @@
 {
     "@context": "http://schema.org/",
     "@type": "WebPage",
-    "@id": "{{ request.site.root_url }}{% pageurl page %}",
+    "@id": "{{ current_site.root_url }}{% pageurl page %}",
 	"name": "{{ page.title|escapejs }} | CCA Libraries",
 	{% if page.main_image %}
 	"primaryImageOfPage": {
 		"@type": "ImageObject",
 		"height": {{ main_image.height }},
-		"url": "{{ request.site.root_url }}{{ main_image.url }}",
+		"url": "{{ current_site.root_url }}{{ main_image.url }}",
 		"width": {{ main_image.width }}
 	},
 	{% endif %}
@@ -30,7 +31,7 @@
 	"license": "https://creativecommons.org/licenses/by/4.0/",
     "publisher": {
 		"@type": "Library",
-        "@id": "{{ request.site.root_url }}",
+        "@id": "{{ current_site.root_url }}",
 		"name": "California College of the Arts Libraries",
         "address": [
             {

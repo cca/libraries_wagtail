@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static libraries_tags wagtailcore_tags wagtailimages_tags %}
+{% wagtail_site as current_site %}
 
 {% block schema_org %}
 {% image page.main_image original as main_image %}
@@ -10,9 +11,9 @@
 	"name": "CCA Libraries Home Page",
 	"primaryImageOfPage": {
 		"@type": "ImageObject",
-        "@id": "{{ request.site.root_url }}{{ main_image.url }}",
+        "@id": "{{ current_site.root_url }}{{ main_image.url }}",
 		"height": {{ main_image.height }},
-		"url": "{{ request.site.root_url }}{{ main_image.url }}",
+		"url": "{{ current_site.root_url }}{{ main_image.url }}",
 		"width": {{ main_image.width }}
 	},
 	"datePublished": "{{ page.first_published_at|date:"c" }}",
@@ -21,7 +22,7 @@
 	"license": "https://creativecommons.org/licenses/by/4.0/",
     "mainEntity": {
 		"@type": "Library",
-        "@id": "{{ request.site.root_url }}",
+        "@id": "{{ current_site.root_url }}",
 		"name": "California College of the Arts Libraries",
         "areaServed": [
             {
@@ -66,7 +67,7 @@
         }
 	},
 	"publisher": {
-		"@id": "{{ request.site.root_url }}"
+		"@id": "{{ current_site.root_url }}"
 	}
 }
 </script>

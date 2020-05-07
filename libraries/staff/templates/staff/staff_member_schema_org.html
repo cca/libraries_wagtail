@@ -1,17 +1,18 @@
 {% load static wagtailcore_tags %}
+{% wagtail_site as current_site %}
 <script type="application/ld+json">
 {
     "@context": "http://schema.org/",
     "@type": "Person",
     "name": "{{ person.name|escapejs }}",
-    "image": [ "{{ request.site.root_url }}{{ img.url }}" ],
+    "image": [ "{{ current_site.root_url }}{{ img.url }}" ],
     "email": "{{ person.email|escapejs }}",
     "telephone": "{{ person.phone }}",
     "jobTitle": "{{ person.position|escapejs }}",
     "description": "{{ person.bio|striptags|escapejs }}",
     "worksFor": {
 		"@type": "Library",
-        "@id": "{{ request.site.root_url }}",
+        "@id": "{{ current_site.root_url }}",
 		"name": "California College of the Arts Libraries",
         "address": [
             {
