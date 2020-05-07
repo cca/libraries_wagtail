@@ -24,7 +24,7 @@ admin.autodiscover()
 urlpatterns = [
     path('django-admin/', admin.site.urls),
     # override Wagtail document handling — send file, not a forced download
-    path('documents/<int:id>/<filename>', serve_wagtail_doc, name='wagtaildocs_serve'),
+    path('documents/<int:document_id>/<document_filename>', serve_wagtail_doc, name='wagtaildocs_serve'),
 
     # CAS login urls
     # NOTE: ^admin/logout/$ must appear before ^admin/ or it's impossible to logout
