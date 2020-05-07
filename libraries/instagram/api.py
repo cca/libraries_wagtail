@@ -3,11 +3,14 @@ import re
 import requests
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator
 
 from .models import InstagramOAuthToken
 
 # these functions will be used inside management scripts exclusively
 logger = logging.getLogger('mgmt_cmd.script')
+validate_url = URLValidator()
 
 
 # @me -> <a href=link>@me</a> etc.
@@ -15,6 +18,7 @@ def linkify_text(text):
     html = text
     username_regex = r"(^|\s)(@[a-zA-Z0-9._]+)"
     hashtag_regex = r"(^|\s)(#[a-zA-Z0-9_]+)"
+    url_regex = r"(^|\s)(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))"
     ig_url = 'https://www.instagram.com/'
 
 
@@ -29,9 +33,21 @@ def linkify_text(text):
         hashtag = match.group(2).replace('#', '')
         return leading_space + '<a href="' + ig_url + 'explore/tags/' + hashtag + '/">#' + hashtag + '</a>'
 
-    # re.sub(pattern, replacement, string)
+    def replace_url(match):
+        leading_space = match.group(1)
+        url = match.group(2)
+        try:
+            validate_url(url)
+        except ValidationError:
+            logger.warning('Regex found invalid URL "{}" in Instagram post.'.format(url))
+            # return unprocessed string
+            return match.string
+        return leading_space + '<a href="' + url + '">' + url + '</a>'
+
+
     html = re.sub(username_regex, replace_username, html)
     html = re.sub(hashtag_regex, replace_hashtag, html)
+    html = re.sub(url_regex, replace_url, html)
     return html
 
 
