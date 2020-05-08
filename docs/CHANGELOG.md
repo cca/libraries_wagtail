@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.5.0
+
+**2020-XX-XX** — host of smaller fixes, upgrade to Wagtail 2.9, implement Portal "Image Grid" and add a Featured checkbox for Exhibits that causes them to be display on the home page.
+
+### Features
+
+- "Featured Exhibit" shows up on home page
+- Wagtail 2.9
+- Instagram URLs
+- 404 error log
+- Pages lacking a Search Description Report
+
+### Bugfixes
+
+- document logging
+
 ## 2.4.1
 
 **2020-03-27** — Another somewhat rushed release, to get our Libraryh3lp chat presence on the website.
