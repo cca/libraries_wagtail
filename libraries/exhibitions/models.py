@@ -112,6 +112,10 @@ class ExhibitPage(Page):
         help_text='Font applied to the Description & other details (location/reception/etc.) below.',
         max_length=50
     )
+    featured = models.BooleanField(
+        default=False,
+        help_text='One "Featured" Exhibit shows up on the Libraries home page.',
+    )
 
     # details about exhibition
     location = RichTextField(
@@ -159,6 +163,7 @@ class ExhibitPage(Page):
                 FieldPanel('gallery_columns'),
                 FieldPanel('gallery_spacing'),
                 FieldPanel('main_body_font'),
+                FieldPanel('featured'),
             ],
             heading='Theme',
         ),

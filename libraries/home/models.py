@@ -7,8 +7,9 @@ from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from blog.models import all_blog_posts
-from instagram.models import Instagram
+from exhibitions.models import ExhibitPage
 from hours.models import get_open_hours
+from instagram.models import Instagram
 
 
 class HomePage(Page):
@@ -62,6 +63,10 @@ class HomePage(Page):
 
         # add latest 2 blog posts as "news items"
         news_items = all_blog_posts()[:2]
+        # if we have a featured exhibit, it replaces the second blog post
+        featured_exhibit = ExhibitPage.objects.filter(featured=True).last()
+        if featured_exhibit:
+            news_items[1] = featured_exhibit
         context['news_items'] = news_items
         # pull open hours snippets for today
         context['hours'] = get_open_hours()

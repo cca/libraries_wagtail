@@ -3,14 +3,23 @@
 <li class="home-news-item">
 	<div class="home-news-item__image-wrapper">
 		<a href="{% pageurl post %}">
-			{% image post.specific.main_image fill-400x267 class="home-news-item__image" %}
+			{% if post.main_image %}
+				{% image post.main_image fill-400x267 class="home-news-item__image" %}
+			{% elif post.header_image.all.0 %}
+				{% image post.header_image.all.0.image fill-400x267 class="home-news-item__image" %}
+			{% endif %}
 		</a>
 	</div>
 
 	<div class="home-news-item__content">
-		<time class="home-news-item__date">
-			{{ post.date }}
-		</time>
+		{% if post.featured %}
+			{# featured exhibit #}
+			<div class="home-news-item__featured-flag">Featured Exhibit</div>
+		{% else %}
+			<time class="home-news-item__date">
+				{{ post.date }}
+			</time>
+		{% endif %}
 		<h3 class="home-news-item__title">
 			<a
 				class="home-news-item__link"
@@ -21,15 +30,15 @@
 			</a>
 		</h3>
 		<div class="home-news-item__text">
-			{% if post.search_description %}
-				{# prefer a search_description if we have one #}
-				{{ post.search_description }}
-			{% elif post.body %}
-				{# this is a streamfield #}
+			{% if post.body %}
+				{# streamfield body of a BlogPage #}
 				{{ post.body|truncatewords_html:50 }}
-			{% elif post.imported_body %}
-				{# HTML imported from the old site's blog, list this last #}
-				{{ post.imported_body|richtext|truncatewords_html:50 }}
+			{% elif post.description %}
+				{# streamfield body of an ExhibitPage #}
+				{{ post.description|truncatewords_html:50 }}
+			{% elif post.search_description %}
+				{# fall back to a search_description if we have one #}
+				{{ post.search_description }}
 			{% endif %}
 		</div>
 	</div>

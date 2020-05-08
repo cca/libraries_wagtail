@@ -52,6 +52,16 @@
     width: 100%;
 }
 
+.home-news-item__featured-flag {
+    // make the fade gradient start after text ends
+    background-image: linear-gradient(to right, $ccaPurple, $ccaPurple 29%, $white);
+    color: $white;
+    font-style: oblique;
+    margin: 0 0 .5em;
+    padding: .5em;
+    text-transform: uppercase;
+}
+
 .home-news-item__content {
     flex: 1 0 100%;
 
