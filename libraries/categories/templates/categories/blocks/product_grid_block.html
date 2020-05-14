@@ -1,0 +1,27 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="product-grid-block">
+    {% for item in value %}
+        {% if item.external_url %}
+            <a href="{{ item.external_url }}" target="_blank">
+        {% elif item.page %}
+            <a href="{% pageurl item.page %}">
+        {% endif %}
+        <div class="product-grid-block__item">
+            <div class="product-grid-block__content {% if not item.external_url and not item.page %}product-grid-block__no-link-item{% endif %}">
+                <div class="product-grid-block__img">
+                    {% image item.image fill-150x150 %}
+                </div>
+                <div class="product-grid-block__text">
+                    {% if item.title %}
+                        <p class="product-grid-block__title">{{item.title}}</p>
+                    {% endif %}
+                    <p class="product-grid-block__caption">{{ item.caption }}</p>
+                </div>
+            </div>
+        </div>
+        {% if item.external_url or item.page %}
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>

@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.forms import ChoiceField
 from django.forms.utils import ErrorList
 
-from wagtail.core.blocks import ChoiceBlock, StructBlock, StructValue, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock
+from wagtail.core.blocks import ChoiceBlock, StructBlock, StructValue, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock, ListBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 # see docs.wagtail.io/en/v2.6.1/topics/streamfield.html#custom-value-class-for-structblock
@@ -107,6 +107,22 @@ class EmbedHTML(RawHTMLBlock):
     class Meta:
         template = "categories/blocks/embed.html"
 
+
+class ProductGridBlock(ListBlock):
+
+
+    class Meta:
+        icon = 'fa-th'
+        template = 'categories/blocks/product_grid_block.html'
+
+
+class ProductGridItemBlock(StructBlock):
+    image = ImageChooserBlock()
+    external_url = URLBlock(label='External URL', required=False, help_text='Only one of these (external URL or internal page) is needed. You can leave both blank if you don\'t want the image to be linked.')
+    page = PageChooserBlock(label='Internal web page', required=False)
+    title = TextBlock(required=False, max_length=30, help_text="Maximum: 30 characters")
+    caption = TextBlock(help_text="Text will be truncated if input (including title) exceeds allotted space.")
+
 # two blocks combined in one row
 class RowBlock(StreamBlock):
     distribution = ChoiceBlock(
@@ -152,6 +168,7 @@ class BaseStreamBlock(StreamBlock):
     )
     linked_image = LinkedImageBlock()
     card = CardBlock()
+    image_grid = ProductGridBlock(ProductGridItemBlock(), label="Image grid")
     pullquote = PullQuoteBlock()
     snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
