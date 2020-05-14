@@ -79,3 +79,8 @@ sup {
 sub {
   bottom: -0.25em;
 }
+
+// My addition - no text decoration on links
+a:link {
+	text-decoration: none;
+}
