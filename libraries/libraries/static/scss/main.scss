@@ -30,6 +30,10 @@
 // -- About Us
 @import 'components/about-us/about-us-text';
 
+// -- Blocks
+@import 'components/blocks/card';
+@import 'components/blocks/product-grid-block';
+
 // -- Blog
 @import 'components/blog/blog-articles-toggle';
 @import 'components/blog/blog-page';
@@ -84,7 +88,6 @@
 @import 'components/misc/rich-text';
 @import 'components/misc/wrapper';
 @import 'components/button';
-@import 'components/card';
 
 // -- Search page and components
 @import 'components/search/search-box';

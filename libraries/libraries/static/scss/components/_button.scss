@@ -11,6 +11,6 @@
     text-decoration: none;
 
     &:hover {
-        border-color: rgb(35, 35, 35);
+        border-color: $btn-hover-light-gray;
     }
 }

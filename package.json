@@ -10,7 +10,7 @@
     "build": "gulp build",
     "scripts": "gulp scripts",
     "sass": "gulp styles",
-    "test": "scss-lint -e libraries/libraries/static/scss/bootstrap -e libraries/libraries/static/scss/reset/_reset.scss libraries/libraries/static/scss",
+    "test": "sass-lint -c .scss-lint.yml --verbose --no-exit",
     "watch": "gulp"
   },
   "browserslist": [
@@ -35,6 +35,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.2"
+    "gulp-uglify": "^3.0.2",
+    "sass-lint": "^1.13.1"
   }
 }
