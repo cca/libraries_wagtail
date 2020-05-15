@@ -51,10 +51,15 @@
     &__text {
         height: 117px;
         hyphens: auto;
-        margin-top: 16px;
+        margin: 16px auto 0;
         overflow: hidden;
         text-align: center;
-        width: 190px;
+        width: 230px;
+
+        @media (min-width: $screen-xs-min) {
+            margin-top: 16px;
+            width: 190px;
+        }
     }
 
     &__title {
@@ -69,7 +74,6 @@
         display: block;
         font-size: 16px;
         overflow: hidden;
-        text-decoration: none;
         text-overflow: ellipsis; /* number of lines to show */ /* fallback */
     }
 }
