@@ -2,19 +2,22 @@
 
 ## 2.5.0
 
-**2020-XX-XX** — host of smaller fixes, upgrade to Wagtail 2.9, implement Portal "Image Grid" and add a Featured checkbox for Exhibits that causes them to be display on the home page.
+**2020-05-XX** — implements Portal's "Image Grid" block, adds a Featured checkbox for Exhibits, and upgrades to Wagtail 2.9 while applying a host of smaller improvements.
 
 ### Features
 
-- "Featured Exhibit" shows up on home page
-- Wagtail 2.9
-- Instagram URLs
-- 404 error log
-- Pages lacking a Search Description Report
+- [#84](https://github.com/cca/libraries_wagtail/issues/84) Ability mark a "Featured Exhibit" that shows up on the home page beneath the latest news item
+![example of Featured Exhibit](https://user-images.githubusercontent.com/1024833/81427010-eec9e580-910e-11ea-8fdb-3b13b631ad8d.png)
+- [#89](https://github.com/cca/libraries_wagtail/issues/89) a clone of the "Image Grid" block from Portal with one small improvement: we can choose an internal page _or_ specify an external URL, instead of always needing an absolute URL even when linking to our own site.
+![example Image Grid](https://user-images.githubusercontent.com/1024833/82011738-c66c4a80-962a-11ea-94e5-416c180c7b40.png)
+- [Wagtail 2.9](https://docs.wagtail.io/en/stable/releases/2.9.html) comes with some security updates, bugfixes, caching of image renditions, and deprecates SiteMiddleware. We needed to change references to `{{ request.site.root_url }}` in our templates to use `{% wagtail_site as current_site %}{{ current_site.root_url }}` tag instead (occurs throughout our Schema.org metadata).
+- [#101](https://github.com/cca/libraries_wagtail/issues/101) Sometimes we reference cool web projects and put URLs in our Instagram posts ([example](https://www.instagram.com/p/B_xfUb3h0Qw/)). Just because Instagram itself is a bad web citizen and doesn't link URLs in captions doesn't mean we can't.
+- [#100](https://github.com/cca/libraries_wagtail/issues/100) 404 errors, mostly from robot crawlers, were absolutely flooding our django_error.log, making it contain super useful information buried in a sea of meaningless errors. I used logging filters to split these into a separate file.
+- [#105](https://github.com/cca/libraries_wagtail/issues/105) Wagtail 2.8 had a sneaky useful feature in Reports, an admin feature that's good at listing pages which match certain criteria. I converted what used to be a management command into a "Pages lacking a Search Description" Report which makes it easier to identify pages not following our best practices.
 
 ### Bugfixes
 
-- document logging
+- [#104](https://github.com/cca/libraries_wagtail/issues/104) While we have been logging document accesses in a CSV for a while, a Wagtail settings change accidentally caused most downloads to bypass logging. This version not only fixes that so all downloads are recorded but also makes the CSV formatting more foolproof by utilizing Python's `csv` library.
 
 ## 2.4.1
 
