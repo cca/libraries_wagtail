@@ -112,7 +112,8 @@ class ProductGridBlock(ListBlock):
 
 
     class Meta:
-        icon = 'fa-th'
+        help_text = 'Grid of images with (optional) links & captions. Grid is rows of three items on desktop-size screens.'
+        icon = 'table'
         template = 'categories/blocks/product_grid_block.html'
 
 
