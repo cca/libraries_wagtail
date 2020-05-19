@@ -2,7 +2,7 @@
 
 ## 2.5.0
 
-**2020-05-XX** — implements Portal's "Image Grid" block, adds a Featured checkbox for Exhibits, and upgrades to Wagtail 2.9 while applying a host of smaller improvements.
+**2020-05-19** — implements Portal's "Image Grid" block, adds a Featured checkbox for Exhibits, and upgrades to Wagtail 2.9 while applying a host of smaller improvements.
 
 ### Features
 
