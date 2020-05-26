@@ -21,7 +21,7 @@ class Command(BaseCommand):
             otoken = InstagramOAuthToken.objects.last()
             # if the long-lived access token (lasts 60 days) is within 3 days of expiring, refresh it
             # DB is timezone-aware while now() is naive so need to normalize them
-            if otoken.date_added.replace(tzinfo=None) - datetime.now() > timedelta(57, 0, 0):
+            if datetime.now() - otoken.date_added.replace(tzinfo=None) > timedelta(57, 0, 0):
                 logger.info('Instagram OAuth token is 57 days old, refreshing it...')
                 refresh_token(otoken.token)
 
