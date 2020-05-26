@@ -8,7 +8,7 @@ Configuration ([these steps are a good outline](https://developers.facebook.com/
 - add the **Instagram** product, select "Basic Display" > **Create new app**
 - Fill out all the fields, though we won't use many of them. We don't have a script that programmatically uses the redirect URI; I just manually copy the code out of the URL. Note that redirect URIs apparently cannot be a straight domain like http://example.com (Facebook will append a slash like `.com/` without telling you).
 - add an "Instagram Test User" for the Instagram account you want to display
-- add the app's `INSTAGRAM_CLIENT_ID`, `INSTAGRAM_CLIENT_SECRET`, and `INSTAGRAM_REDIRECT_URI` to your settings
+- add the app's `INSTAGRAM_APP_ID`, `INSTAGRAM_CLIENT_SECRET`, and `INSTAGRAM_REDIRECT_URI` to your settings
 - run the management command, `python manage.py get_oauth_token`, copy the "code" parameter out of the redirect URI (**IMPORTANT**: remove the `#\_` at the end), then paste that back into the command prompt
 - the script will complete a couple steps to get an OAuth access token
 - now when you run `python manage.py instagram` the latest gram is saved to the database
