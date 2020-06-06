@@ -8,7 +8,7 @@ django-managepy-anywhere==2.0
 django-modelcluster==5.0.1
 django-taggit==1.2.0
 django-treebeard==4.3.1
-django==2.2.11
+django==2.2.13
 djangorestframework-simplejwt==4.3.0
 djangorestframework==3.11.0
 draftjs-exporter==2.1.7
