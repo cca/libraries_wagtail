@@ -37,9 +37,11 @@ $(function(){
     // auto-tag images with the slugified title of the exhibition
     // fires whenever we're on the "Upload" tab
     $(document).on('click', '.modal-content a[href="#upload"]', () => {
-        var title = $('#id_title').val()
-        // handy URLify function is already present
-        $('#id_tags').tagit('createTag', URLify(title))
+        // select "Exhibitions Media" collection (ID = 7)
+        $('#id_image-chooser-upload-collection option[value="7"]').prop("selected", true)
+        var title = `"${$('#id_title').val()}"`
+        // instantiate tagit first, for some reason it's often not ready
+        $('.tagit').tagit().tagit("createTag", title)
     })
 
     // make search description appear required (does not actually force requirement)
