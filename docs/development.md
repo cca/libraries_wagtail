@@ -10,7 +10,7 @@ Basic outline for working on the site:
     + It is recommended to indicate that a commit requires running migrations, e.g. by appending `(MIGRATE)` to the end of the first line of the commit message
 - Feel free to `git push origin $BRANCH` to save intermediary changes to GitHub
 - Once a feature is complete, checkout `dev` & `git merge $BRANCH` into it
-- Once `dev` has been tested on another instance of the site, checkout master & `git merge dev`
+- Once `dev` has been tested on another instance of the site, `git checkout main` & `git merge dev`
 - Check the readme here to see if models or class names need to be updated
 
 Many features are difficult to test without a full database and media files resembling the live site. The included `wagsync.fish` script will:
