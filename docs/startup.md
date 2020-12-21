@@ -20,7 +20,9 @@ There's a "bootstrap.sh" script that does all this but I list the steps above fo
 
 ## Settings, Database, & Search
 
-To get appropriate Postgres & Elasticsearch versions on a Mac, I recommend using Homebrew. These steps were sufficient for me but note that the version numbers may need to be tweaked.
+To get appropriate Postgres & Elasticsearch versions on a Mac, I use Homebrew. These steps were sufficient for me but note that the version numbers may need to be tweaked.
+
+**NOTE**: as of 2020-12-21 elasticsearch 5.6 isn't available in homebrew anymore. You can download it straight from the ES website but then you have to do even more work to make it a service and run it. I am not going to update this documentation because we want to migrate to doing this all in Docker eventually anyways. For now, you can omit the Elasticsearch installation steps and settings.
 
 ```sh
 > brew tap homebrew/services homebrew/cask homebrew/cask-versions
@@ -69,7 +71,7 @@ WAGTAILSEARCH_BACKENDS['default']['URLS'][0] = 'http://localhost:9200'
 WAGTAILSEARCH_BACKENDS['default']['INDEX'] = 'libraries_wagtail_dev'
 ```
 
-Run `python libraries/manage.py update_index` to create the initial search index.
+Run `python libraries/manage.py update_index` to create the initial search index. Also use `npm install && npx gulp build` to get node dependencies and build the site's frontend assets.
 
 ## Misc Notes
 
