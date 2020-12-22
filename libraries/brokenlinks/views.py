@@ -28,7 +28,7 @@ def brokenlinks(request):
         return response
 
     elif request.method == 'POST':
-        sheets_url = 'https://docs.google.com/a/cca.edu/forms/d/e/{0}/formResponse'.format(settings.BROKENLINKS_GOOGLE_SHEET_KEY)
+        sheets_url = 'https://docs.google.com/forms/d/{0}/formResponse'.format(settings.BROKENLINKS_GOOGLE_SHEET_KEY)
         body = QueryDict(request.body)
         data = {
             # NOTE: REMOTE_ADDR is always 127.0.0.1 so this is useless
@@ -38,6 +38,7 @@ def brokenlinks(request):
             settings.BROKENLINKS_HASH['type']: body.get('type', ''),
             settings.BROKENLINKS_HASH['email']: body.get('email', ''),
             settings.BROKENLINKS_HASH['comments']: body.get('comments', ''),
+            'submit': 'Submit'
         }
         r = requests.post(sheets_url, data=data)
         logger.info('broken link reported: ' + str(body.dict())) # untested...
