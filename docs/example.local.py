@@ -32,7 +32,7 @@ DATABASES = {
 }
 
 # Brokenlinks app - "TEST - Summon Broken Links" Google Form
-BROKENLINKS_GOOGLE_SHEET_KEY = 'OIJASDIOJ@@@)...'
+BROKENLINKS_GOOGLE_SHEET_URL = 'https://docs.google.com/forms/d/.../formResponse'
 BROKENLINKS_HASH = {
     "ipaddress": "entry.13121312",
     "openurl": "entry.13121313",
