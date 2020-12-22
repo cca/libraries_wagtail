@@ -1,10 +1,10 @@
-from django.test import TestCase
+from unittest import TestCase
 import requests
 
 # Create your tests here.
 class TestBrokenLink(TestCase):
 
-    def post_test(self):
+    def test_post_broken_link(self):
         """POST data to the brokenlinks app (local server must be running)"""
         data = {
             'ipaddress': '127.0.0.1',
