@@ -11,9 +11,9 @@ logger = logging.getLogger('')
 
 @csrf_exempt
 def brokenlinks(request):
-    if not settings.BROKENLINKS_GOOGLE_SHEET_KEY or not settings.BROKENLINKS_HASH:
+    if not settings.BROKENLINKS_GOOGLE_SHEET_URL or not settings.BROKENLINKS_HASH:
         logger.error('brokenlinks app request but its settings are not configured')
-        response = JsonResponse({"error": "This Wagtail app needs both a BROKENLINKS_GOOGLE_SHEET_KEY and BROKENLINKS_HASH in its settings to function."}, status=500)
+        response = JsonResponse({"error": "This Wagtail app needs both a BROKENLINKS_GOOGLE_SHEET_URL and BROKENLINKS_HASH in its settings to function."}, status=500)
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
@@ -28,7 +28,6 @@ def brokenlinks(request):
         return response
 
     elif request.method == 'POST':
-        sheets_url = 'https://docs.google.com/forms/d/{0}/formResponse'.format(settings.BROKENLINKS_GOOGLE_SHEET_KEY)
         body = QueryDict(request.body)
         data = {
             # NOTE: REMOTE_ADDR is always 127.0.0.1 so this is useless
@@ -40,8 +39,10 @@ def brokenlinks(request):
             settings.BROKENLINKS_HASH['comments']: body.get('comments', ''),
             'submit': 'Submit'
         }
-        r = requests.post(sheets_url, data=data)
+        r = requests.post(settings.BROKENLINKS_GOOGLE_SHEET_URL, data=data)
         logger.info('broken link reported: ' + str(body.dict())) # untested...
+        if r.status_code != 200:
+            logger.error('error submitting broken link to Google Sheets, response code: ' + r.status_code)
         response = JsonResponse(data, status=200)
         response["Access-Control-Allow-Origin"] = "*"
         return response
