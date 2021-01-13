@@ -8,7 +8,7 @@ from hours.models import get_open_hours, get_hours_for_lib, HoursPage, Library
 # hours API
 @never_cache
 def hours(request):
-    if request.GET.get('format', None).lower() == 'json':
+    if request.GET.get('format', '').lower() == 'json':
         # can request hours for a given day, or library
         library = request.GET.get('library', None)
         date = request.GET.get('date', datetime.date.today())
