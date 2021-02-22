@@ -47,13 +47,13 @@ def search(request):
     if type == 'services' and search_query:
         logger.info('Wagtail search, query: {}'.format(search_query))
         # exclude RowComponent pages
-        search_results = Page.objects.not_type(RowComponent).live().search(search_query)
+        search_results = Page.objects.not_type(RowComponent).live().search(search_query, operator="and")
         query = Query.get(search_query)
         # Record hit
         query.add_hit()
     elif type == 'exhibits' and search_query:
         logger.info('Exhibits search, query: {}'.format(search_query))
-        search_results = Page.objects.type(ExhibitPage).live().search(search_query)
+        search_results = Page.objects.type(ExhibitPage).live().search(search_query, operator="and")
         query = Query.get(search_query)
         query.add_hit()
     else:
