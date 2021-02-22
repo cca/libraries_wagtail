@@ -25,6 +25,8 @@
     {% endfor %}
     </ul>
 
+    {% include 'exhibitions/exhibit-pagination.html' %}
+
     {% if page.epilogue %}
         <section class="epilogue">
             {{page.epilogue|richtext}}

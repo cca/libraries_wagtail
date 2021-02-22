@@ -1,0 +1,39 @@
+{% load static wagtailcore_tags %}
+
+<div class="search-pagination">
+	{% if exhibits.has_previous %}
+		<a class="search-pagination__nav-item"
+			title="Go to the previous page"
+			href="{% slugurl 'exhibitions' %}?page={{ exhibits.previous_page_number }}">
+			Prev
+		</a>
+    {% else %}
+		<span>Prev</span>
+	{% endif %}
+	<div class="search-pagination__numbers-wrapper">
+		<ul class="search-pagination__numbers">
+			{% for page_num in exhibits.paginator.page_range %}
+				<li class="search-pagination__number">
+					<a
+						href="{% slugurl 'exhibitions' %}?page={{ page_num }}"
+						{# slugify is used to coerce page_num to a string #}
+						class="search-pagination__number-link
+						{% if page_num|slugify == request.GET.page %}
+							search-pagination__number-link--is-active
+						{% endif %}
+						"
+					>{{page_num}}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% if exhibits.has_next %}
+		<a class="search-pagination__nav-item search-pagination__nav-item--next"
+			title="Go to the next page"
+			href="{% slugurl 'exhibitions' %}?page={{ exhibits.next_page_number }}">
+			Next
+		</a>
+	{% else %}
+		<span>Next</span>
+	{% endif %}
+</div>

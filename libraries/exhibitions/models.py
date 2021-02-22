@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.http import FileResponse
 from django.utils.translation import ugettext_lazy as _
@@ -37,9 +38,22 @@ class ExhibitsIndexPage(Page):
 
     # put list of all published exhibits in the page's context
     def get_context(self, request):
-        exhibits = list(ExhibitPage.objects.live().order_by('-first_published_at'))
         context = super().get_context(request)
-        context['exhibits'] = exhibits
+        exhibits = ExhibitPage.objects.live().order_by('-first_published_at')
+        paginator = Paginator(exhibits, 12)
+        page = request.GET.get("page")
+        try:
+            # If the page exists and the ?page=x is an int
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            # If the ?page=x is not an int; show the first page
+            posts = paginator.page(1)
+        except EmptyPage:
+            # If the ?page=x is out of range (too high most likely)
+            # Then return the last page
+            posts = paginator.page(paginator.num_pages)
+
+        context['exhibits'] = posts
         return context
 
 
