@@ -2,3 +2,14 @@
     top: $header-height-small;
     z-index: $exhib-search-box-z;
 }
+
+// center pagination
+.search-pagination {
+    display: block;
+    text-align: center;
+}
+
+.search-pagination__numbers-wrapper,
+.search-pagination__numbers {
+    display: inline;
+}
