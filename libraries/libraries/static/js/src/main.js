@@ -22,7 +22,6 @@ function main() {
   function toggleSearch(state) {
     $headerSearchIcon.toggleClass(headerLinkActiveCls, state)
     $headerSearchBox.toggleClass('header-search-box--is-active', state)
-    console.log('search toggled')
     if (isInView(headerSearchInput)) headerSearchInput.focus()
   }
 
