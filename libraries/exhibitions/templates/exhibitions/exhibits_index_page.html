@@ -25,9 +25,11 @@
     {% endfor %}
     </ul>
 
-    <section class="epilogue">
-        {{page.epilogue|richtext}}
-    </section>
+    {% if page.epilogue %}
+        <section class="epilogue">
+            {{page.epilogue|richtext}}
+        </section>
+    {% endif %}
 </div>
 
 {% endblock %}
