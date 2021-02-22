@@ -2,48 +2,41 @@ function main() {
 
   // These need to match with the breakpoints
   // written in scss/settings/_breakpoints.scss
-  var breakpoints = {
+  let breakpoints = {
     small: 460,
     medium: 640,
     large: 1000,
-  };
+  }
 
-  var $page = $('.js-page');
+  let $page = $('.js-page')
 
   // -- Header search toggle -- \\
-
-  var $header = $('.js-header');
-  var $headerSearchIcon = $('.js-header-search');
-  var $headerSearchBox = $('.js-header-search-box');
-  var headerLinkActiveCls = 'header__nav-link--is-active';
-  var pageOverlayCls = 'page--overlay';
+  let $header = $('.js-header')
+  let $headerSearchIcon = $('.js-header-search')
+  let $headerSearchBox = $('.js-header-search-box')
+  let headerSearchInput = document.querySelector('.js-search-input')
+  let headerLinkActiveCls = 'header__nav-link--is-active'
+  let pageOverlayCls = 'page--overlay'
 
   // Toggle elements
   function toggleSearch(state) {
-    $headerSearchIcon.toggleClass(
-      headerLinkActiveCls,
-      state
-    );
-    $headerSearchBox.toggleClass(
-      'header-search-box--is-active',
-      state
-    );
+    $headerSearchIcon.toggleClass(headerLinkActiveCls, state)
+    $headerSearchBox.toggleClass('header-search-box--is-active', state)
+    console.log('search toggled')
+    if (isInView(headerSearchInput)) headerSearchInput.focus()
   }
 
   $headerSearchIcon.click(function(e) {
-    e.preventDefault();
-    toggleNavigation(false); // hide nav
-    toggleSearch();
+    e.preventDefault()
+    toggleNavigation(false) // hide nav
+    toggleSearch()
     $page.toggleClass(
       pageOverlayCls,
-      $headerSearchIcon.hasClass(
-        headerLinkActiveCls
-      )
-    );
-  });
+      $headerSearchIcon.hasClass(headerLinkActiveCls)
+    )
+  })
 
   // -- Header navigation toggle -- \\
-
   var $headerHamburgerIcon = $('.js-header-hamburger');
   var $headerNavigation = $('.js-main-navigation');
 
