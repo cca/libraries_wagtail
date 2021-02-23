@@ -1,8 +1,14 @@
 from datetime import datetime, timedelta
+from io import BytesIO
 import logging
+import requests
 
+from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand
 from django.conf import settings
+
+from wagtail.core.models import Collection
+from wagtail.images.models import Image
 
 from instagram.api import get_instagram, refresh_token
 from instagram.models import Instagram, InstagramOAuthToken
@@ -38,12 +44,30 @@ class Command(BaseCommand):
                 logger.info('No new Instagram posts; we already have the most recent one.')
                 exit(0)
 
+            # First add the image to Instagram collection in Wagtail
+            response = requests.get(insta['image'])
+            instagram_collection = None
+            collections = Collection.objects.filter(name='Instagram')
+            if collections.exists():
+                instagram_collection = collections[0]
+            try:
+                image = Image.objects.create(
+                    title='Instagram Post {}'.format(insta['id']),
+                    file=ImageFile(BytesIO(response.content),
+                    name='{}.jpg'.format(insta['id'])),
+                    collection=instagram_collection
+                )
+            except:
+                logger.warn('Unable to create Wagtail Image from Instagram URL: {}'.format(insta['image']))
+                image = None
+
             # new Instagram from API response
             Instagram.objects.create(
                 text=insta['text'],
                 html=insta['html'],
                 ig_id=insta['id'],
-                image=insta['image'],
+                image_url=insta['image'],
+                image=image,
                 username=insta['username'],
             )
             logger.info('Latest Instagram retrieved successfully: "{0}"'.format(insta['text']))

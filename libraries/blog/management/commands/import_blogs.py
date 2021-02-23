@@ -35,7 +35,7 @@ def add_img_to_wagtail(path):
     response = requests.get(img_url)
     image = Image.objects.create(
         title=filename,
-        file=ImageFile(BytesIO(response.content), name=filename)),
+        file=ImageFile(BytesIO(response.content), name=filename))
 
     # for some reason .create() returns a tuple?
     # we want to return The Thing Itself instead, unencased
