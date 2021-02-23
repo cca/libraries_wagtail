@@ -1,15 +1,18 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% if instagram %}
 <div class="home-news-item home-news-item--instagram">
 	<div class="home-news-item__image-wrapper home-news-item__image-wrapper--instagram">
 		<a href="https://www.instagram.com/{{ instagram.username }}/">
+			{% if instagram.image %}
+				{% image instagram.image original alt="Instagram image" class="home-news-item__image" %}
+			{% else %}
 			<img
 				alt="Instagram image"
-				class="home-news-item__image "
+				class="home-news-item__image"
 				src="{{ instagram.image_url }}"
-				title="Image from Instagram"
 			/>
+			{% endif %}
 		</a>
 	</div>
 

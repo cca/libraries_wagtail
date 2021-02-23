@@ -10,6 +10,13 @@ class Instagram(models.Model):
         help_text='Text of gram with hashtags & usernames converted to <a> links'
     )
     image_url = models.URLField(blank=False, max_length=500)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.PROTECT,
+        related_name='+',
+        help_text='downloaded Instagram image',
+    )
     # stackoverflow.com/questions/15470180/character-limit-on-instagram-usernames
     username = models.CharField(blank=False, max_length=30)
 
