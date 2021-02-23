@@ -4,7 +4,7 @@
 
 **2021-02-23** - small improvements to Wagtail search, the Instagram app, and paging for the Exhibitions index. Add CCA Land Acknowledgement.
 
-#### Features
+### Features
 
 - [#123](https://github.com/cca/libraries_wagtail/issues/123) We have too many exhibits to simply show them all on the index; add paging so they're displayed 12 (3 rows of 4) at a time
 - [#111](https://github.com/cca/libraries_wagtail/issues/111) add CCA Land Acknowledgement to the footer, copied verbatim from cca.edu
