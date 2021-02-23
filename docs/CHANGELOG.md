@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.6.0
+
+**2021-02-23** - small improvements to Wagtail search, the Instagram app, and paging for the Exhibitions index. Add CCA Land Acknowledgement.
+
+#### Features
+
+- [#123](https://github.com/cca/libraries_wagtail/issues/123) We have too many exhibits to simply show them all on the index; add paging so they're displayed 12 (3 rows of 4) at a time
+- [#111](https://github.com/cca/libraries_wagtail/issues/111) add CCA Land Acknowledgement to the footer, copied verbatim from cca.edu
+- Search improvements: [#115](https://github.com/cca/libraries_wagtail/issues/115) use "and" operator instead of "or", [#118](https://github.com/cca/libraries_wagtail/issues/118) focus on search text input when drawer is opened, [#110](https://github.com/cca/libraries_wagtail/issues/110) add `<title>` element to search results pages
+
+### Bugfixes
+
+- [#117](https://github.com/cca/libraries_wagtail/issues/117) download Instagram images to avoid relying on media links that expire
+- [bbbdcdd](https://github.com/cca/libraries_wagtail/commit/bbbdcdd9049a02e998138c0d68d78f99d48351e6) fix Koha "library account" link in footer, spacing was off
+- [#124](https://github.com/cca/libraries_wagtail/issues/124) fix 500 error on certain requests to Hours API
+- [0f9b4d1](https://github.com/cca/libraries_wagtail/commit/0f9b4d161d39a61d1ba2ac7979bf7d03a23d1e08) no download link for embedded art works in Exhibits
+- Some changes to Brokenlinks app settings that make them work in more contexts
+- A variety of minor (mostly npm) dependency updates
+
 ## 2.5.0
 
 **2020-05-19** — implements Portal's "Image Grid" block, adds a Featured checkbox for Exhibits, and upgrades to Wagtail 2.9 while applying a host of smaller improvements.
