@@ -13,7 +13,6 @@
 ### Bugfixes
 
 - [#117](https://github.com/cca/libraries_wagtail/issues/117) download Instagram images to avoid relying on media links that expire
-- [bbbdcdd](https://github.com/cca/libraries_wagtail/commit/bbbdcdd9049a02e998138c0d68d78f99d48351e6) fix Koha "library account" link in footer, spacing was off
 - [#124](https://github.com/cca/libraries_wagtail/issues/124) fix 500 error on certain requests to Hours API
 - [0f9b4d1](https://github.com/cca/libraries_wagtail/commit/0f9b4d161d39a61d1ba2ac7979bf7d03a23d1e08) no download link for embedded art works in Exhibits
 - Some changes to Brokenlinks app settings that make them work in more contexts
