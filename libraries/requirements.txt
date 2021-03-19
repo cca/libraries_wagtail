@@ -27,7 +27,7 @@ six==1.15.0
 soupsieve==1.9.5
 sqlparse==0.4.1
 Unidecode==1.1.2
-urllib3==1.26.2
+urllib3==1.26.3
 wagtail==2.9.3
 webencodings==0.5.1
 Willow==1.3
