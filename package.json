@@ -2,10 +2,6 @@
   "name": "libraries-wagtail",
   "version": "1.0.0",
   "description": "CCA Libraries website in Wagtail CMS",
-  "directories": {
-    "doc": "docs",
-    "lib": "lib"
-  },
   "scripts": {
     "build": "gulp build",
     "scripts": "gulp scripts",
