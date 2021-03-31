@@ -39,5 +39,7 @@
     "postcss": "^8.2.1",
     "sass-lint": "^1.13.1"
   },
-  "dependencies": {}
+  "engines": {
+    "node": "<15"
+  }
 }
