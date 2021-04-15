@@ -46,10 +46,14 @@ class Command(BaseCommand):
 
             # First add the image to Instagram collection in Wagtail
             response = requests.get(insta['image'])
-            instagram_collection = None
+
             collections = Collection.objects.filter(name='Instagram')
             if collections.exists():
                 instagram_collection = collections[0]
+            else:
+                # "Root" collection
+                instagram_collection = Collection.objects.filter(id=1)[0]
+
             try:
                 image = Image.objects.create(
                     title='Instagram Post {}'.format(insta['id']),
