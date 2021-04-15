@@ -11,6 +11,7 @@ Configuration ([these steps are a good outline](https://developers.facebook.com/
 - add the app's `INSTAGRAM_APP_ID`, `INSTAGRAM_CLIENT_SECRET`, and `INSTAGRAM_REDIRECT_URI` to your settings
 - run the management command, `python manage.py get_oauth_token`, copy the "code" parameter out of the redirect URI (**IMPORTANT**: remove the `#\_` at the end), then paste that back into the command prompt
 - the script will complete a couple steps to get an OAuth access token
+- (optionally) create an image Collection named "Instagram" to hold downloaded images
 - now when you run `python manage.py instagram` the latest gram is saved to the database
 - set up a cron job to run the management command above on a schedule
 
