@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  db:
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: changeme
+    restart: always
+    image: postgres:9.6
+    expose:
+      - "5432"
+  # we should add this in the future but we don't use redis right now on prod
+  # redis:
+  #   restart: always
+  #   image: redis:3.0
+  #   expose:
+  #     - "6379"
+  elasticsearch:
+    image: elasticsearch:5.6
+    restart: always
+    expose:
+      - "9200"
+  app:
+    environment:
+      DJANGO_SECRET_KEY: changeme
+      DATABASE_URL: postgres://app_user:changeme@db/app_db
+      # CACHE_URL: redis://redis
+      ELASTICSEARCH_ENDPOINT: elasticsearch
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - media-root:/code/libraries/media
+    links:
+      - db:db
+      # - redis:redis
+      - elasticsearch:elasticsearch
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      # - redis
+      - elasticsearch
+volumes:
+  media-root:
