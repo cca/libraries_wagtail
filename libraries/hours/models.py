@@ -114,7 +114,7 @@ class Closure(models.Model):
 # the home page uses this function
 def get_open_hours(day=datetime.date.today()):
     # if we're passed a string, convert it to a date
-    if type(day) is str:
+    if isinstance(day, str):
         # validate input, default to today if we can't get a valid date
         try:
             day = datetime.datetime.strptime(day, '%Y-%m-%d')
