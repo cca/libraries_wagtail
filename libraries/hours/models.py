@@ -1,3 +1,4 @@
+"""Models for the Hours app."""
 import datetime
 
 from django.conf import settings
@@ -42,8 +43,9 @@ class OpenHours(models.Model):
     # I cringe but is there a better way to model this?
     # Tradeoff of using a double open/close hour integer: this is more flexible
     # because we can write in parentheticals ("no checkouts") & slightly easier
-    # in templating because I can just spit out the raw CharField, no processing
-    # NOTE: names of fields must be weekday names from datetime.strftime('%a').lower()
+    # in templating because I can spit out the raw CharField, no processing
+    # NOTE: names of fields must be weekday names from
+    # datetime.strftime('%a').lower()
     mon = models.CharField(max_length=150)
     tue = models.CharField(max_length=150)
     wed = models.CharField(max_length=150)
@@ -88,8 +90,8 @@ class Closure(models.Model):
     )
 
     start_date = models.DateField("Start Date")
-    end_date = models.DateField("End Date",
-        help_text="can be the same as start date",)
+    end_date = models.DateField(
+               "End Date", help_text="can be the same as start date",)
 
     explanation = RichTextField(
         features=settings.RICHTEXT_BASIC,
@@ -109,6 +111,7 @@ class Closure(models.Model):
     def __str__(self):
         return self.label
 
+
 # returns a dict of each library's open hours for a given date e.g.
 # { meyer: '9-5', simpson: '9-6', materials: 'closed' }
 # the home page uses this function
@@ -118,7 +121,7 @@ def get_open_hours(day=datetime.date.today()):
         # validate input, default to today if we can't get a valid date
         try:
             day = datetime.datetime.strptime(day, '%Y-%m-%d')
-        except:
+        except ValueError:
             day = datetime.date.today()
 
     weekday = day.strftime('%a').lower()
@@ -179,11 +182,14 @@ class HoursPage(Page):
         null=True,
         on_delete=models.PROTECT,
         related_name='+',
-        help_text="Doesn't display on the page itself but a thumbnail close to 230x115px is used on the 'About Us' page and a smaller thumbnail is also used in search results.",
+        help_text="Doesn't display on the page itself but a thumbnail close "
+                  "to 230x115px is used on the 'About Us' page and a smaller "
+                  "thumbnail is also used in search results.",
     )
     order = models.IntegerField(
         default=1,
-        help_text='Defines the sort order in the parent row (lower numbers go first).',
+        help_text="Defines the sort order in the parent row (lower numbers "
+                  "go first).",
     )
 
     content_panels = Page.content_panels + [
@@ -193,7 +199,6 @@ class HoursPage(Page):
     promote_panels = Page.promote_panels + [
         FieldPanel('order')
     ]
-
 
     class Meta:
         ordering = ["order", "-last_published_at"]
