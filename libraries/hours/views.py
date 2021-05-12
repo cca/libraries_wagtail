@@ -1,3 +1,4 @@
+"""JSON API View for the Hours app."""
 import datetime
 
 from django.shortcuts import redirect
@@ -28,7 +29,7 @@ def error_response(msg):
 
 @never_cache
 def hours(request):
-    """ Hours API view.
+    """Hours API view.
 
     Parameters
     ----------
@@ -78,7 +79,7 @@ def hours(request):
 
 
 def validate(library, date):
-    """ Validate input (from request query string).
+    """Validate input (from request query string).
 
     Parameters
     ----------
