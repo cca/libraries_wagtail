@@ -38,7 +38,7 @@ $(() => {
         // remove data-iframe from embeds that look like YouTube or Vimeo
         if (src.match(re)) $el.removeAttr('data-iframe')
     })
-    let lg = $('.js-lightgallery').lightGallery(lgOptions);
+    let lg = $('.js-lightgallery').lightGallery(lgOptions)
 
     lg.on('onAfterOpen.lg', () => {
         // add missing tooltips for lightGallery controls

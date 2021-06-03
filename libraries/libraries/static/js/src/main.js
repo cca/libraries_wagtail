@@ -1,5 +1,4 @@
 function main() {
-
   // These need to match with the breakpoints
   // written in scss/settings/_breakpoints.scss
   let breakpoints = {
@@ -36,71 +35,63 @@ function main() {
   })
 
   // -- Header navigation toggle -- \\
-  var $headerHamburgerIcon = $('.js-header-hamburger');
-  var $headerNavigation = $('.js-main-navigation');
+  let $headerHamburgerIcon = $('.js-header-hamburger')
+  let $headerNavigation = $('.js-main-navigation')
 
   // Toggle elements
   function toggleNavigation(state) {
-    $headerHamburgerIcon.toggleClass(
-      headerLinkActiveCls,
-      state
-    );
-    $headerNavigation.toggleClass(
-      'main-navigation--is-active',
-      state
-    );
+    $headerHamburgerIcon.toggleClass(headerLinkActiveCls, state)
+    $headerNavigation.toggleClass('main-navigation--is-active', state)
   }
 
   // Non-anon function becuase we use it separately
   function hamburgerClickHandler(e) {
-    e ? e.preventDefault() : null; // jshint ignore:line
+    e ? e.preventDefault() : null // jshint ignore:line
 
     // on the search page we need toggle the search box
-    isSearchPage ? toggleSearch() : toggleSearch(false); // jshint ignore:line
+    isSearchPage ? toggleSearch() : toggleSearch(false) // jshint ignore:line
     toggleNavigation();
     $page.toggleClass(
       pageOverlayCls,
       $headerHamburgerIcon.hasClass(
         headerLinkActiveCls
       )
-    );
+    )
   }
 
-  $headerHamburgerIcon.click(hamburgerClickHandler);
+  $headerHamburgerIcon.click(hamburgerClickHandler)
 
   // -- Page overlay toggle -- \\
 
   // Hide everything if page overlay is clicked
   $(document).on('click', '.' + pageOverlayCls, function(e) {
-    e.preventDefault();
+    e.preventDefault()
     if ($(e.target).hasClass(pageOverlayCls)) {
-      toggleSearch(false);
-      toggleNavigation(false);
-      $page.toggleClass(pageOverlayCls, false);
+      toggleSearch(false)
+      toggleNavigation(false)
+      $page.toggleClass(pageOverlayCls, false)
     }
-  });
+  })
 
   // This is needed to stop the clicks from the nav
   // links and search-box falling through to the page
   // overlay click handler (above).
-  $header.click(function(e) {
-    e.stopPropagation();
-  });
+  $header.click(e => { e.stopPropagation() })
 
   // -- Page helper class -- \\
 
   // Add a class of the page name for help with main navigation.
-  var pageName = window.location.pathname.replace(/\//g,'');
+  let pageName = window.location.pathname.replace(/\//g,'')
 
   // Search pages can contain query params so the pageName isn't pure
-  var isSearchPage = pageName.indexOf('search') > -1;
+  let isSearchPage = pageName.indexOf('search') > -1
 
   // The home page uri is `/` so pageName is
   // an empty string
   if (pageName.length > 0) {
-    isSearchPage ? $page.addClass('page--search') : $page.addClass('page--' + pageName); // jshint ignore:line
+    isSearchPage ? $page.addClass('page--search') : $page.addClass('page--' + pageName) // jshint ignore:line
   } else {
-    $page.addClass('page--home');
+    $page.addClass('page--home')
   }
 
   // -- Search page search box display -- \\
@@ -108,65 +99,63 @@ function main() {
   // If we're on the search page, open the search box
   // and disable the button so it can't be hidden;
   if (pageName.indexOf('search') > -1) {
-    toggleSearch(true);
-    $headerSearchIcon.off('click');
+    toggleSearch(true)
+    $headerSearchIcon.off('click')
     $headerSearchIcon.click(function(e) {
-      e.preventDefault();
+      e.preventDefault()
 
       // If the link nav is open, hide it
       if ($headerHamburgerIcon.hasClass(headerLinkActiveCls)) {
-        hamburgerClickHandler();
+        hamburgerClickHandler()
       }
-    });
+    })
   }
 
   // -- Responsive helpers -- \\
 
   // We want to debounce the resize event so we're
   // not running these functions a billion times.
-  var resizeTimer,
+  let resizeTimer,
       $window = $(window);
 
   // Get the browser width on change
   $window.on('resize', function(e) {
-    clearTimeout(resizeTimer);
+    clearTimeout(resizeTimer)
     resizeTimer = setTimeout(function() {
-      var browserWidth = $window.width();
+      let browserWidth = $window.width()
 
       // Reset the nav if going from small to big
       if (browserWidth > breakpoints.medium) {
         if ($headerHamburgerIcon.hasClass(headerLinkActiveCls)) {
-          hamburgerClickHandler();
+          hamburgerClickHandler()
         }
       }
-    }, 250);
-  });
+    }, 250)
+  })
 
   // -- Blog sidebar toggle (mobile only) -- \\
 
-  var $blogSearchToggle = $('.js-blog-search-toggle');
-  var $blogSidebar = $('.js-blog-sidebar');
-  var $blogSidebarContent = $('.js-blog-sidebar-content');
-  var $blogSidebarList = $('.js-blog-sidebar-list');
-  var $footer = $('.js-footer');
+  let $blogSearchToggle = $('.js-blog-search-toggle')
+  let $blogSidebar = $('.js-blog-sidebar')
+  let $blogSidebarContent = $('.js-blog-sidebar-content')
+  let $blogSidebarList = $('.js-blog-sidebar-list')
+  let $footer = $('.js-footer')
 
   $blogSearchToggle.click(function(e) {
-    e.preventDefault();
-    $blogSidebarContent.slideToggle();
-    $blogSearchToggle.toggleClass(
-      'blog-articles-toggle--is-active'
-    );
-  });
+    e.preventDefault()
+    $blogSidebarContent.slideToggle()
+    $blogSearchToggle.toggleClass('blog-articles-toggle--is-active')
+  })
 
   // -- Collections navigation scroll (desktop only) -- \\
 
-  var $collectionsNav = $('.js-collections-nav');
+  let $collectionsNav = $('.js-collections-nav')
 
   if ($collectionsNav.length > 0) {
-    var $collectionItems = $('.js-collection-item');
-    var $collectionsNavItems = $('.js-collections-nav-item');
-    var $collectionsTitle = $('.js-collections-title')
-    var collectionNavActiveCls = 'collections-nav-item--is-active';
+    let $collectionItems = $('.js-collection-item')
+    let $collectionsNavItems = $('.js-collections-nav-item')
+    let $collectionsTitle = $('.js-collections-title')
+    let collectionNavActiveCls = 'collections-nav-item--is-active'
 
     $window.on('scroll', function(e) {
       $collectionItems.each(function(i, item) {
@@ -191,29 +180,29 @@ function main() {
             $collectionsNav.css('bottom', '')
         }
 
-      });
-    });
+      })
+    })
   }
 
   // Check if element is in view
   // https://stackoverflow.com/a/42777210/5386237
   function isInView(el, partial) {
       // can't do const { top, bottom } bc uglify chokes on it -EP
-      var rect = el.getBoundingClientRect()
+      let rect = el.getBoundingClientRect()
           , top = rect.top
           , bottom = rect.bottom;
       if (partial) {
           return top < window.innerHeight && bottom >= 0
-      } else {
-          return top >= 0 && bottom <= window.innerHeight
       }
+
+      return top >= 0 && bottom <= window.innerHeight
   }
 
   // -- Anchor link scrolling -- \\
 
   $("a.js-scroll-to[href^='#']").click(function(e) {
     e.preventDefault();
-    var dest = $(this).attr('href');
+    let dest = $(this).attr('href');
     $('html, body').animate(
       { scrollTop: $(dest).offset().top - 100 }, // offset header
       'medium'
