@@ -169,7 +169,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGGING_DIR, 'all.log'),
             'filters': ['quiet_down_elasticsearch'],
-            'maxBytes': 1024*1024*10,  # 10M
+            'maxBytes': 1024 * 1024 * 10,  # 10M
             'backupCount': 14,
             'formatter': 'standard',
         },
@@ -177,7 +177,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGGING_DIR, 'documents.csv'),
-            'maxBytes': 1024*1024*10,  # 10M
+            'maxBytes': 1024 * 1024 * 10,  # 10M
             'backupCount': 14,
             'formatter': 'document',
         },
@@ -186,7 +186,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGGING_DIR, 'django_error.log'),
             'filters': ['is_not_404_error'],
-            'maxBytes': 1024*1024*10,  # 10M
+            'maxBytes': 1024 * 1024 * 10,  # 10M
             'backupCount': 7,
             'formatter': 'http',
         },
@@ -195,7 +195,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGGING_DIR, '404.log'),
             'filters': ['is_404_error'],
-            'maxBytes': 1024*1024*10,  # 10M
+            'maxBytes': 1024 * 1024 * 10,  # 10M
             'backupCount': 7,
             'formatter': 'http',
         },
@@ -212,7 +212,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGGING_DIR, 'mgmt_cmd.log'),
-            'maxBytes': 1024*1024*10,  # 10M
+            'maxBytes': 1024 * 1024 * 10,  # 10M
             'backupCount': 7,
             'formatter': 'standard',
         },
