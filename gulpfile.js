@@ -8,33 +8,24 @@ const autoprefixer = require('autoprefixer')
 
 const static_root = 'libraries/libraries/static'
 const settings = {
-
-	/**
-	 * Distribution settings
-	 */
 	dist: {
 		css: static_root + '/css/',
 		js: static_root + '/js/'
 	},
-
-	/**
-	 * Source settings
-	 */
-
 	src: {
 		exhibits: [static_root + '/js/exhibits.js'],
 		js: [static_root + '/js/src/*.js'],
 		main: [static_root + '/scss/main.scss', static_root + '/scss/exhibits.scss'],
 		scss: [static_root + '/scss/**/*.scss']
 	}
-};
+}
 
 // tasks for each major set of files (main site CSS, main site JS, exhibits JS)
 function allCSS() {
 	return src(settings.src.main, { sourcemaps: true })
 		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
 		.pipe(postcss([ autoprefixer() ]))
-		.pipe(dest(settings.dist.css));
+		.pipe(dest(settings.dist.css))
 }
 
 function mainJS() {
@@ -42,7 +33,7 @@ function mainJS() {
 		.pipe(concat('main.min.js'))
 		.pipe(babel({ presets: ['@babel/preset-env'] }))
 		.pipe(uglify({ output: { comments: 'some' } }))
-		.pipe(dest(settings.dist.js));
+		.pipe(dest(settings.dist.js))
 }
 
 function exhibitsJS() {
@@ -50,7 +41,7 @@ function exhibitsJS() {
 		.pipe(concat('exhibits.min.js'))
 		.pipe(babel({ presets: ['@babel/preset-env'] }))
 		.pipe(uglify())
-		.pipe(dest(settings.dist.js));
+		.pipe(dest(settings.dist.js))
 }
 
 // watch each main set of files & run its associated task

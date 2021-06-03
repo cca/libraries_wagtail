@@ -1,7 +1,7 @@
 fetch('/hours/?format=json')
     .then(response => response.json())
     .then(data => {
-        let h = function (selector, datum='closed') {
+        const h = (selector, datum='closed') => {
             let el = document.querySelector(selector)
             if (el) el.innerText = datum
         }
@@ -14,4 +14,4 @@ fetch('/hours/?format=json')
         // footer hours
         h('.footer-section__site-address.js-meyer-hrs', data.Meyer + ' today')
         h('.footer-section__site-address.js-simpson-hrs', data.Simpson + ' today')
-    })
+    });

@@ -1,4 +1,4 @@
-$(function(){
+$(() => {
     $('#id_exhibit_artwork-FORMS').on('change', '.js-type', ev => {
         let select = $(ev.currentTarget).find('select')
         let type = select.val()
