@@ -15,6 +15,7 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from categories.models.blocks import *
 
+
 # helper method—for child pages, return their category i.e. parent CategoryPage
 # one of: services, collections, about us
 def get_category(page):
@@ -94,12 +95,10 @@ class ServicePage(Page):
         index.SearchField('body'),
         index.SearchField('sidebar_cards'),
         index.SearchField('resources'),
-     ]
-
+    ]
 
     def category(self):
         return get_category(self)
-
 
     class Meta:
         verbose_name = 'Complex text page'
@@ -119,6 +118,7 @@ class ServicePage(Page):
     api_fields = [
         APIField('body'),
     ]
+
 
 # does not have a matching template, should never be visited on its own
 # but only used as a component of a CategoryPage
@@ -144,7 +144,6 @@ class RowComponent(Page):
         FieldPanel('summary'),
     ]
 
-
     def category(self):
         return get_category(self)
 
@@ -161,6 +160,7 @@ class RowComponent(Page):
         request.GET['DRAFT'] = True
         ctx = CategoryPage.get_context(parent, request)
         return render(request, 'categories/category_page.html', context=ctx)
+
 
 # ServicePage & AboutUsPage are two different templates for the same
 # sort of grandchild content (CategoryPage > RowComponent > Service/AboutUsPage)
@@ -234,10 +234,8 @@ class AboutUsPage(Page):
         APIField('body'),
     ]
 
-
     def category(self):
         return get_category(self)
-
 
     class Meta:
         verbose_name = 'Simple text page'
@@ -275,7 +273,7 @@ class ExternalLink(Page):
     )
 
     # no need for a promote, search_desc is on content & slug isn't used
-    promote_panels = [ FieldPanel('order') ]
+    promote_panels = [FieldPanel('order')]
 
     content_panels = Page.content_panels + [
         FieldPanel('link'),
