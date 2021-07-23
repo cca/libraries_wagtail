@@ -59,11 +59,13 @@ def hours(request):
                     'library': library,
                     'hours': hrs
                 })
+                response["Access-Control-Allow-Origin"] = "*"
 
         # we have a date but no library, show all libraries on that date
         else:
             hrs = get_open_hours(date)
             response = JsonResponse(hrs)
+            response["Access-Control-Allow-Origin"] = "*"
 
         # we didn't find any hours via either of the above methods
         if hrs is None:
