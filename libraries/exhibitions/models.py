@@ -2,7 +2,6 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-from django.http import FileResponse
 from django.utils.translation import ugettext_lazy as _
 
 from modelcluster.fields import ParentalKey
@@ -17,11 +16,13 @@ from wagtail.search import index
 
 from categories.models import BaseStreamBlock
 
+
 # logic for showing/hiding appropriate art work fields based on type
 @hooks.register('insert_editor_js')
 def editor_js():
     file = settings.STATIC_URL + 'js/exhibits-admin.js'
     return '<script src="{0}"></script>'.format(file)
+
 
 # Typical setup: Exhibits Index can only have Exhibit children,
 # Exhibits can only have the Exhibits Index as a parent
@@ -55,7 +56,6 @@ class ExhibitsIndexPage(Page):
 
         context['exhibits'] = posts
         return context
-
 
     class Meta:
         ordering = ["order", "-last_published_at"]
@@ -92,7 +92,7 @@ class ExhibitsIndexPage(Page):
 
 class ExhibitPage(Page):
     parent_page_types = ['exhibitions.ExhibitsIndexPage']
-    subpage_types = [] # no children allowed
+    subpage_types = []  # no children allowed
 
     # theme choices
     display_choices = (
@@ -277,13 +277,14 @@ class HeaderImage(Orderable):
         help_text='Single header images should be ≥ 1360px wide; they will be strecthed if not. Foursquare images are sized to a 400x400 square but you can upload larger images.',
         null=False,
         blank=False,
-            on_delete=models.CASCADE,
+        on_delete=models.CASCADE,
         related_name='+'
     )
 
     panels = [
         ImageChooserPanel('image'),
     ]
+
 
 # represents one piece of media/art work for display in the gallery
 class ExhibitArtwork(Orderable):
@@ -344,7 +345,6 @@ class ExhibitArtwork(Orderable):
         FieldPanel('embed_code', classname='js-embed_code'),
         FieldPanel('description'),
     ]
-
 
     def __str__(self):
         return self.title
