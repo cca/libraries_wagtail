@@ -7,7 +7,7 @@ $(() => {
 
     let lgOptions = {
         autoplayFirstVideo: false,
-        hideBarsDelay: 3000,
+        closable: true,
         selector: '.js-gallery--work',
         subHtmlSelectorRelative: true,
         // video player settings
