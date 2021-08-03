@@ -14,6 +14,7 @@ from wagtail.search import index
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from categories.models.blocks import *
+from libraries.utils import validate_clean
 
 
 # helper method—for child pages, return their category i.e. parent CategoryPage
@@ -40,6 +41,10 @@ class CategoryPage(Page):
             rows = self.get_children().live()
         context['rows'] = rows
         return context
+
+    def clean(self):
+        super().clean()
+        validate_clean(self)
 
 
 # reuses blocks from the BlogPage template
@@ -99,6 +104,10 @@ class ServicePage(Page):
 
     def category(self):
         return get_category(self)
+
+    def clean(self):
+        super().clean()
+        validate_clean(self)
 
     class Meta:
         verbose_name = 'Complex text page'
@@ -236,6 +245,10 @@ class AboutUsPage(Page):
 
     def category(self):
         return get_category(self)
+
+    def clean(self):
+        super().clean()
+        validate_clean(self)
 
     class Meta:
         verbose_name = 'Simple text page'

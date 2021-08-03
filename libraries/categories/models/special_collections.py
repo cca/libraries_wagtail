@@ -10,6 +10,8 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
 from categories.models.pages import get_category
+from libraries.utils import validate_clean
+
 
 # Another child of RowComponent but with a very different structure & template
 class SpecialCollectionsPage(Page):
@@ -30,8 +32,8 @@ class SpecialCollectionsPage(Page):
         help_text='Defines the sort order in the parent row (lower numbers go first).',
     )
 
-    # needs an orderable struct of some sort which contains a title, richtext blurb,
-    # link to the external collection, and feature image _at least_
+    # needs an orderable struct of some sort which contains a title, richtext
+    # blurb, link to the external collection, and feature image _at least_
     content_panels = Page.content_panels + [
         InlinePanel('special_collections', label='Special Collection')
     ]
@@ -44,9 +46,12 @@ class SpecialCollectionsPage(Page):
     def main_image(self):
         return self.specific.special_collections.first().image
 
-
     def category(self):
         return get_category(self)
+
+    def clean(self):
+        super().clean()
+        validate_clean(self)
 
     # make page searchable by text of child special collections
     search_fields = Page.search_fields + [
