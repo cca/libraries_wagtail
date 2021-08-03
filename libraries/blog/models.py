@@ -3,11 +3,12 @@ from django.shortcuts import render
 
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
 from categories.models import BaseStreamBlock
+from libraries.utils import validate_clean
 
 
 # helper to get a list of published blog posts in reverse chronological order
@@ -107,10 +108,12 @@ class BlogPage(Page):
 
         return context
 
+    def clean(self):
+        super().clean()
+        validate_clean(self)
 
     class Meta:
         verbose_name = 'News article'
-
 
     search_fields = Page.search_fields + [
         index.SearchField('imported_body'),

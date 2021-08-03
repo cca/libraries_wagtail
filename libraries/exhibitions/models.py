@@ -1,8 +1,6 @@
 from django.conf import settings
-from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 
 from modelcluster.fields import ParentalKey
 
@@ -15,6 +13,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
 from categories.models import BaseStreamBlock
+from libraries.utils import validate_clean
 
 
 # logic for showing/hiding appropriate art work fields based on type
@@ -243,14 +242,9 @@ p { font-size: 1.2em; }
 
         return False
 
-    # override clean() method to add custom validation, see
-    # github.com/wagtail/wagtail/blob/master/wagtail/core/models.py#L437
     def clean(self):
         super().clean()
-        if not Page._slug_is_available(self.slug, self.get_parent(), self):
-            raise ValidationError({'slug': _("This slug is already in use")})
-        if self.search_description is None or self.search_description == '':
-            raise ValidationError({'search_description': _("A Search Description is required.")})
+        validate_clean(self)
 
     # index related ExhibitArtworks
     search_fields = Page.search_fields + [
