@@ -1,6 +1,9 @@
 import csv
 import io
 import logging
+import urllib
+
+from wsgiref.util import FileWrapper
 
 from django.conf import settings
 from django.http import Http404, HttpResponse, StreamingHttpResponse
@@ -17,6 +20,7 @@ from wagtail.utils.sendfile import sendfile
 
 # logger specifically for tracking document downloads
 logger = logging.getLogger('document')
+
 
 @etag(document_etag)
 @cache_control(max_age=3600, public=True)
@@ -94,7 +98,7 @@ def serve_wagtail_doc(request, document_id, document_filename):
             return sendfile(
                 request,
                 local_path,
-                attachment=False,
+                attachment=False,  # open in browser, do NOT force download
                 attachment_filename=doc.filename,
                 backend=sendfile_streaming_backend.sendfile
             )
@@ -109,6 +113,10 @@ def serve_wagtail_doc(request, document_id, document_filename):
 
         wrapper = FileWrapper(doc.file)
         response = StreamingHttpResponse(wrapper, content_type='application/octet-stream')
+
+        # set filename and filename* to handle non-ascii characters in filename
+        # see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition
+        response['Content-Disposition'] = "attachment; filename={0}; filename*=UTF-8''{0}".format(urllib.parse.quote(doc.filename))
 
         # FIXME: storage backends are not guaranteed to implement 'size'
         response['Content-Length'] = doc.file.size
