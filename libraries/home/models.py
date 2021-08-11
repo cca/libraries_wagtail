@@ -29,9 +29,6 @@ class HomePage(Page):
 
     image_attribution = RichTextField(features=settings.RICHTEXT_BASIC, blank=True)
 
-    # blurbs for the 3 main sections (services, collections, about us)
-    # we limit length & do not allow links like in a RichTextField
-    latin = 'Aliquam iaculis ornare tristique. Phasellus ullamcorper tristique est, ac dictum quam sagittis ut.'
     # @TODO this is a quick, emergency hack to get links into the description
     # we should redo these as StructBlocks with a title, link, & rich text
     services_text = RichTextField(features=settings.RICHTEXT_BASIC, blank=True)
