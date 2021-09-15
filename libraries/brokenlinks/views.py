@@ -1,4 +1,3 @@
-import json
 import logging
 import requests
 
@@ -8,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 logger = logging.getLogger('')
+
 
 @csrf_exempt
 def brokenlinks(request):
@@ -40,7 +40,7 @@ def brokenlinks(request):
             'submit': 'Submit'
         }
         r = requests.post(settings.BROKENLINKS_GOOGLE_SHEET_URL, data=data)
-        logger.info('broken link reported: ' + str(body.dict())) # untested...
+        logger.info('broken link reported: ' + str(body.dict()))  # @TODO untested...
         if r.status_code != 200:
             logger.error('error submitting broken link to Google Sheets, response code: ' + r.status_code)
         response = JsonResponse(data, status=200)
