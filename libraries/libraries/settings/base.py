@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'search',
     'sersol_api',
     'staff',
+    'summon',
 
     'wagtail.api.v2',
     'wagtail.contrib.forms',
@@ -328,3 +329,10 @@ RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
     'ol',
     'ul',
 ]
+
+# Summon app configuration
+SUMMON_SFTP_URL = 'ftp.summon.serialssolutions.com'
+SUMMON_REPORT_URL = 'https://library.cca.edu/cgi-bin/koha/svc/report?id=152&sql_params={}'
+# You _must_ define these credentials in a local settings file as well
+# SUMMON_SFTP_UN = 'password'
+# SUMMON_SFTP_PW = 'username'
