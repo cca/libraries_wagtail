@@ -19,7 +19,7 @@ def truncate(content, length=200, suffix='...'):
         return content
     else:
         # split on spaces & drop the last entry, add suffix
-        return ' '.join(content[:length+1].split(' ')[0:-1]) + suffix
+        return ' '.join(content[:length + 1].split(' ')[0:-1]) + suffix
 
 
 # NOTE: this creates duplicate images, see bug #39
@@ -87,11 +87,11 @@ class Command(BaseCommand):
                         # strip HTML tags & truncate the body to create search description
                         search_desc = truncate(strip_tags(row['body']))
                         post = BlogPage(
-                            title = row['title'],
-                            slug = row['slug'],
-                            search_description = search_desc,
-                            date = post_date,
-                            imported_body = row['body'],
+                            title=row['title'],
+                            slug=row['slug'],
+                            search_description=search_desc,
+                            date=post_date,
+                            imported_body=row['body'],
                         )
                         # have to add this way to get page's depth & path fields right
                         blog_index.add_child(instance=post)
@@ -108,7 +108,7 @@ class Command(BaseCommand):
                             wagtail_image = add_img_to_wagtail(img_field)
                             post.main_image = wagtail_image
                             post.save()
-                            self.stdout.write(self.style.SUCCESS( 'Successfully added main image %s' % img_field ))
+                            self.stdout.write(self.style.SUCCESS('Successfully added main image %s' % img_field))
                         except:
-                            self.stdout.write(self.style.ERROR( 'Unable to add main image %s' % img_field ))
+                            self.stdout.write(self.style.ERROR('Unable to add main image %s' % img_field))
                             self.stdout.write(sys.exc_info()[0])
