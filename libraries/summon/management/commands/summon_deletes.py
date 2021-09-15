@@ -31,7 +31,7 @@ class Command(BaseCommand):
         except SummonDelete.DoesNotExist:
             # on the first run the above will raise an error because there are
             # no SummonDelete.objects yet
-            logger.error('There are no existing SummonDelete objects. Please run this management script with a "--lastrun YYYY/MM/DD" argument.')
+            logger.error('There are no existing SummonDelete objects. Please run this management script with an argument of the date we last updated Summon in "YYYY/MM/DD" format.')
             exit(1)
         logger.info("Summon deletes task was last run on {}".format(lastrun))
 
