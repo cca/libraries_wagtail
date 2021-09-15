@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'search',
     'sersol_api',
     'staff',
+    'summon',
 
     'wagtail.api.v2',
     'wagtail.contrib.forms',
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+# whitenoise must go first
 # the 2 cache middleware should sandwich everything else
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -111,6 +113,9 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
     }
 }
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 300
+CACHE_MIDDLEWARE_KEY_PREFIX = 'ccalib'
 
 ROOT_URLCONF = 'libraries.urls'
 
@@ -375,11 +380,12 @@ INSTAGRAM_APP_SECRET = env.get('INSTAGRAM_SECRET', '').rstrip('\n'),
 INSTAGRAM_REDIRECT_URI = env.get('INSTAGRAM_REDIRECT_URI', '').rstrip('\n'),
 
 # Summon app
+SUMMON_SFTP_URL = 'ftp.summon.serialssolutions.com'
+SUMMON_REPORT_URL = 'https://library.cca.edu/cgi-bin/koha/svc/report?id=152&sql_params={}'
 SUMMON_SFTP_UN = env.get('SUMMON_SFTP_UN', '').rstrip('\n'),
 SUMMON_SFTP_PW = env.get('SUMMON_SFTP_PW', '').rstrip('\n'),
 
 # Search Backend
-#
 ENGLISH_KEYWORDS = [
     'animation'
 ]
@@ -472,16 +478,6 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
-try:
-    from .local import *
-except ImportError:
-    pass
-
-# caching for production
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 300
-CACHE_MIDDLEWARE_KEY_PREFIX = 'ccalib'
-
 # http://docs.wagtail.io/en/v1.13.1/advanced_topics/performance.html#templates
 TEMPLATES = [
     {
@@ -532,3 +528,9 @@ if 'GS_CREDENTIALS' in env:
     # Load credentials from service account key that grants access
     # to the storage
     GS_CREDENTIALS = Credentials.from_service_account_info(json.loads(env['GS_CREDENTIALS']))
+
+# Let local.py settings override anything declared above
+try:
+    from .local import *
+except ImportError:
+    pass

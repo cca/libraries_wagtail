@@ -1,5 +1,5 @@
 import os
-from .elasticsearch import *
+from .elasticsearch import WAGTAILSEARCH_BACKENDS
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -24,7 +24,7 @@ DATABASES = {
         'USER': 'dbuser',
         'PASSWORD': 'OIJASDIOJ@@@)...',
         'HOST': 'localhost',
-        },
+    },
     'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
@@ -46,3 +46,7 @@ BROKENLINKS_HASH = {
 INSTAGRAM_APP_ID = '123987123987456'
 INSTAGRAM_APP_SECRET = 'OIJASDIOJ@@@)..'
 INSTAGRAM_REDIRECT_URI = 'https://libraries.cca.edu'
+
+# Summon app
+SUMMON_SFTP_UN = 'username'
+SUMMON_SFTP_PW = 'password'
