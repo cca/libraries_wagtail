@@ -20,14 +20,14 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('lastrun', nargs='?', type=str,
-                            help='date of last run (in YYYY/MM/DD format)')
+                            help='date of last run (in YYYY-MM-DD format)')
 
     def handle(self, *args, **options):
         if not hasattr(settings, 'SUMMON_SFTP_UN') or not hasattr(settings, 'SUMMON_SFTP_PW'):
             raise CommandError("Requires a SUMMON_SFTP_UN and SUMMON_SFTP_PW configured in yout local.py settings.")
-        # lastrun is a STRING (not date!) of form "YYYY/MM/DD"
+        # lastrun is a STRING (not date!) of form "YYYY-MM-DD"
         try:
-            lastrun = options.get('lastrun', None) or SummonDelete.objects.latest('date').date.strftime('%Y/%m/%d')
+            lastrun = options.get('lastrun', None) or SummonDelete.objects.latest('date').date.strftime('%Y-%m-%d')
         except SummonDelete.DoesNotExist:
             # on the first run the above will raise an error because there are
             # no SummonDelete.objects yet
