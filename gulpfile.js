@@ -1,5 +1,5 @@
 const { src, dest, parallel, watch } = require('gulp')
-const sass = require('gulp-sass')
+const sass = require('gulp-sass')(require('node-sass'))
 const postcss = require('gulp-postcss')
 const concat = require('gulp-concat')
 const babel = require('gulp-babel')
