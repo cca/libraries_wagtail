@@ -1,4 +1,3 @@
-from datetime import date
 import logging
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -9,6 +8,7 @@ import requests
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
+from django.utils import timezone
 
 from summon.models import SummonDelete
 
@@ -57,7 +57,7 @@ class Command(BaseCommand):
                         sftp.put(fh.name)
                         # write last run date to model
                         SummonDelete.objects.create(
-                            date=date.today(),
+                            date=timezone.now(),
                             number=number,
                             records=records
                         )
