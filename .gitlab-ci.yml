@@ -14,7 +14,7 @@ variables:
   ROLLOUT_RESOURCE_TYPE: deployment
 
 services:
-  - docker:20.10
+  - docker:18.09.7
 
 stages:
   - build
@@ -23,7 +23,7 @@ stages:
 
 # Build & Push Docker image to Google Container Registry.
 docker_image_staging:
-  image: "docker:20.10"
+  image: "docker:18.09.7"
   stage: build
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-(fast|nodb|full)-*/"
@@ -31,7 +31,7 @@ docker_image_staging:
   variables:
     DOCKER_IMAGE_TAG: "us.gcr.io/cca-web-staging/libraries"
   services:
-    - docker:20.10-dind
+    - docker:18.09.7-dind
   script:
     - apk add -q py-pip make
     - docker pull -q ${DOCKER_IMAGE_TAG} || true
@@ -42,7 +42,7 @@ docker_image_staging:
 
 # Build & Push Docker image to Google Container Registry PROD
 docker_image_prod:
-  image: "docker:20.10"
+  image: "docker:18.09.7"
   stage: build
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
