@@ -92,7 +92,7 @@ docker_image_prod:
   - gcloud sql databases delete libraries-${KUBERNETES_NAMESPACE_OVERWRITE} --instance=cca-edu-staging-2 || true
   - gcloud sql databases create libraries-${KUBERNETES_NAMESPACE_OVERWRITE} --instance=cca-edu-staging-2 --charset=UTF8 --collation=en_US.UTF8 || true
   - gcloud sql import sql cca-edu-staging-2 gs://libraries-db-dumps-ci/${DB_FILE} --database=libraries-${KUBERNETES_NAMESPACE_OVERWRITE} -q || true
-  - gsutil rm gs://cca-manual-db-dumps/${DB_FILE}
+  #- gsutil rm gs://cca-manual-db-dumps/${DB_FILE}
 
 .provision_secrets_staging: &provision_secrets_staging
   - kubectl get secret smtp-libraries cloud-storage-credentials cloudsql-db-credentials cloudsql-instance-credentials ldap-credentials secret-key smtp-gmail-com-credentials --namespace=libraries -oyaml | sed -e '/namespace/ d' | kubectl apply --namespace="${KUBERNETES_NAMESPACE_OVERWRITE}" -f - || true
