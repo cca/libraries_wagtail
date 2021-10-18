@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
   # Start 1 copy of the application.
   replicas: 1
