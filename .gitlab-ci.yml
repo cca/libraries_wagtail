@@ -1,0 +1,201 @@
+---
+image: alpine:3.10
+
+variables:
+  # KUBE_INGRESS_BASE_DOMAIN is the application deployment.
+  # domain and should be set as a variable at the group or project level.
+  KUBE_INGRESS_BASE_DOMAIN: stg.cca.edu
+  POSTGRES_ENABLED: "true"
+  POSTGRES_DB: $CI_ENVIRONMENT_SLUG
+  POSTGRES_VERSION: 9.6.2
+  KUBERNETES_VERSION: 1.16.15
+  HELM_VERSION: 2.13.1
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://localhost:2375
+  ROLLOUT_RESOURCE_TYPE: deployment
+
+services:
+  - docker:18.09.7
+
+stages:
+  - build
+  - synchronize
+  - deploy
+
+# Build & Push Docker image to Google Container Registry.
+docker_image_staging:
+  image: "docker:18.09.7"
+  stage: build
+  rules:
+    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-(fast|nodb|full)-*/"
+      when: always
+  variables:
+    DOCKER_IMAGE_TAG: "us.gcr.io/cca-web-staging/libraries"
+  services:
+    - docker:18.09.7-dind
+  script:
+    - apk add -q py-pip make
+    - docker pull -q ${DOCKER_IMAGE_TAG} || true
+    - docker build --cache-from ${DOCKER_IMAGE_TAG} -t "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA" .
+    - echo "${SA_SERVICE_ACCOUNT_KEY}" > key.json
+    - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
+    - docker push "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+
+# Build & Push Docker image to Google Container Registry PROD
+docker_image_prod:
+  image: "docker:18.09.7"
+  stage: build
+  rules:
+    - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
+      when: always
+  variables:
+    DOCKER_IMAGE_TAG: "us.gcr.io/cca-web-0/libraries"
+  services:
+    - docker:18.09.7-dind
+  script:
+    - apk add -q py-pip make
+    - docker pull -q ${DOCKER_IMAGE_TAG} || true
+    - docker build --cache-from ${DOCKER_IMAGE_TAG} -t "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA" .
+    - echo "${SA_SERVICE_ACCOUNT_PROD_KEY}" > key.json
+    - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
+    - docker push "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+
+# ---------------------
+# Google Authentication
+# ---------------------
+
+.gcloud_auth_prod: &gcloud_auth_prod
+  - echo "${SA_SERVICE_ACCOUNT_PROD_KEY}" > key.json
+  - gcloud auth activate-service-account --key-file=key.json
+  - gcloud config set project cca-web-0
+  - gcloud config set container/cluster ccaedu-prod
+  - gcloud config set compute/zone us-west1-b
+  - gcloud container clusters get-credentials ccaedu-prod --zone us-west1-b
+
+.gcloud_auth_staging: &gcloud_auth_staging
+  - echo "${SA_SERVICE_ACCOUNT_KEY}" > key.json
+  - gcloud auth activate-service-account --key-file=key.json
+  - gcloud config set project cca-web-staging
+  - gcloud config set container/cluster ccaedu-stg
+  - gcloud config set compute/zone us-west1-b
+  - gcloud container clusters get-credentials ccaedu-stg --zone us-west1-b
+
+# ---------------------------------------
+# QA/STAGING PROJECT SET-UP - ANCHOR DEFS
+# ---------------------------------------
+
+# For this step to work, the gitlab ci service account must have read permissions on the production export GSB.
+# In addition, the cloud sql instance service account _must_ have the correct permissions on the GBS:
+# https://cloud.google.com/sql/docs/postgres/import-export/importing
+.provision_db_staging: &provision_db_staging
+  - export DB_FILE=libraries_export_"$(date +'%Y_%m_%d')".gz
+  - gsutil cp gs://cca-manual-ldb-dumps/${DB_FILE} gs://libraries-db-dumps-ci
+  - gcloud sql databases delete libraries-${KUBERNETES_NAMESPACE_OVERWRITE} --instance=cca-edu-staging-2 || true
+  - gcloud sql databases create libraries-${KUBERNETES_NAMESPACE_OVERWRITE} --instance=cca-edu-staging-2 --charset=UTF8 --collation=en_US.UTF8 || true
+  - gcloud sql import sql cca-edu-staging-2 gs://libraries-db-dumps-ci/${DB_FILE} --database=libraries-${KUBERNETES_NAMESPACE_OVERWRITE} -q || true
+  - gsutil rm gs://cca-manual-db-dumps/${DB_FILE}
+
+.provision_secrets_staging: &provision_secrets_staging
+  - kubectl get secret smtp-libraries cloud-storage-credentials cloudsql-db-credentials cloudsql-instance-credentials ldap-credentials secret-key smtp-gmail-com-credentials --namespace=libraries -oyaml | sed -e '/namespace/ d' | kubectl apply --namespace="${KUBERNETES_NAMESPACE_OVERWRITE}" -f - || true
+
+# ----------------
+# DEPLOYMENTS - QA
+# ----------------
+
+.apply_k8s_qa: &apply_k8s_qa
+  - cat kubernetes/services.yaml kubernetes/deployments.yaml | envsubst | kubectl apply -f -
+
+.provision_storage_qa: &provision_storage_qa
+  - gsutil ls -b gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/ || gsutil mb -p cca-web-staging -c STANDARD -l us-west1 -b on gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
+  - gsutil -q -m rsync -d -r gs://libraries-media.cca.edu/ gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
+  - gsutil iam ch allUsers:objectViewer gs://portal-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
+
+# tag example: mg-full-0.0.1.
+synchronize_qa:
+  image: "google/cloud-sdk:352.0.0"
+  stage: synchronize
+  rules:
+    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-full-*/"
+      when: always
+  script:
+    - *gcloud_auth_prod
+    - *export_prod_db
+    - *gcloud_auth_staging
+    - *provision_db_staging
+    - *provision_storage_qa
+  environment:
+    name: "$CI_COMMIT_REF_NAME"
+
+# tag example: mg-full-0.0.1.
+deploy_full_qa:
+  image: "google/cloud-sdk:352.0.0"
+  stage: deploy
+  rules:
+    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-full-*/"
+      when: always
+  script:
+    - apt-get update
+    - apt -y install gettext
+    - *gcloud_auth_staging
+    - *apply_k8s_qa
+    - *provision_secrets_staging
+  environment:
+    name: "$CI_COMMIT_REF_NAME"
+
+# tag example: mg-fast-0.0.1.
+deploy_fast_qa:
+  image: "google/cloud-sdk:352.0.0"
+  stage: deploy
+  rules:
+    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|nlm)-fast-*/"
+      when: always
+  script:
+    - apt-get update
+    - apt -y install gettext
+    - *gcloud_auth_staging
+    - *apply_k8s_qa
+  environment:
+    name: "$CI_COMMIT_REF_NAME"
+    url: https://$CI_ENVIRONMENT_SLUG.stg.cca.edu
+
+# ------------------------
+# DEPLOYMENTS - PRODUCTION
+# ------------------------
+
+# ONLY HERE FOR REFERENCE - THIS SHOULD ONLY BE DONE ONCE
+  stage: deploy
+  rules:
+    - if: "$CI_COMMIT_REF_NAME =~ /^staging-fast-*/"
+      when: always
+  script:
+    - apt-get update
+    - apt -y install gettext
+    - *gcloud_auth_staging
+    - *apply_k8s_staging
+  environment:
+    name: "$CI_COMMIT_REF_NAME"
+    url: https://$CI_ENVIRONMENT_SLUG.stg.cca.edu
+
+.provision_storage_prod: &provision_storage_prod
+  - gsutil ls -b gs://libraries-media.cca.edu/ || gsutil mb -p cca-web-0 -c STANDARD -l us-west1 -b on gs://libraries-media.cca.edu/
+  - gsutil iam ch allUsers:objectViewer gs://libraries-media.cca.edu/
+  - export CORS_ORIGIN='libraries'; envsubst < kubernetes/cors.json > /tmp/cors.json; gsutil cors set /tmp/cors.json gs://libraries-media.cca.edu; rm /tmp/cors.json
+
+.apply_k8s_prod: &apply_k8s_prod
+  # - kubectl kubernetes/overlays/production/ | envsubst | kubectl apply -f -
+  - cat kubernetes/manifests/production.yaml | envsubst | kubectl apply -f -
+
+# tag example: release-${VERSION}
+deploy_release:
+  image: "google/cloud-sdk:352.0.0"
+  stage: deploy
+  rules:
+    - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
+      when: manual
+  script:
+    - apt-get update
+    - apt -y install gettext
+    - *gcloud_auth_prod
+    - *apply_k8s_prod
+  environment:
+    name: "$CI_COMMIT_REF_NAME"
