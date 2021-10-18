@@ -24,7 +24,7 @@ spec:
 
       initContainers:
         - name: init-app
-          image: libraries:latest
+          image: ${DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA}
           imagePullPolicy: Always
           command:
             [
@@ -64,7 +64,7 @@ spec:
 
       containers:
         - name: app
-          image: libraries:latest
+          image: ${DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA}
           imagePullPolicy: Always
           # Env variables form ConfigMap
           envFrom:
