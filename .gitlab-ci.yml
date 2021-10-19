@@ -98,7 +98,7 @@ docker_image_prod:
   - kubectl get secret cloud-storage-credentials cloudsql-db-credentials secret-key --namespace=libraries -oyaml | sed -e '/namespace/ d' | kubectl apply --namespace="${KUBERNETES_NAMESPACE_OVERWRITE}" -f - || true
 
 # ----------------
-# DEPLOYMENTS - QA
+# DEPLOYMENTS - QA.
 # ----------------
 
 .apply_k8s_qa: &apply_k8s_qa
