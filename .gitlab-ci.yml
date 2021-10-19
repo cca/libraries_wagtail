@@ -102,7 +102,7 @@ docker_image_prod:
 # ----------------
 
 .apply_k8s_qa: &apply_k8s_qa
-  - cat kubernetes/services.yaml kubernetes/deployments.yaml | envsubst | kubectl apply -f -
+  - cat kubernetes/qa.yaml | envsubst | kubectl apply -f -
 
 .provision_storage_qa: &provision_storage_qa
   - gsutil ls -b gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/ || gsutil mb -p cca-web-staging -c STANDARD -l us-west1 -b on gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
