@@ -12,6 +12,13 @@ variables:
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://localhost:2375
   ROLLOUT_RESOURCE_TYPE: deployment
+  BROKEN_LINKS_URL: 'https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse'
+  INSTAGRAM_APP_ID: '123987123987456'
+  INSTAGRAM_REDIRECT_URI: 'https://libraries.cca.edu'
+  INSTAGRAM_APP_ID: '123987123987456'
+  SUMMON_SFTP_UN: 'cca-catalog'
+  ES_URL: http://elasticsearch.elasticsearch5.svc:9200
+  ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
 services:
   - docker:18.09.7

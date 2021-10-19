@@ -108,7 +108,29 @@ spec:
                 secretKeyRef:
                   name: cloud-storage-credentials
                   key: credentials
-
+            # Instagram 
+            - name: INSTAGRAM_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: instagram-secret
+                  key: instagram-secret
+            # Summon SFTP
+            - name: SUMMON_SFTP_PW
+              valueFrom:
+                secretKeyRef:
+                  name: summon-sftp
+                  key: summon-sftp
+            # Gmail SMTP
+            - name: GOOGLE_SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-gmail-com-credentials
+                  key: username
+            - name: GOOGLE_SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-gmail-com-credentials
+                  key: password
       containers:
         - name: app
           image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
