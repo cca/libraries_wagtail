@@ -46,7 +46,7 @@ data:
 
 ---
 # The application itself.
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app
@@ -156,7 +156,7 @@ spec:
 ---
 # Cloud SQL proxy
 # We need this to access our Cloud SQL instance(s)
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloudsqlproxy
