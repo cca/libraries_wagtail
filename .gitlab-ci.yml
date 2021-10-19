@@ -121,7 +121,7 @@ synchronize_qa:
     #- *export_prod_db
     - *gcloud_auth_staging
     - *provision_db_staging
-    - *provision_storage_qa
+    #- *provision_storage_qa
   environment:
     name: "$CI_COMMIT_REF_NAME"
 
