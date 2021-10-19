@@ -44,7 +44,7 @@ RUN pip install -r requirements/requirements.txt
 COPY . .
 
 # Settings environment variable
-ENV DJANGO_SETTINGS_MODULE libraries.settings
+ENV DJANGO_SETTINGS_MODULE libraries.libraries.settings
 
 # Collect static files
 COPY libraries/libraries/static/ libraries/libraries/static
