@@ -451,6 +451,7 @@ ES_INDEX_SETTINGS = {
         },
     }
 }
+ES_URL = env.get('ES_URL', '').rstrip('\n')
 WAGTAILSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'wagtail.search.backends.elasticsearch5',
