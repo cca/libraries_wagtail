@@ -1,12 +1,12 @@
 ---
-# create the namespace for portal
+# create the namespace for libraries
 
 kind: Namespace
 apiVersion: v1
 metadata:
   name: ${KUBERNETES_NAMESPACE_OVERWRITE}
   labels:
-    name: portal
+    name: libraries
 
 ---
 # Settings to expose as environment variables.
@@ -17,7 +17,7 @@ metadata:
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 data:
   # Generic
-  DJANGO_SETTINGS_MODULE: portal.settings
+  DJANGO_SETTINGS_MODULE: libraries.libraries.settings
   KUBERNETES_NAMESPACE: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Sentry
@@ -28,7 +28,7 @@ data:
   CAS_SERVER_URL: "https://sso.cca.edu/cas/login"
 
   # Media
-  MEDIA_URL: "https://portal-media-staging.cca.edu/"
+  MEDIA_URL: "https://libraries-media-staging.cca.edu/"
 
   # Review Apps
   DEPLOY_RELEASE: ${KUBERNETES_NAMESPACE_OVERWRITE}
@@ -43,7 +43,7 @@ data:
 
   # Google Cloud Storage
   GS_PROJECT_ID: cca-web-staging
-  GS_BUCKET_NAME: portal-media-staging.cca.edu
+  GS_BUCKET_NAME: libraries-media-staging.cca.edu
   GS_USE_DOMAIN_NAMED_BUCKET: "true"
 
   # Event integration
@@ -58,7 +58,7 @@ data:
   WORKDAY_TENANT: "customreport2/cca/cca_gold/"
 
   # Database
-  DB_NAME: portal-${KUBERNETES_NAMESPACE_OVERWRITE}
+  DB_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Blackbaud
   BLACKBAUD_REDIRECT_URI: https://${KUBERNETES_NAMESPACE_OVERWRITE}.cca.edu/djadmin/base/blackbaudtoken/response/
@@ -77,20 +77,20 @@ spec:
   # Select the pods which are part of this deployment.
   selector:
     matchLabels:
-      app: portal
+      app: libraries
 
   # The pod template this deployment will create.
   template:
     metadata:
       labels:
-        app: portal
+        app: libraries
     spec:
       imagePullSecrets:
         - name: gcr-json-key
 
       initContainers:
         - name: init-app
-          image: us.gcr.io/cca-web-staging/portal:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+          image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
           imagePullPolicy: Always
           command:
             [
@@ -130,7 +130,7 @@ spec:
 
       containers:
         - name: app
-          image: us.gcr.io/cca-web-staging/portal:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+          image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
           imagePullPolicy: Always
           # Env variables form ConfigMap
           envFrom:
@@ -297,17 +297,17 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: portal-http
+  name: libraries-http
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
   labels:
-    app: portal
+    app: libraries
 spec:
   type: NodePort
   ports:
     - port: 8000
       protocol: TCP
   selector:
-    app: portal
+    app: libraries
 
 ---
 # A service that allows pods to connect to the Cloud SQL instance
@@ -335,7 +335,7 @@ metadata:
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
   backend:
-    serviceName: portal-http
+    serviceName: libraries-http
     servicePort: 8000
 
 ---
@@ -359,7 +359,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: app-import-hourly
-              image: us.gcr.io/cca-web-staging/portal:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
@@ -420,7 +420,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: app-import-daily
-              image: us.gcr.io/cca-web-staging/portal:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
@@ -500,7 +500,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: app-import-weekly
-              image: us.gcr.io/cca-web-staging/portal:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
@@ -556,7 +556,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: app-report-recent-edits
-              image: us.gcr.io/cca-web-staging/portal:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
@@ -617,7 +617,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: app-wagtail-publish-scheduled-pages
-              image: us.gcr.io/cca-web-staging/portal:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
@@ -668,7 +668,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: app-clearsessions
-              image: us.gcr.io/cca-web-staging/portal:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
@@ -719,7 +719,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: app-import-every-5-minutes
-              image: us.gcr.io/cca-web-staging/portal:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
