@@ -2,6 +2,7 @@ beautifulsoup4==4.8.2
 certifi==2021.5.30
 chardet==4.0.0
 Django==2.2.24
+dj-database-url<0.6
 django-cas-ng==4.1.1
 django-extensions==2.2.8
 django-managepy-anywhere==2.0

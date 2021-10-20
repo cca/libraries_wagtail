@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 from .base import *
 import os
+import dj_database_url
 from .elasticsearch import WAGTAILSEARCH_BACKENDS
 
 DEBUG = False
@@ -212,15 +213,16 @@ ADMINS = (
     ("Eric Phetteplace", "ephetteplace@cca.edu"),
 )
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env.get('DB_NAME', '').rstrip('\n'),
-        'USER': env.get('DB_USER', '').rstrip('\n'),
-        'PASSWORD': env.get('DB_PASSWORD', '').rstrip('\n'),
-        'HOST': 'cloudsqlproxy',
-    },
-}
+DATABASES = {}
+if 'DATABASE_URL' in env:
+    DATABASES['default'] = dj_database_url.config()
+else:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env.get('PGDATABASE', 'cca_libraries'),
+        # User, host and port can be configured by the PGUSER, PGHOST and
+        # PGPORT environment variables (these get picked up by libpq).
+    }
 
 # Brokenlinks app - "Summon Broken Links for Website Tests" Google Form
 BROKENLINKS_GOOGLE_SHEET_URL = env.get('BROKEN_LINKS_URL', '').rstrip('\n')
