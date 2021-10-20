@@ -17,7 +17,7 @@ metadata:
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 data:
   # Generic
-  DJANGO_SETTINGS_MODULE: libraries.libraries.settings
+  DJANGO_SETTINGS_MODULE: libraries.settings
   KUBERNETES_NAMESPACE: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # CAS

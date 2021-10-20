@@ -1,1 +1,1 @@
-from libraries.libraries.settings.base import *
+from libraries.settings.base import *
