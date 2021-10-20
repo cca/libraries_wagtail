@@ -14,7 +14,7 @@ WORKDIR /app/libraries/static/
 # Build the application itself.
 FROM python:3.6-stretch as libraries
 WORKDIR /app
-ENV PYTHONPATH /app:/app/libraries/apps
+ENV PYTHONPATH /app:/app/libraries
 
 # Install non-python dependencies
 # Step 0: add all repos to sources.list
