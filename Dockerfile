@@ -54,4 +54,5 @@ COPY libraries/libraries/static/ libraries/libraries/static
 EXPOSE 8000
 
 # Start Django
-CMD ["uwsgi", "--ini", "kubernetes/uwsgi.ini"]
+#CMD ["uwsgi", "--ini", "kubernetes/uwsgi.ini"]
+CMD ["while (true) echo \"hi\""]
