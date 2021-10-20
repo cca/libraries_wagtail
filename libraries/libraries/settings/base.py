@@ -218,7 +218,7 @@ DATABASES = {
         'NAME': env.get('DB_NAME', '').rstrip('\n'),
         'USER': env.get('DB_USER', '').rstrip('\n'),
         'PASSWORD': env.get('DB_PASSWORD', '').rstrip('\n'),
-        'HOST': 'localhost',
+        'HOST': 'cloudsqlproxy',
     },
 }
 
