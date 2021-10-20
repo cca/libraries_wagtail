@@ -378,6 +378,10 @@ SUMMON_SFTP_PW = env.get('SUMMON_SFTP_PW', '').rstrip('\n'),
 
 # Search Backend
 #
+ENGLISH_KEYWORDS = [
+    'animation'
+]
+
 ES_INDEX_SETTINGS = {
     'settings': {
         'index': {
