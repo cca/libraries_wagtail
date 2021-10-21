@@ -13,7 +13,6 @@ RUN npm install
 
 # build static assets
 RUN npx gulp build
-RUN python libraries/manage.py collectstatic
 
 # Build the application itself.
 FROM python:3.6-stretch as libraries
