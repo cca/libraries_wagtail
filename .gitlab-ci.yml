@@ -113,8 +113,8 @@ docker_image_prod:
 
 .provision_storage_qa: &provision_storage_qa
   - gsutil ls -b gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/ || gsutil mb -p cca-web-staging -c STANDARD -l us-west1 -b on gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
-  - gsutil -q -m rsync -d -r gs://libraries-media.cca.edu/ gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
-  - gsutil iam ch allUsers:objectViewer gs://portal-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
+  - gsutil -q -m rsync -d -r gs://libraries-media-staging/  gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
+  - gsutil iam ch allUsers:objectViewer gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
 
 # tag example: mg-full-0.0.1.
 synchronize_qa:
@@ -124,11 +124,10 @@ synchronize_qa:
     - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-full-*/"
       when: always
   script:
-    #- *gcloud_auth_prod
     #- *export_prod_db
     - *gcloud_auth_staging
     #- *provision_db_staging
-    #- *provision_storage_qa
+    - *provision_storage_qa
   environment:
     name: "$CI_COMMIT_REF_NAME"
 
