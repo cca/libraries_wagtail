@@ -6,7 +6,7 @@ RUN apk update && apk add git rsync python g++ make bash vim && rm -rf /var/cach
 
 ## Copy project files into the docker image
 COPY libraries/libraries/static/ libraries/libraries/static
-COPY package.json ./
+COPY package.json gulpfile.js ./
 
 WORKDIR /app
 RUN npm install
