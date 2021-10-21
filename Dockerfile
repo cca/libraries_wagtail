@@ -54,5 +54,5 @@ COPY libraries/libraries/static/ libraries/libraries/static
 EXPOSE 8000
 
 # Start Django
-#CMD ["uwsgi", "--ini", "kubernetes/uwsgi.ini"]
-CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
+CMD ["uwsgi", "--ini", "kubernetes/uwsgi.ini"]
+#CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
