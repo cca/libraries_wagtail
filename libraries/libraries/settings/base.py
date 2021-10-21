@@ -4,6 +4,7 @@ from .base import *
 import os
 import dj_database_url
 from .elasticsearch import WAGTAILSEARCH_BACKENDS
+from google.oauth2.service_account import Credentials
 
 DEBUG = True
 
