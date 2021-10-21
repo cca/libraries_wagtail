@@ -5,7 +5,7 @@ import os
 import dj_database_url
 from .elasticsearch import WAGTAILSEARCH_BACKENDS
 
-DEBUG = False
+DEBUG = True
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
