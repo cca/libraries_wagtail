@@ -55,6 +55,7 @@ class Migration(migrations.Migration):
         ('blog', '0002_blogindex'),
         ('home', '0002_create_homepage'),
         ('wagtailcore', '0040_page_draft_title'),
+        ('wagtailcore', '0043_lock_fields'),
     ]
 
     operations = [
