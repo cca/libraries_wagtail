@@ -55,4 +55,4 @@ EXPOSE 8000
 
 # Start Django
 #CMD ["uwsgi", "--ini", "kubernetes/uwsgi.ini"]
-CMD ["while (true) echo \"hi\""]
+CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
