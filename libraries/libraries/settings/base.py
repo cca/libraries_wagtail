@@ -365,3 +365,29 @@ TEMPLATES = [
         },
     }
 ]
+
+
+# ------------ #
+# Google Cloud #
+# ------------ #
+
+# Main service account for GCP
+if 'GS_CREDENTIALS' in env:
+    INSTALLED_APPS += (
+        'storages',
+    )
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+    GS_BUCKET_NAME = env.get('GS_BUCKET_NAME', '')
+    GS_USE_DOMAIN_NAMED_BUCKET = env.get('GS_USE_DOMAIN_NAMED_BUCKET', '') == 'true'
+
+    # Even if the bucket has public permisions, we need to set this
+    # setting to `'publicRead'` to retrun a public, non-expiring URL.
+    GS_DEFAULT_ACL = 'publicRead'
+
+    # Ensure uploaded files are given distinct names, as per valid Django storage behaviour
+    GS_FILE_OVERWRITE = False
+
+    # Load credentials from service account key that grants access
+    # to the storage
+    GS_CREDENTIALS = Credentials.from_service_account_info(json.loads(env['GS_CREDENTIALS']))
