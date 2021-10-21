@@ -95,9 +95,11 @@ It might be a little less straightforward than that but it's close.
 
 ## Cron jobs
 
-Wagtail automatically updates the search index and publishes scheduled pages. As we include more management commands, we may require more cron jobs but for now this is the only one that needs to be configured:
+Wagtail automatically updates the search index and publishes scheduled pages. As we include more management commands, we may require more cron jobs.
 
 ```sh
 # download latest Instagram post (at least daily, scheduling not hugely important)
 0 4 * * * workon libraries; /opt/virtualenvs/libraries/bin/python /opt/libraries_wagtail/libraries/manage.py instagram
+# send a list of deleted bib records to Summon weekly
+0 2 * * 1 workon libraries; /opt/virtualenvs/libraries/bin/python /opt/libraries_wagtail/libraries/manage.py summon_deletes
 ```
