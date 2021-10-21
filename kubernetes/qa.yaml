@@ -73,14 +73,12 @@ spec:
         - name: init-app
           image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
           imagePullPolicy: Always
-          #command:
-          #  [
-          #    "sh",
-          #    "-c",
-          #    "django-admin.py migrate --noinput && django-admin.py createcachetable",
-          #  ]
-          command: [ "/bin/bash", "-c", "--" ]
-          args: [ "trap : TERM INT; sleep infinity & wait" ]  
+          command:
+            [
+              "sh",
+              "-c",
+              "django-admin.py migrate --noinput && django-admin.py createcachetable",
+            ]
           # Env variables form ConfigMap
           envFrom:
             - configMapRef:
