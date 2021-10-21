@@ -2,14 +2,18 @@ FROM node:14-alpine AS fe_tools
 WORKDIR /app
 
 # Install yarn and other dependencies via apk
-RUN apk update && apk add yarn git rsync python g++ make bash vim && rm -rf /var/cache/apk/*
-
+RUN apk update && apk add git rsync python g++ make bash vim && rm -rf /var/cache/apk/*
 
 ## Copy project files into the docker image
-COPY libraries/libraries/static/ libraries/static
+COPY libraries/libraries/static/ libraries/libraries/static
+COPY package.json ./
 
-WORKDIR /app/libraries/static/
+WORKDIR /app
+RUN npm install
 
+# build static assets
+RUN npx gulp build
+RUN python libraries/manage.py collectstatic
 
 # Build the application itself.
 FROM python:3.6-stretch as libraries
