@@ -52,11 +52,6 @@ data:
   # cca.edu integration
   CCA_EDU_API_BASE_URL: "https://cca-staging.cca.edu/api/v1/"
 
-  # Workday
-  WORKDAY_SERVICE_USER: cca_webapp
-  WORKDAY_BASE: "https://wd5-impl-services1.workday.com/ccx/service/"
-  WORKDAY_TENANT: "customreport2/cca/cca_gold/"
-
   # Database
   DB_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
 
@@ -154,12 +149,6 @@ spec:
                   key: password
             - name: DATABASE_URL
               value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
-            # CCA Events Integration
-            - name: CCA_EVENTS_WEBHOOKS_SHARED_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: events-credentials
-                  key: events_shared_secret
             # Google Cloud Storage
             - name: GS_CREDENTIALS
               valueFrom:
@@ -178,12 +167,6 @@ spec:
                 secretKeyRef:
                   name: legacy-google-api-credentials
                   key: credentials
-            # Workday Credentials
-            - name: WORKDAY_SERVICE_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: workday-credentials
-                  key: workday_service_pass
             # cca.edu API Credentials
             - name: CCA_EDU_API_USER
               valueFrom:
@@ -346,10 +329,10 @@ spec:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: import-hourly
+  name: instagram
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  schedule: "33 * * * *"
+  schedule: "*/2 * * * *"
   # Allows to run only one cron job at a time
   concurrencyPolicy: Forbid
   jobTemplate:
@@ -358,13 +341,13 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
-            - name: app-import-hourly
+            - name: app-instagram
               image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
                 - manage.py
-                - import_hourly
+                - instagram
               # Env variables form ConfigMap
               envFrom:
                 - configMapRef:
@@ -397,366 +380,55 @@ spec:
                     secretKeyRef:
                       name: legacy-google-api-credentials
                       key: credentials
-                - name: WORKDAY_SERVICE_PASS
-                  valueFrom:
-                    secretKeyRef:
-                      name: workday-credentials
-                      key: workday_service_pass
-
 ---
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: import-daily
-  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
-spec:
-  schedule: "4 10 * * *"
-  # Allows to run only one cron job at a time
-  concurrencyPolicy: Forbid
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: OnFailure
-          containers:
-            - name: app-import-daily
-              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-              imagePullPolicy: Always
-              args:
-                - python
-                - manage.py
-                - import_daily
-              # Env variables form ConfigMap
-              envFrom:
-                - configMapRef:
-                    name: app
-              env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
-                - name: DB_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: username
-                - name: DB_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: password
-                - name: DATABASE_URL
-                  value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
-                - name: GS_CREDENTIALS
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloud-storage-credentials
-                      key: credentials
-                # Web Integrations Google Cloud Storage
-                - name: GS_INT_CREDENTIALS
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloud-storage-int-credentials
-                      key: credentials
-                # Workday Credentials
-                - name: WORKDAY_SERVICE_PASS
-                  valueFrom:
-                    secretKeyRef:
-                      name: workday-credentials
-                      key: workday_service_pass
-                # CCA Events Integration
-                - name: CCA_EVENTS_WEBHOOKS_SHARED_SECRET
-                  valueFrom:
-                    secretKeyRef:
-                      name: events-credentials
-                      key: events_shared_secret
-                # Blackbaud
-                - name: BLACKBAUD_CLIENT_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: blackbaud-credentials
-                      key: blackbaud_client_id
-                - name: BLACKBAUD_CLIENT_SECRET
-                  valueFrom:
-                    secretKeyRef:
-                      name: blackbaud-credentials
-                      key: blackbaud_client_secret
-
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: import-weekly
-  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
-spec:
-  schedule: "45 14 * * 0"
-  # Allows to run only one cron job at a time
-  concurrencyPolicy: Forbid
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: OnFailure
-          containers:
-            - name: app-import-weekly
-              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-              imagePullPolicy: Always
-              args:
-                - python
-                - manage.py
-                - import_weekly
-              # Env variables form ConfigMap
-              envFrom:
-                - configMapRef:
-                    name: app
-              env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
-                - name: DB_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: username
-                - name: DB_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: password
-                - name: DATABASE_URL
-                  value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
-                - name: GS_CREDENTIALS
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloud-storage-credentials
-                      key: credentials
-                - name: WORKDAY_SERVICE_PASS
-                  valueFrom:
-                    secretKeyRef:
-                      name: workday-credentials
-                      key: workday_service_pass
-
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: report-recent-edits
-  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
-spec:
-  schedule: "7 14 * * *"
-  # Allows to run only one cron job at a time
-  concurrencyPolicy: Forbid
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: OnFailure
-          containers:
-            - name: app-report-recent-edits
-              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-              imagePullPolicy: Always
-              args:
-                - python
-                - manage.py
-                - report_recent_edits
-              # Env variables form ConfigMap
-              envFrom:
-                - configMapRef:
-                    name: app
-              env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
-                - name: DB_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: username
-                - name: DB_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: password
-                - name: DATABASE_URL
-                  value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
-                - name: GS_CREDENTIALS
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloud-storage-credentials
-                      key: credentials
-                - name: GOOGLE_SMTP_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: smtp-gmail-com-credentials
-                      key: username
-                - name: GOOGLE_SMTP_PASS
-                  valueFrom:
-                    secretKeyRef:
-                      name: smtp-gmail-com-credentials
-                      key: password
-
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: wagtail-publish-scheduled-pages
-  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
-spec:
-  schedule: "* * * * *"
-  # Allows to run only one cron job at a time
-  concurrencyPolicy: Forbid
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: OnFailure
-          containers:
-            - name: app-wagtail-publish-scheduled-pages
-              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-              imagePullPolicy: Always
-              args:
-                - python
-                - manage.py
-                - publish_scheduled_pages
-              # Env variables form ConfigMap
-              envFrom:
-                - configMapRef:
-                    name: app
-              env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
-                - name: DB_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: username
-                - name: DB_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: password
-                - name: DATABASE_URL
-                  value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
-                - name: GS_CREDENTIALS
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloud-storage-credentials
-                      key: credentials
-
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: clearsessions
-  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
-spec:
-  schedule: "25 11 * * 1"
-  # Allows to run only one cron job at a time
-  concurrencyPolicy: Forbid
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: OnFailure
-          containers:
-            - name: app-clearsessions
-              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-              imagePullPolicy: Always
-              args:
-                - python
-                - manage.py
-                - clearsessions
-              # Env variables form ConfigMap
-              envFrom:
-                - configMapRef:
-                    name: app
-              env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
-                - name: DB_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: username
-                - name: DB_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: password
-                - name: DATABASE_URL
-                  value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
-                - name: GS_CREDENTIALS
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloud-storage-credentials
-                      key: credentials
-
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: import-every-5-minutes
-  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
-spec:
-  schedule: "*/5 * * * *"
-  # Allows to run only one cron job at a time
-  concurrencyPolicy: Forbid
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: OnFailure
-          containers:
-            - name: app-import-every-5-minutes
-              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-              imagePullPolicy: Always
-              args:
-                - python
-                - manage.py
-                - import_every_5_minutes
-              # Env variables form ConfigMap
-              envFrom:
-                - configMapRef:
-                    name: app
-              env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
-                - name: DB_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: username
-                - name: DB_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: password
-                - name: DATABASE_URL
-                  value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
-                - name: GS_CREDENTIALS
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloud-storage-credentials
-                      key: credentials
-                - name: WORKDAY_SERVICE_PASS
-                  valueFrom:
-                    secretKeyRef:
-                      name: workday-credentials
-                      key: workday_service_pass
-
----
-
+# apiVersion: batch/v1beta1
+# kind: CronJob
+# metadata:
+#   name: wagtail-publish-scheduled-pages
+#   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+# spec:
+#   schedule: "* * * * *"
+#   # Allows to run only one cron job at a time
+#   concurrencyPolicy: Forbid
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           restartPolicy: OnFailure
+#           containers:
+#             - name: app-wagtail-publish-scheduled-pages
+#               image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+#               imagePullPolicy: Always
+#               args:
+#                 - python
+#                 - manage.py
+#                 - publish_scheduled_pages
+#               # Env variables form ConfigMap
+#               envFrom:
+#                 - configMapRef:
+#                     name: app
+#               env:
+#                 - name: SECRET_KEY
+#                   valueFrom:
+#                     secretKeyRef:
+#                       name: secret-key
+#                       key: key
+#                 - name: DB_USER
+#                   valueFrom:
+#                     secretKeyRef:
+#                       name: cloudsql-db-credentials
+#                       key: username
+#                 - name: DB_PASSWORD
+#                   valueFrom:
+#                     secretKeyRef:
+#                       name: cloudsql-db-credentials
+#                       key: password
+#                 - name: DATABASE_URL
+#                   value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
+#                 - name: GS_CREDENTIALS
+#                   valueFrom:
+#                     secretKeyRef:
+#                       name: cloud-storage-credentials
+#                       key: credentials
+#
+# ---

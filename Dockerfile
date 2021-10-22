@@ -49,7 +49,7 @@ ENV DJANGO_SETTINGS_MODULE libraries.settings
 
 # Collect static files
 COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
-#RUN if [ "$DEVBUILD" = true ]; then echo "skipping collectstatic..."; else SECRET_KEY=none django-admin.py collectstatic --noinput --clear -v 0; fi
+RUN python libraries/manage.py collectstatic --no-input
 
 # Make port 80 available to the world outside this container
 EXPOSE 8000
