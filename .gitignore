@@ -8,10 +8,9 @@ logs/
 node_modules/
 # ignore collectstatic location in root of project
 libraries/static/
-# track actual static files but not (proprietary) fonts
+# track actual (not compiled) static files
 !libraries/libraries/static
 libraries/libraries/static/css
-libraries/libraries/static/fonts
 # putting these below !libraries/libraries/static helps Atom out
 *.min.css
 *.min.css.map

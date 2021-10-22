@@ -39,7 +39,18 @@ data:
 
   # Google Cloud Storage
   GS_PROJECT_ID: cca-web-0
+<<<<<<< HEAD
   GS_BUCKET_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
+=======
+  GS_BUCKET_NAME: libraries-media.cca.edu
+  GS_USE_DOMAIN_NAMED_BUCKET: "true"
+
+  # Event integration
+  CCA_EVENTS_API_URL: "https://events.cca.edu/api/v2/"
+
+  # cca.edu integration
+  CCA_EDU_API_BASE_URL: "https://www.cca.edu/api/v1/" # need to use www for a valid certificate chain
+>>>>>>> 87386e8 (clean up k8s config, rm unneeded cron jobs & some env vars)
 
   # Database
   DB_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
@@ -108,7 +119,7 @@ spec:
                 secretKeyRef:
                   name: cloud-storage-credentials
                   key: credentials
-            # Instagram 
+            # Instagram
             - name: INSTAGRAM_SECRET
               valueFrom:
                 secretKeyRef:
@@ -270,3 +281,116 @@ spec:
   backend:
     serviceName: libraries-http
     servicePort: 8000
+
+---
+#
+# CRONJOBS
+#
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: import-hourly
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+spec:
+  schedule: "2/* * * * *"
+  # Allows to run only one cron job at a time
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: app-import-hourly
+              image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              imagePullPolicy: Always
+              args:
+                - python
+                - manage.py
+                - import_hourly
+              # Env variables form ConfigMap
+              envFrom:
+                - configMapRef:
+                    name: app
+              env:
+                - name: SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-key
+                      key: key
+                - name: DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudsql-db-credentials
+                      key: username
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudsql-db-credentials
+                      key: password
+                - name: DATABASE_URL
+                  value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
+                - name: GS_CREDENTIALS
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloud-storage-credentials
+                      key: credentials
+                - name: LEGACY_GOOGLE_API_CREDENTIALS
+                  valueFrom:
+                    secretKeyRef:
+                      name: legacy-google-api-credentials
+                      key: credentials
+
+---
+# apiVersion: batch/v1beta1
+# kind: CronJob
+# metadata:
+#   name: wagtail-publish-scheduled-pages
+#   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+# spec:
+#   schedule: "* * * * *"
+#   # Allows to run only one cron job at a time
+#   concurrencyPolicy: Forbid
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           restartPolicy: OnFailure
+#           containers:
+#             - name: app-wagtail-publish-scheduled-pages
+#               image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+#               imagePullPolicy: Always
+#               args:
+#                 - python
+#                 - manage.py
+#                 - publish_scheduled_pages
+#               # Env variables form ConfigMap
+#               envFrom:
+#                 - configMapRef:
+#                     name: app
+#               env:
+#                 - name: SECRET_KEY
+#                   valueFrom:
+#                     secretKeyRef:
+#                       name: secret-key
+#                       key: key
+#                 - name: DB_USER
+#                   valueFrom:
+#                     secretKeyRef:
+#                       name: cloudsql-db-credentials
+#                       key: username
+#                 - name: DB_PASSWORD
+#                   valueFrom:
+#                     secretKeyRef:
+#                       name: cloudsql-db-credentials
+#                       key: password
+#                 - name: DATABASE_URL
+#                   value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
+#                 - name: GS_CREDENTIALS
+#                   valueFrom:
+#                     secretKeyRef:
+#                       name: cloud-storage-credentials
+#                       key: credentials
+#
+# ---
