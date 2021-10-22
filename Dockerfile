@@ -1,4 +1,5 @@
-FROM node:14-alpine AS fe_tools
+FROM node:14-alpine AS assets
+# we build static assets (JS, CSS, application images) in a node container
 WORKDIR /app
 
 # Install yarn and other dependencies via apk
@@ -6,15 +7,12 @@ RUN apk update && apk add git rsync python g++ make bash vim && rm -rf /var/cach
 
 ## Copy project files into the docker image
 COPY libraries/libraries/static/ libraries/libraries/static
-COPY package.json gulpfile.js ./
+COPY package.json package-lock.json gulpfile.js ./
 
-WORKDIR /app
 RUN npm install
-
-# build static assets
 RUN npx gulp build
 
-# Build the application itself.
+# Build the Django application itself.
 FROM python:3.6-stretch as libraries
 WORKDIR /app
 ENV PYTHONPATH /app:/app/libraries
@@ -50,7 +48,7 @@ COPY . .
 ENV DJANGO_SETTINGS_MODULE libraries.settings
 
 # Collect static files
-COPY libraries/libraries/static/ libraries/libraries/static
+COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
 #RUN if [ "$DEVBUILD" = true ]; then echo "skipping collectstatic..."; else SECRET_KEY=none django-admin.py collectstatic --noinput --clear -v 0; fi
 
 # Make port 80 available to the world outside this container
