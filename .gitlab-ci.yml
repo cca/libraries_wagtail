@@ -186,21 +186,20 @@ deploy_fast_qa:
 #  - gsutil iam ch allUsers:objectViewer gs://libraries-media.cca.edu/
 # - export CORS_ORIGIN='libraries'; envsubst < kubernetes/cors.json > /tmp/cors.json; gsutil cors set /tmp/cors.json gs://libraries-media.cca.edu; rm /tmp/cors.json
 
-#.apply_k8s_prod: &apply_k8s_prod
-  # - kubectl kubernetes/overlays/production/ | envsubst | kubectl apply -f -
-  #  - cat kubernetes/manifests/production.yaml | envsubst | kubectl apply -f -
+.apply_k8s_prod: &apply_k8s_prod
+  - cat kubernetes/prod.yaml | envsubst | kubectl apply -f -
 
 # tag example: release-${VERSION}
-#deploy_release:
-#  image: "google/cloud-sdk:352.0.0"
-#  stage: deploy
-#  rules:
-#    - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
-#      when: manual
-#  script:
-#    - apt-get update
-#    - apt -y install gettext
-#    - *gcloud_auth_prod
-#    - *apply_k8s_prod
-#  environment:
-#    name: "$CI_COMMIT_REF_NAME"
+deploy_release:
+  image: "google/cloud-sdk:352.0.0"
+  stage: deploy
+  rules:
+    - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
+      when: manual
+  script:
+    - apt-get update
+    - apt -y install gettext
+    - *gcloud_auth_prod
+    - *apply_k8s_prod
+  environment:
+    name: "$CI_COMMIT_REF_NAME"
