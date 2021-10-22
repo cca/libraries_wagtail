@@ -187,7 +187,7 @@ deploy_fast_qa:
 # - export CORS_ORIGIN='libraries'; envsubst < kubernetes/cors.json > /tmp/cors.json; gsutil cors set /tmp/cors.json gs://libraries-media.cca.edu; rm /tmp/cors.json
 
 .apply_k8s_prod: &apply_k8s_prod
-  - cat kubernetes/prod.yaml | envsubst | kubectl apply -f -
+  - cat kubernetes/production.yaml | envsubst | kubectl apply -f -
 
 # tag example: release-${VERSION}
 deploy_release:
