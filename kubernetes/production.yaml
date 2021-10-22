@@ -1,0 +1,272 @@
+---
+# create the namespace for libraries
+
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ${KUBERNETES_NAMESPACE_OVERWRITE}
+  labels:
+    name: libraries
+
+---
+# Settings to expose as environment variables.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+data:
+  # Generic
+  DJANGO_SETTINGS_MODULE: libraries.settings
+  KUBERNETES_NAMESPACE: ${KUBERNETES_NAMESPACE_OVERWRITE}
+
+  # CAS
+  CAS_SERVER_URL: "https://sso.cca.edu/cas/login"
+
+  # Media
+  MEDIA_URL: "https://storage.googleapis.com/libraries-${KUBERNETES_NAMESPACE_OVERWRITE}/"
+
+  # Review Apps
+  DEPLOY_RELEASE: ${KUBERNETES_NAMESPACE_OVERWRITE}
+  # DEPLOY_RELEASE: ${CI_COMMIT_REF_NAME}
+  # DEPLOY_COMMIT_HASH: ${CI_COMMIT_SHORT_SHA}
+  # DEPLOY_BRANCH_NAME: ${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}
+  # DEPLOY_SERVER_NAME: ${KUBERNETES_NAMESPACE_OVERWRITE}
+
+  # Elastic Search
+  ES_URL: "http://elasticsearch.elasticsearch5.svc:9200"
+  ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
+
+  # Google Cloud Storage
+  GS_PROJECT_ID: cca-web-0
+  GS_BUCKET_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
+
+  # Database
+  DB_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
+
+---
+# The application itself.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+spec:
+  # Start 1 copy of the application.
+  replicas: 2
+
+  # Select the pods which are part of this deployment.
+  selector:
+    matchLabels:
+      app: libraries
+
+  # The pod template this deployment will create.
+  template:
+    metadata:
+      labels:
+        app: libraries
+    spec:
+      imagePullSecrets:
+        - name: gcr-json-key
+
+      initContainers:
+        - name: init-app
+          image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+          imagePullPolicy: Always
+          command:
+            [
+              "sh",
+              "-c",
+              "django-admin.py migrate --noinput && django-admin.py createcachetable",
+            ]
+          # Env variables form ConfigMap
+          envFrom:
+            - configMapRef:
+                name: app
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-key
+                  key: key
+            # Database
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: password
+            - name: DATABASE_URL
+              value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
+            # Google Cloud Storage
+            - name: GS_CREDENTIALS
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-storage-credentials
+                  key: credentials
+            # Instagram 
+            - name: INSTAGRAM_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: instagram-secret
+                  key: instagram-secret
+            # Summon SFTP
+            - name: SUMMON_SFTP_PW
+              valueFrom:
+                secretKeyRef:
+                  name: summon-sftp
+                  key: summon-sftp
+            # Gmail SMTP
+            - name: GOOGLE_SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-gmail-com-credentials
+                  key: username
+            - name: GOOGLE_SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-gmail-com-credentials
+                  key: password
+      containers:
+        - name: app
+          image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+          imagePullPolicy: Always
+          # Env variables form ConfigMap
+          envFrom:
+            - configMapRef:
+                name: app
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-key
+                  key: key
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: password
+            - name: DATABASE_URL
+              value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
+            # Google Cloud Storage
+            - name: GS_CREDENTIALS
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-storage-credentials
+                  key: credentials
+          # Define the port our application listens on.
+          ports:
+            - containerPort: 8000
+          # Limit memory use to prevent uncontrolled resource use in case of bugs.
+          # This can be raised if necessary, but make sure the cluster is large
+          # enough or the application won't deploy.
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 512Mi
+
+---
+# Cloud SQL proxy
+# We need this to access our Cloud SQL instance(s)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudsqlproxy
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+spec:
+  replicas: 1
+
+  # Select the pods which are part of this deployment.
+  selector:
+    matchLabels:
+      tool: cloudsqlproxy
+
+  # The pod template this deployment will create.
+  template:
+    metadata:
+      labels:
+        tool: cloudsqlproxy
+    spec:
+      containers:
+        - name: cloudsqlproxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.26.0
+          command:
+            [
+              "/cloud_sql_proxy",
+              "--dir=/cloudsql",
+              "-instances=cca-web-0:us-west1:cca-edu-prod-1=tcp:0.0.0.0:5432",
+              "-credential_file=/secrets/cloudsql/credentials.json",
+            ]
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+            - name: cloudsql
+              mountPath: /cloudsql
+
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+        - name: cloudsql
+          emptyDir:
+
+---
+# A service to allow external connections.  This accepts connections from inside
+# the cluster and distributes them to our pod(s).
+apiVersion: v1
+kind: Service
+metadata:
+  name: libraries-http
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+  labels:
+    app: libraries
+spec:
+  type: NodePort
+  ports:
+    - port: 8000
+      protocol: TCP
+  selector:
+    app: libraries
+
+---
+# A service that allows pods to connect to the Cloud SQL instance
+# via cloudsqlproxy pod(s)
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudsqlproxy
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+spec:
+  ports:
+    - port: 5432
+      targetPort: postgresql
+  selector:
+    tool: cloudsqlproxy
+
+---
+## Ingress to configure external connections.  On GKE, this will create a GCP
+## HTTP load balancer.  These are charged *per ingress* so be careful when
+## creating new ones.
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+spec:
+  backend:
+    serviceName: libraries-http
+    servicePort: 8000

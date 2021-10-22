@@ -1,17 +1,19 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from __future__ import absolute_import, unicode_literals
+from .base import *
 import os
+import json
+import dj_database_url
+from .elasticsearch import WAGTAILSEARCH_BACKENDS
+from google.oauth2.service_account import Credentials
+
+DEBUG = True
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
+env = os.environ.copy()
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'libraries.cca.edu',
-    '10.16.8.23',
-    'libraries-dev.cca.edu',
-    '10.16.8.37',
-]
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     # our apps
@@ -86,11 +88,11 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
-
+# SSO/AUTH
 CAS_CREATE_USER = False
 CAS_FORCE_CHANGE_USERNAME_CASE = 'lower'
 CAS_LOGOUT_COMPLETELY = True
-CAS_SERVER_URL = 'https://sso.cca.edu/cas/login'
+CAS_SERVER_URL = env.get('CAS_SERVER_URL', '').rstrip('\n')
 LOGIN_URL = 'cas_ng_login'
 WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 WAGTAIL_PASSWORD_RESET_ENABLED = False
@@ -265,24 +267,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'libraries.wsgi.application'
 
+# Mail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = env.get('GOOGLE_SMTP_USER', '').rstrip('\n')
+EMAIL_HOST_PASSWORD = env.get('GOOGLE_SMTP_PASS', '').rstrip('\n')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'America/Los_Angeles'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -328,3 +330,200 @@ RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
     'ol',
     'ul',
 ]
+
+# Base URL to use when referring to full URLs within the Wagtail admin backend -
+# e.g. in notification emails. Don't include '/admin' or a trailing slash
+BASE_URL = 'http://localhost'
+
+#SECRET_KEY = env.get('SECRET_KEY', '').rstrip('\n')
+SECRET_KEY = 'ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%g'
+
+ADMINS = (
+    ("Eric Phetteplace", "ephetteplace@cca.edu"),
+)
+
+DATABASES = {}
+if 'DATABASE_URL' in env:
+    DATABASES['default'] = dj_database_url.config()
+else:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env.get('PGDATABASE', 'cca_libraries'),
+        # User, host and port can be configured by the PGUSER, PGHOST and
+        # PGPORT environment variables (these get picked up by libpq).
+    }
+
+# Brokenlinks app - "Summon Broken Links for Website Tests" Google Form
+BROKENLINKS_GOOGLE_SHEET_URL = env.get('BROKEN_LINKS_URL', '').rstrip('\n')
+BROKENLINKS_HASH = {
+    "ipaddress": "entry.1306463040",
+    "openurl": "entry.1430108689",
+    "permalink": "entry.743539962",
+    "type": "entry.1515176237",
+    "email": "entry.1509607699",
+    "comments": "entry.249064033",
+}
+
+# Instagram app
+INSTAGRAM_APP_ID = env.get('INSTAGRAM_APP_ID', '').rstrip('\n'),
+INSTAGRAM_APP_SECRET = env.get('INSTAGRAM_SECRET', '').rstrip('\n'),
+INSTAGRAM_REDIRECT_URI = env.get('INSTAGRAM_REDIRECT_URI', '').rstrip('\n'),
+
+# Summon app
+SUMMON_SFTP_UN = env.get('SUMMON_SFTP_UN', '').rstrip('\n'),
+SUMMON_SFTP_PW = env.get('SUMMON_SFTP_PW', '').rstrip('\n'),
+
+# Search Backend
+#
+ENGLISH_KEYWORDS = [
+    'animation'
+]
+
+ES_INDEX_SETTINGS = {
+    'settings': {
+        'index': {
+            'number_of_shards': '5',
+            'number_of_replicas': '1',
+        },
+        'analysis': {
+            'filter': {
+                'english_stop': {
+                    'type': 'stop',
+                    'stopwords': '_english_'
+                },
+                'english_keywords': {
+                    'type': 'keyword_marker',
+                    'keywords': ENGLISH_KEYWORDS
+                },
+                'english_stemmer': {
+                    'type': 'stemmer',
+                    'language': 'english'
+                },
+                'english_possessive_stemmer': {
+                    'type': 'stemmer',
+                    'language': 'possessive_english'
+                }
+            },
+            'char_filter': {
+                'special_char_replace': {
+                    'type': 'pattern_replace',
+                    'pattern': '[^\p{L}\s]',
+                    'replacement': ''
+                }
+            },
+            'analyzer': {
+                'english': {
+                    'tokenizer': 'standard',
+                    'filter': [
+                        'english_possessive_stemmer',
+                        'lowercase',
+                        'english_stop',
+                        'english_keywords',
+                        'english_stemmer'
+                    ],
+                    'char_filter': [
+                        'html_strip'
+                    ],
+                },
+                'english_exact': {
+                    'tokenizer': 'standard',
+                    'filter': [
+                        'lowercase'
+                    ],
+                    'char_filter': [
+                        'html_strip'
+                    ],
+                },
+                'alpha_only': {
+                    'tokenizer': 'standard',
+                    'filter': [
+                        'lowercase'
+                    ],
+                    'char_filter': [
+                        'special_char_replace'
+                    ],
+                    'type': 'custom',
+                }
+            },
+        },
+    }
+}
+ES_URL = env.get('ES_URL', '').rstrip('\n')
+ES_INDEX_PREFIX = env.get('ES_INDEX_PREFIX', '').rstrip('\n')
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.search.backends.elasticsearch5',
+        # Override both URLS and INDEX properties in local settings like
+        # from .elasticsearch import *
+        # WAGTAILSEARCH_BACKENDS['default']['URLS'] = "http://example.com:9200"
+        # WAGTAILSEARCH_BACKENDS['default']['INDEX'] = "libraries_wagtail_dev"
+        'URLS': [ES_URL],
+        'INDEX': ES_INDEX_PREFIX,
+        'TIMEOUT': 10,
+        'OPTIONS': {},
+        'AUTO_UPDATE': True,
+        'ATOMIC_REBUILD': True,
+        'INDEX_SETTINGS': ES_INDEX_SETTINGS,
+    }
+}
+
+try:
+    from .local import *
+except ImportError:
+    pass
+
+# caching for production
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 300
+CACHE_MIDDLEWARE_KEY_PREFIX = 'ccalib'
+
+# http://docs.wagtail.io/en/v1.13.1/advanced_topics/performance.html#templates
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(PROJECT_DIR, 'templates')
+        ],
+        'OPTIONS': {
+            # context_processors copied from base.py
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ],
+        },
+    }
+]
+
+
+# ------------ #
+# Google Cloud #
+# ------------ #
+
+# Main service account for GCP
+if 'GS_CREDENTIALS' in env:
+    INSTALLED_APPS += (
+        'storages',
+    )
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+    GS_BUCKET_NAME = env.get('GS_BUCKET_NAME', '')
+    GS_USE_DOMAIN_NAMED_BUCKET = env.get('GS_USE_DOMAIN_NAMED_BUCKET', '') == 'true'
+
+    # Even if the bucket has public permisions, we need to set this
+    # setting to `'publicRead'` to retrun a public, non-expiring URL.
+    GS_DEFAULT_ACL = 'publicRead'
+
+    # Ensure uploaded files are given distinct names, as per valid Django storage behaviour
+    GS_FILE_OVERWRITE = False
+
+    # Load credentials from service account key that grants access
+    # to the storage
+    GS_CREDENTIALS = Credentials.from_service_account_info(json.loads(env['GS_CREDENTIALS']))
