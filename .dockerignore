@@ -1,18 +1,17 @@
 *.pyc
 .DS_Store
 *.swp
-/venv/
-/static/
-/uploads/
-/tmp/
-/.vagrant/
-/Vagrantfile.local
+/.github
+/docs
 /node_modules
 /yarn-error.log
 /npm-debug.log
-/.idea/
 /.git/
-/logs/
+/libraries/logs/
+LICENSE.txt
+.gitignore
+.scss-lint.yml
+readme.md
 # Distribution / packaging
 .Python
 env/
@@ -31,7 +30,3 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-
-**/static_deploy/
-**/webpack_bundles/
-/.venv/
