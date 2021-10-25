@@ -35,14 +35,16 @@ $(() => {
     })
 
     // auto-tag images with the slugified title of the exhibition
-    // fires whenever we're on the "Upload" tab
-    $(document).on('click', '.modal-content a[href="#upload"]', () => {
-        // select "Exhibitions Media" collection (ID = 7)
-        $('#id_image-chooser-upload-collection option[value="7"]').prop("selected", true)
-        var title = `"${$('#id_title').val()}"`
-        // instantiate tagit first, for some reason it's often not ready
-        $('.tagit').tagit().tagit("createTag", title)
-    })
+    // fires whenever we're on the image "Upload" tab of an exhibit
+    if ($('#id_exhibit_artwork-FORMS').length) {
+        $(document).on('click', '.modal-content a[href="#upload"]', () => {
+            // select "Exhibitions Media" collection (ID = 7)
+            $('#id_image-chooser-upload-collection option[value="7"]').prop("selected", true)
+            var title = `"${$('#id_title').val()}"`
+            // instantiate tagit first, for some reason it's often not ready
+            $('.tagit').tagit().tagit("createTag", title)
+        })
+    }
 
     // make search description appear required (does not actually force requirement)
     $('#id_search_description').attr('required', true).closest('li').addClass('required')
