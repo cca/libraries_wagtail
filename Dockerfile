@@ -43,6 +43,10 @@ RUN pip install -r requirements/requirements.txt
 
 # Install application code.
 COPY . .
+RUN ls -al /app/libraries
+# if collectstatic throughs an error during build & this dir doesn't exist it
+# can't be created for some reason, breaks the build
+RUN mkdir /app/libraries/logs
 
 # Settings environment variable
 ENV DJANGO_SETTINGS_MODULE libraries.settings
