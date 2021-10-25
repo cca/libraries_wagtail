@@ -1,6 +1,5 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from __future__ import absolute_import, unicode_literals
-from .base import *
 import os
 import json
 import dj_database_url
