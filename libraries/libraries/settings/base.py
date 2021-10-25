@@ -60,6 +60,7 @@ INSTALLED_APPS = [
 
 # the 2 cache middleware should sandwich everything else
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
 
     'django.middleware.gzip.GZipMiddleware',
