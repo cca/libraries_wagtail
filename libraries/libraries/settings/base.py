@@ -16,6 +16,9 @@ env = os.environ.copy()
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    # let whitenoise serve static files instead of Django
+    'whitenoise.runserver_nostatic',
+
     # our apps
     'alerts',
     'blog',
@@ -336,7 +339,7 @@ RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://localhost'
+# BASE_URL = 'http://localhost'
 
 #SECRET_KEY = env.get('SECRET_KEY', '').rstrip('\n')
 SECRET_KEY = 'ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%g'

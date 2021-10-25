@@ -49,6 +49,4 @@ We put _all_ static (CSS, JS) files under the main app's static folder, in libra
 
 There are two empty folders under the main static directory ("moodle" and "summmon") for hosting static files used in external services that cannot host their own content. These files are generated in separate projects, see the CCA GitHub to find them.
 
-When developing, you can use Django's internal static files server to serve files directly from the libraries/libraries/static directory. This is configured to happen automatically when `DEBUG = True` by a stanza at the bottom of libraries/libraries/urls.py but it is insecure and should not be used in production.
-
-In production, we run `manage.py collectstatic` as part of the build process which copies our (compiled, minified) static files to libraries/static. Those are served from there thanks mainly to the [whitenoise](http://whitenoise.evans.io/en/stable/) middleware add-on. The `static` template tag we use is also from whitenoise and should imported like `{% load static from staticfiles %}`. It replaces references to files with references to hashed file names. This helps bust the cache during upgrades and ensure users always receive the most current versions of files, not outdated ones saved in their cache.
+If static files change, we need to run `manage.py collectstatic` which copies our (compiled, minified) static files to libraries/static. Those are served from there thanks mainly to the [whitenoise](http://whitenoise.evans.io/en/stable/) middleware add-on.

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.urls import include, path, re_path
 from django.contrib import admin
 from django.views.generic import RedirectView, TemplateView
@@ -58,13 +57,3 @@ urlpatterns = [
     # the list:
     re_path(r'', include(wagtail_urls)),
 ]
-
-
-
-# if settings.DEBUG or settings.BASE_URL == 'http://localhost':
-#     from django.conf.urls.static import static
-#     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-#
-#     # Serve static and media files from development server
-#     urlpatterns += staticfiles_urlpatterns()
-#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
