@@ -1,16 +1,22 @@
 .Python
 pip-selfcheck.json
 *.pyc
-libraries/media
-local.py
-logs/
-*.log
 node_modules/
-# ignore collectstatic location in root of project
-libraries/static/
+
+# local settings file for laptop development
+libraries/libraries/settings/local.py
+
+# ignore all type of static files
+libraries/logs/*
+libraries/media/*
+libraries/static/*
+
 # track actual (not compiled) static files
 !libraries/libraries/static
+!libraries/logs/.keep
+!libraries/static/.keep
 libraries/libraries/static/css
+
 # putting these below !libraries/libraries/static helps Atom out
 *.min.css
 *.min.css.map
