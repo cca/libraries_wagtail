@@ -50,3 +50,5 @@ We put _all_ static (CSS, JS) files under the main app's static folder, in libra
 There are two empty folders under the main static directory ("moodle" and "summmon") for hosting static files used in external services that cannot host their own content. These files are generated in separate projects, see the CCA GitHub to find them.
 
 If static files change, we need to run `manage.py collectstatic` which copies our (compiled, minified) static files to libraries/static. Those are served from there thanks mainly to the [whitenoise](http://whitenoise.evans.io/en/stable/) middleware add-on.
+
+Portal serves hashed static files like "main.min.87e56a.js" which busts the cache so that users never receive outdated versions of files from their local cache. We would like this feature but so far we haven't figured out how to configure whitenoise to do it for us.
