@@ -53,7 +53,7 @@ class Command(BaseCommand):
                 # PUT file to Summon SFTP server
                 cnopts = pysftp.CnOpts()
                 cnopts.hostkeys.load(Path(__file__).parent / 'known_hosts')
-                with pysftp.Connection(settings.SUMMON_SFTP_URL,
+                with pysftp.Connection(settings.SUMMON_SFTP_URL, cnopts=cnopts,
                                        username=settings.SUMMON_SFTP_UN,
                                        password=settings.SUMMON_SFTP_PW) as sftp:
                     with sftp.cd('deletes'):
