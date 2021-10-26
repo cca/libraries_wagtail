@@ -346,7 +346,8 @@ RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 # BASE_URL = 'http://localhost'
 
-SECRET_KEY = env.get('SECRET_KEY', '').rstrip('\n')
+# SECRET_KEY = env.get('SECRET_KEY', '').rstrip('\n')
+SECRET_KEY = 'ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb'
 
 ADMINS = (
     ("Eric Phetteplace", "ephetteplace@cca.edu"),
