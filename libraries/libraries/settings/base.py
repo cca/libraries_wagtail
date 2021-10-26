@@ -6,11 +6,12 @@ import dj_database_url
 from .elasticsearch import WAGTAILSEARCH_BACKENDS
 from google.oauth2.service_account import Credentials
 
-DEBUG = True
-
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 env = os.environ.copy()
+
+if env.get('KUBERNETES_NAMESPACE', None) in ['lib-ep', 'lib-mg']:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
