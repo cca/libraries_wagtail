@@ -45,12 +45,15 @@ class Command(BaseCommand):
 
         # write to file in temporary directory
         with TemporaryDirectory() as tmpdir:
-            path = Path(tmpdir.name) / "cca-catalog-deletes-{}.mrc".format(lastrun.replace('/', '-'))
+            path = Path(tmpdir) / "cca-catalog-deletes-{}.mrc".format(lastrun.replace('/', '-'))
             with path.open('w+') as fh:
                 fh.write(records)
                 fh.seek(0)
 
                 # PUT file to Summon SFTP server
+                # @TODO can we change it so pysftp doesn't use the "paramiko"
+                # label in logging by calling cnopts.log()?
+                # https://pysftp.readthedocs.io/en/release_0.2.9/cookbook.html#pysftp-cnopts
                 cnopts = pysftp.CnOpts()
                 cnopts.hostkeys.load(Path(__file__).parent / 'known_hosts')
                 with pysftp.Connection(settings.SUMMON_SFTP_URL, cnopts=cnopts,
