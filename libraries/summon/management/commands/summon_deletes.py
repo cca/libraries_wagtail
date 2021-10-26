@@ -49,7 +49,10 @@ class Command(BaseCommand):
             with path.open('w+') as fh:
                 fh.write(records)
                 fh.seek(0)
+
                 # PUT file to Summon SFTP server
+                cnopts = pysftp.CnOpts()
+                cnopts.hostkeys.load(Path(__file__).parent / 'known_hosts')
                 with pysftp.Connection(settings.SUMMON_SFTP_URL,
                                        username=settings.SUMMON_SFTP_UN,
                                        password=settings.SUMMON_SFTP_PW) as sftp:
