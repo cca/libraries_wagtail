@@ -155,44 +155,6 @@ spec:
                 secretKeyRef:
                   name: cloud-storage-credentials
                   key: credentials
-            # Web Integrations Google Cloud Storage
-            - name: GS_INT_CREDENTIALS
-              valueFrom:
-                secretKeyRef:
-                  name: cloud-storage-int-credentials
-                  key: credentials
-            # Legacy credentials for google api authentication
-            - name: LEGACY_GOOGLE_API_CREDENTIALS
-              valueFrom:
-                secretKeyRef:
-                  name: legacy-google-api-credentials
-                  key: credentials
-            # cca.edu API Credentials
-            - name: CCA_EDU_API_USER
-              valueFrom:
-                secretKeyRef:
-                  name: cca-edu-credentials
-                  key: cca_edu_api_user
-            - name: CCA_EDU_API_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: cca-edu-credentials
-                  key: cca_edu_api_pass
-            - name: LDAP_MODIFY_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: ldap-credentials
-                  key: password
-            - name: VAULT_ACCESS_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: vault-token
-                  key: vault-token
-            - name: MOODLE_CORE_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: moodle-token
-                  key: moodle-token
             - name: GOOGLE_SMTP_USER
               valueFrom:
                 secretKeyRef:
@@ -203,16 +165,24 @@ spec:
                 secretKeyRef:
                   name: smtp-gmail-com-credentials
                   key: password
-            - name: BLACKBAUD_CLIENT_ID
+            # Instagram app secrets
+            - name: INSTAGRAM_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: blackbaud-credentials
-                  key: blackbaud_client_id
-            - name: BLACKBAUD_CLIENT_SECRET
+                  name: instagram-secret
+                  key: instagram-secret
+            # Summon SFTP secrets
+            - name: SUMMON_SFTP_UN
               valueFrom:
                 secretKeyRef:
-                  name: blackbaud-credentials
-                  key: blackbaud_client_secret
+                  name: summon-sftp
+                  key: summon-user
+            - name: SUMMON_SFTP_PW
+              valueFrom:
+                secretKeyRef:
+                  name: summon-sftp
+                  key: summon-sftp
+
           # Define the port our application listens on.
           ports:
             - containerPort: 8000
