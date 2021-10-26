@@ -2,9 +2,6 @@ FROM node:14-alpine AS assets
 # we build static assets (JS, CSS, application images) in a node container
 WORKDIR /app
 
-# Install yarn and other dependencies via apk
-RUN apk update && apk add git rsync python g++ make bash vim && rm -rf /var/cache/apk/*
-
 ## Copy project files into the docker image
 COPY libraries/libraries/static/ libraries/libraries/static
 COPY package.json package-lock.json gulpfile.js ./
