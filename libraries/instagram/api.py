@@ -21,12 +21,10 @@ def linkify_text(text):
     url_regex = r"(^|\s)(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))"
     ig_url = 'https://www.instagram.com/'
 
-
     def replace_username(match):
         leading_space = match.group(1)
         username = match.group(2).replace('@', '')
         return leading_space + '<a href="' + ig_url + username + '/">@' + username + '</a>'
-
 
     def replace_hashtag(match):
         leading_space = match.group(1)
@@ -43,7 +41,6 @@ def linkify_text(text):
             # return unprocessed string
             return match.string
         return leading_space + '<a href="' + url + '">' + url + '</a>'
-
 
     html = re.sub(username_regex, replace_username, html)
     html = re.sub(hashtag_regex, replace_hashtag, html)
@@ -92,8 +89,7 @@ def get_token_from_code(code):
     Parameters
     ----------
     code : str
-        the "code" parameter in the app's redirect URI, DO NOT include the final two
-        "#_" characters
+        the "code" parameter in the app's redirect URI
 
     Returns
     -------
@@ -107,7 +103,8 @@ def get_token_from_code(code):
     data = {
         "client_id": settings.INSTAGRAM_APP_ID,
         "client_secret": settings.INSTAGRAM_APP_SECRET,
-        "code": code,
+        # strip the final two "#_" characters in case user included them
+        "code": code.rstrip('#_'),
         "grant_type": "authorization_code",
         "redirect_uri": settings.INSTAGRAM_REDIRECT_URI
     }

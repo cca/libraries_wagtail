@@ -375,9 +375,9 @@ BROKENLINKS_HASH = {
 }
 
 # Instagram app
-INSTAGRAM_APP_ID = env.get('INSTAGRAM_APP_ID', '').rstrip('\n'),
-INSTAGRAM_APP_SECRET = env.get('INSTAGRAM_SECRET', '').rstrip('\n'),
-INSTAGRAM_REDIRECT_URI = env.get('INSTAGRAM_REDIRECT_URI', '').rstrip('\n'),
+INSTAGRAM_APP_ID = env.get('INSTAGRAM_APP_ID', None).rstrip('\n')
+INSTAGRAM_APP_SECRET = env.get('INSTAGRAM_SECRET', None).rstrip('\n')
+INSTAGRAM_REDIRECT_URI = 'https://libraries.cca.edu'
 
 # Summon app
 SUMMON_SFTP_URL = 'ftp.summon.serialssolutions.com'
