@@ -45,7 +45,7 @@ class Command(BaseCommand):
 
         # write to file in temporary directory
         with TemporaryDirectory() as tmpdir:
-            path = Path(tmpdir) / "cca-catalog-deletes-{}.mrc".format(lastrun.replace('/', '-'))
+            path = Path(tmpdir.name) / "cca-catalog-deletes-{}.mrc".format(lastrun.replace('/', '-'))
             with path.open('w+') as fh:
                 fh.write(records)
                 fh.seek(0)
