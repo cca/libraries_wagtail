@@ -40,14 +40,14 @@ RUN pip install -r requirements/requirements.txt
 
 # Install application code.
 COPY . .
-# if collectstatic throughs an error during build & this dir doesn't exist it
+# if collectstatic throw an error during build & this dir doesn't exist, it
 # can't be created for some reason, breaks the build
 RUN mkdir /app/libraries/logs
 
 # Settings environment variable
 ENV DJANGO_SETTINGS_MODULE libraries.settings
 
-# Collect static files
+# Collect our compiled static files from the assets image
 COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
 RUN python libraries/manage.py collectstatic --no-input
 
@@ -56,4 +56,5 @@ EXPOSE 8000
 
 # Start Django
 CMD ["uwsgi", "--ini", "kubernetes/uwsgi.ini"]
-#CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
+# Use the command below for debugging; it forces the container to run forever
+# CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"

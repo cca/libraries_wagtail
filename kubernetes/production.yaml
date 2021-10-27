@@ -108,18 +108,6 @@ spec:
                 secretKeyRef:
                   name: cloud-storage-credentials
                   key: credentials
-            # Instagram 
-            - name: INSTAGRAM_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: instagram-secret
-                  key: instagram-secret
-            # Summon SFTP
-            - name: SUMMON_SFTP_PW
-              valueFrom:
-                secretKeyRef:
-                  name: summon-sftp
-                  key: summon-sftp
             # Gmail SMTP
             - name: GOOGLE_SMTP_USER
               valueFrom:
@@ -163,6 +151,28 @@ spec:
                 secretKeyRef:
                   name: cloud-storage-credentials
                   key: credentials
+            # Instagram app secrets
+            - name: INSTAGRAM_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: instagram-secret
+                  key: instagram-secret
+            - name: INSTAGRAM_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: instagram-secret
+                  key: app-id
+            # Summon SFTP secrets
+            - name: SUMMON_SFTP_UN
+              valueFrom:
+                secretKeyRef:
+                  name: summon-sftp
+                  key: summon-user
+            - name: SUMMON_SFTP_PW
+              valueFrom:
+                secretKeyRef:
+                  name: summon-sftp
+                  key: summon-sftp
           # Define the port our application listens on.
           ports:
             - containerPort: 8000
