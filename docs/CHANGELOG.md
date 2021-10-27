@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.0.0
+
+**2021-10-27** - migrate the build/deploy/hosting to using Docker/GitLab CI/Google Cloud Platform and kubernetes. Add a command to update our deleted bibliographic records in Summon and require a search description for almost all pages.
+
+### Features
+
+- Entirely new build and deploy process that promises quicker releases and more consistency between development and production versions. As a consequence, the app has moved from [GitHub](https://github.com/cca/libraries_wagtail) to a private [GitLab](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu) repo.
+- Images, videos, and documents are now saved to and served from a Google Storage Bucket. All their URLs have changed and must be updated in external sources such as Koha (which used the app to host material type icons).
+- **Summon Deletes**: a new management command runs a Koha report and then SFTPs the results to Summon to update our discovery index.
+- More page types (`AboutUs`, `Service`, `Category`, `SpecialCollection`, and `Blog`) require a search description field under the **Promote** tab. Also, `RowComponent` pages are excluded from the search description report since they do not appear in search results.
+
+### Outstanding Bugs
+
+- GL [#7](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/7) Cron jobs are not working yet so Instagram & Summon commands must be run manually
+- We may need to create a new Instagram app on Facebook's developers platform if the client_id and secret of the previously-existing app on production cannot be located
+- GL [#14](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/14) the flip bookreader app is no longer deployed at https://libraries.cca.edu/static/bookreader/ but it also server no purpose currently as VAULT is still down from the October 1st server outage
+- GL [#3](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/3) logs are no longer persistent, they're wiped out by each release
+
 ## 2.6.0
 
 **2021-02-23** - small improvements to Wagtail search, the Instagram app, and paging for the Exhibitions index. Add CCA Land Acknowledgement.
