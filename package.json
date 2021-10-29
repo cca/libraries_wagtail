@@ -40,5 +40,30 @@
   },
   "dependencies": {
     "node-sass": "^6.0.1"
+  },
+  "eslintConfig": {
+      "env": {
+          "browser": true,
+          "es6": true
+      },
+      "extends": "eslint:recommended",
+      "rules": {
+          "indent": [
+              "error",
+              "space"
+          ],
+          "linebreak-style": [
+              "error",
+              "unix"
+          ],
+          "quotes": [
+              "error",
+              "single"
+          ],
+          "semi": [
+              "error",
+              "never"
+          ]
+      }
   }
 }

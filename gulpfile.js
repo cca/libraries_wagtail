@@ -13,16 +13,26 @@ const settings = {
 		js: static_root + '/js/'
 	},
 	src: {
+		// JavaScript src
 		exhibits: [static_root + '/js/exhibits.js'],
 		js: [static_root + '/js/src/*.js'],
-		main: [static_root + '/scss/main.scss', static_root + '/scss/exhibits.scss'],
-		scss: [static_root + '/scss/**/*.scss']
+		summon: [static_root + '/summon/*.js'],
+		// SASS src
+		styles: [
+			static_root + '/scss/main.scss'
+			, static_root + '/scss/exhibits.scss'
+			, static_root + '/summon/scss/summon.scss'
+		],
+		scss: [
+			static_root + '/scss/**/*.scss',
+			static_root + '/summon/scss/*.scss'
+		]
 	}
 }
 
 // tasks for each major set of files (main site CSS, main site JS, exhibits JS)
 function allCSS() {
-	return src(settings.src.main, { sourcemaps: true })
+	return src(settings.src.styles, { sourcemaps: true })
 		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
 		.pipe(postcss([ autoprefixer() ]))
 		.pipe(dest(settings.dist.css))
@@ -44,10 +54,19 @@ function exhibitsJS() {
 		.pipe(dest(settings.dist.js))
 }
 
+function summonJS() {
+	return src(settings.src.summon, { sourcemaps: true })
+		.pipe(concat('summon.min.js'))
+		.pipe(babel({ presets: ['@babel/preset-env'] }))
+		.pipe(uglify())
+		.pipe(dest(settings.dist.js))
+}
+
 // watch each main set of files & run its associated task
 function defaultTask() {
 	watch(settings.src.exhibits, exhibitsJS)
 	watch(settings.src.js, mainJS)
+	watch(settings.src.js, summonJS)
 	watch(settings.src.scss, allCSS)
 }
 
@@ -55,5 +74,5 @@ function defaultTask() {
 exports.js = mainJS
 exports.css = allCSS
 exports.exhibits = exhibitsJS
-exports.build = parallel(allCSS, mainJS, exhibitsJS)
+exports.build = parallel(allCSS, mainJS, exhibitsJS, summonJS)
 exports.default = defaultTask

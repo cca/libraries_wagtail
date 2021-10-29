@@ -2,6 +2,7 @@ files:
     include:
         - libraries/libraries/static/scss/**/*.scss
         - libraries/libraries/static/scss/**/**/*.scss
+        - libraries/libraries/static/summon/scss/*.scss
     ignore:
         - libraries/libraries/static/scss/bootstrap/**/*.scss
         - libraries/libraries/static/scss/reset/_reset.scss
