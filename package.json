@@ -6,7 +6,7 @@
     "build": "gulp build",
     "scripts": "gulp scripts",
     "sass": "gulp styles",
-    "test": "sass-lint -c .scss-lint.yml --verbose --no-exit",
+    "test": "sass-lint --verbose --no-exit",
     "watch": "gulp"
   },
   "browserslist": [
@@ -41,6 +41,7 @@
   "dependencies": {
     "node-sass": "^6.0.1"
   },
+  "sasslintConfig": ".sass-lint.yml",
   "eslintConfig": {
       "env": {
           "browser": true,

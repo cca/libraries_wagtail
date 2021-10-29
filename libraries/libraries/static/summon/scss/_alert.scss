@@ -1,13 +1,14 @@
 // copied from Summon styles
+// sass-lint:disable no-color-literals
 .alert {
-    padding: 15px;
-    margin-bottom: 19px;
     border: 1px solid transparent;
     border-radius: 2px;
-        
+    margin-bottom: 19px;
+    padding: 15px;
+
     h4 {
-        margin-top: 0;
         color: inherit;
+        margin-top: 0;
     }
 
     .alert-link {
@@ -15,11 +16,12 @@
     }
 }
 
-.alert>p,.alert>ul {
+.alert > p,
+.alert > ul {
     margin-bottom: 0;
 }
 
-.alert>p+p {
+.alert > p + p {
     margin-top: 5px;
 }
 
@@ -27,12 +29,13 @@
     background-color: #fcf8e3;
     border-color: #faebcc;
     color: #8a6d3b;
-}
 
-.alert-warning hr {
-    border-top-color: #f7e1b5;
-}
+    .alert-link {
+        color: #66512c;
+    }
 
-.alert-warning .alert-link {
-    color: #66512c;
+    hr {
+        border-top-color: #f7e1b5;
+    }
 }
+// sass-lint:enable no-color-literals
