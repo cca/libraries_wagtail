@@ -376,7 +376,7 @@ BROKENLINKS_HASH = {
 }
 
 # Instagram app
-INSTAGRAM_REDIRECT_URI = 'https://libraries.cca.edu'
+INSTAGRAM_REDIRECT_URI = 'https://libraries.cca.edu/'
 INSTAGRAM_APP_ID = env.get('INSTAGRAM_APP_ID', '').rstrip('\n')
 INSTAGRAM_APP_SECRET = env.get('INSTAGRAM_SECRET', '').rstrip('\n')
 
