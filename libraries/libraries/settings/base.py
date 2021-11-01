@@ -306,6 +306,8 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# necessary to serve Summon files or any arbitrary static file
+WHITENOISE_ROOT = STATIC_ROOT
 
 # NOTE: these are overridden by Google Storage Bucket settings at bottom of file
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
