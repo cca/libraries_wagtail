@@ -35,7 +35,7 @@ class Command(BaseCommand):
 
             # did we get an error?
             if insta.get('error_type') is not None:
-                logger.critical('Unable to retrieved latest Instagram. IG Error Type: "{0}". Message: "{1}"'.format(insta['error_type'], insta['error_message']))
+                logger.critical('Unable to retrieve latest Instagram. IG Error Type: "{0}". Message: "{1}"'.format(insta['error_type'], insta['error_message']))
                 exit(1)
 
             # do we already have this one?
