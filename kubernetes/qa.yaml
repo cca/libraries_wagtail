@@ -289,25 +289,24 @@ spec:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: import-daily
+  name: summon-sftp
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  schedule: "4 10 * * *"
-  # Allows to run only one cron job at a time
-  concurrencyPolicy: Forbid
+  # run daily
+  schedule: "2 0 * * *"
   jobTemplate:
     spec:
       template:
         spec:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           containers:
-            - name: app-import-daily
+            - name: test-cronjob
               image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
-                - manage.py
-                - import_daily
+                - libraries/manage.py
+                - summon_deletes
               # Env variables form ConfigMap
               envFrom:
                 - configMapRef:
@@ -335,30 +334,40 @@ spec:
                     secretKeyRef:
                       name: cloud-storage-credentials
                       key: credentials
+                # Summon SFTP secrets
+                - name: SUMMON_SFTP_UN
+                  valueFrom:
+                    secretKeyRef:
+                      name: summon-sftp
+                      key: summon-user
+                - name: SUMMON_SFTP_PW
+                  valueFrom:
+                    secretKeyRef:
+                      name: summon-sftp
+                      key: summon-sftp
 
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: wagtail-publish-scheduled-pages
+  name: instagram
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  schedule: "* * * * *"
-  # Allows to run only one cron job at a time
-  concurrencyPolicy: Forbid
+  # run daily
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:
         spec:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           containers:
-            - name: app-wagtail-publish-scheduled-pages
+            - name: test-cronjob
               image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
-                - manage.py
-                - publish_scheduled_pages
+                - libraries/manage.py
+                - instagram
               # Env variables form ConfigMap
               envFrom:
                 - configMapRef:
@@ -386,5 +395,16 @@ spec:
                     secretKeyRef:
                       name: cloud-storage-credentials
                       key: credentials
+                # Instagram app secrets
+                - name: INSTAGRAM_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: instagram-secret
+                      key: instagram-secret
+                - name: INSTAGRAM_APP_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: instagram-secret
+                      key: app-id
 
 ---
