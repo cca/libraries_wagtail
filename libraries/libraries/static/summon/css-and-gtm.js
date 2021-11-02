@@ -4,11 +4,14 @@
 setTimeout(main, 500)
 
 function main() {
-    ccaCustomizations(document)
+    ccaCustomizations()
     addGTM()
+    // defined in broken-link-modal.js
+    brokenLinkReports()
 }
 
-function ccaCustomizations(d) {
+function ccaCustomizations() {
+    let d = document
     let css = d.createElement('link')
     css.setAttribute('rel', 'stylesheet')
     css.setAttribute('type', 'text/css')
