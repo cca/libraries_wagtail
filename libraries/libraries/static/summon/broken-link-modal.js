@@ -1,5 +1,5 @@
 /* Credit to Robert Hoyt of Fairfield University who provided this code */
-$(function() {
+(function() {
   // Modal HTML
   function modal(title, body, button) {
     return `<div class="modal fade" tabindex="-1" role="dialog">
@@ -115,4 +115,4 @@ $(function() {
   // attach button to results in Summon, excluding books and journals
   let rootScope = angular.element('html').scope().$root
   rootScope.$on('apiSuccess', (scope) => setTimeout(addReportLinks, 500))
-})
+})()
