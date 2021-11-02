@@ -1,5 +1,5 @@
 /* Credit to Robert Hoyt of Fairfield University who provided this code */
-function() brokenLinkReports {
+function brokenLinkReports() {
   // Modal HTML
   function modal(title, body, button) {
     return `<div class="modal fade" tabindex="-1" role="dialog">
