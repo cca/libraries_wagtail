@@ -12,7 +12,7 @@ from .views import NoSearchDescriptionReport
 def register_frank_menu_item():
     return MenuItem(
         'Help',
-        'https://sites.google.com/a/cca.edu/libraries/home/websites-servers/editing-in-wagtail',
+        'https://sites.google.com/cca.edu/librarieswiki/home/websites-servers/editing-in-wagtail',
         classnames='icon icon-help',
         order=10000,
     )
