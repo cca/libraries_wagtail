@@ -28,7 +28,6 @@ div[size='large'] .logo {
 // for all facets below
 .facetName {
     color: #06c;
-    text-decoration: none;
 
     &:hover {
         color: #004080;
@@ -36,8 +35,9 @@ div[size='large'] .logo {
     }
 }
 
-// hide the right-side links in formatted citation lists
-// they make copy-pasting into documents difficult
+// links in formatted citation lists make copy-pasting difficult
+// to test: bookmark multiple articles, go to list, choose a
+// citation style, links appear on right
 // sass-list:disable no-important
 li[ng-repeat='citation in citations'] a {
     display: none !important;
@@ -45,38 +45,29 @@ li[ng-repeat='citation in citations'] a {
 
 // "clear filters" container
 .clearRefinementsContainer {
-    padding-top: 1.2em;
-    padding-bottom: 1em;
+    // don't push facets down as much
+    padding-bottom: 0;
+    padding-top: 0;
 
-    // "clear filters" button
-    .customPrimaryLink .closeBtn {
-        background: $cca-teal !important;
-        color: white !important;
-        box-sizing: border-box;
-        border: solid 2px $cca-teal;
-    }
-
-    // "clear filters" button hover
-    .customPrimaryLink:hover .closeBtn,
-    .customPrimaryLink:active .closeBtn {
+    // "clear all" button hover
+    .clearRefinementsContainerHeader .summonBtn:hover,
+    .clearRefinementsContainerHeader .summonBtn:active {
         background: white !important;
-        color: $cca-teal !important;
-        border: solid 2px $cca-teal;
+        border: outset 2px $cca-teal;
+
+        span {
+            color: $cca-teal !important;
+        }
     }
 
-    // "clear filters" text larger font size
+    // larger font for all "clear refinements" text
     .ng-binding {
         color: $cca-teal;
-        font-size: 15px;
         font-weight: bold;
     }
 }
 
-// "clear filters" no underline on hover
-a.clearRefinements.customPrimaryLink {
-    text-decoration: none;
-}
-
+// @TODO check styles from here down on new Summon UI
 // toggle arrows for facet section headers
 .facetField.collapsible h3 a::after {
     border-bottom: 0;
@@ -95,12 +86,6 @@ a.clearRefinements.customPrimaryLink {
     border-bottom: 4px solid #000;
     border-top: 0;
     vertical-align: super;
-}
-
-// even the top/bottom space around "clear filter" btn
-.clearRefinementsContainer {
-    padding-top: 1.5em;
-    padding-bottom: 0;
 }
 
 // "apply" filter button
@@ -135,27 +120,5 @@ a.btn.btn-primary.applyBtn {
 input[name='email']:invalid {
     border-color: $error;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px lighten($error, 20%);
-}
-
-// increase padding
-.topicSummary .inner .content,
-.customSections .inner .content,
-.bxRecommender .inner .content {
-    padding: 1.3em;
-}
-
-// increase font size
-h3,
-.h3 {
-    font-size: 120%;
-}
-
-// put "report broken link" on same line as Full Text Online
-.fullText .ng-scope {
-    float: left;
-
-    .availabilityLink {
-        padding-right: .5em;
-    }
 }
 // sass-list:enable no-important

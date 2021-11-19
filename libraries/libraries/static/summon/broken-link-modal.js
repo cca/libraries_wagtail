@@ -66,8 +66,8 @@ function brokenLinkReports() {
         let doc = angular.element(el).scope().document
         // we used to check doc.content_type for "Journal" and not "Book" but this
         // didn't catch ebooks (e.g. Hathi Trust)
-        if (doc && !doc.is_print && $item.find('.availabilityLink').text().match('Full Text Online')) {
-          return $item.find('.fullText').append('<a class="availabilityLink reportBroken" href="#"><i class="uxf-icon uxf-alert"></i> Report Broken Link</a>')
+        if (doc && !doc.is_print && $item.find('.availabilityLink, .customPrimaryLink').text().match('Full Text Online')) {
+          return $item.find('.fullText').append('<a class="availabilityLink summonBtn reportBroken" href="#"><i class="uxf-icon uxf-alert"></i> Report Broken Link</a>')
         }
       })
   }
