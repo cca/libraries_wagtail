@@ -15,7 +15,7 @@ function ccaCustomizations() {
     let css = d.createElement('link')
     css.setAttribute('rel', 'stylesheet')
     css.setAttribute('type', 'text/css')
-    css.href = 'https://libraries.cca.edu/summon/summon.css'
+    css.href = 'https://libraries.cca.edu/static/summon/summon.css'
     // load CSS adjustments
     d.querySelector('head').append(css)
 
