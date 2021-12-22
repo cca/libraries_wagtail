@@ -10,4 +10,4 @@ This app receives POSTed information and sends it to a Google Spreadsheet for an
 6. enter those into the `BROKENLINKS_HASH` setting
 7. insert the included JavaScript into Summon, double-checking the URLs
 
-The "cca-broken-link-modal.js" JavaScript is not actually used anywhere in Wagtail; it's included merely for reference, but should be added to a customized script for Summon.
+See the Summon app for the custom JavaScript that's inserted into Summon that POSTs data back to this app.

@@ -30,8 +30,6 @@ def brokenlinks(request):
     elif request.method == 'POST':
         body = QueryDict(request.body)
         data = {
-            # NOTE: REMOTE_ADDR is always 127.0.0.1 so this is useless
-            # settings.BROKENLINKS_HASH['ipaddress']: request.META.get('REMOTE_ADDR', ''),
             settings.BROKENLINKS_HASH['openurl']: body.get('openurl', ''),
             settings.BROKENLINKS_HASH['permalink']: body.get('permalink', ''),
             settings.BROKENLINKS_HASH['type']: body.get('type', ''),
@@ -40,9 +38,9 @@ def brokenlinks(request):
             'submit': 'Submit'
         }
         r = requests.post(settings.BROKENLINKS_GOOGLE_SHEET_URL, data=data)
-        logger.info('broken link reported: ' + str(body.dict()))  # @TODO untested...
+        logger.info('broken link reported: ' + str(body.dict()))
         if r.status_code != 200:
-            logger.error('error submitting broken link to Google Sheets, response code: ' + r.status_code)
+            logger.error('error submitting broken link to Google Sheets, response code: ' + str(r.status_code))
         response = JsonResponse(data, status=200)
         response["Access-Control-Allow-Origin"] = "*"
         return response
