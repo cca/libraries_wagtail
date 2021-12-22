@@ -367,7 +367,9 @@ else:
     }
 
 # Brokenlinks app - "Summon Broken Links for Website Tests" Google Form
-BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse"
+# test form commented out
+# BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse"
+BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/1FAIpQLSehVHSXLkZ5_gcAYxh5ZEktbU-0axbakVONq9lavfP1SXGc_A/formResponse"
 BROKENLINKS_HASH = {
     "ipaddress": "entry.1306463040",
     "openurl": "entry.1430108689",

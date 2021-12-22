@@ -6,7 +6,7 @@ from django.http import JsonResponse, HttpResponse, QueryDict
 from django.views.decorators.csrf import csrf_exempt
 
 
-logger = logging.getLogger('')
+logger = logging.getLogger(__name__)
 
 
 @csrf_exempt
