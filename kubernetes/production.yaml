@@ -300,8 +300,8 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-            - name: test-cronjob
-              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+            - name: summon-cronjob
+              image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
@@ -361,8 +361,8 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-            - name: test-cronjob
-              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+            - name: instagram-cronjob
+              image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
