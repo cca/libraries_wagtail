@@ -297,7 +297,9 @@ spec:
   schedule: "2 0 * * *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
-  ttlSecondsAfterFinished: 900
+  # https://kubernetes.io/docs/concepts/workloads/controllers/job/#clean-up-finished-jobs-automatically
+  # Our server k8s does not support this yet
+  # ttlSecondsAfterFinished: 900
   jobTemplate:
     spec:
       template:
@@ -361,7 +363,7 @@ spec:
   schedule: "0 0 * * *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
-  ttlSecondsAfterFinished: 900
+  # ttlSecondsAfterFinished: 900
   jobTemplate:
     spec:
       template:
