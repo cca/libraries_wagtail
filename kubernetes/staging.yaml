@@ -1,4 +1,5 @@
 ---
+# I don't think this file is used right now -EP
 # create the namespace for libraries
 
 kind: Namespace

@@ -1,4 +1,5 @@
 ---
+# this is the file used by [ep|mg]-full-... tagged releases
 # create the namespace for libraries
 
 kind: Namespace
@@ -294,13 +295,16 @@ metadata:
 spec:
   # run daily
   schedule: "2 0 * * *"
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
+  ttlSecondsAfterFinished: 900
   jobTemplate:
     spec:
       template:
         spec:
           restartPolicy: Never
           containers:
-            - name: test-cronjob
+            - name: summon
               image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
@@ -355,13 +359,16 @@ metadata:
 spec:
   # run daily
   schedule: "0 0 * * *"
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
+  ttlSecondsAfterFinished: 900
   jobTemplate:
     spec:
       template:
         spec:
           restartPolicy: Never
           containers:
-            - name: test-cronjob
+            - name: instagram
               image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:

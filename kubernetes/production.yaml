@@ -300,7 +300,7 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-            - name: summon-cronjob
+            - name: summon
               image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
@@ -361,7 +361,7 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-            - name: instagram-cronjob
+            - name: instagram
               image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
