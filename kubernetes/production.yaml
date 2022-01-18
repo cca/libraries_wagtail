@@ -294,6 +294,8 @@ metadata:
 spec:
   # run daily
   schedule: "2 0 * * *"
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
   jobTemplate:
     spec:
       template:
@@ -355,6 +357,8 @@ metadata:
 spec:
   # run daily
   schedule: "0 0 * * *"
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
   jobTemplate:
     spec:
       template:
