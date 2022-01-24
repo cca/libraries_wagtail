@@ -1,0 +1,3 @@
+[submodule "libraries/libraries/static/bookreader"]
+        path = libraries/libraries/static/bookreader
+        url = https://github.com/cca/libraries_bookreader.git

@@ -10,8 +10,6 @@ libraries/libraries/settings/local.py
 libraries/logs/*
 libraries/media/*
 libraries/static/*
-# ignore bookreader for now
-libraries/libraries/static/bookreader
 
 # track actual (not compiled) static files
 !libraries/libraries/static
