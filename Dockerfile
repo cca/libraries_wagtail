@@ -6,7 +6,7 @@ WORKDIR /app
 COPY libraries/libraries/static/ libraries/libraries/static
 COPY package.json package-lock.json gulpfile.js ./
 
-RUN npm install
+RUN npm install --no-fund
 RUN npx gulp build
 
 # Build the Django application itself.
