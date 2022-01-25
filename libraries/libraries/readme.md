@@ -9,7 +9,6 @@ This is the main Django app which contains the backbone of our Wagtail site. It 
     + images
     + JavaScript
     + SASS (compiled CSS, too)
-    + the Artists' Bookreader sub-app (a functionally independent static site)
 - base HTML templates including universal header/footer/search
 - API settings
 - custom filters for loggers
