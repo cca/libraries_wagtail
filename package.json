@@ -32,39 +32,37 @@
     "gulp-postcss": "^9.0",
     "gulp-sass": "^5.0.0",
     "gulp-uglify": "^3.0.2",
+    "node-sass": "^7.0.1",
     "postcss": "^8.2.1",
     "sass-lint": "^1.13.1"
   },
   "engines": {
     "node": "<15"
   },
-  "dependencies": {
-    "node-sass": "^6.0.1"
-  },
   "sasslintConfig": ".sass-lint.yml",
   "eslintConfig": {
-      "env": {
-          "browser": true,
-          "es6": true
-      },
-      "extends": "eslint:recommended",
-      "rules": {
-          "indent": [
-              "error",
-              "space"
-          ],
-          "linebreak-style": [
-              "error",
-              "unix"
-          ],
-          "quotes": [
-              "error",
-              "single"
-          ],
-          "semi": [
-              "error",
-              "never"
-          ]
-      }
+    "env": {
+      "browser": true,
+      "es6": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+      "indent": [
+        "error",
+        "space"
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ]
+    }
   }
 }
