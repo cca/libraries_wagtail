@@ -115,4 +115,4 @@ function brokenLinkReports() {
   // attach button to results in Summon, excluding books and journals
   let rootScope = angular.element('html').scope().$root
   rootScope.$on('apiSuccess', (scope) => setTimeout(addReportLinks, 500))
-}
+};

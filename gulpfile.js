@@ -19,7 +19,8 @@ const settings = {
 		js: [static_root + '/js/src/*.js'],
 		summon: {
 			css: [static_root + '/summon/scss/summon.scss'],
-			js: [static_root + '/summon/*.js']
+			// babel throws an error if you provide these in the wrong order
+			js: [static_root + '/summon/broken-link-modal.js', static_root + '/summon/css-and-gtm.js']
 		},
 		// SASS src
 		styles: [
