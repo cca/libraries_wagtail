@@ -29,13 +29,13 @@
 @font-face {
     font-display: fallback;
     font-family: 'The Serif';
-    font-weight: bold;
+    font-style: italic;
     src: url('/static/fonts/TheSerifB-W5PlainItalic.otf') format('otf');
 }
 
 @font-face {
     font-display: fallback;
     font-family: 'The Serif';
-    font-style: italic;
+    font-weight: bold;
     src: url('/static/fonts/TheSerifB-W7Bold.otf') format('otf');
 }
