@@ -19,3 +19,23 @@
     font-style: italic;
     src: url('/static/fonts/lineto-brown-italic.woff2') format('woff2'), url('/static/fonts/lineto-brown-italic.woff') format('woff');
 }
+// The Serif font face
+@font-face {
+    font-display: fallback;
+    font-family: 'The Serif';
+    src: url('/static/fonts/TheSerifB-W5Plain.otf') format('otf');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'The Serif';
+    font-weight: bold;
+    src: url('/static/fonts/TheSerifB-W5PlainItalic.otf') format('otf');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'The Serif';
+    font-style: italic;
+    src: url('/static/fonts/TheSerifB-W7Bold.otf') format('otf');
+}
