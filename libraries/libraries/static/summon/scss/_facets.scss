@@ -1,0 +1,41 @@
+// sass-lint:disable no-important,no-qualifying-elements
+// make left-side facets more obvious, #3
+// these styles copied from the base <a> style
+// this selector for the "narrow your search" filters
+.quickFilters span.ng-binding,
+// the drawer of extra filters that apepars when "more..." is selected
+// "a >" needed to avoid the .count span of numbers
+.moreFacetsContainer a > span.ng-binding,
+// for all facets below
+.facetName {
+    color: $link_blue;
+
+    &:hover {
+        color: darken($link_blue, 20%);
+        text-decoration: underline;
+    }
+}
+
+// "clear filters" container
+.clearRefinementsContainer {
+    // don't push facets down as much
+    padding-bottom: 0;
+    padding-top: 0;
+
+    // "clear all" button hover
+    .clearRefinementsContainerHeader .summonBtn:hover,
+    .clearRefinementsContainerHeader .summonBtn:active {
+        background: $white !important;
+        border: outset 2px $cca-teal;
+
+        span {
+            color: $cca-teal !important;
+        }
+    }
+
+    // larger font for all "clear refinements" text
+    .ng-binding {
+        color: $cca-teal;
+        font-weight: bold;
+    }
+}

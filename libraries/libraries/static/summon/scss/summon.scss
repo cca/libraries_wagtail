@@ -1,6 +1,9 @@
 @import 'colors';
 @import 'alert';
+@import 'facets';
 @import 'custom_panels';
+
+// sass-lint:disable no-important,no-qualifying-elements
 
 // main logo size/spacing on large screens
 div[size='large'] .logo {
@@ -9,67 +12,25 @@ div[size='large'] .logo {
 
 // "did you mean" styles, larger font & more focal
 // ID selector for specificity
-// sass-lint:disable no-ids
+// sass-lint:disable no-ids,placeholder-in-extend
 #ng-app .didYouMean {
     @extend .alert;
     @extend .alert-warning;
     font-size: 16px;
     font-weight: bold;
 }
-// sass-lint:enable no-ids
-
-// make left-side facets more obvious, #3
-// these styles copied from the base <a> style
-// this selector for the "narrow your search" filters
-.quickFilters span.ng-binding,
-// the drawer of extra filters that apepars when "more..." is selected
-// "a >" needed to avoid the .count span of numbers
-.moreFacetsContainer a > span.ng-binding,
-// for all facets below
-.facetName {
-    color: #06c;
-
-    &:hover {
-        color: #004080;
-        text-decoration: underline;
-    }
-}
+// sass-lint:enable no-ids,placeholder-in-extend
 
 // links in formatted citation lists make copy-pasting difficult
 // to test: bookmark multiple articles, go to list, choose a
 // citation style, links appear on right
-// sass-list:disable no-important
+
 li[ng-repeat='citation in citations'] a {
     display: none !important;
-}
-
-// "clear filters" container
-.clearRefinementsContainer {
-    // don't push facets down as much
-    padding-bottom: 0;
-    padding-top: 0;
-
-    // "clear all" button hover
-    .clearRefinementsContainerHeader .summonBtn:hover,
-    .clearRefinementsContainerHeader .summonBtn:active {
-        background: white !important;
-        border: outset 2px $cca-teal;
-
-        span {
-            color: $cca-teal !important;
-        }
-    }
-
-    // larger font for all "clear refinements" text
-    .ng-binding {
-        color: $cca-teal;
-        font-weight: bold;
-    }
 }
 
 // email input in "broken links" dialog
 input[name='email']:invalid {
     border-color: $error;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px lighten($error, 20%);
+    box-shadow: inset 0 1px 1px color.adjust($black, $alpha: -.9), 0 0 8px lighten($error, 20%);
 }
-// sass-list:enable no-important
