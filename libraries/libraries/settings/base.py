@@ -10,8 +10,15 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 env = os.environ.copy()
 
-if env.get('KUBERNETES_NAMESPACE', None) in ['lib-ep', 'lib-mg']:
+namespace = env.get('KUBERNETES_NAMESPACE', None)
+if namespace in ['lib-ep', 'lib-mg']:
     DEBUG = True
+    # Base URL to use when referring to full URLs within the Wagtail admin backend -
+    # e.g. in notification emails. Don't include '/admin' or a trailing slash
+    # lib-ep namespace URL is libraries-libep.cca.edu, etc.
+    BASE_URL = 'https://libraries-{}.cca.edu'.format(namespace.replace('-',''))
+elif namespace == 'lib-production':
+    BASE_URL = 'https://libraries.cca.edu'
 
 ALLOWED_HOSTS = ['*']
 
@@ -343,10 +350,6 @@ RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
     'ol',
     'ul',
 ]
-
-# Base URL to use when referring to full URLs within the Wagtail admin backend -
-# e.g. in notification emails. Don't include '/admin' or a trailing slash
-# BASE_URL = 'http://localhost'
 
 # SECRET_KEY = env.get('SECRET_KEY', '').rstrip('\n')
 SECRET_KEY = 'ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb'
