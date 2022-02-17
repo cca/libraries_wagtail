@@ -22,7 +22,7 @@ data:
   KUBERNETES_NAMESPACE: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # CAS
-  CAS_SERVER_URL: "https://sso-stage.cca.edu/cas/login"
+  CAS_SERVER_URL: "https://sso.cca.edu/cas/login"
 
   # Media
   MEDIA_URL: "https://storage.googleapis.com/libraries-staging-${KUBERNETES_NAMESPACE_OVERWRITE}/"
