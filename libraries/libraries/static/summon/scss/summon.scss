@@ -34,3 +34,11 @@ input[name='email']:invalid {
     border-color: $error;
     box-shadow: inset 0 1px 1px adjust-color($black, $alpha: -.9), 0 0 8px lighten($error, 20%);
 }
+
+// fix language button bug (white font on gray bg) 2022-03
+.languageMenu {
+    .languageText,
+    .navLanguageSwitcher {
+        color: $black;
+    }
+}
