@@ -226,13 +226,12 @@ spec:
               readOnly: true
             - name: cloudsql
               mountPath: /cloudsql
-
       volumes:
         - name: cloudsql-instance-credentials
           secret:
             secretName: cloudsql-instance-credentials
         - name: cloudsql
-          emptyDir:
+          emptyDir: {}
 
 ---
 # A service to allow external connections.  This accepts connections from inside

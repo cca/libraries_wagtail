@@ -1,0 +1,13 @@
+namespace: libraries-wagtail
+
+# does it make sense to break the libraries app off into
+# its own "base" or does it need to rely on these bases
+# so they are built & run first?
+bases:
+  - ./elasticsearch
+  - ./postgres
+
+resources:
+  - namespace.yml
+  - deployment.yml
+  - service.yml

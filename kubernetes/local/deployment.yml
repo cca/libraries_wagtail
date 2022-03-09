@@ -1,0 +1,41 @@
+# nginx
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wagtail
+  labels:
+    app: libraries
+spec:
+  # Start 1 copy of the application.
+  replicas: 1
+
+  # Select the pods which are part of this deployment.
+  selector:
+    matchLabels:
+      app: libraries
+
+  # The pod template this deployment will create.
+  template:
+    metadata:
+      labels:
+        app: libraries
+    spec:
+      containers:
+        - name: wagtail
+          image: python:3.6-alpine
+          command: [ python ]
+          args:
+            - -c
+            - |-
+              from time import sleep
+              while True: print('running'); sleep(60);
+          # image: wagtail
+          ports:
+            - containerPort: 80
+          # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+          resources:
+              limits:
+                memory: 1024Mi
+                cpu: "1"
+              requests:
+                memory: 1024Mi

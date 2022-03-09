@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: elasticsearch-config
+data:
+  elasticsearch.yml: |
+    # X-Pack is a commercial feature, but a trial version is enabled by default
+    # unless you explicitly disable it.
+    xpack.security.enabled: false
+    xpack.monitoring.enabled: false
+    xpack.watcher.enabled: false
+
+    # Listen on all IP addresses
+    network.host: _site_
+    transport.type: local
+
+    # Make this the only node
+    node.name: "elasticsearch"
+    node.master: "true"
+    node.data: "true"
+    node.max_local_storage_nodes: 1
+    gateway.recover_after_nodes: 1
+    gateway.expected_nodes: 1
+
+    # We do not allow ES scripting on production hosts due to its numerous
+    # security problems.  Therefore you probably want to disable scripting here
+    # as well, so you don't accidentally use features that won't work on
+    # production.
+    script.inline: false
+    script.stored: false

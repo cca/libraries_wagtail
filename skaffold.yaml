@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta25
+kind: Config
+metadata:
+  name: skaffold-config
+build:
+  artifacts:
+    []
+  # - image: libraries-wagtail
+  #   docker:
+  #     dockerfile: Dockerfile
+deploy:
+  kustomize:
+    paths:
+    - kubernetes/local
