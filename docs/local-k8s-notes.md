@@ -1,5 +1,34 @@
 # Local kubernetes development - CCA dev ops
 
+## Running libraries.cca.edu locally (notes)
+
+You will need docker, minikube, kubectl, and skaffold. Many of these are available from different places but they're also all on homebrew. The other sensible place to get these tools is as [gcloud](https://cloud.google.com/sdk/docs/install) CLI components, which we need to interact with our cloud-hosted resources (databases, static files, servers) anyways. To use them, make sure that the "bin" subfolder inside the gcloud tools is on your path.
+
+```sh
+> brew i kubectl minikube skaffold
+> brew i --cask docker # Docker Desktop app
+> # OR use gcloud for these two components
+> gcloud components install kubectl minikube skaffold
+```
+
+Docker Desktop provides nice visualizations of resources (images, volumes) as well as a set of command-line completions for the most popular shells. You may need to give it additional resources under Settings > Resources.
+
+Minikube can also be configured to use more resources than the defaults:
+
+```sh
+> minikube config set vm-driver docker
+> minikube config set cpus 6
+> minikube config set memory 10000
+```
+
+A laptop devoting this many resources to running a local kubernetes cluster will be quite slow; close any unnecessary applications you're running.
+
+To get going:
+
+1. Open Docker Desktop & wait for it to start the docker daemon
+2. Run `minikube start` & wait for it to spin up
+3. Run `skaffold dev` to build the cluster's servers & reload when you change files, see `skaffold help` for other options such as "build", "debug", and "run"
+
 ## March 8, 2022
 
 Josh's demo:
