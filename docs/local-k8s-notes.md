@@ -63,4 +63,8 @@ Why the 2 elasticsearch containers?
 
 Why is the Postgres service a NodePort one rather than ClusterIP? Is it needed outside the cluster for some reason?
 
+Josh wrote this in Slack and it's probably the reason why:
+
+> kubectl port-forward is not limited to your web server alone. You can use to port forward your database server, your elasticsearch server, or anything else you want. Then you can hook your postgres DB into your GUI app, for example.
+
 Next thing to work on: actually using the libraries Wagtail app and its Dockerfile.
