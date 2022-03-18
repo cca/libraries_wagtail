@@ -11,3 +11,8 @@ resources:
   - namespace.yml
   - deployment.yml
   - service.yml
+  - configMap.yml
+
+secretGenerator:
+  - name: app-secrets
+    env: secrets.env

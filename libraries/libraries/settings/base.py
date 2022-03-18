@@ -3,14 +3,13 @@ from __future__ import absolute_import, unicode_literals
 import os
 import json
 import dj_database_url
-from .elasticsearch import WAGTAILSEARCH_BACKENDS
 from google.oauth2.service_account import Credentials
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 env = os.environ.copy()
 
-namespace = env.get('KUBERNETES_NAMESPACE', None)
+namespace = env.get('KUBERNETES_NAMESPACE', None) or env.get('LOCAL_NAMESPACE', None)
 if namespace in ['lib-ep', 'lib-mg']:
     DEBUG = True
     # Base URL to use when referring to full URLs within the Wagtail admin backend -
@@ -19,6 +18,8 @@ if namespace in ['lib-ep', 'lib-mg']:
     BASE_URL = 'https://libraries-{}.cca.edu'.format(namespace.replace('-',''))
 elif namespace == 'lib-production':
     BASE_URL = 'https://libraries.cca.edu'
+elif namespace == 'libraries-wagtail': # local namespace
+    BASE_URL = 'http://localhost'
 
 ALLOWED_HOSTS = ['*']
 
@@ -471,11 +472,7 @@ ES_INDEX_PREFIX = env.get('ES_INDEX_PREFIX', '').rstrip('\n')
 WAGTAILSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'wagtail.search.backends.elasticsearch5',
-        # Override both URLS and INDEX properties in local settings like
-        # from .elasticsearch import *
-        # WAGTAILSEARCH_BACKENDS['default']['URLS'] = "http://example.com:9200"
-        # WAGTAILSEARCH_BACKENDS['default']['INDEX'] = "libraries_wagtail_dev"
-        'URLS': [ES_URL],
+        'URLS': [ ES_URL ],
         'INDEX': ES_INDEX_PREFIX,
         'TIMEOUT': 10,
         'OPTIONS': {},

@@ -39,3 +39,9 @@ spec:
                 cpu: "1"
               requests:
                 memory: 1024Mi
+
+          envFrom:
+            - configMapRef:
+                name: app
+            - secretRef:
+                name: app-secrets
