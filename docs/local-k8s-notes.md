@@ -35,7 +35,7 @@ Josh's demo:
 
 <https://gitlab.com/california-college-of-the-arts/cca-k8s-demo/>
 
-Have to redo the port forwarding every time the image is rebuilt with `kubectl port-forward --namespace $NS service/$SERVICE 8000:80`. A k8s ingress resource is might be a permanent solution.
+Have to redo the port forwarding every time the image is rebuilt with `kubectl port-forward --namespace $NS service/$SERVICE 8000:80`. A k8s ingress resource might be a permanent solution.
 
 My major questions: how to run a Postgres DB and ES servers connected to app, how to sync data, secrets/env.
 
@@ -53,22 +53,16 @@ persistent volumes are stored _on the minikube server_ in the /data dir, you can
 
 kustomize secrets generator can pull values from a gitignored .env file, you combine those with your configMap.yml for all your app's secrets/environment variables
 
-to get a fresh copy of the database, use GCP commands and then drop/create the db on your local k8s cluster: <https://gitlab.com/california-college-of-the-arts/portal/-/blob/main/scripts/portaldev-copy-db>
-
-to get the static files, `gsutil cp` from the storage bucket to local dir: <https://gitlab.com/california-college-of-the-arts/portal/-/blob/main/scripts/portaldev-copy-media>
+to get the static files, `gsutil rsync` ([docs](https://cloud.google.com/storage/docs/gsutil/commands/rsync)) from the storage bucket to local dir: <https://gitlab.com/california-college-of-the-arts/portal/-/blob/main/scripts/portaldev-copy-media>
 
 ## Outstanding Questions
 
 Why the 2 elasticsearch containers?
-
-Why is the Postgres service a NodePort one rather than ClusterIP? Is it needed outside the cluster for some reason?
-
-Josh wrote this in Slack and it's probably the reason why:
-
-> kubectl port-forward is not limited to your web server alone. You can use to port forward your database server, your elasticsearch server, or anything else you want. Then you can hook your postgres DB into your GUI app, for example.
 
 Next thing to work on: actually using the libraries Wagtail app and its Dockerfile.
 
 ## Googe Cloud Media & DB Synchronization
 
 You can use `gsutil rsync` to copy media from one storage bucket to another. For very large transfers, try the [Google Cloud Transfer Service](https://console.cloud.google.com/transfer/cloud/jobs). We already have a job configured to copy media from production to staging and it can be run on demand.
+
+To run `google sql export sql` ([docs](https://cloud.google.com/sdk/gcloud/reference/sql/export/sql)) which exports a database to a SQL file in a GS bucket, you need to copy the **service account** name from the SQL instance in Google Console and add it as a principle/permissions to the GS Bucket with at least "Object Creator" privileges.
