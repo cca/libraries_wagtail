@@ -20,19 +20,35 @@ spec:
       labels:
         app: libraries
     spec:
+      volumes:
+        - name: code
+          persistentVolumeClaim:
+            claimName: code-pv-volumeclaim-app
+        - name: scripts
+          configMap:
+            name: scripts
+            defaultMode: 0744
+
       containers:
-        - name: wagtail
-          image: python:3.6-alpine
-          command: [ python ]
-          args:
-            - -c
-            - |-
-              from time import sleep
-              while True: print('running'); sleep(60);
-          # image: wagtail
+        # Portal does this, does is it? breaks skaffold run, syntax error
+        # - $patch: replace
+
+        - name: app
+          image: libraries-wagtail
+          imagePullPolicy: IfNotPresent
+          stdin: true
+          tty: true
+          command: [ "/scripts/init.sh" ]
+
           ports:
-            - containerPort: 80
-          # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+            - containerPort: 8000
+
+          volumeMounts:
+            - name: code
+              mountPath: /app/libraries
+            - name: scripts
+              mountPath: /scripts
+
           resources:
               limits:
                 memory: 1024Mi
@@ -45,3 +61,7 @@ spec:
                 name: app
             - secretRef:
                 name: app-secrets
+
+          env:
+            - name: DATABASE_URL
+              value: postgres://postgresadmin:admin123@postgres.libraries-wagtail:5432/cca_libraries

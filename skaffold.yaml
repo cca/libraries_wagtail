@@ -2,13 +2,35 @@ apiVersion: skaffold/v2beta25
 kind: Config
 metadata:
   name: skaffold-config
-build:
-  artifacts:
-    []
-  # - image: libraries-wagtail
-  #   docker:
-  #     dockerfile: Dockerfile
-deploy:
-  kustomize:
-    paths:
-    - kubernetes/local
+profiles:
+  - name: db-only
+    deploy:
+      kubeContext: minikube
+      kubectl:
+        # otherwise it complains about the namespace not existing
+        manifests: [ "kubernetes/local/namespace.yml" ]
+      kustomize:
+        paths:
+          - kubernetes/local/postgres
+  - name: local-dev
+    build:
+      artifacts:
+      - image: libraries-wagtail
+        # Portal this custom cmd below which lets them have a DEVBUILD switch
+        # in their build process, that might be useful
+        # custom:
+            # buildCommand: docker build --network host --build-arg DEVBUILD=true -t $IMAGE .
+        docker:
+          dockerfile: Dockerfile
+        sync:
+            infer:
+              - "libraries/**/*.py"
+              - "libraries/libraries/static/**/*.scss"
+              - "libraries/libraries/static/**/*.js"
+              - "libraries/libraries/templates/**/*.html"
+              # - "scripts/*"
+    deploy:
+      kubeContext: minikube
+      kustomize:
+        paths:
+        - kubernetes/local

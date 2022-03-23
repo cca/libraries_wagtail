@@ -5,7 +5,7 @@ metadata:
   labels:
     app: postgres
 spec:
-  # why is this NodePort and not ClusterIP? Is it needed outside the cluster?
+  # NodePort opens up Postgres for GUI app access outside the cluster
   type: NodePort
   ports:
    - port: 5432

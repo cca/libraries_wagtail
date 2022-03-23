@@ -1,0 +1,27 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: code-pv-volume-app
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /Users/ephetteplace/Code/libraries_wagtail/libraries
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: code-pv-volumeclaim-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: code-pv-volume-app
+  resources:
+    requests:
+      storage: 5Gi

@@ -9,6 +9,7 @@ bases:
 
 resources:
   - namespace.yml
+  - volumes.yml
   - deployment.yml
   - service.yml
   - configMap.yml
@@ -16,3 +17,8 @@ resources:
 secretGenerator:
   - name: app-secrets
     env: secrets.env
+
+configMapGenerator:
+  - name: scripts
+    files:
+    - ./scripts/init.sh
