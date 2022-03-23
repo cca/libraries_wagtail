@@ -63,6 +63,7 @@ if set -q _flag_d;
         echo "minikube isn't runnning, try running 'minikube start' first"
         set_color normal
         exit 1
+    end
     # configure cluster and gcloud contexts
     minikube update-context
     kubectl config set-context --current --namespace=libraries-wagtail
