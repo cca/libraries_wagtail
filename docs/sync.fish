@@ -8,11 +8,15 @@ from either the staging or production instances. Options:"
     echo -e "\t-s, --stage\tuse the staging cluster (default)"
     echo -e "\t-p, --prod\tuse the production cluster (mutually exclusive with the above)"
     echo -e "\t-d, --db\tsynchronize the database (default)"
-    echo -e "\t-m, --media\tsynchronize the media files (images, videos, documents)"
+    echo -e "\t-m, --media\tdownload media files (images, videos, documents). This does
+\t\tnot delete any local files, it merely fills in the ones you're missing."
     echo -e "\nExamples:"
     echo -e "\tsync.fish — sync the staging database locally"
     echo -e "\tsync.fish --db --media — sync the staging database and media locally"
-    echo -e "\tsync.fish --prod --media — sync production media (but not the database) locally"
+    echo -e "\tsync.fish --prod --media — download production media (but not the database)"
+    echo -e "\nNote that 'staging' here refers to Eric's libraries-libep.cca.edu site and its related
+database and media files, NOT Mark's libraries-libmg.cca.edu site. If we feel a need
+to differentiate, we can use three instance flags instead of the current two."
     exit 0
 end
 
@@ -26,6 +30,7 @@ if set -q _flag_p
     set DB_INSTANCE cca-edu-prod-1
     set DB_NAME libraries-lib-production
     set DB_GS_BUCKET gs://cca-manual-db-dumps
+    set MEDIA_GS_BUCKET gs://libraries-lib-production
 else
     echo "Using staging context"
     set CTX staging
@@ -34,6 +39,7 @@ else
     set DB_INSTANCE cca-edu-staging-2
     set DB_NAME libraries-lib-ep
     set DB_GS_BUCKET gs://libraries-db-dumps-ci
+    set MEDIA_GS_BUCKET gs://libraries-media-staging-lib-ep
 end
 
 set AUTH_USER (gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null)
@@ -47,11 +53,16 @@ end
 
 gcloud config set project $PROJECT
 
-# @TODO Sync media
+# Sync media
 if set -q _flag_m
-    set_color --bold red
-    echo "Media syncing not implemented yet, skipping..."
-    set_color normal
+    if [ ! -d libraries/media ]
+        set_color --bold red
+        echo "Error: unable to find libraries/media folder to sync media into."
+        echo "Make sure you're running ./docs/sync.sh from the root of this project"
+        set_color normal
+        exit 1
+    end
+    gsutil -m rsync -r $MEDIA_GS_BUCKET libraries/media
 end
 
 # Sync database
@@ -64,7 +75,7 @@ if set -q _flag_d;
         set_color normal
         exit 1
     end
-    # configure cluster and gcloud contexts
+    # configure kubectl context
     minikube update-context
     kubectl config set-context --current --namespace=libraries-wagtail
 
