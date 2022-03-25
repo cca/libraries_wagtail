@@ -38,8 +38,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certifi
 COPY libraries/requirements.txt requirements/requirements.txt
 RUN pip install -r requirements/requirements.txt
 
-# Install application code.
-COPY . .
+# Collect our compiled static files from the assets image
+COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
+
+# Install application code. Copy only libraries dir so that changes to docs,
+# k8s, config files, etc. don't invalidate the docker cache
+# https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#leverage-build-cache
+COPY libraries libraries/
 # if collectstatic throw an error during build & this dir doesn't exist, it
 # can't be created for some reason, breaks the build
 RUN mkdir /app/libraries/logs
@@ -47,8 +52,6 @@ RUN mkdir /app/libraries/logs
 # Settings environment variable
 ENV DJANGO_SETTINGS_MODULE libraries.settings
 
-# Collect our compiled static files from the assets image
-COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
 RUN python libraries/manage.py collectstatic --no-input
 
 # Make port 80 available to the world outside this container
