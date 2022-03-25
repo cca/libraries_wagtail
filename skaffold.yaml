@@ -13,6 +13,12 @@ profiles:
         paths:
           - kubernetes/local/postgres
   - name: local-dev
+    # we _don't_ want to waste time building for the `skaffold run -p db-only` pipeline
+    # https://skaffold.dev/docs/environment/profiles/#activation
+    activation:
+      - command: build
+      - command: dev
+      - command: delete
     build:
       artifacts:
       - image: libraries-wagtail
@@ -30,7 +36,6 @@ profiles:
               - "libraries/libraries/templates/**/*.html"
               # - "scripts/*"
     deploy:
-      kubeContext: minikube
       kustomize:
         paths:
         - kubernetes/local
