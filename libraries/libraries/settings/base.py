@@ -532,9 +532,3 @@ if 'GS_CREDENTIALS' in env:
     # Load credentials from service account key that grants access
     # to the storage
     GS_CREDENTIALS = Credentials.from_service_account_info(json.loads(env['GS_CREDENTIALS']))
-
-# Let local.py settings override anything declared above
-try:
-    from .local import *
-except ImportError:
-    pass
