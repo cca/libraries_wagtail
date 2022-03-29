@@ -22,13 +22,14 @@ profiles:
     build:
       artifacts:
       - image: libraries-wagtail
-        # Portal this custom cmd below which lets them have a DEVBUILD switch
+        # Portal uses the custom cmd below which lets them have a DEVBUILD switch
         # in their build process, that might be useful
         # custom:
             # buildCommand: docker build --network host --build-arg DEVBUILD=true -t $IMAGE .
         docker:
           dockerfile: Dockerfile
         sync:
+        # https://skaffold.dev/docs/pipeline-stages/filesync/
             infer:
               - "libraries/**/*.py"
               - "libraries/libraries/static/**/*.scss"

@@ -34,7 +34,8 @@ spec:
               memory: 1024Mi
               cpu: "1"
             requests:
-              memory: 1024Mi
+              memory: 500Mi
+              cpu: "0.5"
       volumes:
         - name: postgredb
           persistentVolumeClaim:

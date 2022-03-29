@@ -17,8 +17,8 @@ Minikube can also be configured to use more resources than the defaults:
 
 ```sh
 > minikube config set vm-driver docker
-> minikube config set cpus 6
-> minikube config set memory 10000
+> minikube config set cpus 4
+> minikube config set memory 8192
 ```
 
 A laptop devoting this many resources to running a local kubernetes cluster will be quite slow; close any unnecessary applications you're running.
@@ -26,10 +26,25 @@ A laptop devoting this many resources to running a local kubernetes cluster will
 To get going:
 
 1. Open Docker Desktop & wait for it to start the docker daemon
-2. Run `minikube start` & wait for it to spin up
+2. Run `minikube start` & wait for it to complete
+  a. _if you don't have the site's database yet_ run `skaffold -p db-only` and `./docs/sync.fish`
 3. Run `skaffold dev` to build the cluster's servers & reload when you change files, see `skaffold help` for other options such as "build", "debug", and "run"
+4. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000` to forward the cluster's port 8000 to your host port 8000, now you can access the site at http://localhost:8000
+  a. Alternatively, use the Kube Forwarder.app (you can install it with `brew install --cask kube-forwarder)
 
-## March 8, 2022
+## Questions & Todos
+
+- [ ] mount the media files at /app/libraries/media
+- [ ] smoother solution to port-forwarding (ingress resource with the minikube addon? load balancer?)
+- [ ] do we want to mimic Portal's mounted volume approach to the app code?
+
+## Googe Cloud Media & DB Synchronization
+
+You can use `gsutil rsync` to copy media from one storage bucket to another. For very large transfers, try the [Google Cloud Transfer Service](https://console.cloud.google.com/transfer/cloud/jobs). We already have a job configured to copy media from production to staging and it can be run on demand.
+
+To run `google sql export sql` ([docs](https://cloud.google.com/sdk/gcloud/reference/sql/export/sql)) which exports a database to a SQL file in a GS bucket, you need to copy the **service account** name from the SQL instance in Google Console and add it as a principle/permissions to the GS Bucket with at least "Object Creator" privileges.
+
+## March 8, 2022 Dev Ops Meeting
 
 Josh's demo:
 
@@ -54,15 +69,3 @@ persistent volumes are stored _on the minikube server_ in the /data dir, you can
 kustomize secrets generator can pull values from a gitignored .env file, you combine those with your configMap.yml for all your app's secrets/environment variables
 
 to get the static files, `gsutil rsync` ([docs](https://cloud.google.com/storage/docs/gsutil/commands/rsync)) from the storage bucket to local dir: <https://gitlab.com/california-college-of-the-arts/portal/-/blob/main/scripts/portaldev-copy-media>
-
-## Outstanding Questions
-
-Why the 2 elasticsearch containers?
-
-Next thing to work on: actually using the libraries Wagtail app and its Dockerfile.
-
-## Googe Cloud Media & DB Synchronization
-
-You can use `gsutil rsync` to copy media from one storage bucket to another. For very large transfers, try the [Google Cloud Transfer Service](https://console.cloud.google.com/transfer/cloud/jobs). We already have a job configured to copy media from production to staging and it can be run on demand.
-
-To run `google sql export sql` ([docs](https://cloud.google.com/sdk/gcloud/reference/sql/export/sql)) which exports a database to a SQL file in a GS bucket, you need to copy the **service account** name from the SQL instance in Google Console and add it as a principle/permissions to the GS Bucket with at least "Object Creator" privileges.

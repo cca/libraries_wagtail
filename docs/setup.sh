@@ -18,7 +18,7 @@ checkfor skaffold || brew install skaffold
 checkfor gcloud || echo "Google Cloud SDK is used to sync media and database files from the cloud. Install it yourself by following the instructions on https://cloud.google.com/sdk/docs/install-sdk"
 
 minikube config set vm-driver docker
-minikube config set cpus 2
+minikube config set cpus 4
 minikube config set memory 8192
 # minikube config set disk-size 20000mb
 minikube addons enable metrics-server
@@ -49,7 +49,7 @@ case ${result} in
 esac
 
 # shut down minikube if we started it above
-if not minikube status 2&>/dev/null; then
+if ! minikube status 2&>/dev/null; then
     minikube stop
 fi
 
