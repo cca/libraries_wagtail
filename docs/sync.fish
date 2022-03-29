@@ -81,14 +81,15 @@ if set -q _flag_d;
 
     # is Postgres pod running?
     set PG_POD (kubectl get pods --selector=app=postgres -o=custom-columns=:metadata.name --sort-by=.metadata.creationTimestamp --no-headers -n libraries-wagtail | tail -n 1)
-    if test -z "$PG_POD"
+    while test -z "$PG_POD"
         set_color --bold red
-        echo "The Postgres pod is not running in minikube. Run 'skaffold run -p db-only' to start it.'"
+        echo "The Postgres pod is not running in minikube. Running 'skaffold run -p db-only' to start it.'"
         set_color normal
-        exit 1
-    else
-        echo "Found Postgres pod $PG_POD"
+        skaffold run -p db-only
+        or echo "Error running skaffold, exiting..." and exit 1
+        set PG_POD (kubectl get pods --selector=app=postgres -o=custom-columns=:metadata.name --sort-by=.metadata.creationTimestamp --no-headers -n libraries-wagtail | tail -n 1)
     end
+    echo "Found Postgres pod $PG_POD"
 
     # export database to GS bucket and then download it
     # should I use gs://cca-manual-db-dumps when in prod context?
