@@ -20,7 +20,6 @@ checkfor gcloud || echo "Google Cloud SDK is used to sync media and database fil
 minikube config set vm-driver docker
 minikube config set cpus 4
 minikube config set memory 8192
-# minikube config set disk-size 20000mb
 minikube addons enable metrics-server
 
 echo -e "\nObtain a copy of secrets.env from a developer and place it in kubernetes/local\n"
@@ -34,12 +33,12 @@ case ${result} in
         echo "Skipping database download. You can run ./docs/sync.fish to download the database later."
         ;;
     "p")
-        minikube start
+        minikube start --kubernetes-version=1.18.20
         skaffold run -p db-only
         ./docs/sync.fish --prod --db
         ;;
     "s")
-        minikube start
+        minikube start --kubernetes-version=1.18.20
         skaffold run -p db-only
         ./docs/sync.fish --stage --db
         ;;

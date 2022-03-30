@@ -1,7 +1,14 @@
 #!/usr/bin/env fish
+alias k 'kubectl --namespace libraries-wagtail'
+
+function pf -d 'redo libraries service port-forwarding'
+    pkill -f 'port-forward service/libraries'
+    k port-forward service/libraries 8000:8000 &
+end
+
 function start -d 'start the local wagtail application'
     # start docker
-    if not docker info &>/dev/null
+    if docker info &>/dev/null
         echo "✅ Docker is running"
     else
         if command --query dockerd
@@ -14,49 +21,53 @@ function start -d 'start the local wagtail application'
         end
 
         while not docker info &>/dev/null
-            echo (date "+%H:%m") "waiting for Docker to start..."
-            sleep 2
+            echo (date "+%H:%m:%S") "waiting for Docker to start..."
+            sleep 10
         end
     end
 
     # start minikube
-    if not minikube status &>/dev/null
-        minikube start
-    else
+    if minikube status &>/dev/null
         echo "✅ Minikube is running"
+    else
+        minikube start # --kubernetes-version=1.18.20
     end
 
-    # run skaffold (in background? or else we can't run kubectl port-forward)
-    if not ps aux | grep skaffold
-        skaffold run dev &
-    else
+    # run skaffold
+    if k --field-selector=status.phase=Running get pods 2>/dev/null | grep wagtail-
         echo "✅ Skaffold is already running"
+    else
+        skaffold dev &
     end
 
     # port-forward
     echo "Starting kubernetes port-forwarding. The application will be available at http://localhost:8000"
     echo "If your k8s deployment is recreated, you have to redo the port-forwarding. You can tell this has happened if you see 'Error: No such container' and the website stops loading but the deployments are up (kubectl -n libraries-wagtail get deploy)."
-    # @TODO can we send kubectl port-forward to a background job, watch for deployment changes,
-    # then rerun it if we see one happening? Might be difficult if not completely impossible
-    kubectl --namespace libraries-wagtail port-forward service/libraries 8000:8000
+    # @TODO can we watch for deployment changes, then automatically redo port-forwarding when we see them?
+    # Might be difficult if not completely impossible
+    pf
 end
 
 function stop -d 'stop the local development tools'
-    echo "NOTE: stop isn't implemented yet, needs to be tested"
-    exit
-    killall skaffold
+    echo "Stopping the local development toolchain..."
+    pkill -f 'port-forward service/libraries'
+    pkill -f 'skaffold dev'
     minikube stop
-    killall Docker.app
+    pkill dockerd
+    killall Docker
 end
 
 set option $argv[1]
 
-if [ "$option" = 'start' -o "$option" = 'up' ]
+if [ "$option" = start -o "$option" = up ]
     start
-else if [ "$option" = 'stop' -o "$option" = 'down' ]
+else if [ "$option" = stop -o "$option" = down ]
     stop
+else if [ "$option" = 'pf' ]
+    pf
 else
-    echo "usage: ./docs/dev.fish [ start | stop | up | down ]"
-    echo "start/up starts the local development site"
-    echo "stop/down stops all the local development tools (skaffold, minikube, docker) in the right order"
+    echo -e "usage: ./docs/dev.fish [ start | stop | up | down | pf ]\n"
+    echo -e "\tstart/up - start the local development site"
+    echo -e "\tstop/down - stop the local development toolchaim (skaffold, minikube, docker)"
+    echo -e "\tpf - redo port-forwarding (after deployment changes)"
 end

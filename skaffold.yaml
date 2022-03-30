@@ -17,6 +17,7 @@ profiles:
     # https://skaffold.dev/docs/environment/profiles/#activation
     activation:
       - command: build
+      - command: deploy
       - command: dev
       - command: delete
     build:
