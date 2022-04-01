@@ -1,0 +1,30 @@
+# Settings to expose as environment variables.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app
+  labels:
+    app: libraries
+data:
+  # Generic
+  CAS_SERVER_URL: https://sso-stage.cca.edu/cas/login
+
+  # Elasticsearch
+  ES_URL: http://elasticsearch.libraries-wagtail:9200
+  ES_INDEX_PREFIX: libraries_wagtail
+
+  # Media
+  MEDIA_URL: /media/
+  MEDIA_ROOT: /app/media/
+
+  # local namespace
+  LOCAL_NAMESPACE: libraries-wagtail
+
+  # Postgres
+  PGHOST: postgres.libraries-wagtail
+  PGUSER: postgresadmin
+  PGDATABASE: cca_libraries
+  PGPASSWORD: admin123
+
+  # misc
+  IS_LOCAL: "true"

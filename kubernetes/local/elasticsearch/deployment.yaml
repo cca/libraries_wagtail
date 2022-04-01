@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+        - command:
+            - /bin/sh
+            - -exc
+            - |
+              cp /config/elasticsearch.yml /usr/share/elasticsearch/config
+              exec bash bin/es-docker
+          env:
+            - name: ES_JAVA_OPTS
+              value: -Xms1024m -Xmx1024m
+          # TODO: use version of elasticsearch used in production
+          image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+          imagePullPolicy: IfNotPresent
+          name: elasticsearch
+          ports:
+            - containerPort: 9200
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              memory: 2048Mi
+              cpu: "1"
+            requests:
+              memory: 2048Mi
+              cpu: "1"
+          volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: data
+            - mountPath: /config
+              name: config
+      initContainers:
+        - command:
+            - chown
+            - -R
+            - 1000:1000
+            - /usr/share/elasticsearch/data
+          image: busybox
+          imagePullPolicy: Always
+          name: set-data-owner
+          volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: data
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: elasticsearch-config
+          name: config
+        - name: data
+          persistentVolumeClaim:
+            claimName: elasticsearch-pv-volumeclaim

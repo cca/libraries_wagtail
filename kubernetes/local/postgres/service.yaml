@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  # NodePort opens up Postgres for GUI app access outside the cluster
+  type: NodePort
+  ports:
+   - port: 5432
+  selector:
+   app: postgres

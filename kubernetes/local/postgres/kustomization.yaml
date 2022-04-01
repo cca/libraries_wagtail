@@ -1,0 +1,7 @@
+namespace: libraries-wagtail
+
+resources:
+  - configMap.yaml
+  - deployment.yaml
+  - service.yaml
+  - volumes.yaml

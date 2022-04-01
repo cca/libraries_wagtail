@@ -1,0 +1,43 @@
+apiVersion: skaffold/v2beta25
+kind: Config
+metadata:
+  name: skaffold-config
+profiles:
+  - name: db-only
+    deploy:
+      kubeContext: minikube
+      kubectl:
+        # otherwise it complains about the namespace not existing
+        manifests: [ "kubernetes/local/namespace.yml" ]
+      kustomize:
+        paths:
+          - kubernetes/local/postgres
+  - name: local-dev
+    # we _don't_ want to waste time building for the `skaffold run -p db-only` pipeline
+    # https://skaffold.dev/docs/environment/profiles/#activation
+    activation:
+      - command: build
+      - command: deploy
+      - command: dev
+      - command: delete
+    build:
+      artifacts:
+      - image: libraries-wagtail
+        # Portal uses the custom cmd below which lets them have a DEVBUILD switch
+        # in their build process, that might be useful
+        # custom:
+            # buildCommand: docker build --network host --build-arg DEVBUILD=true -t $IMAGE .
+        docker:
+          dockerfile: Dockerfile
+        sync:
+        # https://skaffold.dev/docs/pipeline-stages/filesync/
+            infer:
+              - "libraries/**/*.py"
+              - "libraries/libraries/static/**/*.scss"
+              - "libraries/libraries/static/**/*.js"
+              - "libraries/libraries/templates/**/*.html"
+              # - "scripts/*"
+    deploy:
+      kustomize:
+        paths:
+        - kubernetes/local

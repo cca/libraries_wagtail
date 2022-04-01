@@ -1,0 +1,67 @@
+# nginx
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wagtail
+  labels:
+    app: libraries
+spec:
+  # Start 1 copy of the application.
+  replicas: 1
+
+  # Select the pods which are part of this deployment.
+  selector:
+    matchLabels:
+      app: libraries
+
+  # The pod template this deployment will create.
+  template:
+    metadata:
+      labels:
+        app: libraries
+    spec:
+      volumes:
+        # - name: code
+        #   persistentVolumeClaim:
+        #     claimName: code-pv-volumeclaim-app
+        - name: scripts
+          configMap:
+            name: scripts
+            defaultMode: 0744
+
+      containers:
+        # Portal does this, does is it? breaks skaffold run, syntax error
+        # - $patch: replace
+
+        - name: app
+          image: libraries-wagtail
+          imagePullPolicy: IfNotPresent
+          stdin: true
+          tty: true
+          command: [ "/scripts/init.sh" ]
+
+          ports:
+            - containerPort: 8000
+
+          volumeMounts:
+            # - name: code
+            #   mountPath: /app/libraries
+            - name: scripts
+              mountPath: /scripts
+
+          resources:
+              limits:
+                memory: 1024Mi
+                cpu: "1"
+              requests:
+                memory: 1024Mi
+
+          envFrom:
+            - configMapRef:
+                name: app
+            - secretRef:
+                name: app-secrets
+
+          env:
+            - name: DATABASE_URL
+              value: postgres://postgresadmin:admin123@postgres.libraries-wagtail:5432/cca_libraries

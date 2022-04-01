@@ -6,7 +6,15 @@ Deployment is triggered by tags of a certain format.
 - `mg-full-$TAG` -> https://libraries-libmg.cca.edu/
 - `release-$TAG` -> https://libraries.cca.edu (production)
 
-First push the commits you want, then remember to `git push --tags` to push up the tag or else a deployment won't be triggered.
+Note that _the git branch does not matter_; GitLab will happily deploy a commit that's tagged `release-0.0.1` to production even if it's not on the `main` branch. The full procedure to publsh changes looks like:
+
+```sh
+> git commit -m "here are my changes"
+> git push # push changes to gitlab
+> git tag $TAG # create a tag hooked to one of the deployments above
+> git push --tags # push the tag, triggering a deployment
+> glab ci status --live # (optional) monitor deployment progress
+```
 
 Right now, we only have `full` builds that do everything but eventually we might have more focused builds that don't take as long.
 

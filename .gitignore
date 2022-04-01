@@ -5,6 +5,8 @@ node_modules/
 
 # local settings file for laptop development
 libraries/libraries/settings/local.py
+# k8s secrets, used in local/kustomize.yml secretGenerator
+secrets.env
 
 # ignore all type of static files
 libraries/logs/*

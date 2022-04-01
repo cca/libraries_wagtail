@@ -1,0 +1,33 @@
+# NOTE: we don't use these resouces, they are commented out in the
+# root local/kustomization.yml file.
+# This is how Portal adds app files to the server so the main app image doesn't
+# need to be constantly rebuilt, but it adds a large layer of complexity
+# (they use `kubectl kustomize` and `sed` to replace a {{CODE_PATH}} variable
+# to create a temporary k8s manifest) and I couldn't get it working right.
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: code-pv-volume-app
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /Users/ephetteplace/Code/libraries_wagtail/libraries
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: code-pv-volumeclaim-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: code-pv-volume-app
+  resources:
+    requests:
+      storage: 5Gi

@@ -12,66 +12,13 @@ Here's the basic steps to starting this project. We'll assume you're in the root
 > python libraries/manage.py createsuperuser
 > # create the cache table—only relevant for production
 > python libraries/manage.py createcachetable libraries_wagtail_cache
+> # create an initial search index
+> python libraries/manage.py update_index
 ```
 
 Finally, to get animated GIF support from Wand you need to install the imagemagick library [as described in its documentation](http://docs.wand-py.org/en/latest/guide/install.html). I've found that this works fine locally on my Macbook but causes severe problems on our server as large amounts of memory are taken up to generate GIF derivatives.
 
 There's a "bootstrap.sh" script that does all this but I list the steps above for precision's sake.
-
-## Settings, Database, & Search
-
-To get appropriate Postgres & Elasticsearch versions on a Mac, I use Homebrew. These steps were sufficient for me but note that the version numbers may need to be tweaked.
-
-**NOTE**: as of 2020-12-21 elasticsearch 5.6 isn't available in homebrew anymore. You can download it straight from the ES website but then you have to do even more work to make it a service and run it. I am not going to update this documentation because we want to migrate to doing this all in Docker eventually anyways. For now, you can omit the Elasticsearch installation steps and settings.
-
-```sh
-> brew tap homebrew/services homebrew/cask homebrew/cask-versions
-> brew install postgresql@9.4
-> # put the pg_* utilities such as pg_restore on your path
-> set -U fish_user_paths "/usr/local/opt/postgresql@9.4/bin" $fish_user_paths
-> brew cask install homebrew/cask-versions/adoptopenjdk8 # prerequisite for elasticsearch
-> brew install elasticsearch@5.6
-```
-
-Once those are installed, you can manage them with the `brew services` commands. I typically run `brew services start --all` to fire up both before I start development and then `brew services stop --all` to shut them down afterwards. Leaving them running in the background does no harm.
-
-The database and search settings vary the most across local/dev/production environments. We define them in the libraries/libraries/settings/local.py file. I've included an example local.py in the "docs" folder with all the confidential items changed, it can be a useful guide when configuring the site.
-
-We should use a postgres database rather than a sqlite3 one because it's closer to what the production site uses. Here are examples of local postgres and sqlite databases:
-
-```python
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
-
-# Base URL to use when referring to full URLs within the Wagtail admin backend -
-# e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'https://localhost'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'libraries_cca_edu',
-        'USER': 'libuser',
-        'PASSWORD': 'password', # can be left blank for no password
-        'HOST': 'localhost',
-    },
-    'local': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-```
-
-The site comes with settings for Elasticsearch but doesn't enable it by default. To enable it, install Elasticsearch, start the ES server, and add a passage like this to libraries/libraries/settings/local.py:
-
-```python
-from .elasticsearch import *
-# You'll want to override these properties as they vary by installation
-WAGTAILSEARCH_BACKENDS['default']['URLS'][0] = 'http://localhost:9200'
-WAGTAILSEARCH_BACKENDS['default']['INDEX'] = 'libraries_wagtail_dev'
-```
-
-Run `python libraries/manage.py update_index` to create the initial search index. Also use `npm install && npx gulp build` to get node dependencies and build the site's frontend assets.
 
 ## Misc Notes
 
