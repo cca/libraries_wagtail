@@ -50,20 +50,27 @@ end
 
 function stop -d 'stop the local development tools'
     echo "Stopping the local development toolchain..."
+    echo "Stopping port-forwarding"
     pkill -f 'port-forward service/libraries'
+    echo "Stopping skaffold"
     pkill -f 'skaffold dev'
-    minikube stop
-    pkill dockerd
-    killall Docker
+    echo "Stopping minikube"
+    # if you try to stop minikube & it's not started it loops infinitely
+    if minikube status &>/dev/null
+        minikube stop
+    end
+    echo "Stopping docker"
+    pkill dockerd 2>/dev/null
+    killall Docker 2>/dev/null
 end
 
 set option $argv[1]
 
-if [ "$option" = start -o "$option" = up ]
+if test "$option" = start; or test "$option" = up
     start
-else if [ "$option" = stop -o "$option" = down ]
+else if test "$option" = stop; or test "$option" = down
     stop
-else if [ "$option" = 'pf' ]
+else if test "$option" = pf
     pf
 else
     echo -e "usage: ./docs/dev.fish [ start | stop | up | down | pf ]\n"

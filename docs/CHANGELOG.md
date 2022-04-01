@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.NEXT
+
+**YYYY-MM-DD** - create a workflow to run the site locally in a local kubernetes cluster that's similar to what the deployed site uses.
+
+- New development tools under the "docs" directory. The setup.sh script bootstraps a development environment, the sync.fish script synchronizes the local database and media with the remote instances, and the dev.fish script starts/stops the local development toolchain.
+
 ## 3.0.0
 
 **2021-10-27** - migrate the build/deploy/hosting to using Docker/GitLab CI/Google Cloud Platform and kubernetes. Add a command to update our deleted bibliographic records in Summon and require a search description for almost all pages.

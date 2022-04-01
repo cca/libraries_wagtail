@@ -16,6 +16,8 @@ Note that _the git branch does not matter_; GitLab will happily deploy a commit 
 > glab ci status --live # (optional) monitor deployment progress
 ```
 
-Right now, we only have `full` builds that do everything but eventually we might have more focused builds that don't take as long.
+Deployments to production ("release" tag) must be manually triggered inside GitLab.
+
+Right now, we only have `full` builds that do everything but eventually we might have more focused builds that don't take as long. We should focus on making the Docker image as cacheable as possible to increase speed.
 
 To watch the process of a build or see why it failed, visit GitLab's **Pipelines** page under CI/CD: https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/pipelines
