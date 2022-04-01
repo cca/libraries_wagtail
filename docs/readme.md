@@ -38,7 +38,7 @@ There are a few layers to the CCA Libraries site. The outline below shows the ba
 - An asterisk \* denotes a _singleton_ page (e.g. the home page, various indices)
 - A caret ^ denotes non-page content (doesn't appear in search results, shouldn't be visited directly in a web browser)
 
-```
+```yaml
 Root (Wagtail abstraction)
     |---Home* (home.HomePage)
         |---Services* (categories.CategoryPage)
@@ -64,7 +64,9 @@ Root (Wagtail abstraction)
         |---Search (no model, only a view in search/views.py)
         |---Brokenlinks^ (no model, only a view in brokenlinks/views.py)
         |---Instagram^ (instagram.Instagram, used on home page)
-        |---Serials Solution API^ (no model, only a view in sersol_api/views.py)
+        |---Serials Solution API^ (no model, only a view in sersol_api/views.py, used in Koha)
+        |---Summon^ (scheduled task to update our deleted catalog records in Summon)
+        |---Alerts^ (add alerts with django-admin, they appear in the header)
 ```
 
 The grandchild pages of each main category (Services, Collections, and About Us), represented above with the phrase "child content pages...", can use one of three page models: ServicePage, AboutUsPage, and SpecialCollectionsPage. Each of these pages can then, in turn, have children of any of those three types.
