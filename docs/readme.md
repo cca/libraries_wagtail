@@ -30,6 +30,17 @@ See deployment.md for more details on deploying to remote instances like staging
 
 **dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when you're done. Note that this is just a convenience; there's no reason you cannot manage the development tools individually if you want to.
 
+## Module (including Wagtail) Updates
+
+I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for python development as it stores an actual dependency graph rather than a list of unrelated packages like requirements.txt. For instance, if package A is changed to no longer rely on package B, pipenv removes B from the graph, but requirements doesn't know anything about dependencies and will happily continue to install a useless piece of software. Eventually, we might move to using pipenv in the Dockerfile, but for now we can `pipenv install wagtail=3.0.0` to add or upgrade a package and then `pipenv run pip freeze -l > libraries/requirements.txt` to flatten the pipenv graph into a requirements list.
+
+Wagtail, and often Django, updates require running a few extra steps on the app pod:
+
+```sh
+> alias k 'kubectl -nlibraries-wagtail' # save yourself a lot of typing
+> k exec (k get pods -o name | grep wagtail) -- /app/libraries/manage.py migrate
+```
+
 ## Sitemap
 
 There are a few layers to the CCA Libraries site. The outline below shows the basic structure with a few annotations:
