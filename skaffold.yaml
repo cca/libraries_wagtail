@@ -33,11 +33,20 @@ profiles:
         # https://skaffold.dev/docs/pipeline-stages/filesync/
             infer:
               - "libraries/**/*.py"
-              - "libraries/libraries/static/**/*.scss"
-              - "libraries/libraries/static/**/*.js"
               - "libraries/libraries/templates/**/*.html"
+              - "libraries/libraries/static/scss/*.scss"
+              - "libraries/libraries/static/css/*.css"
+              - "libraries/libraries/static/js/*.js"
+              - "libraries/libraries/static/fonts/*"
+              - "libraries/libraries/static/images/*"
+              - "libraries/libraries/static/summon/*"
               # - "scripts/*"
     deploy:
       kustomize:
         paths:
         - kubernetes/local
+        hooks:
+          after:
+            - host:
+                command: ['bash', '-c', 'kubectl -nlibraries-wagtail port-forward service/libraries 8000:8000 &']
+                # do we need to kill this process later? or on repeat runs?

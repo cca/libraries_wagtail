@@ -34,18 +34,14 @@ function start -d 'start the local wagtail application'
     end
 
     # run skaffold
-    if k --field-selector=status.phase=Running get pods 2>/dev/null | grep wagtail-
+    if k --field-selector=status.phase=Running get pods -o name | grep wagtail- &>/dev/null
         echo "✅ Skaffold is already running"
     else
+        set_color --bold
+        echo "Running Skaffold dev"
+        set_color normal
         skaffold dev &
     end
-
-    # port-forward
-    echo "Starting kubernetes port-forwarding. The application will be available at http://localhost:8000"
-    echo "If your k8s deployment is recreated, you have to redo the port-forwarding. You can tell this has happened if you see 'Error: No such container' and the website stops loading but the deployments are up (kubectl -n libraries-wagtail get deploy)."
-    # @TODO can we watch for deployment changes, then automatically redo port-forwarding when we see them?
-    # Might be difficult if not completely impossible
-    pf
 end
 
 function stop -d 'stop the local development tools'
