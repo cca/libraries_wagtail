@@ -46,8 +46,6 @@ end
 
 function stop -d 'stop the local development tools'
     echo "Stopping the local development toolchain..."
-    echo "Stopping port-forwarding"
-    pkill -f 'port-forward service/libraries'
     echo "Stopping skaffold"
     pkill -f 'skaffold dev'
     echo "Stopping minikube"
