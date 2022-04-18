@@ -159,7 +159,7 @@ class RowBlock(StreamBlock):
 class BaseStreamBlock(StreamBlock):
     subheading = CharBlock(
         icon="title",
-        classname="title",
+        form_classname="title",
         template="categories/blocks/subheading.html"
     )
     paragraph = RichTextBlock(

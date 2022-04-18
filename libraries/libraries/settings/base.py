@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.contrib.redirects',
     'wagtail.contrib.styleguide',
+    # https://docs.wagtail.org/en/stable/reference/contrib/legacy_richtext.html
+    'wagtail.contrib.legacy.richtext',
     'wagtail.core',
     'wagtail.documents',
     'wagtail.embeds',

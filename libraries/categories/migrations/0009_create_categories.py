@@ -64,6 +64,11 @@ def remove_categories(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
+    run_before = [
+        # added for Wagtail 2.11 compatibility
+        ('wagtailcore', '0053_locale_model'),
+    ]
+
     # we need the CategoryPage model to already exist
     dependencies = [
         ('categories', '0008_auto_20170721_0453'),

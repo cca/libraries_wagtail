@@ -1,3 +1,4 @@
+anyascii==0.3.1
 autopep8==1.6.0
 bcrypt==3.2.0
 beautifulsoup4==4.8.2
@@ -36,7 +37,7 @@ lxml==4.8.0
 olefile==0.46
 openpyxl==3.0.9
 paramiko==2.10.3
-Pillow==7.2.0
+Pillow==8.4.0
 protobuf==3.19.4
 psycopg2-binary==2.8.4
 pyasn1==0.4.8
@@ -58,7 +59,7 @@ toml==0.10.2
 Unidecode==1.3.4
 urllib3==1.26.9
 uWSGI==2.0.20
-wagtail==2.10.2
+wagtail==2.11.9
 webencodings==0.5.1
 whitenoise==5.2.0
 Willow==1.4.1

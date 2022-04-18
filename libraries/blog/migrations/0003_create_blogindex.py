@@ -50,6 +50,11 @@ def remove_blogindex(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
+    run_before = [
+        # added for Wagtail 2.11 compatibility
+        ('wagtailcore', '0053_locale_model'),
+    ]
+
     # we need the blogindex model to already exist
     dependencies = [
         ('blog', '0002_blogindex'),

@@ -2,9 +2,11 @@
 
 ## 3.NEXT
 
-**YYYY-MM-DD** - create a workflow to run the site locally in a local kubernetes cluster that's similar to what the deployed site uses.
+**YYYY-MM-DD** - create a workflow to run the site locally in a local kubernetes cluster that's similar to what the deployed site uses. Perform three Wagtail core updates.
 
 - New development tools under the "docs" directory. The setup.sh script bootstraps a development environment, the sync.fish script synchronizes the local database and media with the remote instances, and the dev.fish script starts/stops the local development toolchain.
+- Wagtail 2.10 upgrade: [Moderation Workflows](https://docs.wagtail.org/en/stable/editor_manual/administrator_tasks/managing_workflows.html#managing-workflows) are improved, we use the [Legacy richtext](https://docs.wagtail.org/en/stable/reference/contrib/legacy_richtext.html) middleware to simplify some styles, and there are new workflow and "site history" reports.
+- Wagtail 2.11 upgrade: adds locale field to page model to support [multi-language content](https://docs.wagtail.org/en/stable/advanced_topics/i18n.html#multi-language-content), [page aliases](https://docs.wagtail.org/en/stable/releases/2.11.html#page-aliases), and [nested media collections](https://docs.wagtail.org/en/stable/releases/2.11.html#collections-hierarchy).
 
 ## 3.0.0
 
