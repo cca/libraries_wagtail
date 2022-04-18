@@ -131,14 +131,4 @@
     @include respond($break-medium) {
         font-size: 14px;
     }
-
-    em {
-        cursor: pointer;
-        font-style: normal;
-        text-decoration: underline;
-
-        &:hover {
-            opacity: .7;
-        }
-    }
 }
