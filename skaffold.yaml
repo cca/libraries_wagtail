@@ -20,6 +20,11 @@ profiles:
       - command: deploy
       - command: dev
       - command: delete
+    portForward:
+      - resourceType: service
+        resourceName: libraries
+        namespace: libraries-wagtail
+        port: 8000
     build:
       artifacts:
       - image: libraries-wagtail
@@ -31,22 +36,28 @@ profiles:
           dockerfile: Dockerfile
         sync:
         # https://skaffold.dev/docs/pipeline-stages/filesync/
-            infer:
-              - "libraries/**/*.py"
-              - "libraries/libraries/templates/**/*.html"
-              - "libraries/libraries/static/scss/*.scss"
-              - "libraries/libraries/static/css/*.css"
-              - "libraries/libraries/static/js/*.js"
-              - "libraries/libraries/static/fonts/*"
-              - "libraries/libraries/static/images/*"
-              - "libraries/libraries/static/summon/*"
-              # - "scripts/*"
+        # we use "manual" and not "infer" because infer does not work with our multi-stage Docker build:
+        # "For multi-stage Dockerfiles, Skaffold only examines the last stage. Use manual sync rules to
+        # sync file copies from other stages."
+            manual:
+              - src: "libraries/**/*.py"
+                dest: .
+              - src: "libraries/libraries/templates/**/*.html"
+                dest: .
+              # we have to sync SASS files too or else changes to them trigger a rebuild
+              - src: "libraries/libraries/static/scss/**/*.scss"
+                dest: .
+              - src: "libraries/libraries/static/css/*.css"
+                dest: .
+              - src: "libraries/libraries/static/js/**/*.js"
+                dest: .
+              - src: "libraries/libraries/static/fonts/*"
+                dest: .
+              - src: "libraries/libraries/static/images/*"
+                dest: .
+              - src: "libraries/libraries/static/summon/**/*"
+                dest: .
     deploy:
       kustomize:
         paths:
         - kubernetes/local
-        hooks:
-          after:
-            - host:
-                command: ['bash', '-c', 'kubectl -nlibraries-wagtail port-forward service/libraries 8000:8000 &']
-                # do we need to kill this process later? or on repeat runs?

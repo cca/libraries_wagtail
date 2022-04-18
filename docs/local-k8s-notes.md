@@ -28,9 +28,13 @@ To get going:
 1. Open Docker Desktop & wait for it to start the docker daemon
 2. Run `minikube start` & wait for it to complete
   a. _if you don't have the site's database yet_ run `skaffold -p db-only` and `./docs/sync.fish`
-3. Run `skaffold dev` to build the cluster's servers & reload when you change files, see `skaffold help` for other options such as "build", "debug", and "run"
-4. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000` to forward the cluster's port 8000 to your host port 8000, now you can access the site at http://localhost:8000
-  a. Alternatively, use the Kube Forwarder.app (you can install it with `brew install --cask kube-forwarder)
+3. Run `skaffold dev --trigger polling --port-forward` to build the cluster's servers & reload when you change files, see `skaffold help` for other options such as "build", "debug", and "run"
+
+There are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:
+
+1. (easiest) run `skaffold dev` with the `--port-forward` flag. The [port-forward](https://skaffold.dev/docs/pipeline-stages/port-forwarding/) configuration is in Skaffold.yml. If we omit this from the Skaffold profile but use the `--port-forward` flag, Skaffold will automatically create forwarding for all your services, but if the pods are recreated it will not recreate the forwarding, so this is not recommended.
+2. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000`, this is what Skaffold is doing behind the scenes
+3. Use [Kube Forwarder.app](https://kube-forwarder.pixelpoint.io/) (you can install it with `brew install --cask kube-forwarder) which provides a GUI interface around port forwarding
 
 ## Questions & Todos
 
