@@ -19,6 +19,7 @@ if namespace in ['lib-ep', 'lib-mg']:
 elif namespace == 'lib-production':
     BASE_URL = 'https://libraries.cca.edu'
 elif namespace == 'libraries-wagtail': # local namespace
+    DEBUG = True
     BASE_URL = 'http://localhost'
 
 ALLOWED_HOSTS = ['*']
@@ -396,10 +397,6 @@ SUMMON_SFTP_UN = env.get('SUMMON_SFTP_UN', '').rstrip('\n')
 SUMMON_SFTP_PW = env.get('SUMMON_SFTP_PW', '').rstrip('\n')
 
 # Search Backend
-ENGLISH_KEYWORDS = [
-    'animation'
-]
-
 ES_INDEX_SETTINGS = {
     'settings': {
         'index': {
@@ -414,7 +411,7 @@ ES_INDEX_SETTINGS = {
                 },
                 'english_keywords': {
                     'type': 'keyword_marker',
-                    'keywords': ENGLISH_KEYWORDS
+                    'keywords': ['koha', 'openequella', 'equella', 'moodle', 'panopto']
                 },
                 'english_stemmer': {
                     'type': 'stemmer',
