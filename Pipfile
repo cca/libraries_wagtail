@@ -25,4 +25,4 @@ whitenoise = {version = "==5.2.0", extras = ["brotli"]}
 pysftp = "==0.2.9"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7.13"

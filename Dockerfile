@@ -10,7 +10,7 @@ RUN npm install --no-fund
 RUN npx gulp build
 
 # Build the Django application itself.
-FROM python:3.6-stretch as libraries
+FROM python:3.7.13 as libraries
 WORKDIR /app
 ENV PYTHONPATH /app:/app/libraries
 
@@ -34,9 +34,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certifi
     # Step 5: Cleanup apt cache and lists
     rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 
-# Install requirements - done in a separate step so Docker can cache it.
-COPY libraries/requirements.txt requirements/requirements.txt
-RUN pip install -r requirements/requirements.txt
+# Install python dependencies
+RUN pip install pipenv
+COPY Pipfile Pipfile.lock /app/
+# --system: install deps in system python, --deploy: throw error if lockfile doesn't match Pipfile
+RUN pipenv install --system --deploy
 
 # Collect our compiled static files from the assets image
 COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
@@ -45,7 +47,7 @@ COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
 # k8s, config files, etc. don't invalidate the docker cache
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#leverage-build-cache
 COPY libraries libraries/
-# if collectstatic throw an error during build & this dir doesn't exist, it
+# if collectstatic throws an error during build & this dir doesn't exist, it
 # can't be created for some reason, breaks the build
 RUN mkdir /app/libraries/logs
 
