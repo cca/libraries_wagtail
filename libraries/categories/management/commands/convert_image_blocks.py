@@ -53,7 +53,7 @@ def convertBlocksOfModel(model, streamfield):
     for page in model.objects.all():
         global page_was_changed
         page_was_changed = False
-        new_stream_data = [convertBlock(block) for block in getattr(page, streamfield).stream_data]
+        new_stream_data = [convertBlock(block) for block in getattr(page, streamfield).raw_data]
         if page_was_changed:
             stream_block = getattr(page, streamfield).stream_block
             setattr(page, streamfield, StreamValue(stream_block, new_stream_data, is_lazy=True))
