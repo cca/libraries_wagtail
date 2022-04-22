@@ -50,6 +50,7 @@ COPY libraries libraries/
 # if collectstatic throws an error during build & this dir doesn't exist, it
 # can't be created for some reason, breaks the build
 RUN mkdir /app/libraries/logs
+COPY kubernetes/uwsgi.ini kubernetes/
 
 # Settings environment variable
 ENV DJANGO_SETTINGS_MODULE libraries.settings
