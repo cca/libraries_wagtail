@@ -2,7 +2,61 @@
 
 This folder contains the generic documentation for the CCA Libraries Wagtail site as well as development scripts, all of which are meant to be run from the parent directory. Most of the site's apps also have readme files with more information specific to them.
 
-## Development
+## Questions & Todos
+
+- [ ] mount the media files at /app/libraries/media
+- [ ] do we want to mimic Portal's mounted volume approach to the app code?
+- [ ] commands for pruning minikube's docker instance
+
+## Running Wagtail Locally
+
+We need docker, minikube, kubectl, and skaffold. Many of these are available from different places but they're also all on homebrew. The other sensible place to get these tools is as [gcloud](https://cloud.google.com/sdk/docs/install) CLI components, which we need to interact with our cloud-hosted resources (databases, static files, servers) anyways. To use them, make sure that the "bin" subfolder inside the gcloud tools is on your path.
+
+```sh
+> brew i kubectl minikube skaffold # kubectl is a dependeny of homebrew minikube
+> brew i --cask docker # Docker Desktop app
+> # OR use gcloud for these two components
+> gcloud components install kubectl minikube skaffold
+```
+
+Docker Desktop provides nice visualizations of resources (images, volumes) as well as a set of command-line completions for the most popular shells. You may need to give it additional resources under Settings > Resources.
+
+Minikube can also be configured to use more resources than the defaults:
+
+```sh
+> minikube config set vm-driver docker
+> minikube config set cpus 4
+> minikube config set memory 8192
+```
+
+Once we're set up, the dev.fish script should do everything we need. Notes below are for troubleshooting or work on our development tooling.
+
+To start:
+
+1. Open Docker Desktop & wait for it to start the docker daemon
+2. Run `minikube start` & wait for it to complete
+  a. _if we don't have the site's database yet_ run `skaffold -p db-only` and `./docs/sync.fish`
+3. Run `skaffold dev --trigger polling --port-forward` to build the cluster's servers & reload when we change files, see `skaffold help` for other options such as "build", "debug", and "run"
+
+There are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:
+
+1. (easiest) run `skaffold dev` with the `--port-forward` flag. The [port-forward](https://skaffold.dev/docs/pipeline-stages/port-forwarding/) configuration is in Skaffold.yml. If we omit this from the Skaffold profile but use the `--port-forward` flag, Skaffold will automatically create forwarding for all your services, but if the pods are recreated it will not recreate the forwarding, so this is not recommended.
+2. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000`, this is what Skaffold does behind the scenes
+3. Use [Kube Forwarder.app](https://kube-forwarder.pixelpoint.io/) (you can install it with `brew install --cask kube-forwarder`) which provides a GUI interface around port forwarding
+
+Note that persistent volumes are stored _on the minikube server_ in the /data dir, we can `minikube ssh` to go into the server to look around. The server's docker instance will also stack up old versions of our images over time and need to be pruned. (**TODO** write up what these commands look like)
+
+`minikube dashboard` opens a nice web UI to visualize its k8s resources.
+
+## Tools
+
+**setup.sh** bootstraps the local development environment so we can begin working on the site without needing to push to a remote instance like staging.
+
+**sync.fish** copies a remote instance's data to your local development environment. `./docs/sync.fish --media` does the media files while `./docs/sync.fish --db` does the database. By default it syncs from staging but you can sync from `--prod` as well. Run `./docs/sync.fish --help` for complete usage information.
+
+**dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when you're done. Note that this is just a convenience; there's no reason you cannot manage the development tools individually if you want to.
+
+## Development Git Flow
 
 Outline:
 
@@ -21,14 +75,6 @@ Outline:
 - Push changes to production, `git tag release-$NUM && git push && git push --tags`
 
 See deployment.md for more details on deploying to remote instances like staging and production.
-
-## Tools
-
-**setup.sh** bootstraps the local development environment so we can begin working on the site without needing to push to a remote instance like staging.
-
-**sync.fish** copies a remote instance's data to your local development environment. `./docs/sync.fish --media` does the media files while `./docs/sync.fish --db` does the database. By default it syncs from staging but you can sync from `--prod` as well. Run `./docs/sync.fish --help` for complete usage information.
-
-**dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when you're done. Note that this is just a convenience; there's no reason you cannot manage the development tools individually if you want to.
 
 ## Module (including Wagtail) Updates
 
