@@ -5,7 +5,7 @@ from wagtail.core.models import Page
 
 
 # Custom validation for Page's clean() method to require search_description
-# Used in several places, not you _MUST_ call super.clean() before this
+# Used in several places, note you _MUST_ call super.clean() before this
 # github.com/wagtail/wagtail/blob/master/wagtail/core/models.py#L437
 def validate_clean(self):
     if not Page._slug_is_available(self.slug, self.get_parent(), self):
