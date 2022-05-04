@@ -2,14 +2,15 @@
 
 ## 3.1.0
 
-**YYYY-MM-DD** - create a workflow to run the site locally in a local kubernetes cluster that's similar to what the deployed site uses. Perform three Wagtail core updates.
+**YYYY-MM-DD** - create a workflow to run the site locally in a local kubernetes cluster that resembles our staging and production deployments. Perform four Wagtail core updates. Performance improvements in the site header and on the home page. Previews should more reliably show changes as opposed to cached, outdated versions of a page.
 
 - New development tools under the "docs" directory. The setup.sh script bootstraps a development environment, the sync.fish script synchronizes the local database and media with the remote instances, and the dev.fish script starts/stops the local development toolchain.
 - [Wagtail 2.10](https://docs.wagtail.org/en/stable/releases/2.10.html) upgrade: [Moderation Workflows](https://docs.wagtail.org/en/stable/editor_manual/administrator_tasks/managing_workflows.html#managing-workflows) are improved, we use the [Legacy richtext](https://docs.wagtail.org/en/stable/reference/contrib/legacy_richtext.html) middleware to simplify some styles, and there are new workflow and "site history" reports.
 - [Wagtail 2.11](https://docs.wagtail.org/en/stable/releases/2.11.html) upgrade: adds locale field to page model to support [multi-language content](https://docs.wagtail.org/en/stable/advanced_topics/i18n.html#multi-language-content), [page aliases](https://docs.wagtail.org/en/stable/releases/2.11.html#page-aliases), and [nested media collections](https://docs.wagtail.org/en/stable/releases/2.11.html#collections-hierarchy).
 - [Wagtail 2.12](https://docs.wagtail.org/en/stable/releases/2.12.html) upgrade: [customizing admin UI colors](https://docs.wagtail.org/en/stable/advanced_topics/customisation/admin_templates.html#custom-user-interface-colors), update the convert_images_blocks.py script.
+- [Wagtail 2.13](https://docs.wagtail.org/en/stable/releases/2.13.html) upgrade: duplicate blocks while editing pages (@TODO confirm!), internal [commenting](https://docs.wagtail.org/en/stable/editor_manual/editing_existing_pages.html#commenting) is available but not added to any of our page models yet.
 
-We're not using many of the new features in these Wagtail versions but the upgrades are part of an effort to bring us back up to date so when features we _do_ want to use are introduced we're able to acquire them quickly.
+We're not using many of the new features in these Wagtail versions but the upgrades are part of an effort to bring us up to date so when features we _do_ want to use are introduced, we're able to acquire them quickly.
 
 ## 3.0.0
 
