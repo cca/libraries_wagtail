@@ -32,6 +32,7 @@ function start -d 'start the local wagtail application'
     else
         minikube start # --kubernetes-version=1.18.20
     end
+    eval (minikube docker-env)
 
     # run skaffold
     if k --field-selector=status.phase=Running get pods -o name | grep wagtail- &>/dev/null
@@ -58,6 +59,25 @@ function stop -d 'stop the local development tools'
     killall Docker 2>/dev/null
 end
 
+function cleanup -d 'free up disk space by deleting older docker images'
+    set_color --bold
+    echo "Cleaning up Docker objects more than a day old on the Minikube server"
+    set_color red
+    echo "NOTE: this command is untested! Use at your own risk, but the worst result is probably that the next time Skaffold runs it will rebuild the app container from scratch with no cache."
+    set_color normal
+    read -P "Do you want to continue? (Y/n) " response
+    if test (string lower "$response") = 'n'
+        echo "OK! Not cleaning up."
+        return 0
+    end
+    minikube ssh 'docker system df'
+    # @TODO does this interactive command work over `minikube ssh`?
+    minikube ssh 'docker system prune --filter until=24h'
+    # Below: find all but the most recent libraries-wagtail images & rm them
+    # set most_recent_img (minikube ssh "docker images libraries-wagtail --format '{{.ID}}' | head -n1")
+    # docker images libraries-wagtail -f before=$most_recent_img --format '{{.ID}}' | uniq | xargs -n1 docker rmi
+end
+
 set option $argv[1]
 switch $option
     case start up
@@ -66,6 +86,8 @@ switch $option
         stop
     case gulp
         gulp
+    case clean cleanup
+        cleanup
     case '*'
         echo -e "usage: ./docs/dev.fish [ start | stop | up | down | gulp ]\n"
         echo -e "\tstart/up - start the local development site"
