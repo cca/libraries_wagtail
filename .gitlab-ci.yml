@@ -32,6 +32,8 @@ stages:
 docker_image_staging:
   image: "docker:18.09.7"
   stage: build
+  tags:
+  - build
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-(fast|nodb|full)-*/"
       when: always
@@ -120,6 +122,8 @@ docker_image_prod:
 synchronize_qa:
   image: "google/cloud-sdk:360.0.0"
   stage: synchronize
+  tags:
+  - staging
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-full-*/"
       when: always
@@ -135,6 +139,8 @@ synchronize_qa:
 deploy_full_qa:
   image: "google/cloud-sdk:360.0.0"
   stage: deploy
+  tags:
+  - staging
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-full-*/"
       when: always
@@ -151,6 +157,8 @@ deploy_full_qa:
 deploy_fast_qa:
   image: "google/cloud-sdk:360.0.0"
   stage: deploy
+  tags:
+  - staging
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|nlm)-fast-*/"
       when: always
@@ -193,6 +201,8 @@ deploy_fast_qa:
 deploy_release:
   image: "google/cloud-sdk:352.0.0"
   stage: deploy
+  tags:
+  - production
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
       when: manual
