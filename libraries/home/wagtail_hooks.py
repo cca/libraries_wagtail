@@ -23,8 +23,9 @@ def register_no_search_desc_report_menu_item():
     return MenuItem("Pages lacking Search Description", reverse('no_search_description_report'), classnames='icon icon-' + NoSearchDescriptionReport.header_icon, order=700)
 
 
+# @TODO is this function name weird because I copy-pasted it from documentation?
 @hooks.register('register_admin_urls')
-def register_unpublished_changes_report_url():
+def register_no_search_desc_report_url():
     return [
         path('reports/no-search-description/', NoSearchDescriptionReport.as_view(), name='no_search_description_report'),
     ]
