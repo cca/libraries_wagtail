@@ -22,7 +22,7 @@
     "url": "https://github.com/cca/libraries_wagtail/issues"
   },
   "homepage": "https://github.com/cca/libraries_wagtail#readme",
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "autoprefixer": "^10.1",
@@ -33,7 +33,9 @@
     "gulp-sass": "^5.0.0",
     "gulp-uglify": "^3.0.2",
     "node-sass": "^7.0.1",
-    "postcss": "^8.2.1",
+    "postcss": "^8.2.1"
+  },
+  "devDependencies": {
     "sass-lint": "^1.13.1"
   },
   "engines": {

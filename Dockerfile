@@ -1,13 +1,15 @@
-FROM node:14-alpine AS assets
+FROM node:16-alpine AS assets
 # we build static assets (JS, CSS, application images) in a node container
 WORKDIR /app
 
-## Copy project files into the docker image
+# Copy project files into the docker image
+# See https://pnpm.io/cli/fetch#usage-scenario
 COPY libraries/libraries/static/ libraries/libraries/static
-COPY package.json package-lock.json gulpfile.js ./
-
-RUN npm install --no-fund
-RUN npx gulp build
+COPY pnpm-lock.yaml gulpfile.js package.json ./
+RUN npm install --location=global pnpm@7.4 gulp-cli@2.3 --no-fund --no-audit
+RUN pnpm fetch --prod
+RUN pnpm install -r --offline --prod
+RUN gulp build
 
 # Build the Django application itself.
 FROM python:3.7.13 as libraries
