@@ -33,7 +33,7 @@ class Command(BaseCommand):
             # no SummonDelete.objects yet
             logger.error('There are no existing SummonDelete objects. Please run this management script with an argument of the date we last updated Summon in "YYYY/MM/DD" format.')
             exit(1)
-        logger.info("Summon deletes task was last run on {}".format(lastrun))
+        logger.info("Finding deleted MARC records since {}".format(lastrun))
 
         response = requests.get(settings.SUMMON_REPORT_URL.format(quote(lastrun)))
         # Koha JSON is an array of arrays for each row of the report e.g. [[1], [2]]
@@ -51,9 +51,6 @@ class Command(BaseCommand):
                 fh.seek(0)
 
                 # PUT file to Summon SFTP server
-                # @TODO can we change it so pysftp doesn't use the "paramiko"
-                # label in logging by calling cnopts.log()?
-                # https://pysftp.readthedocs.io/en/release_0.2.9/cookbook.html#pysftp-cnopts
                 cnopts = pysftp.CnOpts()
                 cnopts.hostkeys.load(Path(__file__).parent / 'known_hosts')
                 with pysftp.Connection(settings.SUMMON_SFTP_URL, cnopts=cnopts,

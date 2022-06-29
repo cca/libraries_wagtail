@@ -18,7 +18,7 @@ This task depends on `pysftp` and is the sole reason for that dependency. There 
 
 The `SUMMON_SFTP_URL` is also set in our base settings while `SUMMON_SFTP_UN` and `SUMMON_SFTP_PW` are secret and must be configured in your local settings.
 
-By default, pysftp checks ~/.ssh/known_hosts and it will not connect to a server if it is not listed there. So I recommend manually connecting to the Summon SFTP server like `sftp $SUMMON_SFTP_UN@$SUMMON_SFTP_URL`, filling in the appropriate values and inserting our password at the prompt, which will prompt you to add the host to known_hosts.
+By default, pysftp checks ~/.ssh/known_hosts (/root/.ssh/known_hosts on a kubernetes pod) and it will not connect to a server if it is not listed there. To work around this, we include our own known_hosts file in the management/commands directory. In the past, the command has stopped working when Summon changed the address of their FTP server. We can update known_hosts by running a shell on a pod, connecting to Summon's FTP with `sftp cca-catalog@ftp.summon.serialssolutions.com`, typing "yes" at the prompt, and copying the updated /root/.ssh/known_hosts file.
 
 The first time the task runs, there are no previous iterations, which can cause an error. The management command accepts a "date last run" argument so you can run `python manage.py summon_deletes "YYYY/MM/DD"` the first time.
 
