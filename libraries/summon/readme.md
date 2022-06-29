@@ -14,12 +14,12 @@ We previously stored this code in the [libraries_branding](https://github.com/cc
 
 ## Setup
 
-This task depends on `pysftp` and is the sole reason for that dependency. There is a `SummonDelete` model under this app that represents previous runs of the task; a `SummonDelete` includes the date of the run, the number of deleted records, and a text list of deleted records. We hook this app up to a public Koha JSON report which simply returns the identifiers (biblionumbers) of deleted records and nothing else. Set this to `SUMMON_REPORT_URL`.
+This task depends on `pysftp` and is the sole reason for that dependency. There is a `SummonDelete` model under this app that represents previous runs of the task; a `SummonDelete` includes the date of the run, the number of deleted records, and a text list of deleted records. We hook this app up to [a public Koha JSON report](https://library-staff.cca.edu/cgi-bin/koha/reports/guided_reports.pl?reports=152&phase=Edit%20SQL) which simply returns the identifiers (biblionumbers) of deleted records and nothing else. Set this to `SUMMON_REPORT_URL`. Example: https://library.cca.edu/cgi-bin/koha/svc/report?id=152&sql_params={}
 
 The `SUMMON_SFTP_URL` is also set in our base settings while `SUMMON_SFTP_UN` and `SUMMON_SFTP_PW` are secret and must be configured in your local settings.
 
 By default, pysftp checks ~/.ssh/known_hosts (/root/.ssh/known_hosts on a kubernetes pod) and it will not connect to a server if it is not listed there. To work around this, we include our own known_hosts file in the management/commands directory. In the past, the command has stopped working when Summon changed the address of their FTP server. We can update known_hosts by running a shell on a pod, connecting to Summon's FTP with `sftp cca-catalog@ftp.summon.serialssolutions.com`, typing "yes" at the prompt, and copying the updated /root/.ssh/known_hosts file.
 
-The first time the task runs, there are no previous iterations, which can cause an error. The management command accepts a "date last run" argument so you can run `python manage.py summon_deletes "YYYY/MM/DD"` the first time.
+The first time the task runs, there are no previous iterations, which can cause an error. The management command accepts a "date last run" argument so you can run `python manage.py summon_deletes "MM/DD/YYYY"` the first time. Note that **Koha has changed the date format for report parameters _multiple times_** so we may need to try a few different formats and edit the command if they change it again.
 
 After the initial run, the task can be added as a cron job and run regularly.
