@@ -2,7 +2,7 @@
 
 ## 3.1.0
 
-**YYYY-MM-DD** - create a workflow to run the site locally in a local kubernetes cluster that resembles our staging and production deployments. Perform four Wagtail core updates. Performance improvements in the site header and on the home page. Previews should more reliably show changes as opposed to cached, outdated versions of a page.
+**2020-06-30** - create a workflow to run the site locally in a local kubernetes cluster that resembles our staging and production deployments. Perform four Wagtail core updates. Performance improvements in the site header and on the home page. Previews should more reliably show changes as opposed to cached, outdated versions of a page.
 
 ### Features
 
@@ -17,6 +17,7 @@ We're not using many of the new features in these Wagtail versions but the upgra
 ### Bugfixes
 
 - The **Summon Deletes** script temporarily stopped working due to a pair of problems (a change to Summon's FTP server and one to Koha's date formatting).
+- Minor accessibility improvements (e.g. better color contrast for the links on the home page "info boxes")
 
 ## 3.0.0
 
