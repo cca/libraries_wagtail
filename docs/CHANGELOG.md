@@ -2,7 +2,7 @@
 
 ## 3.1.0
 
-**2020-06-30** - create a workflow to run the site locally in a local kubernetes cluster that resembles our staging and production deployments. Perform four Wagtail core updates. Performance improvements in the site header and on the home page. Previews should more reliably show changes as opposed to cached, outdated versions of a page.
+**2022-06-30** - create a workflow to run the site locally in a local kubernetes cluster that resembles our staging and production deployments. Perform four Wagtail core updates. Performance improvements in the site header and on the home page. Previews should more reliably show changes as opposed to cached, outdated versions of a page.
 
 ### Features
 
