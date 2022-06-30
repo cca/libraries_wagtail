@@ -96,7 +96,9 @@
     letter-spacing: .04em;
     line-height: 20px;
 
-    a {
+    // the extra selectors are for specifity
+    // to override the `.rich-text a[href]` rule in components/misc/rich-text.scss
+    .rich-text a[href] {
         color: $info-box-link-blue;
     }
 
