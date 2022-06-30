@@ -15,7 +15,6 @@
         margin: 0 0 15px;
     }
 
-    // scss-lint:disable DeclarationOrder
     @include respond($break-medium) {
         flex: 0 0 30%;
 
@@ -26,7 +25,6 @@
             padding-right: 24px;
         }
     }
-    // scss-lint:enable DeclarationOrder
 }
 
 // vary color based on category

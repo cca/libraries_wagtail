@@ -3,7 +3,7 @@
 // ========================================
 
 .collection {
-    @include clearfix();
+    @include clearfix;
 
     @include respond($break-medium) {
         margin: 0 0 20px;

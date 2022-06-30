@@ -3,7 +3,7 @@
 // ========================================
 
 .collections-nav {
-    @include clearfix(); // fix margins
+    @include clearfix; // fix margins
     margin: 0 15px 10px;
 
     @include respond($break-medium) {

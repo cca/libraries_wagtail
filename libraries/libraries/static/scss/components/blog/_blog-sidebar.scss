@@ -24,9 +24,9 @@
         // saves us having to handle this in JS because
         // of the mobile toggle.
 
-        // scss-lint:disable ImportantRule
+        // sass-lint:disable no-important
         display: block !important;
-        // scss-lint:enable ImportantRule
+        // sass-lint:enable no-important
     }
 }
 

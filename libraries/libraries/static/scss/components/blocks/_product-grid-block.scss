@@ -74,6 +74,6 @@
         display: block;
         font-size: 16px;
         overflow: hidden;
-        text-overflow: ellipsis; /* number of lines to show */ /* fallback */
+        text-overflow: ellipsis; // number of lines to show, fallback
     }
 }

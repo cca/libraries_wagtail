@@ -8,12 +8,12 @@
 // selector overrides a lot easier, also just logical.
 
 // we have to use an ID here to override lightGallery CSS
-// scss-lint:disable IdSelector, ImportantRule
+// sass-lint:disable no-ids,no-important
 #lg-counter {
     color: $turquoise !important;
     font-size: 18px;
 }
-// scss-lint:enable IdSelector, ImportantRule
+// sass-lint:enable no-ids,no-important
 
 $sub-html-padding: 40px;
 
@@ -52,7 +52,7 @@ $sub-html-padding: 40px;
         padding: $sub-html-padding 2em;
 
         // dark gray line inbetween responsibility & description
-        &:before {
+        &::before {
             border-left: 1px solid lighten($black, 30%);
             content: '';
             height: 60px;
@@ -74,12 +74,10 @@ $sub-html-padding: 40px;
     .gallery--work__linked-title {
         display: block;
 
-        // scss-lint:disable SelectorDepth
         a {
             color: $turquoise;
             text-decoration: none;
         }
-        // scss-lint:enable SelectorDepth
     }
 }
 

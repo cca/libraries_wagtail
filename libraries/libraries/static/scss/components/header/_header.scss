@@ -4,7 +4,7 @@
 // ===================================
 
 .header {
-    @include clearfix();
+    @include clearfix;
     background: $white;
     border-bottom: 1px solid $header-border-color;
     height: $header-height-small;

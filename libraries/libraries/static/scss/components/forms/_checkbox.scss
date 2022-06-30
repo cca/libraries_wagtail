@@ -2,8 +2,7 @@
 // Custom checkbox styles
 // ========================================
 
-// scss-lint:disable QualifyingElement
-input[type="radio"] {
+input[type='radio'] {
     appearance: none;
     background: $black;
     border-radius: 99px;
@@ -25,4 +24,3 @@ input[type="radio"] {
         box-shadow: inset 0 0 0 4px $white, 0 0 0 2px $black;
     }
 }
-// scss-lint:enable QualifyingElement

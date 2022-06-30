@@ -68,7 +68,6 @@ $mainnav-border-bottom: 3px;
         border-left-color: $green;
     }
 
-    // scss-lint:disable DeclarationOrder
     @include respond($break-medium) {
         &:first-of-type {
             border-bottom-color: $blue;
@@ -82,7 +81,6 @@ $mainnav-border-bottom: 3px;
             border-bottom-color: $green;
         }
     }
-    // scss-lint:enable DeclerationOrder
 }
 
 .page--services .main-navigation__item:first-of-type {

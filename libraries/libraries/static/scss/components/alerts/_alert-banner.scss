@@ -1,6 +1,6 @@
 .alert-banner {
     align-items: center;
-    background-color: #E00;
+    background-color: $ccaRed;
     color: $white;
     display: flex;
     font-family: $font-family-sans-serif;
@@ -20,14 +20,10 @@
         float: left;
         height: 24px;
         margin-right: 8px;
-        mask-repeat: no-repeat;
-        -webkit-mask-repeat: no-repeat;
+        mask-image: url('/static/images/exclamation-circle.svg');
         mask-position: center;
-        -webkit-mask-position: center;
+        mask-repeat: no-repeat;
         mask-size: contain;
-        -webkit-mask-size: contain;
-        -webkit-mask-image: url("/static/images/exclamation-circle.svg");
-        mask-image: url("/static/images/exclamation-circle.svg");
         width: 24px;
     }
 
@@ -37,6 +33,7 @@
 
     p {
         display: inline;
+        // @TODO isn't this overridden by the rule below?
         margin-right: 8px;
         margin: 0;
     }

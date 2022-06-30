@@ -8,17 +8,15 @@
     font-family: $font-family-sans-serif;
     // non-standard, autoprefixer can't handle this property because the values
     // differ with each implementation (W3C, Firefox, Chrome)
-    // scss-lint:disable PropertySpelling
+    // sass-lint:disable no-misspelled-properties
     font-smooth: always;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    // scss-lint:enable PropertySpelling
+    // sass-lint:enable no-misspelled-properties
     min-width: 360px;
     padding-top: $header-height-small;
     text-rendering: optimizeLegibility;
-    // scss-lint:disable DuplicateProperty
+    // sass-lint:disable no-duplicate-properties
     text-rendering: geometricPrecision;
-    // scss-lint:enable DuplicateProperty
+    // sass-lint:enable no-duplicate-properties
 
     // push page body down if alert banner is present, not necessary on home page
     &--with-alert:not(.page--home) {

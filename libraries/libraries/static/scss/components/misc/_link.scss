@@ -4,7 +4,6 @@
 
 .rich-text,
 .service-row-item__text-wrapper {
-    // scss-lint:disable QualifyingElement
     a[href] {
         border-bottom: 2px solid transparent;
         color: $ccaBlue;
@@ -15,5 +14,4 @@
     a[href]:hover {
         border-bottom-color: $ccaBlue;
     }
-    // scss-lint:enable QualifyingElement
 }

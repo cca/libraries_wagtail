@@ -30,7 +30,6 @@
         margin-bottom: 0;
     }
 
-    // scss-lint:disable DeclarationOrder
     @include respond($break-medium) {
         border-bottom: 0;
         flex: 1 0 50%;
@@ -41,7 +40,6 @@
         flex: 1 0 20%;
         margin: 0;
     }
-    // scss-lint:enable DeclarationOrder
 }
 
 .home-info-box__item:nth-of-type(2)::after,
@@ -97,6 +95,10 @@
     font-size: 13px;
     letter-spacing: .04em;
     line-height: 20px;
+
+    a {
+        color: $info-box-link-blue;
+    }
 
     @include respond($break-medium) {
         font-size: 14px;

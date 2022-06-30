@@ -10,17 +10,15 @@ $text-selectors: '.blog-post__image-description, .blog-post__paragraph, .blog-po
     font-family: $font-family-serif;
     // non-standard, autoprefixer can't handle this property because the values
     // differ with each implementation (W3C, Firefox, Chrome)
-    // scss-lint:disable PropertySpelling
+    // sass-lint:disable no-misspelled-properties
     font-smooth: always;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    // scss-lint:enable PropertySpelling
+    // sass-lint:enable no-misspelled-properties
     line-height: 1.5;
     min-width: 360px;
     text-rendering: optimizeLegibility;
-    // scss-lint:disable DuplicateProperty
+    // sass-lint:disable no-duplicate-properties
     text-rendering: geometricPrecision;
-    // scss-lint:enable DuplicateProperty
+    // sass-lint:enable no-duplicate-properties
 
     // override font based on the value of main_body_font
     // Due to the way inheritance works, we need to reiterate all the blocks (see
