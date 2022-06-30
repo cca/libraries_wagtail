@@ -52,6 +52,9 @@ docker_image_staging:
 docker_image_prod:
   image: "docker:18.09.7"
   stage: build
+  tags:
+  - build
+  - production
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
       when: always
