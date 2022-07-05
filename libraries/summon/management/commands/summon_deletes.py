@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 cnopts.hostkeys.load(Path(__file__).parent / 'known_hosts')
                 with pysftp.Connection(settings.SUMMON_SFTP_URL, cnopts=cnopts,
                                        username=settings.SUMMON_SFTP_UN,
-                                       password=settings.SUMMON_SFTP_PW) as sftp:
+                                       password=settings.SUMMON_SFTP_PASS) as sftp:
                     with sftp.cd('deletes'):
                         sftp.put(fh.name)
                         # write last run date to model
