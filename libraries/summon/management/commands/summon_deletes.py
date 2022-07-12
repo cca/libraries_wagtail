@@ -23,8 +23,8 @@ class Command(BaseCommand):
                             help='date of last run (in MM/DD/YYYY format)')
 
     def handle(self, *args, **options):
-        if not hasattr(settings, 'SUMMON_SFTP_UN') or not hasattr(settings, 'SUMMON_SFTP_PW'):
-            raise CommandError("Requires a SUMMON_SFTP_UN and SUMMON_SFTP_PW configured in yout local.py settings.")
+        if not hasattr(settings, 'SUMMON_SFTP_UN') or not hasattr(settings, 'SUMMON_SFTP_PASS'):
+            raise CommandError("Requires a SUMMON_SFTP_UN and SUMMON_SFTP_PASS configured in yout local.py settings.")
         # lastrun is a STRING (not date!) of form "MM/DD/YYYY"
         try:
             lastrun = options.get('lastrun', None) or SummonDelete.objects.latest('date').date.strftime('%m/%d/%Y')
