@@ -9,4 +9,4 @@ class SummonDelete(models.Model):
     records = models.TextField(blank=True, help_text='Newline-separated list of deleted record ID numbers ("biblionumber" in Koha parlance).')
 
     def __str__(self):
-        return str(self.date)
+        return str('{} ({})'.format(self.date.strftime('%Y-%m-%d'), self.number))
