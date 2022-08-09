@@ -4,10 +4,9 @@
 
 	<li class="home-info-box__item">
 		<h2 class="home-info-box__item-title">
-			{# @TODO should these a[href] be a reference, not a hard-coded value? #}
 			<a
 				class="home-info-box__item-link"
-				href="/services/"
+				href="{% slugurl 'services' %}"
 				title="Services"
 			>
 				Services
@@ -21,7 +20,7 @@
 		<h2 class="home-info-box__item-title">
 			<a
 				class="home-info-box__item-link"
-				href="/collections/"
+				href="{% slugurl 'collections' %}"
 				title="Collections"
 			>
 				Collections
@@ -35,7 +34,7 @@
 		<h2 class="home-info-box__item-title">
 			<a
 				class="home-info-box__item-link"
-				href="/about-us/"
+				href="{% slugurl 'about-us' %}"
 				title="About Us"
 			>
 				About Us
