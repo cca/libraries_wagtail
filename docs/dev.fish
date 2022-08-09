@@ -9,7 +9,7 @@ end
 function start -d 'start the local wagtail application'
     # start docker
     if docker info &>/dev/null
-        echo "✅ Docker is running"
+        echo "✅  Docker is running"
     else
         if command --query dockerd
             dockerd &>/dev/null &
@@ -28,7 +28,7 @@ function start -d 'start the local wagtail application'
 
     # start minikube
     if minikube status &>/dev/null
-        echo "✅ Minikube is running"
+        echo "✅  Minikube is running"
     else
         minikube start # --kubernetes-version=1.18.20
     end
@@ -36,7 +36,7 @@ function start -d 'start the local wagtail application'
 
     # run skaffold
     if k --field-selector=status.phase=Running get pods -o name | grep wagtail- &>/dev/null
-        echo "✅ Skaffold is already running"
+        echo "✅  Skaffold is already running"
     else
         set_color --bold
         echo "Running Skaffold dev, hit Ctrl + Z to send it to the background or Ctrl + C to stop."
