@@ -42,7 +42,7 @@ profiles:
             manual:
               - src: "libraries/**/*.py"
                 dest: .
-              - src: "libraries/libraries/templates/**/*.html"
+              - src: "libraries/**/templates/**/*.html"
                 dest: .
               # we have to sync SASS files too or else changes to them trigger a rebuild
               - src: "libraries/libraries/static/scss/**/*.scss"
