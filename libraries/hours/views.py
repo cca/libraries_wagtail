@@ -86,7 +86,7 @@ def validate(library, date):
     Parameters
     ----------
     library : str
-        Name of a library e.g. "Meyer", "Simpson".
+        Name of a library, e.g. "Simpson".
         Libraries are Wagtail snippets.
     date : str
         Date in YYYY-MM-DD format.
