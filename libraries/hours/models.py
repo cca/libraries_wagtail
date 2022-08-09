@@ -81,7 +81,7 @@ class OpenHours(models.Model):
 
 @register_snippet
 class Closure(models.Model):
-    label = models.CharField(max_length=200, help_text="e.g. Meyer Fall 2017")
+    label = models.CharField(max_length=200, help_text="e.g. Simpson Fall 2022")
 
     library = models.ForeignKey(
         'hours.Library',
@@ -212,8 +212,8 @@ class HoursPage(Page):
         # default to current date but allow "date" parameter in URL
         for_date = request.GET.get('date', datetime.date.today())
         hrs = {}
-        for lib in ('Meyer', 'Simpson', 'Materials'):
-            hrs[lib] = get_hours_for_lib(lib, for_date=for_date)
+        for lib in Library.objects.all():
+            hrs[lib.name] = get_hours_for_lib(lib.name, for_date=for_date)
 
         context['hours'] = hrs
         # for ease of templating, don't pass "for_date" when it's current date
