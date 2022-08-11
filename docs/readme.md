@@ -9,7 +9,7 @@ This folder contains the generic documentation for the CCA Libraries Wagtail sit
 
 ## Running Wagtail Locally
 
-We need docker, minikube, kubectl, and skaffold. Many of these are available from different places but they're also all on homebrew. The other sensible place to get these tools is as [gcloud](https://cloud.google.com/sdk/docs/install) CLI components, which we need to interact with our cloud-hosted resources (databases, static files, servers) anyways. To use them, make sure that the "bin" subfolder inside the gcloud tools is on your path.
+We need docker, minikube, kubectl, and skaffold. Many of these are available from different places but they're also all on homebrew. The other sensible place to get these tools is as [gcloud](https://cloud.google.com/sdk/docs/install) CLI components, which we need to interact with our cloud-hosted resources (databases, static files, servers) anyways. To use them, we make sure that the "bin" subfolder inside the gcloud tools is on our path.
 
 ```sh
 > brew i kubectl minikube skaffold # kubectl is a dependeny of homebrew minikube
@@ -18,7 +18,7 @@ We need docker, minikube, kubectl, and skaffold. Many of these are available fro
 > gcloud components install kubectl minikube skaffold
 ```
 
-Docker Desktop provides nice visualizations of resources (images, volumes) as well as a set of command-line completions for the most popular shells. You may need to give it additional resources under Settings > Resources.
+Docker Desktop provides nice visualizations of resources (images, volumes) as well as a set of command-line completions for the most popular shells. We may need to give it additional resources under Settings > Resources.
 
 Minikube can also be configured to use more resources than the defaults:
 
@@ -39,9 +39,9 @@ To start:
 
 There are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:
 
-1. (easiest) run `skaffold dev` with the `--port-forward` flag. The [port-forward](https://skaffold.dev/docs/pipeline-stages/port-forwarding/) configuration is in Skaffold.yml. If we omit this from the Skaffold profile but use the `--port-forward` flag, Skaffold will automatically create forwarding for all your services, but if the pods are recreated it will not recreate the forwarding, so this is not recommended.
+1. (easiest) run `skaffold dev` with the `--port-forward` flag. The [port-forward](https://skaffold.dev/docs/pipeline-stages/port-forwarding/) configuration is in Skaffold.yml. If we omit this from the Skaffold profile but use the `--port-forward` flag, Skaffold will automatically create forwarding for all services, but if the pods are recreated it will not recreate the forwarding, so this is not recommended.
 2. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000`, this is what Skaffold does behind the scenes
-3. Use [Kube Forwarder.app](https://kube-forwarder.pixelpoint.io/) (you can install it with `brew install --cask kube-forwarder`) which provides a GUI interface around port forwarding
+3. Use [Kube Forwarder.app](https://kube-forwarder.pixelpoint.io/) (install it with `brew install --cask kube-forwarder`) which provides a GUI interface around port forwarding
 
 Note that persistent volumes are stored _on the minikube server_ in the /data dir, we can `minikube ssh` to go into the server to look around. The server's docker instance will also stack up old versions of our images over time and need to be pruned. (**TODO** write up what these commands look like)
 
@@ -51,11 +51,9 @@ Note that persistent volumes are stored _on the minikube server_ in the /data di
 
 **setup.sh** bootstraps the local development environment so we can begin working on the site without needing to push to a remote instance like staging.
 
-**sync.fish** copies a remote instance's data to your local development environment. `./docs/sync.fish --media` does the media files while `./docs/sync.fish --db` does the database. By default it syncs from staging but you can sync from `--prod` as well. Run `./docs/sync.fish --help` for complete usage information.
+**sync.fish** copies a remote instance's data to our local development environment. `./docs/sync.fish --prod --media` does the media files while `./docs/sync.fish --prod --db` does the database. It can sync from either `--stage` or `--prod`. It can also sync media/database between our production and staging instances if we provide _both_ instance flags. Run `./docs/sync.fish --help` for complete usage information.
 
-Looking to sync the production and staging sites? For media files, use a Google [Cloud Transfer Service](https://cloud.google.com/storage-transfer/docs/overview). Go to Cloud Console > [Data Transfer](https://console.cloud.google.com/transfer/jobs?project=cca-web-0) > there should already be a job "Copy libraries production media to lib-ep staging" but if not it is trivial to create one.
-
-**dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when you're done. Note that this is just a convenience; there's no reason you cannot manage the development tools individually if you want to.
+**dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when we're done. Note that this is just a convenience; there's no reason we cannot manage the development tools individually.
 
 ## Development Git Flow
 
@@ -66,7 +64,7 @@ Outline:
 - Start up the local development environment, `./docs/dev.fish up`
 - If model or database changes happen, run `makemigrations -n short_name`
   - Try to _always_ name migrations so it's possible infer what it's doing from the filename
-  - If you make multiple migrations for the same feature/issue, combine them _before pushing to the remote repo_ with `squashmigrations app_name first_number last_number`
+  - Combine multiple migrations for the same feature/issue _before pushing to the remote repo_ with `squashmigrations app_name first_number last_number`
   - It is recommended to indicate that a commit requires running migrations, e.g. by appending `(MIGRATE)` to the end of the first line of the commit message
 - Feel free to `git push origin $BRANCH` to save intermediary changes to the remote repo
 - Once a feature is complete, checkout `dev` & `git merge $BRANCH` into it
@@ -84,7 +82,7 @@ I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for python developme
 Wagtail, and often Django, updates require running a few extra steps on the app pod:
 
 ```sh
-> alias k 'kubectl -nlibraries-wagtail' # save yourself a lot of typing
+> alias k 'kubectl -nlibraries-wagtail' # save a lot of typing
 > k exec (k get pods -o name | grep wagtail) -- /app/libraries/manage.py migrate
 ```
 
@@ -135,7 +133,7 @@ We put _all_ static (CSS, JS) files under the main app's static folder, in libra
 
 We use [Gulp](http://gulpjs.com/) for our front-end build tool. Note that tools like autoprefixer are solving some bugs, so switching might result in some style problems (e.g., the radio buttons on the home page search box need autoprefixer).
 
-`npm run` builds the site's assets and `npm watch` watches for changes and rebuilds. See the Gulpfile for more information on these tasks. You should be able to run these tasks on your host laptop and not inside the development app container; the changes will not trigger an image rebuild (which would slow down development terribly) and should be automatically [synced](https://skaffold.dev/docs/pipeline-stages/filesync/) to the container if Skaffold is working properly. Portal takes a different approach to the problem of syncing assets without rebuilding the image and mounts the local application code into the app container as a volume, but this introduces some complexity into the local kubernetes configuration.
+`npm run` builds the site's assets and `npm watch` watches for changes and rebuilds. See the Gulpfile for more information on these tasks. We should be able to run these tasks on our host laptop and not inside the development app container; the changes will not trigger an image rebuild (which would slow down development terribly) and should be automatically [synced](https://skaffold.dev/docs/pipeline-stages/filesync/) to the container if Skaffold is working properly. Portal takes a different approach to the problem of syncing assets without rebuilding the image and mounts the local application code into the app container as a volume, but this introduces some complexity into the local kubernetes configuration.
 
 There are two folders under the main static directory ("moodle" and "summmon") for hosting static files used in external services that cannot host their own content. The Summon files are contained within this project (see libraries/summon and the summon Gulp tasks) while the Moodle files are created in the [Moodle Styles](https://github.com/cca/moodle-styles) project.
 
