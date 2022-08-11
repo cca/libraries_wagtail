@@ -9,10 +9,10 @@ from either the staging or production instances. Options:"
     echo -e "\t-p, --prod\tuse the production cluster"
     echo -e "\t-d, --db\tsynchronize the database (default)"
     echo -e "\t-m, --media\tdownload media files (images, videos, documents). This does
-\t\tnot delete any local files, it merely fills in the ones you're missing."
+\tnot delete any local files, it merely fills in the ones you're missing."
     echo -e "\nExamples:"
     echo -e "\tsync.fish -s — sync the staging database locally"
-    echo -e "\tsync.fish --db --media — sync the staging database and media locally"
+    echo -e "\tsync.fish -s --db --media — sync the staging database and media locally"
     echo -e "\tsync.fish --prod --media — download production media (but not the database)"
     echo -e "\tsync.fish --prod --stage --db — sync production database to staging"
     echo -e "\n'Staging' here refers to Eric's libraries-libep.cca.edu site and its related
@@ -24,25 +24,28 @@ flags. This is always a unidirectional sync from prod to staging."
 end
 
 set REGION us-west1-b
+# these are used in 2 places cuz of prod-to-staging db sync
+set STAGE_PROJECT cca-web-staging
+set STAGE_DB_INSTANCE cca-edu-staging-2
+set STAGE_DB_NAME libraries-lib-ep
+set STAGE_DB_GSB gs://libraries-db-dumps-ci
 
 if set -q _flag_p
     echo "Using production context"
     set CTX production
     set PROJECT cca-web-0
-    set CLUSTER ccaedu-prod
     set DB_INSTANCE cca-edu-prod-1
     set DB_NAME libraries-lib-production
-    set DB_GS_BUCKET gs://cca-manual-db-dumps
-    set MEDIA_GS_BUCKET gs://libraries-lib-production
+    set DB_GSB gs://cca-manual-db-dumps
+    set MEDIA_GSB gs://libraries-lib-production
 else if set -q _flag_s
     echo "Using staging context"
     set CTX staging
-    set PROJECT cca-web-staging
-    set CLUSTER ccaedu-stg
-    set DB_INSTANCE cca-edu-staging-2
-    set DB_NAME libraries-lib-ep
-    set DB_GS_BUCKET gs://libraries-db-dumps-ci
-    set MEDIA_GS_BUCKET gs://libraries-media-staging-lib-ep
+    set PROJECT $STAGE_PROJECT
+    set DB_INSTANCE $STAGE_DB_INSTANCE
+    set DB_NAME $STAGE_DB_NAME
+    set DB_GSB $STAGE_DB_GSB
+    set MEDIA_GSB gs://libraries-media-staging-lib-ep
 else
     set_color --bold red
     echo "You must specify either the --stage or --prod context."
@@ -76,8 +79,14 @@ if set -q _flag_m
             exit 1
         end
         # remote to local media sync
-        gsutil -m rsync -r $MEDIA_GS_BUCKET libraries/media
+        gsutil -m rsync -r $MEDIA_GSB libraries/media
     end
+end
+
+function export_db
+    set DB_FILE (date "+%Y-%m-%d")-$DB_NAME-$CTX.sql.gz
+    set DB_URI $DB_GSB/$DB_FILE
+    gcloud sql export sql $DB_INSTANCE $DB_URI --database $DB_NAME --offload
 end
 
 # Sync database
@@ -85,8 +94,16 @@ if set -q _flag_d;
     or not set -q _flag_m
 
     if set -q _flag_p; and set -q _flag_s
-        echo "prod to staging db sync not implemented yet..."
-        exit 0
+        # sync prod db to staging
+        export_db
+        # copy db file from a prod GSB to a staging one
+        gsutil cp $DB_URI $STAGE_DB_GSB
+        echo "Switching to staging context"
+        gcloud config set project $STAGE_PROJECT
+        gcloud sql databases delete $STAGE_DB_NAME --instance $STAGE_DB_INSTANCE
+        gcloud sql databases create $STAGE_DB_NAME --instance $STAGE_DB_INSTANCE
+        # we can't use DB_URI because it points to the prod GSB
+        gcloud sql import sql $STAGE_DB_INSTANCE $STAGE_DB_GSB/$DB_FILE --database $STAGE_DB_NAME
     else
         # remote to local minikube database sync
         if not minikube status >/dev/null
@@ -97,7 +114,7 @@ if set -q _flag_d;
         end
         # configure kubectl context
         minikube update-context
-        kubectl config set-context --current --namespace=libraries-wagtail
+        kubectl config set-context --current --namespace libraries-wagtail
 
         # is Postgres pod running?
         set PG_POD (kubectl get pods --selector=app=postgres -o=custom-columns=:metadata.name --sort-by=.metadata.creationTimestamp --no-headers -n libraries-wagtail | tail -n 1)
@@ -111,11 +128,8 @@ if set -q _flag_d;
         end
         echo "Found Postgres pod $PG_POD"
 
-        # export database to GS bucket and then download it
-        # should I use gs://cca-manual-db-dumps when in prod context?
-        set DB_FILE (date "+%Y-%m-%d")-$DB_NAME-$CTX.sql.gz
-        set DB_URI $DB_GS_BUCKET/$DB_FILE
-        gcloud sql export sql $DB_INSTANCE $DB_URI --database=$DB_NAME
+        # export database to GSB and then download it
+        export_db
         gsutil cp $DB_URI .
         echo "Using $PG_POD to restore $DB_NAME from $DB_FILE"
         kubectl cp ./$DB_FILE $PG_POD:/tmp/$DB_FILE
