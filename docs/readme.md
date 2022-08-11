@@ -4,8 +4,7 @@ This folder contains the generic documentation for the CCA Libraries Wagtail sit
 
 ## Questions & Todos
 
-- [ ] mount the media files at /app/libraries/media
-- [ ] do we want to mimic Portal's mounted volume approach to the app code?
+- [ ] serving media files locally (mount libraries/media somehow or use another GSB)
 - [ ] commands for pruning minikube's docker instance
 
 ## Running Wagtail Locally
@@ -53,6 +52,8 @@ Note that persistent volumes are stored _on the minikube server_ in the /data di
 **setup.sh** bootstraps the local development environment so we can begin working on the site without needing to push to a remote instance like staging.
 
 **sync.fish** copies a remote instance's data to your local development environment. `./docs/sync.fish --media` does the media files while `./docs/sync.fish --db` does the database. By default it syncs from staging but you can sync from `--prod` as well. Run `./docs/sync.fish --help` for complete usage information.
+
+Looking to sync the production and staging sites? For media files, use a Google [Cloud Transfer Service](https://cloud.google.com/storage-transfer/docs/overview). Go to Cloud Console > [Data Transfer](https://console.cloud.google.com/transfer/jobs?project=cca-web-0) > there should already be a job "Copy libraries production media to lib-ep staging" but if not it is trivial to create one.
 
 **dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when you're done. Note that this is just a convenience; there's no reason you cannot manage the development tools individually if you want to.
 
