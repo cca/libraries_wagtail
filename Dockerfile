@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1.2
-# ^^^ use docker buildkit https://docs.docker.com/develop/develop-images/build_enhancements/
 FROM node:16-alpine AS assets
 # we build static assets (JS, CSS, application images) in a node container
 WORKDIR /app
@@ -8,14 +6,11 @@ WORKDIR /app
 # See https://pnpm.io/cli/fetch#usage-scenario
 COPY libraries/libraries/static/ libraries/libraries/static
 COPY pnpm-lock.yaml gulpfile.js package.json ./
-RUN --mount=type=cache,target=/root/.npm npm install --location=global pnpm@7.4 gulp-cli@2.3 --no-fund --no-audit
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store pnpm fetch --prod
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store pnpm install -r --frozen-lockfile --offline --prod
+RUN npm install --location=global pnpm@7.4 gulp-cli@2.3 --no-fund --no-audit
+RUN pnpm fetch --prod
+RUN pnpm install -r --offline --prod
 RUN gulp build
 
-# @TODO this would be faster if python build was in a second intermediary image
-# so we have node/pnpm, python/pip(env), & apt-get doing work in parallel
-# e.g. see https://sourcery.ai/blog/python-docker/
 # Build the Django application itself.
 FROM python:3.7.13 as libraries
 WORKDIR /app
@@ -25,9 +20,7 @@ ENV PYTHONPATH /app:/app/libraries
 # Step 0: add all repos to sources.list
 RUN printf "deb http://ftp.debian.org/debian/ stretch main\ndeb-src http://ftp.debian.org/debian/ stretch main\ndeb http://security.debian.org stretch/updates main\ndeb-src http://security.debian.org stretch/updates main" > /etc/apt/sources.list
 
-RUN rm -f /etc/apt/apt.conf.d/docker-clean
-RUN --mount=type=cache,target=/var/cache/apt \
-    apt-get update && apt-get install -y --no-install-recommends wget ca-certificates && \
+RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certificates && \
     # Step 1: Add the PGDG repo into the sources list
     echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     # Step 2: Install wget and ca-certificates to be able to add a cert for PGDG
@@ -40,17 +33,14 @@ RUN --mount=type=cache,target=/var/cache/apt \
     postgresql-client-9.6 \
     # Install rsync to be able to fetch media files
     rsync && \
-    # Step 5: Cleanup apt lists
-    rm -rf /var/lib/apt/lists/*
+    # Step 5: Cleanup apt cache and lists
+    rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 
-# Install python dependencies with caching
-ENV PIP_CACHE_DIR="/root/.cache/pip"
-ENV PIPENV_CACHE_DIR="/root/.cache/pipenv"
-RUN mkdir -p ${PIP_CACHE_DIR} ${PIPENV_CACHE_DIR}
-RUN --mount=type=cache,target=/root/.cache pip install pipenv
+# Install python dependencies
+RUN pip install pipenv
 COPY Pipfile Pipfile.lock /app/
 # --system: install deps in system python, --deploy: throw error if lockfile doesn't match Pipfile
-RUN --mount=type=cache,target=/root/.cache pipenv install --system --deploy
+RUN pipenv install --system --deploy
 
 # Collect our compiled static files from the assets image
 COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
