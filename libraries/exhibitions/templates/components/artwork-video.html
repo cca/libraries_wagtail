@@ -5,7 +5,7 @@
     style="width:{{ page.column_width }}px;">
     <div class="gallery--work__video">
         {% include 'components/ytp-btn.html' %}
-        {% image work.image max-630x630 %}
+        {% image work.image max-630x630 loading="lazy" %}
     </div>
     <div class="gallery--work__video media" id="js-{{ work.title|slugify }}">
         <video class="lg-video-object lg-html5" controls preload="none"

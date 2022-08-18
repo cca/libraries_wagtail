@@ -7,7 +7,7 @@
     <div class="gallery--work__audio">
         {% include "components/audio-btn.html" %}
         {% if work.image %}
-            {% image work.image max-630x630 %}
+            {% image work.image max-630x630 loading="lazy" %}
         {% else %}
             <img class="gallery__fallback-image" src="{% static 'images/audio-fallback.jpg' %}" alt="audio icon" />
         {% endif %}

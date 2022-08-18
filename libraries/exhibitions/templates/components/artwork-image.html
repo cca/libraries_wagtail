@@ -5,5 +5,5 @@
     data-src="{{ full_image.url }}" data-width="{{ full_image.width }}"
     data-sub-html=".js-caption" style="width:{{ page.column_width }}px;">
     <div class="gallery--work__image">
-        {% image work.image max-630x630 %}
+        {% image work.image max-630x630 loading="lazy" %}
     </div>
