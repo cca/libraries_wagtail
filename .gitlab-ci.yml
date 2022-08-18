@@ -116,9 +116,9 @@ docker_image_prod:
   - cat kubernetes/qa.yaml | envsubst | kubectl apply -f -
 
 .provision_storage_qa: &provision_storage_qa
-  - gsutil ls -b gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/ || gsutil mb -p cca-web-staging -c STANDARD -l us-west1 -b on gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
-  - gsutil -q -m rsync -d -r gs://libraries-media-staging/  gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
-  - gsutil iam ch allUsers:objectViewer gs://libraries-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
+  - gsutil ls -b gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/ || gsutil mb -p cca-web-staging -c STANDARD -l us-west1 -b on gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
+  - gsutil -q -m rsync -d -r gs://libraries-media-staging/  gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
+  - gsutil iam ch allUsers:objectViewer gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
 
 # tag example: mg-full-0.0.1.
 synchronize_qa:
