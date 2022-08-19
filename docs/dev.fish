@@ -54,9 +54,8 @@ function stop -d 'stop the local development tools'
     if minikube status &>/dev/null
         minikube stop
     end
-    echo "Stopping docker"
-    pkill dockerd 2>/dev/null
-    killall Docker 2>/dev/null
+    echo "Quitting Docker Desktop"
+    osascript -l JavaScript -e "Application('Docker Desktop').quit()" >/dev/null
 end
 
 function cleanup -d 'free up disk space by deleting older docker images'
