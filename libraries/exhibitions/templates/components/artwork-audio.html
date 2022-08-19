@@ -1,5 +1,5 @@
 {% load wagtailimages_tags %}
-{% load static from staticfiles %}
+{% load static from static %}
 <div class="gallery--work js-gallery--work"
     data-sub-html=".js-caption" data-html="#js-{{ work.title|slugify }}"
     data-download-url="{{ work.media.file.url }}"

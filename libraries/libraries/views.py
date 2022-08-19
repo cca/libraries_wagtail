@@ -22,7 +22,7 @@ def serve_wagtail_doc(request, document_id, document_filename):
     """
     Replacement for `wagtail.documents.views.serve`
     Substantial copying from original method:
-    https://github.com/wagtail/wagtail/blob/master/wagtail/documents/views/serve.py
+    https://github.com/wagtail/wagtail/blob/main/wagtail/documents/views/serve.py
     Wagtail's default document view serves everything as an attachment.
     We'll bounce back to the URL and let the media server serve it.
     """

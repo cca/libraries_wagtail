@@ -235,7 +235,7 @@ if 'DATABASE_URL' in env:
     DATABASES['default'] = dj_database_url.config()
 else:
     DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': env.get('PGDATABASE', 'cca_libraries'),
         # User, host and port can be configured by the PGUSER, PGHOST and
         # PGPORT environment variables (these get picked up by libpq).
