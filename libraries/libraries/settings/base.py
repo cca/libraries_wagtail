@@ -230,6 +230,7 @@ ADMINS = (
     ("Eric Phetteplace", "ephetteplace@cca.edu"),
 )
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATABASES = {}
 if 'DATABASE_URL' in env:
     DATABASES['default'] = dj_database_url.config()
@@ -394,6 +395,9 @@ if 'GS_CREDENTIALS' in env:
     # Even if the bucket has public permisions, we need to set this
     # setting to `'publicRead'` to retrun a public, non-expiring URL.
     GS_DEFAULT_ACL = 'publicRead'
+    GS_OBJECT_PARAMETERS = {
+        "cache_control": "public, max-age=31536000"
+    }
 
     # Ensure uploaded files are given distinct names, as per valid Django storage behaviour
     GS_FILE_OVERWRITE = False

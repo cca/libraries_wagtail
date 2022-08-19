@@ -4,26 +4,28 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-autopep8 = "*"
 django_managepy_anywhere = "==2.0"
+autopep8 = "*"
 
 [packages]
-django = "==3.0.14"
-django-cas-ng = "==4.1.1"
-django-extensions = "==2.2.8"
-djangorestframework-simplejwt = "==4.3.0"
+# @TODO updates:
+# Wagtail 2.15 & 2.16
+# elasticsearch
+# uwsgi
+django = "==3.2.15"
+django-cas-ng = "==4.3.0"
+django-extensions = "==3.1.5"
+djangorestframework-simplejwt = "==5.2.0"
 elasticsearch = "==5.4.0"
-l18n = "==2018.5"
-olefile = "==0.46"
+l18n = "==2021.3"
 psycopg2-binary = "==2.8.4"
-soupsieve = "==1.9.5"
-wagtail = "==2.13.5"
-xmltodict = "==0.12.0"
-django-storages = {version = "==1.7.1", extras = ["google"]}
+wagtail = "==2.14.2"
+xmltodict = "==0.13.0"
 uwsgi = "==2.0.20"
-dj-database-url = "<0.6"
-whitenoise = {version = "==5.2.0", extras = ["brotli"]}
+dj-database-url = "==1.0.0"
+whitenoise = {version = "==6.2.0", extras = ["brotli"]}
 pysftp = "==0.2.9"
+django-storages = {version = "==1.13.1", extras = ["google"]}
 
 [requires]
 python_version = "3.7.13"
