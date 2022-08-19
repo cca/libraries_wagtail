@@ -1,6 +1,3 @@
-import csv
-import io
-import logging
 import urllib
 
 from wsgiref.util import FileWrapper
@@ -17,9 +14,6 @@ from wagtail.documents.models import document_served
 from wagtail.documents.views.serve import document_etag
 from wagtail.utils import sendfile_streaming_backend
 from wagtail.utils.sendfile import sendfile
-
-# logger specifically for tracking document downloads
-logger = logging.getLogger('document')
 
 
 @etag(document_etag)
@@ -48,13 +42,8 @@ def serve_wagtail_doc(request, document_id, document_filename):
         if isinstance(result, HttpResponse):
             return result
 
-    # Send document_served signal & log
+    # Send document_served signal
     document_served.send(sender=Document, instance=doc, request=request)
-    # ensure log output is valid CSV
-    output = io.StringIO()
-    writer = csv.writer(output, quoting=csv.QUOTE_NONNUMERIC)
-    writer.writerow([document_id, document_filename, request.headers['User-Agent']])
-    logger.info(output.getvalue().strip())
 
     try:
         local_path = doc.file.path
