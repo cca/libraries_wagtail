@@ -8,9 +8,7 @@ end
 
 function start -d 'start the local wagtail application'
     # start docker
-    if docker info &>/dev/null
-        echo "✅  Docker is running"
-    else
+    if not docker info &>/dev/null
         if command --query dockerd
             dockerd &>/dev/null &
         else if [ -d /Applications/Docker.app ]
@@ -25,14 +23,14 @@ function start -d 'start the local wagtail application'
             sleep 10
         end
     end
+    echo "✅  Docker is running"
 
     # start minikube
-    if minikube status &>/dev/null
-        echo "✅  Minikube is running"
-    else
+    if not minikube status &>/dev/null
         minikube start # --kubernetes-version=1.18.20
     end
     eval (minikube docker-env)
+    echo "✅  Minikube is running"
 
     # run skaffold
     if k --field-selector=status.phase=Running get pods -o name | grep wagtail- &>/dev/null
@@ -55,6 +53,7 @@ function stop -d 'stop the local development tools'
         minikube stop
     end
     echo "Quitting Docker Desktop"
+    osascript -l JavaScript -e "Application('Docker Desktop').quit()" >/dev/null
     osascript -l JavaScript -e "Application('Docker').quit()" >/dev/null
 end
 
@@ -65,7 +64,7 @@ function cleanup -d 'free up disk space by deleting older docker images'
     echo "NOTE: this command is untested! Use at your own risk, but the worst result is probably that the next time Skaffold runs it will rebuild the app container from scratch with no cache."
     set_color normal
     read -P "Do you want to continue? (Y/n) " response
-    if test (string lower "$response") = 'n'
+    if test (string lower "$response") = n
         echo "OK! Not cleaning up."
         return 0
     end
