@@ -3,7 +3,7 @@
 {% if work.embed_code != '' %}
 <div class="gallery--work js-gallery--work" data-download-url="false"
     data-iframe="true" data-src="{{ work.embed_code }}"
-    data-sub-html=".js-caption" style="width:{{page.column_width}}px;">
+    data-sub-html=".js-caption" style="width:{{ page.column_width }}px;">
     <div class="gallery--work__html">
         {% if work.image %}
             {% include 'components/ytp-btn.html' %}
@@ -15,6 +15,13 @@
         {% elif 'https://www.youtube.com/watch?v=' in work.embed_code %}
             {% include 'components/ytp-btn.html' %}
             <img src="https://i3.ytimg.com/vi/{{ work.embed_code | cut:'https://www.youtube.com/watch?v=' }}/0.jpg" alt="{{ work.title }}">
+
+        {% comment %}
+        Panopto also has a formulaic thumbnail image URL
+        {% endcomment %}
+        {% elif 'ccarts.hosted.panopto.com' in work.embed_code %}
+            {% include 'components/ytp-btn.html' %}
+            <img src="https://ccarts.hosted.panopto.com/Panopto/Services/FrameGrabber.svc/FrameRedirect?objectId={{ work.embed_code | cut:'https://ccarts.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=' | slice:":36" }}&mode=Delivery&usePng=True" alt="{{ work.title ">
 
         {% else %}
             <iframe class="responsive-embed" width="560" height="315" src="{{ work.embed_code }}" frameborder="0" allow="encrypted-media" allowfullscreen loading="lazy"></iframe>
