@@ -6,29 +6,31 @@ const babel = require('gulp-babel')
 const uglify = require('gulp-uglify')
 const autoprefixer = require('autoprefixer')
 
-const static_root = 'libraries/libraries/static'
+const source = 'libraries/libraries/static'
+// compile assets directly into static files location, helps with local Skaffold dev
+const dist = 'libraries/static'
 const settings = {
 	dist: {
-		css: static_root + '/css/',
-		js: static_root + '/js/',
-		summon: static_root + '/summon/'
+		css: dist + '/css/',
+		js: dist + '/js/',
+		summon: dist + '/summon/'
 	},
 	src: {
 		// JavaScript src
-		exhibits: [static_root + '/js/exhibits.js'],
-		js: [static_root + '/js/src/*.js'],
+		exhibits: [source + '/js/exhibits.js'],
+		js: [source + '/js/src/*.js'],
 		summon: {
-			css: [static_root + '/summon/scss/summon.scss'],
+			css: [source + '/summon/scss/summon.scss'],
 			// babel throws an error if you provide these in the wrong order
-			js: [static_root + '/summon/broken-link-modal.js', static_root + '/summon/css-and-gtm.js']
+			js: [source + '/summon/broken-link-modal.js', source + '/summon/css-and-gtm.js']
 		},
 		// SASS src
 		styles: [
-			static_root + '/scss/main.scss'
-			, static_root + '/scss/exhibits.scss'
+			source + '/scss/main.scss'
+			, source + '/scss/exhibits.scss'
 		],
 		scss: [
-			static_root + '/scss/**/*.scss'
+			source + '/scss/**/*.scss'
 		]
 	}
 }
