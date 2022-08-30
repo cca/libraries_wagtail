@@ -15,6 +15,13 @@
 		<div class="home-info-box__item-text">
 			{{ page.services_text|richtext }}
 		</div>
+		{% for block in page.services_link %}
+			<div class="home-info-box__link">
+				<span class="btn btn-primary btn-lg">
+					{% include_block block %}
+				</span>
+			</div>
+		{% endfor %}
 	</li>
 	<li class="home-info-box__item">
 		<h2 class="home-info-box__item-title">
@@ -29,6 +36,13 @@
 		<div class="home-info-box__item-text">
 			{{ page.collections_text|richtext }}
 		</div>
+		{% for block in page.collections_link %}
+			<div class="home-info-box__link">
+				<span class="btn btn-primary btn-lg">
+					{% include_block block %}
+				</span>
+			</div>
+		{% endfor %}
 	</li>
 	<li class="home-info-box__item">
 		<h2 class="home-info-box__item-title">
@@ -43,5 +57,12 @@
 		<div class="home-info-box__item-text">
 			{{ page.about_us_text|richtext }}
 		</div>
+		{% for block in page.about_us_link %}
+			<div class="home-info-box__link">
+				<span class="btn btn-primary btn-lg">
+					{% include_block block %}
+				</span>
+			</div>
+		{% endfor %}
 	</li>
 </ul>

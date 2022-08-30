@@ -1,0 +1,16 @@
+// ===================================
+// Links in the home hero box beneath
+// each of the 3 columns. The links
+// inside are stylized as Bootstrap buttons.
+// ===================================
+.home-info-box__link {
+    text-align: center;
+
+    a {
+        color: $white;
+    }
+
+    .btn {
+        margin-bottom: .8em;
+    }
+}

@@ -1,3 +1,36 @@
+// Boostrap Mixins
+// import them all as some as dependencies of other BS utilities
+@import 'bootstrap/mixins/alerts.scss';
+@import 'bootstrap/mixins/background-variant.scss';
+@import 'bootstrap/mixins/border-radius.scss';
+@import 'bootstrap/mixins/buttons.scss';
+@import 'bootstrap/mixins/center-block.scss';
+@import 'bootstrap/mixins/clearfix.scss';
+@import 'bootstrap/mixins/forms.scss';
+@import 'bootstrap/mixins/gradients.scss';
+@import 'bootstrap/mixins/grid-framework.scss';
+@import 'bootstrap/mixins/grid.scss';
+@import 'bootstrap/mixins/hide-text.scss';
+@import 'bootstrap/mixins/image.scss';
+@import 'bootstrap/mixins/labels.scss';
+@import 'bootstrap/mixins/list-group.scss';
+@import 'bootstrap/mixins/nav-divider.scss';
+@import 'bootstrap/mixins/nav-vertical-align.scss';
+@import 'bootstrap/mixins/opacity.scss';
+@import 'bootstrap/mixins/pagination.scss';
+@import 'bootstrap/mixins/panels.scss';
+@import 'bootstrap/mixins/progress-bar.scss';
+@import 'bootstrap/mixins/reset-filter.scss';
+@import 'bootstrap/mixins/reset-text.scss';
+@import 'bootstrap/mixins/resize.scss';
+@import 'bootstrap/mixins/responsive-visibility.scss';
+@import 'bootstrap/mixins/size.scss';
+@import 'bootstrap/mixins/tab-focus.scss';
+@import 'bootstrap/mixins/table-row.scss';
+@import 'bootstrap/mixins/text-emphasis.scss';
+@import 'bootstrap/mixins/text-overflow.scss';
+@import 'bootstrap/mixins/vendor-prefixes.scss';
+
 // Fonts
 @import 'fonts/cca-fonts';
 
@@ -18,8 +51,8 @@
 @import 'bootstrap/variables';
 @import 'bootstrap/code'; // depends on vars above
 @import 'bootstrap/responsive-embed';
-@import 'bootstrap/mixins/responsive-visibility';
 @import 'bootstrap/responsive-utilities';
+@import 'bootstrap/buttons';
 
 // Reset
 @import 'reset/reset';
@@ -70,6 +103,7 @@
 @import 'components/home/home-hero';
 @import 'components/home/home-info-box-times';
 @import 'components/home/home-info-box';
+@import 'components/home/home-info-box-links';
 @import 'components/home/image-attribution';
 @import 'components/home/home-news-item';
 @import 'components/home/home-news';
@@ -77,7 +111,6 @@
 // -- Hours
 // Table styles borrowed from Bootstrap
 @import 'bootstrap/variables';
-@import 'bootstrap/mixins/table-row';
 @import 'bootstrap/tables';
 
 // -- Misc

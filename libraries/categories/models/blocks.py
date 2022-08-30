@@ -53,6 +53,7 @@ class LinkBlock(StructBlock):
 
     class Meta:
         icon = "link"
+        template = 'categories/blocks/link-block.html'
         value_class = LinkStructValue
 
 
