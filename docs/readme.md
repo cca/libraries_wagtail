@@ -86,7 +86,52 @@ Wagtail, and often Django, updates require running a few extra steps on the app 
 > k exec (k get pods -o name | grep wagtail) -- /app/libraries/manage.py migrate
 ```
 
-## Sitemap
+## Static Files
+
+We put _all_ static (CSS, JS) files under the main app's static folder, in libraries/libraries/static. I am not sure if this is a great strategy as it separates apps from their styles (e.g. libraries/exhibitions from libraries/libraries/static/scss/exhibits.scss). Static files are served with the [whitenoise](http://whitenoise.evans.io/en/stable/) middleware add-on.
+
+We use [Gulp](http://gulpjs.com/) for our front-end build tool. Note that tools like autoprefixer are solving some bugs, so switching might result in some style problems (e.g., the radio buttons on the home page search box need autoprefixer).
+
+`npm run` builds the site's assets and `npm watch` watches for changes and rebuilds. See the Gulpfile for more information on these tasks. We should be able to run these tasks on our host laptop and not inside the development app container; the changes will not trigger an image rebuild (which would slow down development terribly) and should be automatically [synced](https://skaffold.dev/docs/pipeline-stages/filesync/) to the container if Skaffold is working properly. Portal takes a different approach to the problem of syncing assets without rebuilding the image and mounts the local application code into the app container as a volume, but this introduces some complexity into the local kubernetes configuration.
+
+There are two folders under the main static directory ("moodle" and "summmon") for hosting static files used in external services that cannot host their own content. The Summon files are contained within this project (see libraries/summon and the summon Gulp tasks) while the Moodle files are created in the [Moodle Styles](https://github.com/cca/moodle-styles) project.
+
+## Database Migrations
+
+When a model is changed, we must generate migration files that implement the change in the database. This process is made complicated by the fact that we need to generate the migrations on the (local, minikube) pod running the app. Here is an outline of the process:
+
+```sh
+> # make edits to a models.py file
+> k8 sh # enter the pod running the app using the `k8` helper
+> cd libraries; python manage.py makemigration -n "name_of_feature" # create migrations
+> python manage.py migrate # apply migrations
+> exit # leave the pod
+> ./docs/get_migrations.fish # copy the migration files off the pod
+```
+
+If we test our code after migration and want to make changes, it can get tricky. We'll need to undo the migrations on the local database, delete the migration files, then create new ones. It's important to have a copy of the migration we want to undo. On the pod, we can run `python manage.py migrate {app} {number}` where the number is the one _before_ the change we want to undo. For instance, if we wanted to undo the changes in libraries/blog/migrations/0003_create_blogindex.py we would run `python manage.py migrate blog 0002`.
+
+### Best Practices
+
+Name migrations with the `-n` flag, e.g. `python manage.py makemigrations -n new_feature`.
+
+Remember to **always** [squash](https://docs.djangoproject.com/en/4.0/topics/migrations/#squashing-migrations) and name migrations as noted under the development heading.
+
+Sometimes when we create a model, we want to immediately create an instance of it rather than require the admin to create one manually. This lets us create objects like the site's singular home page or top-level categories programmatically, greatly decreasing the time to bootstrap a new iteration of the site. Here are a few examples of this tactic:
+
+- home/migrations/0002_create_homepage.py
+- blog/migrations/0003_create_blogindex.py
+- categories/migrations/0006_create_categories.py
+
+Note:
+
+- if we generate child pages, we must make sure the migration lists the migration generating the parent page as a dependency (see how create_categories depends upon create_homepage)
+- we can disallow certain page types from being created manually at all if we a) generate them during migrations & b) ensure no other model lists them in its `subpage_types`
+- `slug`s must be unique & therefore make a good hook when writing the `remove_xxx` method which undoes the effects of the migration
+
+## Miscellaneous Extras
+
+### Sitemap
 
 There are a few layers to the CCA Libraries site. The outline below shows the basic structure with a few annotations:
 
@@ -126,34 +171,6 @@ Root (Wagtail abstraction)
 ```
 
 The grandchild pages of each main category (Services, Collections, and About Us), represented above with the phrase "child content pages...", can use one of three page models: ServicePage, AboutUsPage, and SpecialCollectionsPage. Each of these pages can then, in turn, have children of any of those three types.
-
-## Static Files
-
-We put _all_ static (CSS, JS) files under the main app's static folder, in libraries/libraries/static. I am not sure if this is a great strategy as it separates apps from their styles (e.g. libraries/exhibitions from libraries/libraries/static/scss/exhibits.scss). Static files are served with the [whitenoise](http://whitenoise.evans.io/en/stable/) middleware add-on.
-
-We use [Gulp](http://gulpjs.com/) for our front-end build tool. Note that tools like autoprefixer are solving some bugs, so switching might result in some style problems (e.g., the radio buttons on the home page search box need autoprefixer).
-
-`npm run` builds the site's assets and `npm watch` watches for changes and rebuilds. See the Gulpfile for more information on these tasks. We should be able to run these tasks on our host laptop and not inside the development app container; the changes will not trigger an image rebuild (which would slow down development terribly) and should be automatically [synced](https://skaffold.dev/docs/pipeline-stages/filesync/) to the container if Skaffold is working properly. Portal takes a different approach to the problem of syncing assets without rebuilding the image and mounts the local application code into the app container as a volume, but this introduces some complexity into the local kubernetes configuration.
-
-There are two folders under the main static directory ("moodle" and "summmon") for hosting static files used in external services that cannot host their own content. The Summon files are contained within this project (see libraries/summon and the summon Gulp tasks) while the Moodle files are created in the [Moodle Styles](https://github.com/cca/moodle-styles) project.
-
-## Miscellaneous Extras
-
-### Migration Tricks
-
-Remember to **always** [squash](https://docs.djangoproject.com/en/4.0/topics/migrations/#squashing-migrations) and name migrations as noted under the development heading.
-
-Sometimes when we create a model, we want to immediately create an instance of it rather than require the admin to create one manually. This lets us create objects like the site's singular home page or top-level categories programmatically, greatly decreasing the time to bootstrap a new iteration of the site. Here are a few examples of this tactic:
-
-- home/migrations/0002_create_homepage.py
-- blog/migrations/0003_create_blogindex.py
-- categories/migrations/0006_create_categories.py
-
-Note:
-
-- if we generate child pages, we must make sure the migration lists the migration generating the parent page as a dependency (see how create_categories depends upon create_homepage)
-- we can disallow certain page types from being created manually at all if we a) generate them during migrations & b) ensure no other model lists them in its `subpage_types`
-- `slug`s must be unique & therefore make a good hook when writing the `remove_xxx` method which undoes the effects of the migration
 
 ### Wagtail 2.0 / Django 2.0 update
 
