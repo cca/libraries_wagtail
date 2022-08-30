@@ -45,17 +45,17 @@ profiles:
               - src: "libraries/**/templates/**/*.html"
                 dest: .
               # we have to sync SASS files too or else changes to them trigger a rebuild
-              - src: "libraries/libraries/static/scss/**/*.scss"
+              - src: "libraries/**/*.scss"
                 dest: .
-              - src: "libraries/libraries/static/css/*.css"
+              - src: "libraries/**/*.css"
                 dest: .
-              - src: "libraries/libraries/static/js/**/*.js"
+              - src: "libraries/**/*.js"
                 dest: .
-              - src: "libraries/libraries/static/fonts/*"
+              - src: "libraries/**/fonts/*"
                 dest: .
               - src: "libraries/libraries/static/images/*"
                 dest: .
-              - src: "libraries/libraries/static/summon/**/*"
+              - src: "libraries/**/*.md"
                 dest: .
     deploy:
       kustomize:
