@@ -3,43 +3,37 @@
 
 // Brown font face
 @font-face {
-    font-display: fallback;
+    font-display: swap;
     font-family: 'Brown';
     src: url('/static/fonts/lineto-brown-regular.woff2') format('woff2'), url('/static/fonts/lineto-brown-regular.woff') format('woff');
-    font-display: swap;
 }
 @font-face {
-    font-display: fallback;
+    font-display: swap;
     font-family: 'Brown';
     font-weight: bold;
     src: url('/static/fonts/lineto-brown-bold.woff2') format('woff2'), url('/static/fonts/lineto-brown-bold.woff') format('woff');
-    font-display: swap;
 }
 @font-face {
-    font-display: fallback;
+    font-display: swap;
     font-family: 'Brown';
     font-style: italic;
     src: url('/static/fonts/lineto-brown-italic.woff2') format('woff2'), url('/static/fonts/lineto-brown-italic.woff') format('woff');
-    font-display: swap;
 }
 // The Serif font face
 @font-face {
-    font-display: fallback;
+    font-display: swap;
     font-family: 'The Serif';
     src: url('/static/fonts/TheSerifB-W5Plain.otf') format('otf');
-    font-display: swap;
 }
 @font-face {
-    font-display: fallback;
+    font-display: swap;
     font-family: 'The Serif';
     font-style: italic;
     src: url('/static/fonts/TheSerifB-W5PlainItalic.otf') format('otf');
-    font-display: swap;
 }
 @font-face {
-    font-display: fallback;
+    font-display: swap;
     font-family: 'The Serif';
     font-weight: bold;
     src: url('/static/fonts/TheSerifB-W7Bold.otf') format('otf');
-    font-display: swap;
 }

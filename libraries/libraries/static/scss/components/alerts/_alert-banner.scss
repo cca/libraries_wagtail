@@ -33,8 +33,6 @@
 
     p {
         display: inline;
-        // @TODO isn't this overridden by the rule below?
-        margin-right: 8px;
         margin: 0;
     }
 
@@ -42,9 +40,5 @@
         color: $white;
         font-weight: 400;
         text-decoration: underline;
-    }
-
-    b {
-        font-weight: 600;
     }
 }
