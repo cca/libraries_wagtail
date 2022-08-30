@@ -41,6 +41,7 @@ function allCSS() {
 		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
 		.pipe(postcss([ autoprefixer() ]))
 		.pipe(dest(settings.dist.css))
+		.pipe(dest('libraries/' + settings.dist.css))
 }
 
 function exhibitsJS() {
@@ -49,6 +50,7 @@ function exhibitsJS() {
 		.pipe(babel({ presets: ['@babel/preset-env'] }))
 		.pipe(uglify())
 		.pipe(dest(settings.dist.js))
+		.pipe(dest('libraries/' + settings.dist.js))
 }
 
 function mainJS() {
@@ -57,6 +59,7 @@ function mainJS() {
 		.pipe(babel({ presets: ['@babel/preset-env'] }))
 		.pipe(uglify({ output: { comments: 'some' } }))
 		.pipe(dest(settings.dist.js))
+		.pipe(dest('libraries/' + settings.dist.js))
 }
 
 function summonCSS() {
@@ -64,6 +67,7 @@ function summonCSS() {
 		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
 		.pipe(postcss([ autoprefixer() ]))
 		.pipe(dest(settings.dist.summon))
+		.pipe(dest('libraries/' + settings.dist.css))
 }
 
 function summonJS() {
@@ -72,6 +76,7 @@ function summonJS() {
 		.pipe(babel({ presets: ['@babel/preset-env'] }))
 		.pipe(uglify())
 		.pipe(dest(settings.dist.summon))
+		.pipe(dest('libraries/' + settings.dist.summon))
 }
 
 // watch each main set of files & run its associated task
