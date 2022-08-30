@@ -12,4 +12,5 @@ fetch('/hours/?format=json')
 
         // footer hours
         h('.footer-section__site-address.js-simpson-hrs', data.Simpson + ' today')
+        h('.footer-section__site-address.js-matlib-hrs', data.Materials + ' today')
     });
