@@ -10,7 +10,8 @@
         color: $white;
     }
 
-    .btn {
-        margin-bottom: .8em;
+    // 2nd link if there are 2 links
+    &:nth-child(4) {
+        margin-top: .8em;
     }
 }
