@@ -229,6 +229,9 @@ SECRET_KEY = 'ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb'
 ADMINS = (
     ("Eric Phetteplace", "ephetteplace@cca.edu"),
 )
+# don't send these emails, they tend to be redundant with ones
+# that moderators get anyways
+WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS = False
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATABASES = {}
