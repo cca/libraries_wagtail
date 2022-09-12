@@ -50,6 +50,13 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'http',
         },
+        'logfile': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'standard',
+            'filename': os.path.join(LOGGING_DIR, 'all.log'),
+            'filters': ['quiet_down_elasticsearch'],
+        },
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
@@ -62,7 +69,7 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['console_http'],
+            'handlers': ['console_http', 'logfile'],
             'level': 'DEBUG',
             'propagate': False,
         },
@@ -72,11 +79,11 @@ LOGGING = {
             'propagate': False,
         },
         'py.warnings': {
-            'handlers': ['console'],
+            'handlers': ['console', 'logfile'],
             'propagate': False,
         },
         '': {
-            'handlers': ['console'],
+            'handlers': ['console', 'logfile'],
             'level': 'DEBUG',
             'propagate': False,
         },
