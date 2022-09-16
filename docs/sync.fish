@@ -84,8 +84,8 @@ if set -q _flag_m
 end
 
 function export_db
-    set DB_FILE (date "+%Y-%m-%d")-$DB_NAME-$CTX.sql.gz
-    set DB_URI $DB_GSB/$DB_FILE
+    set -g DB_FILE (date "+%Y-%m-%d")-$DB_NAME-$CTX.sql.gz
+    set -g DB_URI $DB_GSB/$DB_FILE
     gcloud sql export sql $DB_INSTANCE $DB_URI --database $DB_NAME --offload
 end
 
