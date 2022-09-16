@@ -26,7 +26,7 @@
 
 .blog-post__image-description {
     font-family: $font-family-serif;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.3em;
     margin: 0 0 15px;
     opacity: .6;
@@ -89,7 +89,7 @@
 
 .blog-post__paragraph {
     font-family: $font-family-serif;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 300;
     line-height: 1.4em;
     margin: 0 0 15px;
@@ -164,15 +164,16 @@
 .blog-post__quote-cite-name {
     display: block;
     font-family: $font-family-serif;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 700;
+    line-height: 16px;
 }
 
 .blog-post__quote-cite-position {
     display: block;
     font-family: $font-family-serif;
-    font-size: 10px;
-    line-height: 12px;
+    font-size: 14px;
+    line-height: 16px;
 }
 
 .blog-post__snippet {
@@ -205,10 +206,10 @@
 
 .blog-post__snippet-text {
     font-family: $font-family-serif;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.4em;
 
     @include respond($break-medium) {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
