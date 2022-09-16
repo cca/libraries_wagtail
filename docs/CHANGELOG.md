@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.2.0
+
+**YYYY-MM-DD** - buttons for the home page info boxes, increased font size of main body text, and many performance improvements. Many behind-the-scenes updates to dependencies that have no obvious impact but are nonetheless necessary maintenance.
+
+- _Many_ dependency updates, mostly to non-Wagtail software, including Django, Psycopg2, uWSGI, whitenoise, and our various Django addons (CAS, storage, extensions).
+- [Wagtail 2.14](https://docs.wagtail.org/en/latest/releases/2.14.html) upgrade which brings no major new features.
+- [#26](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/26) button styles for links in the home page info boxes.
+- [#36](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/36) pull thumbnails automatically for Panopto videos in Exhibitions.
+- [#27](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/27), [#34](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/34), [#35](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/35) major performance improvements, especially for Exhibitions: long-term caching headers for static assets, preconnect for GSB domain,  lazy loading exhibit images.
+- [#37](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/37) larger main body font sizes
+
 ## 3.1.0
 
 **2022-06-30** - create a workflow to run the site locally in a local kubernetes cluster that resembles our staging and production deployments. Perform four Wagtail core updates. Performance improvements in the site header and on the home page. Previews should more reliably show changes as opposed to cached, outdated versions of a page.
