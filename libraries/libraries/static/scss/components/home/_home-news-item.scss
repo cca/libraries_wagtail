@@ -121,7 +121,7 @@
 
 .home-news-item__text {
     font-family: $font-family-serif;
-    font-size: 13px;
+    font-size: 14px;
     // hyphens & word-break together fix layout bug
     // stops long text (e.g. a URL) from ballooning the size of element
     hyphens: auto;
@@ -129,6 +129,6 @@
     word-break: break-word;
 
     @include respond($break-medium) {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
