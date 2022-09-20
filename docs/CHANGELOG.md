@@ -2,7 +2,7 @@
 
 ## 3.2.0
 
-**YYYY-MM-DD** - buttons on the home page, increased font size, and many performance improvements. Many behind-the-scenes updates to dependencies that have no obvious impact but are nonetheless necessary maintenance.
+**2022-09-20** - buttons on the home page, increased font size, and performance improvements. Many behind-the-scenes updates to dependencies that have no obvious impact but are nonetheless necessary maintenance.
 
 - [#26](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/26) button styles for links in the home page info boxes.
 - [#36](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/36) pull thumbnails automatically for Panopto videos in Exhibitions.
