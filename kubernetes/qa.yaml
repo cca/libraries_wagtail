@@ -293,7 +293,7 @@ metadata:
   name: summon-sftp
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  # run daily
+  # run daily at 2am (UTC) / 7pm PT
   schedule: "2 0 * * *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
@@ -359,7 +359,7 @@ metadata:
   name: instagram
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  # run daily
+  # run daily at midnight (UTC) / 5pm PT
   schedule: "0 0 * * *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
@@ -420,7 +420,7 @@ spec:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: publish_scheduled_pages
+  name: publish-scheduled-pages
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
   # run hourly at half-past
