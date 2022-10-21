@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.NEXT
+
+**YYYY-MM-DD** - allow scheduling posts ahead of time
+
+- [#38](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/38) add `publish_scheduled_pages` cron job
+- Upgrade Skaffold development tool to 2.0
+
 ## 3.2.0
 
 **2022-09-20** - buttons on the home page, increased font size, and performance improvements. Many behind-the-scenes updates to dependencies that have no obvious impact but are nonetheless necessary maintenance.
