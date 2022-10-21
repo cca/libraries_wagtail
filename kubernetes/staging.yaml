@@ -1,5 +1,5 @@
 ---
-# I don't think this file is used right now -EP
+# I don't think this file is used right now, look at qa.yml instead -EP
 # create the namespace for libraries
 
 kind: Namespace
