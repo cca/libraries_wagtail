@@ -1,63 +1,68 @@
-apiVersion: skaffold/v2beta25
+apiVersion: skaffold/v3
 kind: Config
 metadata:
   name: skaffold-config
 profiles:
-  - name: db-only
-    deploy:
-      kubeContext: minikube
-      kubectl:
-        # otherwise it complains about the namespace not existing
-        manifests: [ "kubernetes/local/namespace.yml" ]
-      kustomize:
-        paths:
-          - kubernetes/local/postgres
-  - name: local-dev
-    # we _don't_ want to waste time building for the `skaffold run -p db-only` pipeline
-    # https://skaffold.dev/docs/environment/profiles/#activation
-    activation:
-      - command: build
-      - command: deploy
-      - command: dev
-      - command: delete
-    portForward:
-      - resourceType: service
-        resourceName: libraries
-        namespace: libraries-wagtail
-        port: 8000
-    build:
-      artifacts:
-      - image: libraries-wagtail
-        # Portal uses the custom cmd below which lets them have a DEVBUILD switch
-        # in their build process, that might be useful
-        # custom:
-            # buildCommand: docker build --network host --build-arg DEVBUILD=true -t $IMAGE .
-        docker:
-          dockerfile: Dockerfile
-        sync:
+- name: db-only
+  manifests:
+    rawYaml:
+    # otherwise it complains about the namespace not existing
+    - kubernetes/local/namespace.yml
+    kustomize:
+      paths:
+      - kubernetes/local/postgres
+  deploy:
+    kubectl: {}
+    kubeContext: minikube
+- name: local-dev
+  # we don't want to waste time building for the `skaffold run -p db-only` pipeline
+  # but the way to work around this is to default every _other_ command to this profile
+  # https://skaffold.dev/docs/environment/profiles/#activation
+  activation:
+  - command: build
+  - command: deploy
+  - command: dev
+  - command: delete
+  - command: render
+  build:
+    artifacts:
+    - image: libraries-wagtail
+      # Portal uses the custom cmd below which lets them have a DEVBUILD switch
+      # in their build process, that might be useful
+      # custom:
+          # buildCommand: docker build --network host --build-arg DEVBUILD=true -t $IMAGE .
+      sync:
         # https://skaffold.dev/docs/pipeline-stages/filesync/
         # we use "manual" and not "infer" because infer does not work with our multi-stage Docker build:
         # "For multi-stage Dockerfiles, Skaffold only examines the last stage. Use manual sync rules to
         # sync file copies from other stages."
-            manual:
-              - src: "libraries/**/*.py"
-                dest: .
-              - src: "libraries/**/templates/**/*.html"
-                dest: .
-              # we have to sync SASS files too or else changes to them trigger a rebuild
-              - src: "libraries/**/*.scss"
-                dest: .
-              - src: "libraries/**/*.css"
-                dest: .
-              - src: "libraries/**/*.js"
-                dest: .
-              - src: "libraries/**/fonts/*"
-                dest: .
-              - src: "libraries/libraries/static/images/*"
-                dest: .
-              - src: "libraries/**/*.md"
-                dest: .
-    deploy:
-      kustomize:
-        paths:
-        - kubernetes/local
+        manual:
+        - src: libraries/**/*.py
+          dest: .
+        - src: libraries/**/templates/**/*.html
+          dest: .
+        # we have to sync SASS files too, even though they're not needed on the app container,
+        # or else changes to them trigger a rebuild
+        - src: libraries/**/*.scss
+          dest: .
+        - src: libraries/**/*.css
+          dest: .
+        - src: libraries/**/*.js
+          dest: .
+        - src: libraries/**/fonts/*
+          dest: .
+        - src: libraries/libraries/static/images/*
+          dest: .
+        - src: libraries/**/*.md
+          dest: .
+      docker:
+        dockerfile: Dockerfile
+  manifests:
+    kustomize:
+      paths:
+      - kubernetes/local
+  portForward:
+  - resourceType: service
+    resourceName: libraries
+    namespace: libraries-wagtail
+    port: 8000
