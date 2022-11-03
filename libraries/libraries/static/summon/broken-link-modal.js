@@ -1,20 +1,42 @@
 /* Credit to Robert Hoyt of Fairfield University who provided this code */
 function brokenLinkReports() {
   // Modal HTML
-  function modal(title, body, button) {
+  function prepareModalBody(doc) {
     return `<div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">${title}</h4>
+              <h4 class="modal-title">Report Broken Link</h4>
             </div>
             <div class="modal-body" id="modal-body">
-                ${body}
-                <div class="results"></div>
+              <p>This submission may take some time to process. If you need help immediately, please use the "Help" link at the top right.
+              <p>Please leave your email if you wish to be informed about the progress on this resource.</p>
+              <hr/>
+              <form id="brokenForm" class="form-horizontal">${doc.title}
+                <br/>by ${doc.authors.map((a) => a.fullname).join('; ')}
+                <br/>Content Type: ${doc.content_type}
+                <hr/>
+                <div class="form-group">
+                  <label for="email" class="col-sm-2">Email</label>
+                  <div class="col-sm-10 col-sm-offset-1">
+                    <input name="email" type="email" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="comments" class="col-sm-2">Comments</label>
+                  <div class="col-sm-10 col-sm-offset-1">
+                    <textarea name="comments" class="form-control"></textarea>
+                  </div>
+                </div>
+                <input name="openurl" type="hidden" value="https://ey7mr5fu9x.search.serialssolutions.com?${doc.open_url}">
+                <input name="permalink" type="hidden" value="https://cca.summon.serialssolutions.com/#!/search?bookMark=${doc.bookmark}">
+                <input type="hidden" name="type" value="${doc.content_type}">
+              </form>
+              <div class="results"></div>
             </div>
             <div class="modal-footer">
-                ${button}
+                <button type="button" class="btn btn-info submitBroken">Report Link</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
           </div><!-- /.modal-content -->
@@ -22,35 +44,8 @@ function brokenLinkReports() {
     </div><!-- /.modal -->`
   }
 
-  // Modal Content
-  function prepareModalBody(doc) {
-    return `<p>This submission may take some time to process. If you need help immediately, please use the "Help" link at the top right.
-        <p>Please leave your email if you wish to be informed about the progress on this resource.</p>
-        <hr/>
-        <form id="brokenForm" class="form-horizontal">${doc.title}
-            <br/>by ${doc.authors.map((a) => a.fullname).join('; ')}
-            <br/>Content Type: ${doc.content_type}
-            <hr/>
-            <div class="form-group">
-                <label for="email" class="col-sm-2">Email</label>
-                <div class="col-sm-10 col-sm-offset-1">
-                    <input name="email" type="email" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="comments" class="col-sm-2">Comments</label>
-                <div class="col-sm-10 col-sm-offset-1">
-                    <textarea name="comments" class="form-control"></textarea>
-                </div>
-            </div>
-            <input name="openurl" type="hidden" value="http://ey7mr5fu9x.search.serialssolutions.com?${doc.open_url}">
-            <input name="permalink" type="hidden" value="https://cca.summon.serialssolutions.com/#!/search?bookMark=${doc.bookmark}">
-            <input type="hidden" name="type" value="${doc.content_type}">
-        </form>`
-  }
-
   function addModal(doc) {
-    let html = modal('Report Broken Link', prepareModalBody(doc), '<button type="button" class="btn btn-info submitBroken">Report Link</button>')
+    let html = prepareModalBody(doc)
     $('.modal').remove()
     $('body').append(html)
     $('.modal').modal()
@@ -81,7 +76,7 @@ function brokenLinkReports() {
       return $.getScript('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js').done(()=>{
         modalLoaded = true
         addModal(doc)
-    }).fail(() => console.error('(BLR) Unable to load Bootstrap modal JS.'))
+      }).fail(() => console.error('(BLR) Unable to load Bootstrap modal JS.'))
     }
     return addModal(doc)
   })
