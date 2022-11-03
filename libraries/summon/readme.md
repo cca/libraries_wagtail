@@ -12,7 +12,7 @@ Summon lets you load a custom JavaScript file under the setting "[Summon 2.0 Ext
 
 The JavaScript and SCSS source files are under libraries/libraries/static/summon and have their own gulp build tasks summonCSS, summonJS, and summon (for both).
 
-The easiest way to test is to use [our Summon preview environment](https://cca.preview.summon.serialssolutions.com) if it's available; edit here, push changes to a staging site, swap in the staging site URL in the [preview site's settings](https://customize.preview.summon.serialssolutions.com/settings). Since the preview site is not always available, we may need to do this swap on the live Summon instance sometimes.
+The easiest way to test is to use [our Summon preview environment](https://cca.preview.summon.serialssolutions.com) if it's available; edit here, push changes to a staging site, swap in the staging site URL in the [preview site's settings](https://customize.preview.summon.serialssolutions.com/settings#Summon20ExternalScript). Since the preview site is not always available, we may need to do this swap on the live Summon instance sometimes.
 
 We previously stored this code in the [libraries_branding](https://github.com/cca/libraries_branding/tree/main/summon) GitHub project which compiled and synced the code to our static files folder on the Wagtail server. This approach stopped working when we transitioned to using whitenoise for static files and kubernetes.
 

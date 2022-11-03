@@ -27,7 +27,6 @@ function main() {
 }
 
 // run on a delay...#results load async not there when page loads
-// @TODO use angular to load when API results do & not at an arbitrary time
 setTimeout(main, 500)
 
 })();

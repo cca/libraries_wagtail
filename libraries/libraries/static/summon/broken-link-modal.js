@@ -10,12 +10,12 @@ function brokenLinkReports() {
               <h4 class="modal-title">Report Broken Link</h4>
             </div>
             <div class="modal-body" id="modal-body">
-              <p>This submission may take some time to process. If you need help immediately, please use the "Help" link at the top right.
-              <p>Please leave your email if you wish to be informed about the progress on this resource.</p>
+              <p>This submission may take some time to process. If you need immediate help, use the "Help" link at the top right.</p>
+              <p>Leave your email if you want a librarian to follow up on your report.</p>
               <hr/>
               <form id="brokenForm" class="form-horizontal">${doc.title}
                 <br/>by ${doc.authors.map((a) => a.fullname).join('; ')}
-                <br/>Content Type: ${doc.content_type}
+                <br/><b>Content Type</b>: ${doc.content_type}
                 <hr/>
                 <div class="form-group">
                   <label for="email" class="col-sm-2">Email</label>
