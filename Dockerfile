@@ -22,7 +22,7 @@ RUN printf "deb http://ftp.debian.org/debian/ stretch main\ndeb-src http://ftp.d
 
 RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certificates && \
     # Step 1: Add the PGDG repo into the sources list
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    echo "deb https://ftp.postgresql.org/pub/repos/apt/ bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     # Step 2: Install wget and ca-certificates to be able to add a cert for PGDG
     # Step 3: Add the PDGD cert
     wget --no-check-certificate --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
