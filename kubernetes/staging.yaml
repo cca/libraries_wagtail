@@ -172,17 +172,6 @@ spec:
                 secretKeyRef:
                   name: instagram-secret
                   key: instagram-secret
-            # Summon SFTP secrets
-            - name: SUMMON_SFTP_UN
-              valueFrom:
-                secretKeyRef:
-                  name: summon-sftp
-                  key: summon-user
-            - name: SUMMON_SFTP_PW
-              valueFrom:
-                secretKeyRef:
-                  name: summon-sftp
-                  key: summon-sftp
 
           # Define the port our application listens on.
           ports:

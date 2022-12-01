@@ -151,17 +151,6 @@ spec:
                 secretKeyRef:
                   name: instagram-secret
                   key: app-id
-            # Summon SFTP secrets
-            - name: SUMMON_SFTP_UN
-              valueFrom:
-                secretKeyRef:
-                  name: summon-sftp
-                  key: summon-user
-            - name: SUMMON_SFTP_PW
-              valueFrom:
-                secretKeyRef:
-                  name: summon-sftp
-                  key: summon-sftp
             # Gmail SMTP
             - name: GOOGLE_SMTP_USER
               valueFrom:
@@ -335,17 +324,6 @@ spec:
                     secretKeyRef:
                       name: cloud-storage-credentials
                       key: credentials
-                # Summon SFTP secrets
-                - name: SUMMON_SFTP_UN
-                  valueFrom:
-                    secretKeyRef:
-                      name: summon-sftp
-                      key: summon-user
-                - name: SUMMON_SFTP_PW
-                  valueFrom:
-                    secretKeyRef:
-                      name: summon-sftp
-                      key: summon-sftp
 
 ---
 apiVersion: batch/v1beta1
