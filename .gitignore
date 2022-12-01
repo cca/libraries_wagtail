@@ -2,6 +2,7 @@
 pip-selfcheck.json
 *.pyc
 node_modules/
+.kpt-pipeline
 
 # local settings file for laptop development
 libraries/libraries/settings/local.py
