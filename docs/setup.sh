@@ -23,7 +23,6 @@ minikube config set memory 8192
 minikube addons enable metrics-server
 
 [ -e "$(dirname "$0")/../kubernetes/local/secrets.env" ] || echo -e "\nObtain a copy of secrets.env from a developer and place it in kubernetes/local\n"
-[ -e "$(dirname "$0")/../kubernetes/assets/cdi_cca.key" ] || echo -e "\nObtain a copy of the CID private key 'cdi_cca.key' from a developer and place it in kubernetes/assets\n"
 
 echo "Do you want to load the (s)taging or (p)roduction database into your local minikube cluster now? You need gcloud installed and docker running but this shouldn't require a secrets.env file. Type \"n\" for \"no\". "
 read -r -n 1 -p "[n, p, s]? " result
