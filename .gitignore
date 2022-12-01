@@ -7,6 +7,7 @@ node_modules/
 libraries/libraries/settings/local.py
 # k8s secrets, used in local/kustomize.yml secretGenerator
 secrets.env
+kubernetes/assets/cdi_cca.key
 
 # ignore all type of static files
 libraries/logs/*

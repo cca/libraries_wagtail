@@ -263,12 +263,9 @@ INSTAGRAM_APP_ID = env.get('INSTAGRAM_APP_ID', '').rstrip('\n')
 INSTAGRAM_APP_SECRET = env.get('INSTAGRAM_SECRET', '').rstrip('\n')
 
 # Summon app
-SUMMON_SFTP_URL = 'ftp.summon.serialssolutions.com'
+SUMMON_SFTP_UN= 'cdi_cca-catalog@customers.na'
+SUMMON_SFTP_HOST = 'cdi-providers-dc01.hosted.exlibrisgroup.com'
 SUMMON_REPORT_URL = 'https://library.cca.edu/cgi-bin/koha/svc/report?id=152&sql_params={}'
-SUMMON_SFTP_UN = env.get('SUMMON_SFTP_UN', '').rstrip('\n')
-# https://docs.djangoproject.com/en/4.0/ref/settings/#std-setting-DEBUG
-# must be named "PASS" so it is censored in error report emails
-SUMMON_SFTP_PASS = env.get('SUMMON_SFTP_PW', '').rstrip('\n')
 
 # Search Backend
 ES_INDEX_SETTINGS = {

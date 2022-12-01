@@ -54,6 +54,11 @@ COPY libraries libraries/
 RUN mkdir /app/libraries/logs
 COPY kubernetes/uwsgi.ini kubernetes/
 
+# private key for Summon MFT
+RUN mkdir /root/.ssh
+COPY kubernetes/assets/cdi_cca.key /root/.ssh/
+COPY kubernetes/assets/known_hosts /root/.ssh/
+
 # Settings environment variable
 ENV DJANGO_SETTINGS_MODULE libraries.settings
 

@@ -13,6 +13,7 @@ from django.utils import timezone
 from summon.models import SummonDelete
 
 logger = logging.getLogger('mgmt_cmd.script')
+key_path = Path('/root/.ssh/cdi_cca.key')
 
 
 class Command(BaseCommand):
@@ -22,9 +23,9 @@ class Command(BaseCommand):
         parser.add_argument('lastrun', nargs='?', type=str,
                             help='date of last run (in MM/DD/YYYY format)')
 
-    def handle(self, *args, **options):
-        if not hasattr(settings, 'SUMMON_SFTP_UN') or not hasattr(settings, 'SUMMON_SFTP_PASS'):
-            raise CommandError("Requires a SUMMON_SFTP_UN and SUMMON_SFTP_PASS configured in yout local.py settings.")
+    def handle(self, **options):
+        if not Path.exists(key_path):
+            raise CommandError(f"Requires the CDI private key to be located at {key_path}")
         # lastrun is a STRING (not date!) of form "MM/DD/YYYY"
         try:
             lastrun = options.get('lastrun', None) or SummonDelete.objects.latest('date').date.strftime('%m/%d/%Y')
@@ -43,25 +44,21 @@ class Command(BaseCommand):
         records = '\n'.join([str(rec) for [rec] in rows])
         logger.info("{} records were deleted since {}".format(number, lastrun))
 
-        # write to file in temporary directory
+        # write records text list to file in temporary directory
         with TemporaryDirectory() as tmpdir:
             path = Path(tmpdir) / "cca-catalog-deletes-{}.mrc".format(lastrun.replace('/', '-'))
             with path.open('w+') as fh:
                 fh.write(records)
-                fh.seek(0)
 
-                # PUT file to Summon SFTP server
-                cnopts = pysftp.CnOpts()
-                cnopts.hostkeys.load(Path(__file__).parent / 'known_hosts')
-                with pysftp.Connection(settings.SUMMON_SFTP_URL, cnopts=cnopts,
-                                       username=settings.SUMMON_SFTP_UN,
-                                       password=settings.SUMMON_SFTP_PASS) as sftp:
-                    with sftp.cd('deletes'):
-                        sftp.put(fh.name)
-                        # write last run date to model
-                        SummonDelete.objects.create(
-                            date=timezone.now(),
-                            number=number,
-                            records=records
-                        )
-                        logger.info('Successfully uploaded the deleted records to Summon FTP server.')
+            # PUT file to Summon SFTP server
+            with pysftp.Connection(settings.SUMMON_SFTP_HOST, port=10022,
+                private_key=key_path, username=settings.SUMMON_SFTP_UN) as sftp:
+                with sftp.cd('deletes'):
+                    sftp.put(fh.name)
+                    # write last run date to model
+                    SummonDelete.objects.create(
+                        date=timezone.now(),
+                        number=number,
+                        records=records
+                    )
+                    logger.info('Successfully uploaded the deleted records to Summon FTP server.')
