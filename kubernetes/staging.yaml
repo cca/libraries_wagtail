@@ -277,9 +277,11 @@ metadata:
   name: ingress
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  backend:
-    serviceName: libraries-http
-    servicePort: 8000
+  defaultBackend:
+    service:
+      name: libraries-http
+      port:
+        number: 8000
 
 ---
 #
