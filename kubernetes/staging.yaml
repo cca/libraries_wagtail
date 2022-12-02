@@ -271,7 +271,7 @@ spec:
 ## Ingress to configure external connections.  On GKE, this will create a GCP
 ## HTTP load balancer.  These are charged *per ingress* so be careful when
 ## creating new ones.
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress
@@ -341,54 +341,54 @@ spec:
                       name: legacy-google-api-credentials
                       key: credentials
 ---
-# apiVersion: batch/v1beta1
-# kind: CronJob
-# metadata:
-#   name: wagtail-publish-scheduled-pages
-#   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
-# spec:
-#   schedule: "* * * * *"
-#   # Allows to run only one cron job at a time
-#   concurrencyPolicy: Forbid
-#   jobTemplate:
-#     spec:
-#       template:
-#         spec:
-#           restartPolicy: OnFailure
-#           containers:
-#             - name: app-wagtail-publish-scheduled-pages
-#               image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-#               imagePullPolicy: Always
-#               args:
-#                 - python
-#                 - manage.py
-#                 - publish_scheduled_pages
-#               # Env variables form ConfigMap
-#               envFrom:
-#                 - configMapRef:
-#                     name: app
-#               env:
-#                 - name: SECRET_KEY
-#                   valueFrom:
-#                     secretKeyRef:
-#                       name: secret-key
-#                       key: key
-#                 - name: DB_USER
-#                   valueFrom:
-#                     secretKeyRef:
-#                       name: cloudsql-db-credentials
-#                       key: username
-#                 - name: DB_PASSWORD
-#                   valueFrom:
-#                     secretKeyRef:
-#                       name: cloudsql-db-credentials
-#                       key: password
-#                 - name: DATABASE_URL
-#                   value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
-#                 - name: GS_CREDENTIALS
-#                   valueFrom:
-#                     secretKeyRef:
-#                       name: cloud-storage-credentials
-#                       key: credentials
-#
-# ---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: publish-scheduled-pages
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+spec:
+  # run hourly at half-past
+  schedule: "30 * * * *"
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
+  # ttlSecondsAfterFinished: 900
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: publish-scheduled-pages
+              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              imagePullPolicy: Always
+              args:
+                - python
+                - libraries/manage.py
+                - publish_scheduled_pages
+              # Env variables form ConfigMap
+              envFrom:
+                - configMapRef:
+                    name: app
+              env:
+                - name: SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-key
+                      key: key
+                - name: DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudsql-db-credentials
+                      key: username
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudsql-db-credentials
+                      key: password
+                - name: DATABASE_URL
+                  value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
+                - name: GS_CREDENTIALS
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloud-storage-credentials
+                      key: credentials

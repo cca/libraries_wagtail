@@ -261,7 +261,7 @@ spec:
 ## Ingress to configure external connections.  On GKE, this will create a GCP
 ## HTTP load balancer.  These are charged *per ingress* so be careful when
 ## creating new ones.
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress
