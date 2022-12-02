@@ -7,6 +7,8 @@
 - [#38](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/38) add `publish_scheduled_pages` cron job
 - Upgrade Skaffold development tool to 2.0
 - Migrate from Universal Analytics to Google Analytics 4
+- Kubernetes updates related to v1.22
+- Migrate to using private key authentication with the Summon FTP service
 
 ## 3.2.0
 
