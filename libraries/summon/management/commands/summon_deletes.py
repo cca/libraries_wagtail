@@ -36,7 +36,7 @@ class Command(BaseCommand):
             exit(1)
         logger.info("Finding deleted MARC records since {}".format(lastrun))
 
-        response = requests.get(settings.SUMMON_REPORT_URL.format(quote("'{}'".format(lastrun))))
+        response = requests.get(settings.SUMMON_REPORT_URL.format(quote("{}".format(lastrun))))
         # Koha JSON is an array of arrays for each row of the report e.g. [[1], [2]]
         rows = response.json()
         number = len(rows)
