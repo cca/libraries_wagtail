@@ -1,14 +1,16 @@
 # Changelog
 
-## 3.NEXT
+## 3.2.1
 
-**YYYY-MM-DD** - allow scheduling posts ahead of time
+**2023-01-19** - allow scheduling posts ahead of time. Many updates to backend tools, remove a couple instances of outdated info.
 
 - [#38](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/38) add `publish_scheduled_pages` cron job
 - Upgrade Skaffold development tool to 2.0
 - Migrate from Universal Analytics to Google Analytics 4
 - Kubernetes updates related to v1.22
 - Migrate to using private key authentication with the Summon FTP service
+- Remove defunct Twitter link in footer
+- [#39](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/39) Remove Meyer from home page hours box
 
 ## 3.2.0
 
