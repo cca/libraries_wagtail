@@ -5,7 +5,7 @@ This folder contains the generic documentation for the CCA Libraries Wagtail sit
 ## Questions & Todos
 
 - [ ] serving media files locally (mount libraries/media somehow or use another GSB)
-- [ ] commands for pruning minikube's docker instance
+- [x] commands for pruning minikube's docker instance (see bottom of section below)
 
 ## Running Wagtail Locally
 
@@ -43,9 +43,32 @@ There are three ways to forward a port on the minikube cluster so we can open th
 2. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000`, this is what Skaffold does behind the scenes
 3. Use [Kube Forwarder.app](https://kube-forwarder.pixelpoint.io/) (install it with `brew install --cask kube-forwarder`) which provides a GUI interface around port forwarding
 
-Note that persistent volumes are stored _on the minikube server_ in the /data dir, we can `minikube ssh` to go into the server to look around. The server's docker instance will also stack up old versions of our images over time and need to be pruned. (**TODO** write up what these commands look like)
-
 `minikube dashboard` opens a nice web UI to visualize its k8s resources.
+
+### Minikube Disk Usage
+
+Note that persistent volumes are stored _on the minikube server_ in the /data dir, we can `minikube ssh` to go into the server to look around. The server's docker instance also stacks up old versions of our images over time and needs to be pruned. Below is an example of using docker's [filters](https://docs.docker.com/engine/reference/commandline/images/#filter) to remove all but the last couple images:
+
+```fish
+# set your local docker environment to reference the minikube docker
+> minikube -p minikube docker-env | source
+> docker images
+REPOSITORY        TAG                                                                IMAGE ID       CREATED         SIZE
+libraries-wagtail 552e430472ee46b4a5b551dd13e84243a9c6dbcd4a116689bbf06ede8fbd3884   552e430472ee   2 weeks ago     1.24GB
+libraries-wagtail ep-full-0.28                                                       552e430472ee   2 weeks ago     1.24GB
+libraries-wagtail 8329aa97580d74cebbf9119904262c74e9d1b976198a722e2ab2076f7378e690   8329aa97580d   2 months ago    1.24GB
+...
+# we want to keep the images from 2 weeks ago & remove older libraries-wagtail images
+# first, confirm that this command lists what we want to remove
+> docker images --filter reference=libraries-wagtail --filter before=552e430472ee
+# now remove them, the -q flag causes the output to be only image IDs
+> docker rmi (docker images -q --filter reference=libraries-wagtail --filter before=552e430472ee)
+# we may need the -f/--force flag to rmi if docker warns us that some images are
+# "referenced in multiple repositories". To do everything all in one command (BE CAREFUL):
+> docker rmi -f (docker images -q --filter reference=libraries-wagtail --filter before=(docker images -q --filter reference=libraries-wagtail | head -n1 ))
+```
+
+We can see more info on minikube's usage with `docker system df` and `docker system prune` lets us remove other objects (containers, volumes) that might be taking up space. But realistically, it is the repeatedly re-built app images which consume the vast majority of disk.
 
 ## Tools
 
