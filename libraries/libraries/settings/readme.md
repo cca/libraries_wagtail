@@ -1,5 +1,7 @@
 # Settings
 
+@TODO update this document which reflects my old, local development setup
+
 Flow of settings as they're loaded:
 
 base -> dev or production (branch) -> local (machine) -> elasticsearch

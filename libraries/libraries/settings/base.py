@@ -223,6 +223,9 @@ RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
     'ul',
 ]
 
+# https://docs.wagtail.org/en/latest/reference/settings.html#wagtailadmin-external-link-conversion
+WAGTAIL_EXTERNAL_LINK_CONVERSION = 'confirm'
+
 # SECRET_KEY = env.get('SECRET_KEY', '').rstrip('\n')
 SECRET_KEY = 'ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb'
 
