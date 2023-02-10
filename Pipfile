@@ -13,18 +13,18 @@ autopep8 = "*"
 # elasticsearch
 django = "==3.2.15"
 django-cas-ng = "==4.3.0"
-django-extensions = "==3.1.5"
-djangorestframework-simplejwt = "==5.2.0"
+django-extensions = "==3.2.1"
+djangorestframework-simplejwt = "==5.2.2"
 elasticsearch = "==5.4.0"
 l18n = "==2021.3"
-psycopg2 = "==2.9.3"
+psycopg2 = "==2.9.5"
 wagtail = "==2.15.6"
 xmltodict = "==0.13.0"
-uwsgi = "==2.0.20"
-dj-database-url = "==1.0.0"
-whitenoise = {version = "==6.2.0", extras = ["brotli"]}
+uwsgi = "==2.0.21"
+dj-database-url = "==1.2.0"
+whitenoise = {version = "==6.3.0", extras = ["brotli"]}
 pysftp = "==0.2.9"
-django-storages = {version = "==1.13.1", extras = ["google"]}
+django-storages = {version = "==1.13.2", extras = ["google"]}
 
 [requires]
 python_version = "3.7.13"
