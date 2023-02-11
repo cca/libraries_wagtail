@@ -144,14 +144,16 @@ class RowComponent(Page):
         'hours.HoursPage',
     ]
     summary = RichTextField(features=settings.RICHTEXT_BASIC)
-    # do not index for search
-    search_fields = []
     # no need for a promote tab since slug & search_desc aren't used
     promote_panels = []
 
     content_panels = Page.content_panels + [
         FieldPanel('summary'),
     ]
+
+    # do not index for search
+    def get_indexed_instance(self):
+        return None
 
     def category(self):
         return get_category(self)
