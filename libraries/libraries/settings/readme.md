@@ -1,10 +1,12 @@
 # Settings
 
-@TODO update this document which reflects my old, local development setup
+Our current setup only use a base.py settings file (loaded via the __init__.py file in this directory) in all contexts with a few conditional expressions based on the k8s namespace environment variable to `DEBUG` and the site's `BASE_URL`.
 
-Flow of settings as they're loaded:
+## Old Setup
 
-base -> dev or production (branch) -> local (machine) -> elasticsearch
+Wagtail lets us override settings based on context and the local machine. The hierarchy of settings would normally be:
+
+base -> context (e.g. dev, staging, or production) -> local (machine)
 
 base.py — _universal_ settings that are necessary for all builds of the site, regardless of git branch or machine. Includes lots of Django filler, installed apps, middleware, loggers, and text field settings.
 
@@ -12,8 +14,10 @@ dev.py - runs _development_ builds of the site on both the developer's local mac
 
 production.py - runs _production_ builds of the site on the live web host, though sometimes we may test these settings locally. Typically used when you're on the `main` branch. Uses an SMTP email backend, `DEBUG = FALSE`, and has caching.
 
-local.py - both dev and production above load this file. It is meant for _machine-specific_ settings such as the `BASE_URL`, `SECRET_KEY`, and `DATABASES` plus app-specific settings for Brokenlinks and Instagram.
+local.py - the context file would load this. It is meant for _machine-specific_ settings such as the `BASE_URL`, `SECRET_KEY`, and `DATABASES` plus app-specific settings for Brokenlinks and Instagram.
 
-elasticsearch.py - the "local" settings above load this file, which establishes some consistent search defaults that can then be overridden locally. This should serve as a model for other apps that introduce complex and machine-variable settings; create a file with defaults which is then overridden in local.py as needed.
+## Specifying which settings to use
 
-Running `python manage.py runserver --settings libraries.settings.production` loads them. **You should be able to test production settings locally.** If that's not possible, then it's likely that a setting needs to be moved down from {dev|production}.py to local.py.
+Running `python manage.py runserver --settings libraries.settings.dev` loads a specific settings module with the testing server. The Skaffold dev server executes the `runserver` command without specifying a settings module (see kubernetes/local/scripts/init.sh) which defaults to loading `libraries.settings`.
+
+Using uWSGI, add a line like `evn = DJANGO_SETTINGS_MODULE=libraries.settings.dev` to the uwsigi.ini file (see kubernetes/uwsgi.ini) being referenced by uwgsi's startup command (see Dockerfile).
