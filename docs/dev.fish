@@ -29,7 +29,6 @@ function start -d 'start the local wagtail application'
     if not minikube status &>/dev/null
         minikube start # --kubernetes-version=1.18.20
     end
-    eval (minikube docker-env)
     echo "✅  Minikube is running"
 
     # run skaffold
