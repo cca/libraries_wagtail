@@ -9,7 +9,6 @@ from django_cas_ng.views import LoginView, LogoutView
 
 from brokenlinks import views as brokenlinks_views
 from hours import views as hours_views
-from libraries.views import serve_wagtail_doc
 from search import views as search_views
 from sersol_api import views as sersol_views
 
@@ -18,6 +17,7 @@ from .api import api_router
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.core import urls as wagtail_urls
+from wagtail.documents import urls as wagtaildocs_urls
 
 
 admin.site.site_header = 'CCA Libraries Administration'
@@ -25,14 +25,13 @@ admin.autodiscover()
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
-    # override Wagtail document handling — send file, not a forced download
-    path('documents/<int:document_id>/<document_filename>', serve_wagtail_doc, name='wagtaildocs_serve'),
 
     # CAS login urls
     # NOTE: ^admin/logout/$ must appear before ^admin/ or it's impossible to logout
     path('login/', LoginView.as_view(), name='cas_ng_login'),
     path('admin/login/', LoginView.as_view()),
     path('admin/logout/', LogoutView.as_view(), name='cas_ng_logout'),
+    path('documents/', include(wagtaildocs_urls)),
 
     path('admin/', include(wagtailadmin_urls)),
     # @TODO can we do this using just Wagtail REST APIs instead of Django REST framework?
