@@ -6,6 +6,8 @@
 
 - [Wagtail 2.15 upgrade](https://docs.wagtail.org/en/latest/releases/2.15.html) brings bulk actions for pages, documents, images (e.g. tag multiple images at once). The title field on Image and Document uploads now defaults to the filename without the file extension.
 - [Wagtail 2.16 upgrade](https://docs.wagtail.org/en/latest/releases/2.16.html) brings a new "slim" admin sidebar, automatic redirect creation, "aging pages" report.
+- Google site verification for [Search Console](https://search.google.com/search-console/about)
+- Switch back to using Wagtail's document serving method; the issue of PDFs forcing downloads instead of being readable in the browser appears to have been resolved
 
 ## 3.2.1
 
