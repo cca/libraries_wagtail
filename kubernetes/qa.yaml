@@ -294,6 +294,9 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels:
+            app: libraries
         spec:
           restartPolicy: Never
           containers:
@@ -347,6 +350,9 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels:
+            app: libraries
         spec:
           restartPolicy: Never
           containers:
@@ -411,6 +417,9 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels:
+            app: libraries
         spec:
           restartPolicy: Never
           containers:
