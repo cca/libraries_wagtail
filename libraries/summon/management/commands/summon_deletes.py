@@ -40,9 +40,14 @@ class Command(BaseCommand):
         # Koha JSON is an array of arrays for each row of the report e.g. [[1], [2]]
         rows = response.json()
         number = len(rows)
+
+        if number == 0:
+            logger.info("No records were deleted since {}, not sending data to Summon".format(lastrun))
+            exit(0)
+
+        logger.info("{} records were deleted since {}".format(number, lastrun))
         # unpack the record sub-lists into a newline-delimited string
         records = '\n'.join([str(rec) for [rec] in rows])
-        logger.info("{} records were deleted since {}".format(number, lastrun))
 
         # write records text list to file in temporary directory
         with TemporaryDirectory() as tmpdir:

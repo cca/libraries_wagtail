@@ -284,8 +284,8 @@ metadata:
   name: summon-sftp
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  # run daily at 2am (UTC) / 7pm PT
-  schedule: "2 0 * * *"
+  # run at convenient times for testing, not the same as prod
+  schedule: "22 10 * * *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   # https://kubernetes.io/docs/concepts/workloads/controllers/job/#clean-up-finished-jobs-automatically
