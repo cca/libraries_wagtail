@@ -282,8 +282,8 @@ metadata:
   name: summon-sftp
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  # run daily at 2am (UTC) / 7pm PT
-  schedule: "2 0 * * *"
+  # weekly on monday at 10am PT / 5pm UTC
+  schedule: 0 17 * * 1
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   jobTemplate:
