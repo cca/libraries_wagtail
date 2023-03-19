@@ -28,7 +28,7 @@ class Command(BaseCommand):
             raise CommandError(f"Requires the CDI private key to be located at {key_path}")
         # lastrun is a STRING (not date!) of form "MM/DD/YYYY"
         try:
-            lastrun = options.get('lastrun', None) or SummonDelete.objects.latest('date').date.strftime('%m/%d/%Y')
+            lastrun = options.get('lastrun', None) or SummonDelete.objects.latest('date').date.strftime('%Y-%m-%d')
         except SummonDelete.DoesNotExist:
             # on the first run the above will raise an error because there are
             # no SummonDelete.objects yet
