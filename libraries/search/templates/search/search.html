@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags wagtailsearchpromotions_tags %}
 
 {% block body_class %}search{% endblock %}
 {% block title %}Search{% endblock %}
@@ -13,8 +13,16 @@
 	</div>
 
     <div class="wrapper wrapper--search">
-        {% if search_results %}
+        {% get_search_promotions search_query as search_promotions %}
+
+        {% if search_results or search_promotions %}
             <ul class="search-list">
+                {% for promo in search_promotions %}
+                    {% with result=promo.page %}
+                        {% include 'search/search-result.html' %}
+                    {% endwith %}
+                {% endfor %}
+
                 {% for result in search_results %}
                     {% include 'search/search-result.html' %}
                 {% endfor %}
