@@ -49,9 +49,12 @@
     },
     "extends": "eslint:recommended",
     "rules": {
+      "globals": {
+        "require": true
+      },
       "indent": [
         "error",
-        "space"
+        4
       ],
       "linebreak-style": [
         "error",
