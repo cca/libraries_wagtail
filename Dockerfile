@@ -1,4 +1,5 @@
-FROM node:16-alpine AS assets
+# https://hub.docker.com/_/node
+FROM node:18.15-alpine3.17 AS assets
 # we build static assets (JS, CSS, application images) in a node container
 WORKDIR /app
 
@@ -6,10 +7,11 @@ WORKDIR /app
 # See https://pnpm.io/cli/fetch#usage-scenario
 COPY libraries/libraries/static/ libraries/libraries/static
 COPY pnpm-lock.yaml gulpfile.js package.json ./
-RUN npm install --location=global pnpm@7.4 gulp-cli@2.3 --no-fund --no-audit
+RUN npm install --location=global pnpm@8.1 --no-fund --no-audit
 RUN pnpm fetch --prod
 RUN pnpm install -r --offline --prod
-RUN gulp build
+# this builds files into /app/libraries/static, see gulpfile
+RUN npx gulp build
 
 # Build the Django application itself.
 FROM python:3.7.13 as libraries
@@ -29,7 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certifi
     # Step 4: Install dependencies
     apt-get update && apt-get install -y --no-install-recommends \
     # We need postgresql-client to be able to use
-    # `kubectl exec pg_dump` and `kubectl djnago-admin dbshell`
+    # `kubectl exec pg_dump` and `kubectl django-admin dbshell`
     postgresql-client-9.6 \
     # Install rsync to be able to fetch media files
     rsync && \
@@ -43,7 +45,7 @@ COPY Pipfile Pipfile.lock /app/
 RUN pipenv install --system --deploy
 
 # Collect our compiled static files from the assets image
-COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
+COPY --from=assets /app/libraries/static/ libraries/static
 
 # Install application code. Copy only libraries dir so that changes to docs,
 # k8s, config files, etc. don't invalidate the docker cache

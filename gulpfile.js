@@ -8,8 +8,6 @@ const autoprefixer = require('autoprefixer')
 
 const source = 'libraries/libraries/static'
 // compile assets directly into static files location, helps with local Skaffold dev
-// @TODO but Dockerfile only copies from libraries/libraries/static
-// I think this is breaking the summon assets in prod
 const dist = 'libraries/static'
 const settings = {
     dist: {
