@@ -9,6 +9,7 @@
 - Google site verification for [Search Console](https://search.google.com/search-console/about)
 - Switch back to using Wagtail's document serving method; the issue of PDFs forcing downloads instead of being readable in the browser appears to have been resolved
 - [Promoted Search Results](https://guide.wagtail.org/en-latest/how-to-guides/promote-search-results/) is a Wagtail plugin which adds a Settings page where we can force certain pages to appear at the top of certain searches, e.g. the Inter-library Loan page for "ILL" (when it would not normally appear)
+- [#45](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/45) fix Summon CSS file 404s, also makes docker build process more streamlined
 
 ## 3.2.1
 

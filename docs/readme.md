@@ -98,6 +98,12 @@ Outline:
 
 See deployment.md for more details on deploying to remote instances like staging and production.
 
+### Frontend Development
+
+If you are working on frontend (JS, CSS via SCSS) files with a local Wagtail, the fastest way to get your changes on the running site is to run a `gulp watch` task on your host laptop in a parallel process to the usuall development (skaffold) tools. Gulp will see you make changes to source files, which triggers a build, gulp builds files directly into the static files directory where Wagtail serves them from, and Skaffold notices the new static files and copies them to the running kubernetes pod without restarting or rebuilding anything.
+
+Due to our two-step build process in the Dockerfile, the application pod does not have node available so you cannot actually compile the static files on it, e.g. by running a shell on the pod and then running gulp.
+
 ## Module (including Wagtail) Updates
 
 I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for python development as it stores an actual dependency graph rather than a list of unrelated packages like requirements.txt. For instance, if package A is changed to no longer rely on package B, pipenv removes B from the graph, but requirements doesn't know anything about dependencies and will happily continue to install a useless piece of software. Eventually, we might move to using pipenv in the Dockerfile, but for now we can `pipenv install wagtail=3.0.0` to add or upgrade a package and then `pipenv run pip freeze -l > libraries/requirements.txt` to flatten the pipenv graph into a requirements list.
