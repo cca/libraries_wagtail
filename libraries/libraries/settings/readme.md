@@ -10,7 +10,7 @@ base -> context (e.g. dev, staging, or production) -> local (machine)
 
 base.py — _universal_ settings that are necessary for all builds of the site, regardless of git branch or machine. Includes lots of Django filler, installed apps, middleware, loggers, and text field settings.
 
-dev.py - runs _development_ builds of the site on both the developer's local machine and our development web host libraries-dev.cca.edu. Typically used when you're on the dev branch. Sets the "email backend" to "console", sets `DEBUG = TRUE`, and uses a dummy cache.
+dev.py - runs _development_ builds of the site on both the developer's local machine and our development web host libraries-dev.cca.edu. Typically used when you're on the dev branch. Sets the "email backend" to "console", sets `DEBUG = TRUE`, and doesn't use caching.
 
 production.py - runs _production_ builds of the site on the live web host, though sometimes we may test these settings locally. Typically used when you're on the `main` branch. Uses an SMTP email backend, `DEBUG = FALSE`, and has caching.
 

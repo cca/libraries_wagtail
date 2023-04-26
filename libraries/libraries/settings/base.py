@@ -116,20 +116,24 @@ LOGIN_URL = 'cas_ng_login'
 WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 WAGTAIL_PASSWORD_RESET_ENABLED = False
 
-# db cache for production, dummy for dev
-# https://docs.djangoproject.com/en/1.11/topics/cache/
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'libraries_wagtail_cache',
-    },
-    'dummy': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+# caching only in staging, production, not local dev
+# https://docs.djangoproject.com/en/3.2/topics/cache/
+if namespace == 'libraries-wagtail':
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
     }
-}
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 300
-CACHE_MIDDLEWARE_KEY_PREFIX = 'ccalib'
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+            'LOCATION': 'libraries_wagtail_cache',
+        }
+    }
+    CACHE_MIDDLEWARE_ALIAS = 'default'
+    CACHE_MIDDLEWARE_SECONDS = 300
+    CACHE_MIDDLEWARE_KEY_PREFIX = 'ccalib'
 
 ROOT_URLCONF = 'libraries.urls'
 
