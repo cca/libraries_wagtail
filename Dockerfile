@@ -41,7 +41,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certifi
     rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 
 # Install python dependencies
-RUN pip install pipenv
+RUN pip install --root-user-action=ignore pipenv
 COPY Pipfile Pipfile.lock /app/
 # --system: install deps in system python, --deploy: throw error if lockfile doesn't match Pipfile
 RUN pipenv install --system --deploy
