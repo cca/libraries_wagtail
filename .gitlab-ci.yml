@@ -105,7 +105,7 @@ docker_image_prod:
   #- gsutil rm gs://cca-manual-db-dumps/${DB_FILE}
 
 .provision_secrets_staging: &provision_secrets_staging
-  - kubectl get secret cloud-storage-credentials cloudsql-db-credentials secret-key instagram-secret  smtp-gmail-com-credentials summon-sftp --namespace=libraries -oyaml | sed -e '/namespace:/d;/creationTimestamp:/d;/resourceVersion:/d;/uid:/d' | kubectl apply --namespace="${KUBERNETES_NAMESPACE_OVERWRITE}" -f - || true
+  - kubectl get secret cloud-storage-credentials cloudsql-db-credentials secret-key instagram-secret  smtp-gmail-com-credentials --namespace=libraries -oyaml | sed -e '/namespace:/d;/creationTimestamp:/d;/resourceVersion:/d;/uid:/d' | kubectl apply --namespace="${KUBERNETES_NAMESPACE_OVERWRITE}" -f - || true
 
 # ----------------
 # DEPLOYMENTS - QA.
