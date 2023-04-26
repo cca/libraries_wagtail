@@ -286,9 +286,9 @@ metadata:
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
   # run at convenient times for testing, not the same as prod
-  # schedule: "45 1 * * *"
+  schedule: "50 19 * * *"
   # default when not testing this job: run once on January 1st
-  schedule: "0 0 1 1 *"
+  # schedule: "0 0 1 1 *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   # https://kubernetes.io/docs/concepts/workloads/controllers/job/#clean-up-finished-jobs-automatically
@@ -302,6 +302,10 @@ spec:
             app: libraries
         spec:
           restartPolicy: Never
+          volumes:
+            - name: summon-sftp-secrets
+              secret:
+                secretName: summon-sftp-secrets
           containers:
             - name: summon
               image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
@@ -310,6 +314,10 @@ spec:
                 - python
                 - libraries/manage.py
                 - summon_deletes
+              volumeMount:
+                - name: summon-sftp-secrets
+                  readOnly: true
+                  mountPath: /root/.ssh
               # Env variables form ConfigMap
               envFrom:
                 - configMapRef:
