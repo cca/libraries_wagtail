@@ -20,9 +20,11 @@ ENV PYTHONPATH /app:/app/libraries
 
 # Install non-python dependencies
 # Step 0: add all repos to sources.list
-RUN printf "deb http://ftp.debian.org/debian/ stretch main\ndeb-src http://ftp.debian.org/debian/ stretch main\ndeb http://security.debian.org stretch/updates main\ndeb-src http://security.debian.org stretch/updates main" > /etc/apt/sources.list
+RUN printf "deb http://ftp.debian.org/debian/ stable main\ndeb-src http://ftp.debian.org/debian/ stable main" > /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certificates && \
+    # @TODO We need to update the debian dist from the list https://ftp.postgresql.org/pub/repos/apt/dists/
+    # when it changes...is there a better way like how we use debian.org's "stable" above?
     # Step 1: Add the PGDG repo into the sources list
     echo "deb https://ftp.postgresql.org/pub/repos/apt/ bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     # Step 2: Install wget and ca-certificates to be able to add a cert for PGDG
