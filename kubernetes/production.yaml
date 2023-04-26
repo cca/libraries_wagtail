@@ -294,6 +294,10 @@ spec:
             app: libraries
         spec:
           restartPolicy: Never
+          volumes:
+            - name: summon-sftp-secrets
+              secret:
+                secretName: summon-sftp-secrets
           containers:
             - name: summon
               image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
@@ -302,6 +306,10 @@ spec:
                 - python
                 - libraries/manage.py
                 - summon_deletes
+              volumeMounts:
+                - name: summon-sftp-secrets
+                  readOnly: true
+                  mountPath: /root/.ssh
               # Env variables form ConfigMap
               envFrom:
                 - configMapRef:
