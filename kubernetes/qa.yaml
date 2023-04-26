@@ -55,12 +55,10 @@ metadata:
 spec:
   # Start 1 copy of the application.
   replicas: 1
-
   # Select the pods which are part of this deployment.
   selector:
     matchLabels:
       app: libraries
-
   # The pod template this deployment will create.
   template:
     metadata:
@@ -69,7 +67,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: gcr-json-key
-
       initContainers:
         - name: init-app
           image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
@@ -172,6 +169,7 @@ spec:
           resources:
             limits:
               memory: 512Mi
+              cpu: 1
             requests:
               memory: 512Mi
 
@@ -185,12 +183,10 @@ metadata:
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
   replicas: 1
-
   # Select the pods which are part of this deployment.
   selector:
     matchLabels:
       tool: cloudsqlproxy
-
   # The pod template this deployment will create.
   template:
     metadata:
@@ -216,7 +212,12 @@ spec:
               readOnly: true
             - name: cloudsql
               mountPath: /cloudsql
-
+          resources:
+            limits:
+              memory: 1024Mi
+              cpu: 1
+            requests:
+              memory: 512Mi
       volumes:
         - name: cloudsql-instance-credentials
           secret:
