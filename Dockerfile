@@ -14,7 +14,7 @@ RUN pnpm install -r --offline --prod
 RUN npx gulp build
 
 # Build the Django application itself.
-FROM python:3.7.13 as libraries
+FROM python:3.7.16-bullseye as libraries
 WORKDIR /app
 ENV PYTHONPATH /app:/app/libraries
 
@@ -41,7 +41,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certifi
     rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 
 # Install python dependencies
-RUN pip install --root-user-action=ignore pipenv
+ENV PIP_ROOT_USER_ACTION ignore
+RUN pip install pipenv
 COPY Pipfile Pipfile.lock /app/
 # --system: install deps in system python, --deploy: throw error if lockfile doesn't match Pipfile
 RUN pipenv install --system --deploy
