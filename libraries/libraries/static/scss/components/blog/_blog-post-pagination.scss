@@ -5,37 +5,19 @@
 .blog-post-pagination {
     border-top: 1px solid black(.1);
     display: flex;
-    margin: 60px 0 0;
+    flex-direction: column;
     padding: 20px 0 0;
     position: relative;
 
     @include respond($break-medium) {
-        margin-top: 40px;
-    }
-}
-
-.blog-post-pagination__title {
-    font-size: 16px;
-    font-weight: 700;
-    position: absolute;
-    top: -30px;
-
-    @include respond($break-medium) {
-        display: none;
+        flex-direction: row;
     }
 }
 
 .blog-post-pagination__item {
     @include clearfix;
     flex: 1 0 50%;
-}
-
-.blog-post-pagination__item--prev {
-    display: none;
-
-    @include respond($break-medium) {
-        display: block;
-    }
+    margin-top: 40px;
 }
 
 .blog-post-pagination__link {
@@ -62,9 +44,11 @@
 }
 
 .blog-post-pagination__image {
-    align-self: flex-start;
     background-size: cover;
+    // @TODO remove this when done
+    border: 1px solid red;
     display: inline-block;
+    flex-shrink: 0;
     height: 65px;
     width: 100px;
 
@@ -73,31 +57,37 @@
     }
 }
 
+.blog-post-pagination__text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+
+    @include respond($break-medium) {
+        margin: 0;
+    }
+}
+
 .blog-post-pagination__type {
+    align-self: flex-start;
     border-bottom: 2px solid $green;
-    display: none;
     font-size: 16px;
     font-weight: 700;
     letter-spacing: .1em;
     margin: 0 0 7px;
 
+    // on large screen, right-align the "next article" label
     @include respond($break-medium) {
-        display: inline-block;
+        &.next {
+            align-self: flex-end;
+        }
     }
 }
 
 .blog-post-pagination__post-title {
-    align-self: center;
-    flex: 1 1;
+    align-self: flex-end;
     font-family: $font-family-serif;
     font-size: 14px;
     line-height: 1.6em;
-    padding: 0 25px 0 15px;
-
-    @include respond($break-medium) {
-        font-size: 14px;
-        padding: 0;
-    }
 }
 
 .blog-post-pagination__post-title-text {

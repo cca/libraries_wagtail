@@ -1,13 +1,9 @@
 {% load wagtailimages_tags %}
 
-<ul class="blog-post-pagination">
-
-	<h3 class="blog-post-pagination__title">
-		Next Article
-	</h3>
+<section class="blog-post-pagination">
 
 	{% if previous_post %}
-		<li class="blog-post-pagination__item blog-post-pagination__item--prev">
+		<div class="blog-post-pagination__item">
 			<a
 				class="blog-post-pagination__link"
 				href="{{ previous_post.url }}"
@@ -19,21 +15,22 @@
 					title="{{ previous_post.title }}"
 				></div>
 
-				<br>
-				<span class="blog-post-pagination__type">
-					Previous
-				</span>
+				<div class="blog-post-pagination__text">
+					<h4 class="blog-post-pagination__type previous">
+						Previous Article
+					</h4>
 
-				<h5 class="blog-post-pagination__post-title">
-					{{ previous_post.title }}
-				</h5>
+					<h5 class="blog-post-pagination__post-title">
+						{{ previous_post.title }}
+					</h5>
+				</div>
 			</a>
-		</li>
+		</div>
 	{% endif %}
 
 	{# there's only a "next article" if this post isn't the latest itself #}
 	{% if next_post %}
-		<li class="blog-post-pagination__item">
+		<div class="blog-post-pagination__item">
 			<a
 				class="blog-post-pagination__link blog-post-pagination__link--next"
 				href="{{ next_post.url }}"
@@ -45,18 +42,18 @@
 					title="{{ next_post.title }}"
 				></div>
 
-				<br>
-				<span class="blog-post-pagination__type">
-					Next
-				</span>
-
-				<h5 class="blog-post-pagination__post-title">
-					<span class="blog-post-pagination__post-title-text">
-						{{ next_post.title }}
-					</span>
-				</h5>
+				<div class="blog-post-pagination__text">
+					<h4 class="blog-post-pagination__type next">
+						Next Article
+					</h4>
+					<h5 class="blog-post-pagination__post-title">
+						<span class="blog-post-pagination__post-title-text">
+							{{ next_post.title }}
+						</span>
+					</h5>
+				</div>
 			</a>
-		</li>
+		</div>
 	{% endif %}
 
 </ul>
