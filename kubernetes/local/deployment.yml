@@ -28,6 +28,9 @@ spec:
           configMap:
             name: scripts
             defaultMode: 0744
+        - name: summon-sftp-secrets
+          secret:
+            secretName: summon-sftp-secrets
 
       containers:
         # Portal does this, does is it? breaks skaffold run, syntax error
@@ -48,6 +51,9 @@ spec:
             #   mountPath: /app/libraries
             - name: scripts
               mountPath: /scripts
+            - name: summon-sftp-secrets
+              readOnly: true
+              mountPath: /root/.ssh
 
           resources:
               limits:

@@ -17,12 +17,14 @@ checkfor minikube || brew install minikube
 checkfor skaffold || brew install skaffold
 checkfor gcloud || echo "Google Cloud SDK is used to sync media and database files from the cloud. Install it yourself by following the instructions on https://cloud.google.com/sdk/docs/install-sdk"
 
-minikube config set vm-driver docker
-minikube config set cpus 4
-minikube config set memory 8192
-minikube addons enable metrics-server
+# minikube config set vm-driver docker
+# minikube config set cpus 4
+# minikube config set memory 8192
+# minikube addons enable metrics-server
 
 [ -e "$(dirname "$0")/../kubernetes/local/secrets.env" ] || echo -e "\nObtain a copy of secrets.env from a developer and place it in kubernetes/local\n"
+
+[ -e "$(dirname "$0")/../kubernetes/assets/cdi_cca.key" ] || echo -e "\nObtain a copy of the Summon SFTP private key from a developer (it is in Dashlane as \"Summon MFT\") and save it as kubernetes/assets/cdi_cca.key\n"
 
 echo "Do you want to load the (s)taging or (p)roduction database into your local minikube cluster now? You need gcloud installed and docker running but this shouldn't require a secrets.env file. Type \"n\" for \"no\". "
 read -r -n 1 -p "[n, p, s]? " result
