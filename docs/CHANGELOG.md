@@ -1,11 +1,11 @@
 # Changelog
 
-## 3.NEXT
+## 3.3.0
 
-**2023-??-??** - major Wagtail upgrades. Add Promoted Search Results plugin.
+**2023-04-27** - two major Wagtail upgrades. Add Promoted Search Results plugin. Fix a bug with navigating between blog posts on a phone-sized screen.
 
 - [Wagtail 2.15 upgrade](https://docs.wagtail.org/en/latest/releases/2.15.html) brings bulk actions for pages, documents, images (e.g. tag multiple images at once). The title field on Image and Document uploads now defaults to the filename without the file extension.
-- [Wagtail 2.16 upgrade](https://docs.wagtail.org/en/latest/releases/2.16.html) brings a new "slim" admin sidebar, automatic redirect creation, "aging pages" report.
+- [Wagtail 2.16 upgrade](https://docs.wagtail.org/en/latest/releases/2.16.html) brings a new "slim" admin sidebar, automatic redirect creation, ["aging pages" report](https://libraries.cca.edu/admin/reports/aging-pages/).
 - Google site verification for [Search Console](https://search.google.com/search-console/about)
 - Switch back to using Wagtail's document serving method; the issue of PDFs forcing downloads instead of being readable in the browser appears to have been resolved
 - [Promoted Search Results](https://guide.wagtail.org/en-latest/how-to-guides/promote-search-results/) is a Wagtail plugin which adds a Settings page where we can force certain pages to appear at the top of certain searches, e.g. the Inter-library Loan page for "ILL" (when it would not normally appear)
