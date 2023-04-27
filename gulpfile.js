@@ -7,8 +7,9 @@ const uglify = require('gulp-uglify')
 const autoprefixer = require('autoprefixer')
 
 const source = 'libraries/libraries/static'
-// compile assets directly into static files location, helps with local Skaffold dev
+// files will be copied both here _and_ above dir, too
 const dist = 'libraries/static'
+
 const settings = {
     dist: {
         css: dist + '/css/',

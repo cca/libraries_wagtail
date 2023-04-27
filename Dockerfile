@@ -7,7 +7,8 @@ WORKDIR /app
 # See https://pnpm.io/cli/fetch#usage-scenario
 COPY libraries/libraries/static/ libraries/libraries/static
 COPY pnpm-lock.yaml gulpfile.js package.json ./
-RUN npm install --location=global pnpm@8.1 --no-fund --no-audit
+ENV NPM_CONFIG_UPDATE_NOTIFIER false
+RUN npm install --location=global pnpm@8.3 --no-fund --no-audit
 RUN pnpm fetch --prod
 RUN pnpm install -r --offline --prod
 # this builds files into /app/libraries/static, see gulpfile
@@ -48,7 +49,7 @@ COPY Pipfile Pipfile.lock /app/
 RUN pipenv install --system --deploy
 
 # Collect our compiled static files from the assets image
-COPY --from=assets /app/libraries/static/ libraries/static
+COPY --from=assets /app/libraries/libraries/static/ libraries/libraries/static
 
 # Install application code. Copy only libraries dir so that changes to docs,
 # k8s, config files, etc. don't invalidate the docker cache
