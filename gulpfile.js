@@ -68,7 +68,7 @@ function summonCSS() {
         .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
         .pipe(postcss([ autoprefixer() ]))
         .pipe(dest(settings.dist.summon))
-        .pipe(dest('libraries/' + settings.dist.css))
+        .pipe(dest('libraries/' + settings.dist.summon))
 }
 
 function summonJS() {
