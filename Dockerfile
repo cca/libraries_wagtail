@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certifi
     echo "deb https://ftp.postgresql.org/pub/repos/apt/ bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     # Step 2: Install wget and ca-certificates to be able to add a cert for PGDG
     # Step 3: Add the PDGD cert
-    wget --no-check-certificate --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc > /etc/apt/trusted.gpg.d/pgdg.asc && \
     # Step 4: Install dependencies
     apt-get update && apt-get install -y --no-install-recommends \
     # We need postgresql-client to be able to use
