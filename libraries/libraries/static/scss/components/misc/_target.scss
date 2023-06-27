@@ -1,0 +1,9 @@
+// https://moderncss.dev/modern-css-for-dynamic-component-based-architecture/#css-reset-additions
+// scroll target offset, give anchor links an offset equal to the height of the sticky menu
+:target {
+    scroll-padding-block-start: $header-height-small;
+
+    @include respond($break-medium) {
+        scroll-padding-block-start: $header-height-large;
+    }
+}
