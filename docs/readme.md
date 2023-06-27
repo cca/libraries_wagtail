@@ -135,6 +135,26 @@ We use [Gulp](http://gulpjs.com/) for our front-end build tool. Note that tools 
 
 There are two folders under the main static directory ("moodle" and "summmon") for hosting static files used in external services that cannot host their own content. The Summon files are contained within this project (see libraries/summon and the summon Gulp tasks) while the Moodle files are created in the [Moodle Styles](https://github.com/cca/moodle-styles) project.
 
+## Media
+
+We have, as of 6/2023, about 4.5gb of media files (images, documents, a few videos) on the Libraries' Wagtail site. All the media are stored in [Google Storage Buckets](https://cloud.google.com/storage/docs/buckets) for all instances (local, staging, production) of the site.
+
+| Instance | GCP Project | GSB
+|----------|-------------|----
+| Local | CCA Web Staging | libraries-media-local
+| Staging | CCA Web Staging | libraries-media-staging-lib-ep
+| Production | CCA Web Prod | libraries-lib-production
+
+Some of these may change as we look into using the Autoclass storage feature and using a CDN with the site.
+
+The Wagtail app uses a `GS_BUCKET` env var to know which bucket to use in which context. Each bucket has one service account with a `Storage Object Admin` role that can modify its contents and there is a corresponding `GS_CREDENTIALS` env var that holds the account's JSON key as a string. To run the app locally, save the local bucket's key (it's shared in Dashlane) as kubernetes/local/local-gsb-sa.json.
+
+See the bottom of base.py for how these env vars are used. This is also where we tell Google to set a long-lived cache control header on all objects. This improves performance and our "whitenoise" static file library uses cache busting parameters in file names anyways.
+
+All buckets allow public access (give user `allUsers` the `Storage Object Viewer` role) though it would be difficult to guess the URL of a resource that is not linked off of our websites.
+
+The CI/CD pipeline does some juggling with media files, copying from _another_ intermediary bucket to the ones that are actually used to serve resources for the website.
+
 ## Database Migrations
 
 When a model is changed, we must generate migration files that implement the change in the database. This process is made complicated by the fact that we need to generate the migrations on the (local, minikube) pod running the app. Here is an outline of the process:

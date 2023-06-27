@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.x.x
+
+**YYYY-MM-DD**:
+
+- [#52](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/52) anchor links now account for the fixed header
+- [#33](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/33) fixed a long-running challenge of serving media files when developing locally
+
 ## 3.3.0
 
 **2023-04-27** - two major Wagtail upgrades. Add Promoted Search Results plugin. Fix a bug with navigating between blog posts on a phone-sized screen.
