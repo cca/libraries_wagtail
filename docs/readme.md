@@ -45,6 +45,21 @@ There are three ways to forward a port on the minikube cluster so we can open th
 
 `minikube dashboard` opens a nice web UI to visualize its k8s resources.
 
+### Kubernetes Namespace stuck in "terminating" status
+
+To rebuild the local dev application, Skaffold deletes all the kubernetes resources in the app's `libraries-wagtail` namespace. Sometimes, the namespace itself gets stuck in a "terminating" status. [This article](https://www.redhat.com/sysadmin/troubleshooting-terminating-namespaces) explains what's happening: the namespace's "finalizer" never allows it to be removed. The solution is to edit the namespace and remove the finalizer.
+
+```sh
+k get ns libraries-wagtail -o json > ns.json
+# edit the JSON representation, remove 'kubernetes' from the 'finalizers' array
+$EDITOR ns.json
+# PUT the edited namespace to Kubernetes
+# PORT may change; look at where `minikube dashboard` is running to find it
+PORT=60406 curl -k -H "Content-Type: application/json" -X PUT --data-binary @ns.json http://127.0.0.1:$PORT/api/v1/namespaces/libraries-wagtail/finalize
+```
+
+(in this code `k` is the libraries `kubectl -n $NS` alias)
+
 ### Minikube Disk Usage
 
 Note that persistent volumes are stored _on the minikube server_ in the /data dir, we can `minikube ssh` to go into the server to look around. The server's docker instance also stacks up old versions of our images over time and needs to be pruned. Below is an example of using docker's [filters](https://docs.docker.com/engine/reference/commandline/images/#filter) to remove all but the last couple images:
