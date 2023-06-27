@@ -4,8 +4,8 @@
   "description": "CCA Libraries website in Wagtail CMS",
   "scripts": {
     "build": "gulp build",
-    "scripts": "gulp scripts",
-    "sass": "gulp styles",
+    "css": "gulp css",
+    "js": "gulp js",
     "test": "sass-lint --verbose --no-exit",
     "watch": "gulp"
   },
