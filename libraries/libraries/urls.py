@@ -55,8 +55,8 @@ urlpatterns = [
     path('sitemap.xml', sitemap),
 ]
 
-# when running locally
-if os.environ.get('IS_LOCAL') != None:
+# when running locally with no GSB credentials
+if os.environ.get('GS_CREDENTIALS', True):
     from django.conf.urls.static import static
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 

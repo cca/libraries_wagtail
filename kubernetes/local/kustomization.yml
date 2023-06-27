@@ -17,8 +17,11 @@ resources:
 secretGenerator:
   - name: app-secrets
     env: secrets.env
-    # these files facilitate the summon_deletes mgmt cmd and are copied to /root/.ssh
-    # by a volume on the pod definition (see deployment.yml for how it's done locally)
+  - name: gsb-service-account
+    files:
+      - local-gsb-sa.json
+  # these files facilitate the summon_deletes mgmt cmd and are copied to /root/.ssh
+  # by a volume on the pod definition (see deployment.yml for how it's done locally)
   - name: summon-sftp-secrets
     files:
       - assets/cdi_cca.key

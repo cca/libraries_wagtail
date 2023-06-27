@@ -194,7 +194,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # necessary to serve Summon files or any arbitrary static file
 WHITENOISE_ROOT = STATIC_ROOT
 
-# NOTE: these are overridden by Google Storage Bucket settings at bottom of file
+# these settings seem to still be necessary but note that we serve media from
+# a Google Storage Bucket — see the Google Cloud section at the bottom
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 

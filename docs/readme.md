@@ -2,11 +2,6 @@
 
 This folder contains the generic documentation for the CCA Libraries Wagtail site as well as development scripts, all of which are meant to be run from the parent directory. Most of the site's apps also have readme files with more information specific to them.
 
-## Questions & Todos
-
-- [ ] serving media files locally (mount libraries/media somehow or use another GSB)
-- [x] commands for pruning minikube's docker instance (see bottom of section below)
-
 ## Running Wagtail Locally
 
 We need docker, minikube, kubectl, and skaffold. Many of these are available from different places but they're also all on homebrew. The other sensible place to get these tools is as [gcloud](https://cloud.google.com/sdk/docs/install) CLI components, which we need to interact with our cloud-hosted resources (databases, static files, servers) anyways. To use them, we make sure that the "bin" subfolder inside the gcloud tools is on our path.
