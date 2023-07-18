@@ -40,6 +40,8 @@ There are three ways to forward a port on the minikube cluster so we can open th
 
 `minikube dashboard` opens a nice web UI to visualize its k8s resources.
 
+We currently run the entire app in minikube, including database and search engine, but other CCA teams (like cca.edu) are moving to running only Wagtail locally while using a cloud-hosted database and search engine. Ngoc has a notebook on how this conversion worked if we want to go that route.
+
 ### Kubernetes Namespace stuck in "terminating" status
 
 To rebuild the local dev application, Skaffold deletes all the kubernetes resources in the app's `libraries-wagtail` namespace. Sometimes, the namespace itself gets stuck in a "terminating" status. [This article](https://www.redhat.com/sysadmin/troubleshooting-terminating-namespaces) explains what's happening: the namespace's "finalizer" never allows it to be removed. The solution is to edit the namespace and remove the finalizer.
