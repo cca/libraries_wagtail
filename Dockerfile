@@ -23,23 +23,19 @@ ENV PYTHONPATH /app:/app/libraries
 # Step 0: add all repos to sources.list
 RUN printf "deb http://ftp.debian.org/debian/ stable main\ndeb-src http://ftp.debian.org/debian/ stable main" > /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certificates && \
-    # @TODO We need to update the debian dist from the list https://ftp.postgresql.org/pub/repos/apt/dists/
-    # when it changes...is there a better way like how we use debian.org's "stable" above?
-    # Step 1: Add the PGDG repo into the sources list
-    echo "deb https://ftp.postgresql.org/pub/repos/apt/ bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-    # Step 2: Install wget and ca-certificates to be able to add a cert for PGDG
-    # Step 3: Add the PDGD cert
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc > /etc/apt/trusted.gpg.d/pgdg.asc && \
-    # Step 4: Install dependencies
-    apt-get update && apt-get install -y --no-install-recommends \
-    # We need postgresql-client to be able to use
-    # `kubectl exec pg_dump` and `kubectl django-admin dbshell`
-    postgresql-client-9.6 \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
     # Install rsync to be able to fetch media files
-    rsync && \
-    # Step 5: Cleanup apt cache and lists
-    rm -rf /var/cache/apt/* /var/lib/apt/lists/*
+    rsync
+
+# Install postgresl-client, needed for
+# `kubectl exec pg_dump` and `kubectl django-admin dbshell`
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" | tee -a /etc/apt/sources.list.d/pgdg.list && \
+    curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg && \
+    apt-get update -y && apt-get install postgresql-client-9.6 -y
+
+# Cleanup apt cache and lists
+RUN rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 
 # Install python dependencies
 ENV PIP_ROOT_USER_ACTION ignore

@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: postgres
-          # TODO: use version of postgres in production
+          # TODO: when we upgrade postgres change this to be 14 (version used in prod)
+          # https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/53
           image: postgres:10.4
           imagePullPolicy: IfNotPresent
           ports:
