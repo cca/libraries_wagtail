@@ -5,6 +5,7 @@ metadata:
   labels:
     app: postgres
 data:
+  # note: actual local db is cca_libraries, this one is empty, what happened here?
   POSTGRES_DB: libraries_wagtail
   POSTGRES_USER: postgresadmin
   POSTGRES_PASSWORD: admin123

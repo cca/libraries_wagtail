@@ -34,9 +34,6 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" | tee 
     curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg && \
     apt-get update -y && apt-get install postgresql-client-9.6 -y
 
-# Cleanup apt cache and lists
-RUN rm -rf /var/cache/apt/* /var/lib/apt/lists/*
-
 # Install python dependencies
 ENV PIP_ROOT_USER_ACTION ignore
 RUN pip install pipenv
