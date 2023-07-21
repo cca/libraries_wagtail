@@ -288,7 +288,7 @@ spec:
 # CRONJOBS
 #
 
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: instagram
@@ -343,7 +343,7 @@ spec:
                       name: legacy-google-api-credentials
                       key: credentials
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: publish-scheduled-pages

@@ -23,10 +23,11 @@ ENV PYTHONPATH /app:/app/libraries
 # Step 0: add all repos to sources.list
 RUN printf "deb http://ftp.debian.org/debian/ stable main\ndeb-src http://ftp.debian.org/debian/ stable main" > /etc/apt/sources.list
 
+# rsync needed to fetch media files
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
-    # Install rsync to be able to fetch media files
-    rsync
+    rsync \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install postgresl-client, needed for
 # `kubectl exec pg_dump` and `kubectl django-admin dbshell`
