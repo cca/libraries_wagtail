@@ -19,11 +19,7 @@ FROM python:3.7.16-bullseye as libraries
 WORKDIR /app
 ENV PYTHONPATH /app:/app/libraries
 
-# Install non-python dependencies
-# Step 0: add all repos to sources.list
-RUN printf "deb http://ftp.debian.org/debian/ stable main\ndeb-src http://ftp.debian.org/debian/ stable main" > /etc/apt/sources.list
-
-# rsync needed to fetch media files
+# Install non-python dependencies, rsync needed to fetch media files
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     rsync \
