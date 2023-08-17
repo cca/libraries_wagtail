@@ -11,7 +11,7 @@ autopep8 = "*"
 # @TODO updates:
 # Wagtail 2.15 & 2.16
 # elasticsearch
-django = "==3.2.15"
+django = "==3.2.20"
 django-cas-ng = "==4.3.0"
 django-extensions = "==3.2.3"
 djangorestframework-simplejwt = "==5.2.2"
