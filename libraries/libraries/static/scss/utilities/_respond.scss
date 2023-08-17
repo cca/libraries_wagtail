@@ -20,7 +20,7 @@
                 @content;
             }
         }
-    } @elseif $max-width == false {
+    } @else if $max-width == false {
         @media screen and (min-width: $min-width) {
             @content;
         }
