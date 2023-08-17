@@ -46,6 +46,9 @@ function stop -d 'stop the local development tools'
     echo "Stopping the local development toolchain..."
     echo "Stopping skaffold"
     pkill -f 'skaffold dev'
+    # libraries-wagtail namespace never seems to terminate properly
+    set NS libraries-wagtail
+    kubectl get ns $NS -ojson | jq '.spec.finalizers = []' | kubectl replace --raw "/api/v1/namespaces/$NS/finalize" -f - >/dev/null
     echo "Stopping minikube"
     # if you try to stop minikube & it's not started it loops infinitely
     if minikube status &>/dev/null
