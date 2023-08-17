@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'wagtail.contrib.legacy.richtext',
     # https://docs.wagtail.org/en/stable/reference/contrib/searchpromotions.html
     'wagtail.contrib.search_promotions',
+    'wagtail.contrib.table_block',
     'wagtail.core',
     'wagtail.documents',
     'wagtail.embeds',

@@ -4,6 +4,7 @@ from django.forms import ChoiceField
 from django.forms.utils import ErrorList
 
 from wagtail.core.blocks import ChoiceBlock, StructBlock, StructValue, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock, ListBlock
+from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 # see docs.wagtail.io/en/v2.6.1/topics/streamfield.html#custom-value-class-for-structblock
@@ -175,6 +176,7 @@ class BaseStreamBlock(StreamBlock):
     snippet = RichTextBlock(label="Callout", template="categories/blocks/snippet.html")
     html = EmbedHTML(label="Embed code")
     row = RowBlock(max_num=3)
+    table = TableBlock()
 
 # AboutUsPage has a much simpler template
 class AboutUsStreamBlock(StreamBlock):
