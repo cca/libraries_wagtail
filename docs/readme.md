@@ -190,6 +190,20 @@ Note:
 - we can disallow certain page types from being created manually at all if we a) generate them during migrations & b) ensure no other model lists them in its `subpage_types`
 - `slug`s must be unique & therefore make a good hook when writing the `remove_xxx` method which undoes the effects of the migration
 
+## Postgres Update
+
+How to update the Postgres version. Example `kubectl` commands do not include the appropriate `-n $NAMESPACE` flags, see [libraries-k8s](https://github.com/cca/libraries-k8s) for the easiest way to account for these.
+
+- Export current DB `gcloud sql export sql $DB_INSTANCE $DB_URI --database $DB_NAME --offload` where `DB_URI` is a path to a storage bucket and filename like gs://libraries-db-dumps-ci/2023-09-29-libraries-lib-ep-staging.sql.gz
+- Cloud Console > SQL > go to the new verion's instance (someone else at CCA should've already created it, if not create it yourself) > Database > Add a database with the same name as the old one
+    - Import > Enter the path to the SQL export in GSB and select the new database
+    - Users > Add user with the same username and password as the current db, these credentials will be in a secret in the kubernetes cluster
+- Edit the Dockerfile line that specifies a Postgres version, `apt-get install postgresql-client-9.6`
+- Edit the kubernetes secrets with the cloudsqlproxy connection details
+  - If you changed the db username or password, edit their base64-encoded values. It looks roughly like `kubectl get secret cloudsql-db-credentials -o yaml > secret.yaml; echo 'NEW PASSWORD' | base64 | pbcopy; vim secret.yaml; kubectl apply -f secret.yaml`. Env var secrets like these require a pod restart to take effect.
+  - For the cloudsql-instance-credentials secret which is a JSON file, download the new file (@TODO how do we get it? do we need to create another service account?) & recreate the secret like `kubectl create secret generic production-tls --save-config --dry-run=client --from-file=./tls.key --from-file=./tls.crt -o yaml | kubectl apply -f -`. Pods do not need to be restarted for secret files.
+- When we push a new tagged commit that triggers the GitLab pipelines, it will build the new Docker image with the update postgres client and recreate the pods giving us the new secrets
+
 ## Miscellaneous Extras
 
 ### Sitemap
