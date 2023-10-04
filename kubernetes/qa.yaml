@@ -163,15 +163,14 @@ spec:
           # Define the port our application listens on.
           ports:
             - containerPort: 8000
-          # Limit memory use to prevent uncontrolled resource use in case of bugs.
-          # This can be raised if necessary, but make sure the cluster is large
-          # enough or the application won't deploy.
+          # Lower resource requests & limits for staging
           resources:
             limits:
+              cpu: 150m
               memory: 512Mi
-              cpu: "1"
             requests:
-              memory: 512Mi
+              cpu: 100m
+              memory: 256Mi
 
 ---
 # Cloud SQL proxy
@@ -214,10 +213,11 @@ spec:
               mountPath: /cloudsql
           resources:
             limits:
-              memory: 1024Mi
-              cpu: "1"
+              cpu: 200m
+              memory: 256Mi
             requests:
-              memory: 512Mi
+              cpu: 50m
+              memory: 128Mi
       volumes:
         - name: cloudsql-instance-credentials
           secret:
