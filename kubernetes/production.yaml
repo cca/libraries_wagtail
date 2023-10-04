@@ -169,11 +169,12 @@ spec:
           # This can be raised if necessary, but make sure the cluster is large
           # enough or the application won't deploy.
           resources:
-            # @TODO CPU limits
             limits:
+              cpu: 1000m
               memory: 512Mi
             requests:
-              memory: 512Mi
+              cpu: 500m
+              memory: 256Mi
 
 ---
 # Cloud SQL proxy
@@ -210,7 +211,13 @@ spec:
           ports:
             - name: postgresql
               containerPort: 5432
-          # @TODO resource limits, see qa.yaml for example
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
           volumeMounts:
             - name: cloudsql-instance-credentials
               mountPath: /secrets/cloudsql
