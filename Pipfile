@@ -9,7 +9,7 @@ autopep8 = "*"
 
 [packages]
 # @TODO updates:
-# Wagtail 2.15 & 2.16
+# Wagtail 3.x, 4.x
 # elasticsearch
 django = "==3.2.20"
 django-cas-ng = "==4.3.0"
@@ -17,7 +17,7 @@ django-extensions = "==3.2.3"
 djangorestframework-simplejwt = "==5.2.2"
 elasticsearch = "==5.4.0"
 l18n = "==2021.3"
-psycopg2 = "==2.9.7"
+psycopg2 = "==2.9.9"
 wagtail = "==2.16.3"
 xmltodict = "==0.13.0"
 uwsgi = "==2.0.22"
