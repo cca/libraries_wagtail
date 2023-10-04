@@ -26,7 +26,7 @@ end
 set REGION us-west1-b
 # these are used in 2 places cuz of prod-to-staging db sync
 set STAGE_PROJECT cca-web-staging
-set STAGE_DB_INSTANCE cca-edu-staging-2
+set STAGE_DB_INSTANCE psql14-instance
 set STAGE_DB_NAME libraries-lib-ep
 set STAGE_DB_GSB gs://libraries-db-dumps-ci
 

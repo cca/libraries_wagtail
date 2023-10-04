@@ -200,7 +200,7 @@ spec:
             [
               "/cloud_sql_proxy",
               "--dir=/cloudsql",
-              "-instances=cca-web-staging:us-west1:cca-edu-staging-2=tcp:0.0.0.0:5432",
+              "-instances=cca-web-staging:us-west1:psql14-instance=tcp:0.0.0.0:5432",
               "-credential_file=/secrets/cloudsql/credentials.json",
             ]
           ports:

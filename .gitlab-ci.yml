@@ -99,9 +99,9 @@ docker_image_prod:
 .provision_db_staging: &provision_db_staging
   - export DB_FILE=libraries_export_"$(date +'%Y_%m_%d')".gz
   - gsutil cp gs://cca-manual-db-dumps/${DB_FILE} gs://libraries-db-dumps-ci
-  - gcloud sql databases delete libraries-${KUBERNETES_NAMESPACE_OVERWRITE} --instance=cca-edu-staging-2 || true
-  - gcloud sql databases create libraries-${KUBERNETES_NAMESPACE_OVERWRITE} --instance=cca-edu-staging-2 --charset=UTF8 --collation=en_US.UTF8 || true
-  - gcloud sql import sql cca-edu-staging-2 gs://libraries-db-dumps-ci/${DB_FILE} --database=libraries-${KUBERNETES_NAMESPACE_OVERWRITE} -q || true
+  - gcloud sql databases delete libraries-${KUBERNETES_NAMESPACE_OVERWRITE} --instance=psql14-instance || true
+  - gcloud sql databases create libraries-${KUBERNETES_NAMESPACE_OVERWRITE} --instance=psql14-instance --charset=UTF8 --collation=en_US.UTF8 || true
+  - gcloud sql import sql psql14-instance gs://libraries-db-dumps-ci/${DB_FILE} --database=libraries-${KUBERNETES_NAMESPACE_OVERWRITE} -q || true
   #- gsutil rm gs://cca-manual-db-dumps/${DB_FILE}
 
 .provision_secrets_staging: &provision_secrets_staging
