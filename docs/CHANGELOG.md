@@ -7,6 +7,7 @@
 - [#52](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/52) anchor links now account for the fixed header
 - [#33](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/33) fixed a long-running challenge of serving media files when developing locally
 - a large number of dependency updates, switch from deprecated [node-sass](https://www.npmjs.com/package/node-sass) to [dart-sass](https://www.npmjs.com/package/sass)
+- upgrade the site's PostgresQL database from 9.6 to 14.7 (for production, staging is 14.9)
 
 ## 3.3.0
 
