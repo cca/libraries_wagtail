@@ -89,7 +89,7 @@ end
 function export_db
     set -g DB_FILE (date "+%Y-%m-%d")-$DB_NAME-$CTX.sql.gz
     set -g DB_URI $DB_GSB/$DB_FILE
-    gcloud sql export sql $DB_INSTANCE $DB_URI --database $DB_NAME --offload
+    gcloud sql export sql $DB_INSTANCE $DB_URI --database $DB_NAME
 end
 
 # Sync database
@@ -111,13 +111,22 @@ if set -q _flag_d;
         # remote to local minikube database sync
         if not minikube status >/dev/null
             set_color --bold red
-            echo "minikube isn't runnning, try running 'minikube start' first"
+            echo "minikube isn't runnning, try running 'minikube start' first" 1>&2
             set_color normal
             exit 1
         end
         # configure kubectl context
+        echo "Updating minikube and kubectl context"
         minikube update-context
         kubectl config set-context --current --namespace libraries-wagtail
+
+        set WAG_POD (kubectl get pods --selector=app=libraries -o=custom-columns=:metadata.name --sort-by=.metadata.creationTimestamp --no-headers -n libraries-wagtail)
+        if test -n "$WAG_POD"
+            echo "The Wagtail pod is running; Postgres will refuse to drop and recreate the database
+while a user is connected. Stop Skaffold, or run the 'db-only' profile, and attempt
+this command again." 1>&2
+            exit 1
+        end
 
         # is Postgres pod running?
         set PG_POD (kubectl get pods --selector=app=postgres -o=custom-columns=:metadata.name --sort-by=.metadata.creationTimestamp --no-headers -n libraries-wagtail | tail -n 1)

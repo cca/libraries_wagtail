@@ -209,10 +209,11 @@ k exec (k8 pod) -- psql -U postgresadmin -f db.sql
 
 Upgrade gcloud postgres:
 
-- Export current DB `gcloud sql export sql $DB_INSTANCE $DB_URI --database $DB_NAME --offload` where `DB_URI` is a path to a storage bucket and filename like gs://libraries-db-dumps-ci/2023-09-29-libraries-lib-ep-staging.sql.gz
+- Export current DB `gcloud sql export sql $INSTANCE $GSB_URI --database $DB_NAME --offload` where `GSB_URI` is a path to a storage bucket and filename like gs://libraries-db-dumps-ci/2023-09-29-libraries-lib-ep-staging.sql.gz
 - Cloud Console > SQL > go to the new verion's instance (someone else at CCA should've already created it, if not create it yourself) > Database > Add a database with the same name as the old one
   - Import > Enter the path to the SQL export in GSB and select the new database
   - Users > Add user with the same username and password as the current db
+  - Check that the db has content & the user can access it with `gcloud sql connect $INSTANCE --database $DB_NAME --user $USER`
 - Edit the Dockerfile line that specifies a Postgres client version, e.g. `apt-get install postgresql-client-14`
 - Search & replace references to the old instance e.g. in CI/CD yaml, that's _at least_:
   - /docs/sync.fish `DB_INSTANCE` vars
@@ -222,6 +223,9 @@ Upgrade gcloud postgres:
   - If you changed the db username or password, edit their base64-encoded values. It looks roughly like `kubectl get secret cloudsql-db-credentials -o yaml > secret.yaml; echo 'NEW PASSWORD' | base64 | pbcopy; vim secret.yaml; kubectl apply -f secret.yaml`. Env var secrets like these require a pod restart to take effect.
   - The cloudsql-instance-credentials secret should not need changes, it contains JSON credentials for a service account used during CD but the SA should have access to all Cloud SQL instances in the GCloud project
 - When we push a new tagged commit that triggers the GitLab pipelines, it will build the new Docker image with the updated postgres client and recreate the pods giving us any new secrets
+- For future use of docs/sync.fish with the new db instance, give the db's service account permission to export to the db dumps storage bucket
+  - GCP > Staging or Prod project > SQL > New instance > Copy **Service Account** username off of Overview page
+  - GCP > Storage > DB dumps bucket > **Permissions** > **Grant Access** > Add the SA as a new principle with only the Storage Object Creator role
 
 ## Miscellaneous Extras
 
