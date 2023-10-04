@@ -192,17 +192,36 @@ Note:
 
 ## Postgres Update
 
-How to update the Postgres version. Example `kubectl` commands do not include the appropriate `-n $NAMESPACE` flags, see [libraries-k8s](https://github.com/cca/libraries-k8s) for the easiest way to account for these.
+How to update the Postgres version. Example `kubectl` commands do not include the appropriate `-n $NAMESPACE` flags, see [libraries-k8s](https://github.com/cca/libraries-k8s) for the easiest way to account for these. The `psycopg2` library we use supports multiple versions of postgres so you might not need to update it while upgrading the database.
+
+Upgrade local postgres:
+
+```sh
+# download the local db
+k exec (k8 pod) -- pg_dump --host postgres.libraries-wagtail --user postgresadmin cca_libraries > db.sql
+# stop Skaffold (Ctrl + C), delete whole minikube cluster, recreate it (takes a while)
+minikube delete
+./docs/dev.fish up
+# copy postgres db onto app pod & restore it
+k cp db.sql (k8 pod):/app
+k exec (k8 pod) -- psql -U postgresadmin -f db.sql
+```
+
+Upgrade gcloud postgres:
 
 - Export current DB `gcloud sql export sql $DB_INSTANCE $DB_URI --database $DB_NAME --offload` where `DB_URI` is a path to a storage bucket and filename like gs://libraries-db-dumps-ci/2023-09-29-libraries-lib-ep-staging.sql.gz
 - Cloud Console > SQL > go to the new verion's instance (someone else at CCA should've already created it, if not create it yourself) > Database > Add a database with the same name as the old one
-    - Import > Enter the path to the SQL export in GSB and select the new database
-    - Users > Add user with the same username and password as the current db, these credentials will be in a secret in the kubernetes cluster
-- Edit the Dockerfile line that specifies a Postgres version, `apt-get install postgresql-client-9.6`
-- Edit the kubernetes secrets with the cloudsqlproxy connection details
+  - Import > Enter the path to the SQL export in GSB and select the new database
+  - Users > Add user with the same username and password as the current db
+- Edit the Dockerfile line that specifies a Postgres client version, e.g. `apt-get install postgresql-client-14`
+- Search & replace references to the old instance e.g. in CI/CD yaml, that's _at least_:
+  - /docs/sync.fish `DB_INSTANCE` vars
+  - gitlab-ci.yml `gcloud sql databases...` commands
+  - kubernetes/*.yaml cloudsqlproxy proxy container's `command` in the `--instance` flag
+- (Depending) edit the cloudsqlproxy kubernetes secrets
   - If you changed the db username or password, edit their base64-encoded values. It looks roughly like `kubectl get secret cloudsql-db-credentials -o yaml > secret.yaml; echo 'NEW PASSWORD' | base64 | pbcopy; vim secret.yaml; kubectl apply -f secret.yaml`. Env var secrets like these require a pod restart to take effect.
-  - For the cloudsql-instance-credentials secret which is a JSON file, download the new file (@TODO how do we get it? do we need to create another service account?) & recreate the secret like `kubectl create secret generic production-tls --save-config --dry-run=client --from-file=./tls.key --from-file=./tls.crt -o yaml | kubectl apply -f -`. Pods do not need to be restarted for secret files.
-- When we push a new tagged commit that triggers the GitLab pipelines, it will build the new Docker image with the update postgres client and recreate the pods giving us the new secrets
+  - The cloudsql-instance-credentials secret should not need changes, it contains JSON credentials for a service account used during CD but the SA should have access to all Cloud SQL instances in the GCloud project
+- When we push a new tagged commit that triggers the GitLab pipelines, it will build the new Docker image with the updated postgres client and recreate the pods giving us any new secrets
 
 ## Miscellaneous Extras
 

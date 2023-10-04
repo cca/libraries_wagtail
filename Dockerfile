@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" | tee -a /etc/apt/sources.list.d/pgdg.list && \
     curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg && \
     apt-get update -y && \
-    apt-get install postgresql-client-9.6 -y \
+    apt-get install postgresql-client-14 -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies

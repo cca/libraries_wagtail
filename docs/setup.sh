@@ -35,12 +35,12 @@ case ${result} in
         echo "Skipping database download. You can run ./docs/sync.fish to download the database later."
         ;;
     "p")
-        minikube start --kubernetes-version=1.18.20
+        minikube start --kubernetes-version=1.25.10
         skaffold run -p db-only
         ./docs/sync.fish --prod --db
         ;;
     "s")
-        minikube start --kubernetes-version=1.18.20
+        minikube start --kubernetes-version=1.25.10
         skaffold run -p db-only
         ./docs/sync.fish --stage --db
         ;;
