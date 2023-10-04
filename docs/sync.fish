@@ -23,9 +23,18 @@ flags. This is always a unidirectional sync from prod to staging."
     exit 0
 end
 
+function activate_config
+    gcloud config configurations activate $argv[1]
+    or begin
+        echo "Error: unable to activate $argv[1] gcloud configuration; does it exist?
+    Check with 'gcloud config configurations list' and if it does not exist
+    create it (see docs/setup.sh for details)." 1>&2
+        exit 1
+    end
+end
+
 set REGION us-west1-b
 # these are used in 2 places cuz of prod-to-staging db sync
-set STAGE_PROJECT cca-web-staging
 set STAGE_DB_INSTANCE psql14-instance
 set STAGE_DB_NAME libraries-lib-ep
 set STAGE_DB_GSB gs://libraries-db-dumps-ci
@@ -33,7 +42,7 @@ set STAGE_DB_GSB gs://libraries-db-dumps-ci
 if set -q _flag_p
     echo "Using production context"
     set CTX production
-    set PROJECT cca-web-0
+    activate_config prod
     set DB_INSTANCE cca-edu-prod-1
     set DB_NAME libraries-lib-production
     set DB_GSB gs://cca-manual-db-dumps
@@ -41,14 +50,14 @@ if set -q _flag_p
 else if set -q _flag_s
     echo "Using staging context"
     set CTX staging
-    set PROJECT $STAGE_PROJECT
+    activate_config staging
     set DB_INSTANCE $STAGE_DB_INSTANCE
     set DB_NAME $STAGE_DB_NAME
     set DB_GSB $STAGE_DB_GSB
     set MEDIA_GSB gs://libraries-media-staging-lib-ep
 else
     set_color --bold red
-    echo "You must specify either the --stage or --prod context."
+    echo "You must specify either the -s/--stage or -p/--prod context."
     set_color normal
     exit 1
 end
@@ -62,24 +71,18 @@ else
     gcloud auth login
 end
 
-gcloud config set project $PROJECT
-
 # Sync media
 if set -q _flag_m
-    if set -q _flag_p; and set -q _flag_m
-        # sync the two remote cloud storage buckets
+    if set -q _flag_p
+        # sync prod cloud storage to staging
         echo -e "\nOpening Google Cloud Transfer Service; run the existing job for syncing libraries media"
         open "https://console.cloud.google.com/transfer/jobs?project=cca-web-0"
     else
-        if [ ! -d libraries/media ]
-            set_color --bold red
-            echo "Error: unable to find libraries/media folder to sync media into."
-            echo "Make sure you're running ./docs/sync.sh from the root of this project"
-            set_color normal
-            exit 1
-        end
-        # remote to local media sync
-        gsutil -m rsync -r $MEDIA_GSB libraries/media
+        # implies --stage flag, sync staging media to local cloud storage
+        # we can use rsync because these buckets are under the same project
+        echo "Syncing staging media to the bucket used during local development.
+This sync is additive; no files in the local bucket will be deleted."
+        gsutil -m rsync -r $MEDIA_GSB gs://libraries-media-local
     end
 end
 
@@ -99,7 +102,7 @@ if set -q _flag_d;
         # copy db file from a prod GSB to a staging one
         gsutil cp $DB_URI $STAGE_DB_GSB
         echo "Switching to staging context"
-        gcloud config set project $STAGE_PROJECT
+        activate_config staging
         gcloud sql databases delete $STAGE_DB_NAME --instance $STAGE_DB_INSTANCE
         gcloud sql databases create $STAGE_DB_NAME --instance $STAGE_DB_INSTANCE
         # we can't use DB_URI because it points to the prod GSB
