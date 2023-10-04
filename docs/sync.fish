@@ -86,7 +86,7 @@ This sync is additive; no files in the local bucket will be deleted."
 end
 
 function export_db
-    set -g DB_FILE (date "+%Y-%m-%d")-$DB_NAME-$CTX.sql.gz
+    set -g DB_FILE (date "+%Y-%m-%d")-$DB_NAME.sql.gz
     set -g DB_URI $DB_GSB/$DB_FILE
     gcloud sql export sql $DB_INSTANCE $DB_URI --database $DB_NAME
 end
