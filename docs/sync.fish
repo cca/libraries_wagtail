@@ -33,9 +33,10 @@ function activate_config
     end
 end
 
+# these are consistent across all projects
 set REGION us-west1-b
+set DB_INSTANCE psql14-instance
 # these are used in 2 places cuz of prod-to-staging db sync
-set STAGE_DB_INSTANCE psql14-instance
 set STAGE_DB_NAME libraries-lib-ep
 set STAGE_DB_GSB gs://libraries-db-dumps-ci
 
@@ -43,7 +44,6 @@ if set -q _flag_p
     echo "Using production context"
     set CTX production
     activate_config prod
-    set DB_INSTANCE cca-edu-prod-1
     set DB_NAME libraries-lib-production
     set DB_GSB gs://cca-manual-db-dumps
     set MEDIA_GSB gs://libraries-lib-production
@@ -51,7 +51,6 @@ else if set -q _flag_s
     echo "Using staging context"
     set CTX staging
     activate_config staging
-    set DB_INSTANCE $STAGE_DB_INSTANCE
     set DB_NAME $STAGE_DB_NAME
     set DB_GSB $STAGE_DB_GSB
     set MEDIA_GSB gs://libraries-media-staging-lib-ep
@@ -103,10 +102,10 @@ if set -q _flag_d;
         gsutil cp $DB_URI $STAGE_DB_GSB
         echo "Switching to staging context"
         activate_config staging
-        gcloud sql databases delete $STAGE_DB_NAME --instance $STAGE_DB_INSTANCE
-        gcloud sql databases create $STAGE_DB_NAME --instance $STAGE_DB_INSTANCE
+        gcloud sql databases delete $STAGE_DB_NAME --instance $DB_INSTANCE
+        gcloud sql databases create $STAGE_DB_NAME --instance $DB_INSTANCE
         # we can't use DB_URI because it points to the prod GSB
-        gcloud sql import sql $STAGE_DB_INSTANCE $STAGE_DB_GSB/$DB_FILE --database $STAGE_DB_NAME
+        gcloud sql import sql $DB_INSTANCE $STAGE_DB_GSB/$DB_FILE --database $STAGE_DB_NAME
     else
         # remote to local minikube database sync
         if not minikube status >/dev/null
