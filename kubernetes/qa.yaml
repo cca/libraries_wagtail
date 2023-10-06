@@ -278,6 +278,8 @@ spec:
 #
 # CRONJOBS
 #
+# All our cronjobs are suspended (spec.suspend = true) on staging
+# Edit their schedule to run soon & unsuspend when testing.
 
 apiVersion: batch/v1
 kind: CronJob
@@ -285,6 +287,7 @@ metadata:
   name: summon-sftp
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
+  suspend: true
   # run at convenient times for testing, not the same as prod
   schedule: "30 20 * * *"
   # default when not testing this job: run once on January 1st
@@ -353,6 +356,7 @@ metadata:
   name: instagram
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
+  suspend: true
   # run daily at midnight (UTC) / 5pm PT
   schedule: "0 0 * * *"
   failedJobsHistoryLimit: 2
@@ -420,6 +424,7 @@ metadata:
   name: publish-scheduled-pages
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
+  suspend: true
   # run hourly at half-past
   schedule: "30 * * * *"
   failedJobsHistoryLimit: 2
