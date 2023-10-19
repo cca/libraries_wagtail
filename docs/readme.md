@@ -4,6 +4,8 @@ This folder contains the generic documentation for the CCA Libraries Wagtail sit
 
 ## Running Wagtail Locally
 
+The ./docs/setup.sh script should get you all the needed dependencies. These are extra details and some manual steps.
+
 We need docker, minikube, kubectl, and skaffold. Many of these are available from different places but they're also all on homebrew. The other sensible place to get these tools is as [gcloud](https://cloud.google.com/sdk/docs/install) CLI components, which we need to interact with our cloud-hosted resources (databases, static files, servers) anyways. To use them, we make sure that the "bin" subfolder inside the gcloud tools is on our path.
 
 ```sh
@@ -13,34 +15,17 @@ We need docker, minikube, kubectl, and skaffold. Many of these are available fro
 > gcloud components install kubectl minikube skaffold
 ```
 
-Docker Desktop provides nice visualizations of resources (images, volumes) as well as a set of command-line completions for the most popular shells. We may need to give it additional resources under Settings > Resources.
+Docker Desktop provides visualizations of resources (images, volumes). We need to give it additional resources under Settings > Resources. Generally, give Docker access to all CPUs, almost all RAM, and multiple gigabytes of swap space. It needs _at least_ the amount of memory that minikube uses (see setup.sh).
 
-Minikube can also be configured to use more resources than the defaults:
+We currently run the entire app in minikube, including postgres database and elasticsearch, but other CCA teams (like cca.edu) are moving to running only Wagtail locally while using a cloud-hosted database and search engine. Ngoc has a notebook on how this conversion worked if we want to go that route.
 
-```sh
-> minikube config set vm-driver docker
-> minikube config set cpus 4
-> minikube config set memory 8192
-```
+### Port-forwarding
 
-Once we're set up, the dev.fish script should do everything we need. Notes below are for troubleshooting or work on our development tooling.
-
-To start:
-
-1. Open Docker Desktop & wait for it to start the docker daemon
-2. Run `minikube start` & wait for it to complete
-  a. _if we don't have the site's database yet_ run `skaffold -p db-only` and `./docs/sync.fish`
-3. Run `skaffold dev --trigger polling --port-forward` to build the cluster's servers & reload when we change files, see `skaffold help` for other options such as "build", "debug", and "run"
-
-There are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:
+If you use dev.fish, Skaffold should mostly take care of this for you. Otherwise, there are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:
 
 1. (easiest) run `skaffold dev` with the `--port-forward` flag. The [port-forward](https://skaffold.dev/docs/pipeline-stages/port-forwarding/) configuration is in Skaffold.yml. If we omit this from the Skaffold profile but use the `--port-forward` flag, Skaffold will automatically create forwarding for all services, but if the pods are recreated it will not recreate the forwarding, so this is not recommended.
 2. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000`, this is what Skaffold does behind the scenes
 3. Use [Kube Forwarder.app](https://kube-forwarder.pixelpoint.io/) (install it with `brew install --cask kube-forwarder`) which provides a GUI interface around port forwarding
-
-`minikube dashboard` opens a nice web UI to visualize its k8s resources.
-
-We currently run the entire app in minikube, including database and search engine, but other CCA teams (like cca.edu) are moving to running only Wagtail locally while using a cloud-hosted database and search engine. Ngoc has a notebook on how this conversion worked if we want to go that route.
 
 ### Kubernetes Namespace stuck in "terminating" status
 
@@ -112,13 +97,13 @@ See deployment.md for more details on deploying to remote instances like staging
 
 ### Frontend Development
 
-If you are working on frontend (JS, CSS via SCSS) files with a local Wagtail, the fastest way to get your changes on the running site is to run a `gulp watch` task on your host laptop in a parallel process to the usuall development (skaffold) tools. Gulp will see you make changes to source files, which triggers a build, gulp builds files directly into the static files directory where Wagtail serves them from, and Skaffold notices the new static files and copies them to the running kubernetes pod without restarting or rebuilding anything.
+If you are working on frontend (JS, CSS via SCSS) files with a local Wagtail, the fastest way to get your changes on the running site is to run a `pnpx gulp watch` task on your host laptop in a parallel process to the usuall development (skaffold) tools. Gulp will see you make changes to source files, which triggers a build, gulp builds files directly into the static files directory where Wagtail serves them from, and Skaffold notices the new static files and copies them to the running kubernetes pod without restarting or rebuilding anything.
 
 Due to our two-step build process in the Dockerfile, the application pod does not have node available so you cannot actually compile the static files on it, e.g. by running a shell on the pod and then running gulp.
 
 ## Module (including Wagtail) Updates
 
-I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for python development as it stores an actual dependency graph rather than a list of unrelated packages like requirements.txt. For instance, if package A is changed to no longer rely on package B, pipenv removes B from the graph, but requirements doesn't know anything about dependencies and will happily continue to install a useless piece of software. Eventually, we might move to using pipenv in the Dockerfile, but for now we can `pipenv install wagtail=3.0.0` to add or upgrade a package and then `pipenv run pip freeze -l > libraries/requirements.txt` to flatten the pipenv graph into a requirements list.
+I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for python development as it stores an actual dependency graph rather than a list of unrelated packages like requirements.txt. For instance, if package A is changed to no longer rely on package B, pipenv removes B from the graph, but requirements doesn't know anything about 2nd order dependencies and will happily continue to install a useless piece of software.
 
 Wagtail, and often Django, updates require running a few extra steps on the app pod:
 
@@ -133,7 +118,7 @@ We put _all_ static (CSS, JS) files under the main app's static folder, in libra
 
 We use [Gulp](http://gulpjs.com/) for our front-end build tool. Note that tools like autoprefixer are solving some bugs, so switching might result in some style problems (e.g., the radio buttons on the home page search box need autoprefixer).
 
-`npm run` builds the site's assets and `npm watch` watches for changes and rebuilds. See the Gulpfile for more information on these tasks. We should be able to run these tasks on our host laptop and not inside the development app container; the changes will not trigger an image rebuild (which would slow down development terribly) and should be automatically [synced](https://skaffold.dev/docs/pipeline-stages/filesync/) to the container if Skaffold is working properly. Portal takes a different approach to the problem of syncing assets without rebuilding the image and mounts the local application code into the app container as a volume, but this introduces some complexity into the local kubernetes configuration.
+`npm run` builds the site's assets and `npm watch` watches for changes and rebuilds. See the Gulpfile for more information on these tasks. We should be able to run these tasks on our host laptop and not inside the development app container; the changes will not trigger an image rebuild (which would slow down development terribly) and should be automatically [synced](https://skaffold.dev/docs/pipeline-stages/filesync/) to the container if Skaffold is working properly. Portal takes a different approach to the problem of syncing assets without rebuilding the image and mounts the local application code into the app container as a volume, but this adds complexity to the local kubernetes configuration.
 
 There are two folders under the main static directory ("moodle" and "summmon") for hosting static files used in external services that cannot host their own content. The Summon files are contained within this project (see libraries/summon and the summon Gulp tasks) while the Moodle files are created in the [Moodle Styles](https://github.com/cca/moodle-styles) project.
 
