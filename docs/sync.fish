@@ -143,10 +143,11 @@ this command again." 1>&2
         export_db
         gsutil cp $DB_URI .
         echo "Using $PG_POD to restore $DB_NAME from $DB_FILE"
-        kubectl cp ./$DB_FILE $PG_POD:/tmp/$DB_FILE
-        kubectl exec $PG_POD -- sh -c "\
+        kubectl -n libraries-wagtail cp ./$DB_FILE $PG_POD:/tmp/$DB_FILE
+        kubectl -n libraries-wagtail exec $PG_POD -- sh -c "\
         dropdb -U postgresadmin cca_libraries;\
         createdb -U postgresadmin cca_libraries;\
+        createuser -U postgresadmin --superuser postgres 2>/dev/null;\
         zcat /tmp/$DB_FILE \
         | sed -E -e '/cloudsqladmin|cloudsqlsuperuser/d' \
         | psql -U postgresadmin cca_libraries;"
