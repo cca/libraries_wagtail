@@ -20,54 +20,53 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 
-admin.site.site_header = 'CCA Libraries Administration'
+admin.site.site_header = "CCA Libraries Administration"
 admin.autodiscover()
 
 urlpatterns = [
-    path('django-admin/', admin.site.urls),
-
+    path("django-admin/", admin.site.urls),
     # CAS login urls
     # NOTE: ^admin/logout/$ must appear before ^admin/ or it's impossible to logout
-    path('login/', LoginView.as_view(), name='cas_ng_login'),
-    path('admin/login/', LoginView.as_view()),
-    path('admin/logout/', LogoutView.as_view(), name='cas_ng_logout'),
-    path('documents/', include(wagtaildocs_urls)),
-
-    path('admin/', include(wagtailadmin_urls)),
-    # @TODO can we do this using just Wagtail REST APIs instead of Django REST framework?
-    path('api/v2/', api_router.urls),
-    path('api/v1/', include('alerts.urls')),
-
-    path('search/', search_views.search, name='search'),
-    path('hours/', hours_views.hours, name='hours'),
-
+    path("login/", LoginView.as_view(), name="cas_ng_login"),
+    path("admin/login/", LoginView.as_view()),
+    path("admin/logout/", LogoutView.as_view(), name="cas_ng_logout"),
+    path("documents/", include(wagtaildocs_urls)),
+    path("admin/", include(wagtailadmin_urls)),
+    # TODO can we do this using just Wagtail REST APIs instead of Django REST framework?
+    path("api/v2/", api_router.urls),
+    path("api/v1/", include("alerts.urls")),
+    path("search/", search_views.search, name="search"),
+    path("hours/", hours_views.hours, name="hours"),
     # Summon "broken links" app
-    path('brokenlinks/', brokenlinks_views.brokenlinks, name='brokenlinks'),
-
+    path("brokenlinks/", brokenlinks_views.brokenlinks, name="brokenlinks"),
     # Serials Solution API proxy
-    path('sersol/', sersol_views.sersol, name='sersol_api'),
-
+    path("sersol/", sersol_views.sersol, name="sersol_api"),
     # Favicon
-    path('favicon.ico', RedirectView.as_view(url='/static/images/favicon.ico', permanent=True)),
+    path(
+        "favicon.ico",
+        RedirectView.as_view(url="/static/images/favicon.ico", permanent=True),
+    ),
     # Robots.txt
-    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
     # XML sitemap
-    path('sitemap.xml', sitemap),
+    path("sitemap.xml", sitemap),
 ]
 
 # when running locally with no GSB credentials
-if os.environ.get('GS_CREDENTIALS', True):
+if os.environ.get("GS_CREDENTIALS", True):
     from django.conf.urls.static import static
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
     # Serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
-    re_path(r'', include(wagtail_urls))
+    re_path(r"", include(wagtail_urls))
 ]

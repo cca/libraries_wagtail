@@ -117,7 +117,7 @@
             "address": "{{ page.location|richtext|striptags|escapejs }}"
         },
         {% endif %}
-        {# @TODO Schema.org wants a well-formatted date & this is just text #}
+        {# TODO Schema.org wants a well-formatted date & this is just text #}
         {% if page.dates %} "startDate": "{{ page.dates|striptags|escapejs }}", {% endif %}
         {% if main_image %}
     	"image": {

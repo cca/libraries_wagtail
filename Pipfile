@@ -8,7 +8,7 @@ django_managepy_anywhere = "==2.0"
 autopep8 = "*"
 
 [packages]
-# @TODO updates:
+# TODO updates:
 # Wagtail 3.x, 4.x
 # elasticsearch
 django = "==3.2.20"

@@ -21,7 +21,7 @@ function main() {
 }
 
 // run on a delay...#results load async not there when page loads
-// @TODO why is this necessary? is logo not present? BLR already loads on API success
+// TODO why is this necessary? is logo not present? BLR already loads on API success
 setTimeout(main, 500)
 
 })();

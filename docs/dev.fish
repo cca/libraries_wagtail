@@ -72,7 +72,7 @@ function cleanup -d 'free up disk space by deleting older docker images'
         return 0
     end
     minikube ssh 'docker system df'
-    # @TODO does this interactive command work over `minikube ssh`?
+    # TODO does this interactive command work over `minikube ssh`?
     minikube ssh 'docker system prune --filter until=24h'
     # Below: find all but the most recent libraries-wagtail images & rm them
     # set most_recent_img (minikube ssh "docker images libraries-wagtail --format '{{.ID}}' | head -n1")
