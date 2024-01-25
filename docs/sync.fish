@@ -43,7 +43,7 @@ set STAGE_DB_GSB gs://libraries-db-dumps-ci
 if set -q _flag_p
     echo "Using production context"
     set CTX production
-    activate_config prod
+    activate_config production
     set DB_NAME libraries-lib-production
     set DB_GSB gs://cca-manual-db-dumps
     set MEDIA_GSB gs://libraries-lib-production
