@@ -90,7 +90,7 @@ docker_image_prod:
   - gcloud container clusters get-credentials ccaedu-stg --zone us-west1-b
 
 # ---------------------------------------
-# QA/STAGING PROJECT SET-UP - ANCHOR DEFS
+# STAGING PROJECT SET-UP - ANCHOR DEFS
 # ---------------------------------------
 
 # For this step to work, the gitlab ci service account must have read permissions on the production export GSB.
@@ -107,20 +107,20 @@ docker_image_prod:
 .provision_secrets_staging: &provision_secrets_staging
   - kubectl get secret cloud-storage-credentials cloudsql-db-credentials secret-key instagram-secret  smtp-gmail-com-credentials summon-sftp-secrets --namespace=libraries -oyaml | sed -e '/namespace:/d;/creationTimestamp:/d;/resourceVersion:/d;/uid:/d' | kubectl apply --namespace="${KUBERNETES_NAMESPACE_OVERWRITE}" -f - || true
 
-# ----------------
-# DEPLOYMENTS - QA.
-# ----------------
+# ---------------------
+# DEPLOYMENTS - STAGING
+# ---------------------
 
-.apply_k8s_qa: &apply_k8s_qa
-  - cat kubernetes/qa.yaml | envsubst | kubectl apply -f -
+.apply_k8s_stage: &apply_k8s_stage
+  - cat kubernetes/staging.yaml | envsubst | kubectl apply -f -
 
-.provision_storage_qa: &provision_storage_qa
+.provision_storage_stage: &provision_storage_stage
   - gsutil ls -b gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/ || gsutil mb -p cca-web-staging -c STANDARD -l us-west1 -b on gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
   - gsutil -q -m rsync -d -r gs://libraries-media-staging/  gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
   - gsutil iam ch allUsers:objectViewer gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
 
-# tag example: mg-full-0.0.1.
-synchronize_qa:
+# tag example: "ep-full-0.23" or "mg-full-0.0.1".
+synchronize_stage:
   image: "google/cloud-sdk:360.0.0"
   stage: synchronize
   tags:
@@ -132,12 +132,12 @@ synchronize_qa:
     #- *export_prod_db
     - *gcloud_auth_staging
     #- *provision_db_staging
-    - *provision_storage_qa
+    - *provision_storage_stage
   environment:
     name: "$CI_COMMIT_REF_NAME"
 
-# tag example: mg-full-0.0.1.
-deploy_full_qa:
+# tag example: "ep-full-0.23" or "mg-full-0.0.1".
+deploy_full_stage:
   image: "google/cloud-sdk:360.0.0"
   stage: deploy
   tags:
@@ -149,13 +149,14 @@ deploy_full_qa:
     - apt-get update
     - apt -y install gettext
     - *gcloud_auth_staging
-    - *apply_k8s_qa
+    - *apply_k8s_stage
     - *provision_secrets_staging
   environment:
     name: "$CI_COMMIT_REF_NAME"
 
+# ! untested, libraries does not use this
 # tag example: mg-fast-0.0.1.
-deploy_fast_qa:
+deploy_fast_stage:
   image: "google/cloud-sdk:360.0.0"
   stage: deploy
   tags:
@@ -167,7 +168,7 @@ deploy_fast_qa:
     - apt-get update
     - apt -y install gettext
     - *gcloud_auth_staging
-    - *apply_k8s_qa
+    - *apply_k8s_stage
   environment:
     name: "$CI_COMMIT_REF_NAME"
     url: https://$CI_ENVIRONMENT_SLUG.stg.cca.edu
