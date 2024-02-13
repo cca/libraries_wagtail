@@ -9,6 +9,7 @@ COPY libraries/libraries/static/ libraries/libraries/static
 COPY pnpm-lock.yaml gulpfile.js package.json ./
 ENV NPM_CONFIG_UPDATE_NOTIFIER false
 RUN npm install --location=global pnpm@8.6 --no-fund --no-audit
+# TODO docker RUN cache once we update docker image used to build #32
 RUN pnpm fetch --prod
 RUN pnpm install -r --offline --prod
 # this builds files into /app/libraries/static, see gulpfile

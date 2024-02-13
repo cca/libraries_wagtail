@@ -19,6 +19,7 @@ variables:
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
 services:
+  # TODO upgrade docker image ref #32
   - docker:18.09.7
 
 stages:

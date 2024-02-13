@@ -34,6 +34,7 @@ data:
   # DEPLOY_SERVER_NAME: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Elastic Search
+  # TODO to upgrade to es7 change this URL to es7.cca.edu #54
   ES_URL: "http://elasticsearch.elasticsearch5.svc:9200"
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
