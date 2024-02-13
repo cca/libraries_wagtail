@@ -12,6 +12,7 @@ env = os.environ.copy()
 namespace = env.get("KUBERNETES_NAMESPACE", None) or env.get("LOCAL_NAMESPACE", None)
 if namespace in ["lib-ep", "lib-mg"]:
     DEBUG = True
+    # TODO BASE_URL renamed to WAGTAILADMIN_BASE_URL in Wagtail 3.0
     # Base URL to use when referring to full URLs within the Wagtail admin backend -
     # e.g. in notification emails. Don't include '/admin' or a trailing slash
     # lib-ep namespace URL is libraries-libep.cca.edu, etc.
@@ -90,18 +91,17 @@ MIDDLEWARE = [
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
-# CAS Authentication github.com/cca/libraries_wagtail/issues/76
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "django_cas_ng.backends.CASBackend",
-]
-
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
+
 # SSO/AUTH
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "django_cas_ng.backends.CASBackend",
+]
 CAS_CREATE_USER = False
 CAS_FORCE_CHANGE_USERNAME_CASE = "lower"
 CAS_LOGOUT_COMPLETELY = True
@@ -111,7 +111,6 @@ WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 WAGTAIL_PASSWORD_RESET_ENABLED = False
 
 # caching only in staging, production, not local dev
-# https://docs.djangoproject.com/en/3.2/topics/cache/
 if namespace == "libraries-wagtail":
     CACHES = {
         "default": {
@@ -164,7 +163,6 @@ EMAIL_HOST_USER = env.get("GOOGLE_SMTP_USER", "").rstrip("\n")
 EMAIL_HOST_PASSWORD = env.get("GOOGLE_SMTP_PASS", "").rstrip("\n")
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "America/Los_Angeles"
 USE_I18N = True
@@ -172,7 +170,6 @@ USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -195,7 +192,9 @@ MEDIA_URL = "/media/"
 
 FILE_UPLOAD_PERMISSIONS = 0o644
 
-# Wagtail settings
+####################
+# Wagtail settings #
+####################
 
 WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
 # https://docs.wagtail.io/en/latest/advanced_topics/settings.html#wagtaildocs-serve-method
@@ -227,12 +226,11 @@ RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
 # https://docs.wagtail.org/en/latest/reference/settings.html#wagtailadmin-external-link-conversion
 WAGTAIL_EXTERNAL_LINK_CONVERSION = "confirm"
 
-# SECRET_KEY = env.get('SECRET_KEY', '').rstrip('\n')
+# TODO should be loaded via untracked file or env var #10
 SECRET_KEY = "ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb"
 
 ADMINS = (("Eric Phetteplace", "ephetteplace@cca.edu"),)
-# don't send these emails, they tend to be redundant with ones
-# that moderators get anyways
+# don't send these emails, they tend to be redundant with ones moderators get anyways
 WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS = False
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
@@ -340,7 +338,7 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
-# http://docs.wagtail.io/en/v1.13.1/advanced_topics/performance.html#templates
+# Template caching
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
