@@ -1,7 +1,6 @@
 namespace: libraries-wagtail
 
 resources:
-  - configMap.yaml
   - daemonSet.yaml
   - deployment.yaml
   - services.yaml
