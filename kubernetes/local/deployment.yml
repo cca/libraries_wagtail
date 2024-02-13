@@ -33,9 +33,6 @@ spec:
             secretName: summon-sftp-secrets
 
       containers:
-        # Portal does this, does is it? breaks skaffold run, syntax error
-        # - $patch: replace
-
         - name: app
           image: libraries-wagtail
           imagePullPolicy: IfNotPresent
