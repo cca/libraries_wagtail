@@ -53,7 +53,7 @@ COPY libraries libraries/
 # if collectstatic throws an error during build & this dir doesn't exist, it
 # can't be created for some reason, breaks the build
 RUN mkdir /app/libraries/logs
-COPY kubernetes/uwsgi.ini kubernetes/
+COPY kubernetes/uwsgi.ini libraries/
 
 # Settings environment variable
 ENV DJANGO_SETTINGS_MODULE libraries.settings
@@ -66,6 +66,6 @@ WORKDIR /app/libraries
 EXPOSE 8000
 
 # Start Django
-CMD ["uwsgi", "--ini", "kubernetes/uwsgi.ini"]
+CMD ["uwsgi", "--ini", "uwsgi.ini"]
 # Use the command below for debugging; it forces the container to run forever
 # CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"

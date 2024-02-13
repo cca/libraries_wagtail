@@ -212,6 +212,10 @@ Upgrade gcloud postgres:
   - GCP > Staging or Prod project > SQL > New instance > Copy **Service Account** username off of Overview page
   - GCP > Storage > DB dumps bucket > **Permissions** > **Grant Access** > Add the SA as a new principle with only the Storage Object Creator role
 
+## Elasticsearch
+
+We have separate ES clusters for staging and production. Locally, we run ES without authentication. In the clusters, login with the credentials from Dashlane. Each cluster has a `libraries` role which can only access 
+
 ## Miscellaneous Extras
 
 ### Sitemap
