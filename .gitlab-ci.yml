@@ -1,5 +1,5 @@
 ---
-image: alpine:3.13.6
+image: docker:25-alpine
 
 variables:
   # KUBE_INGRESS_BASE_DOMAIN is the application deployment.
@@ -19,7 +19,7 @@ variables:
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
 services:
-  - docker:25
+  - docker:25-dind
 
 stages:
   - build
