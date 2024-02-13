@@ -8,24 +8,21 @@ django_managepy_anywhere = "==2.0"
 autopep8 = "*"
 
 [packages]
-# TODO updates:
-# Wagtail 3.x, 4.x
-# elasticsearch
+certifi = "*"
+dj-database-url = "==2.1.0"
 django = "==3.2.20"
 django-cas-ng = "==4.3.0"
 django-extensions = "==3.2.3"
+django-storages = {version = "==1.13.2", extras = ["google"]}
 djangorestframework-simplejwt = "==5.2.2"
-elasticsearch = "==5.4.0"
+elasticsearch = "==7.17.9"
 l18n = "==2021.3"
 psycopg2 = "==2.9.9"
-wagtail = "==2.16.3"
-xmltodict = "==0.13.0"
-uwsgi = "==2.0.22"
-dj-database-url = "==2.1.0"
-whitenoise = {version = "==6.5.0", extras = ["brotli"]}
 pysftp = "==0.2.9"
-django-storages = {version = "==1.13.2", extras = ["google"]}
-certifi = "*"
+uwsgi = "==2.0.22"
+wagtail = "==2.16.3"
+whitenoise = {version = "==6.5.0", extras = ["brotli"]}
+xmltodict = "==0.13.0"
 
 [requires]
 python_version = "3.10.13"
