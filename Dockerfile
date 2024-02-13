@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/node
-FROM node:18.15-alpine3.17 AS assets
+FROM node:20.11.0-slim AS assets
 # we build static assets (JS, CSS, application images) in a node container
 WORKDIR /app
 
@@ -7,11 +7,11 @@ WORKDIR /app
 # See https://pnpm.io/cli/fetch#usage-scenario
 COPY libraries/libraries/static/ libraries/libraries/static
 COPY pnpm-lock.yaml gulpfile.js package.json ./
-ENV NPM_CONFIG_UPDATE_NOTIFIER false
-RUN npm install --location=global pnpm@8.6 --no-fund --no-audit
-# TODO docker RUN cache once we update docker image used to build #32
-RUN pnpm fetch --prod
-RUN pnpm install -r --offline --prod
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch --prod
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install -r --offline --prod --frozen-lockfile
 # this builds files into /app/libraries/static, see gulpfile
 RUN npx gulp build
 
