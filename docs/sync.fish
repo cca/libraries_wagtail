@@ -148,7 +148,9 @@ this command again." 1>&2
         end
         echo "Found Postgres pod $PG_POD"
 
-        # export database to GSB and then download it
+        # Export database to GSB and then download it, copy to pod, and restore.
+        # We create a postgres user and delete cloudsql users to prevent errors when the export is
+        # restored. We set postgresadmin password to the one used in k8s/local/deployment.yaml.
         export_db
         gsutil cp $DB_URI .
         echo "Using $PG_POD to restore $DB_NAME from $DB_FILE"
@@ -157,6 +159,7 @@ this command again." 1>&2
         dropdb -U postgresadmin cca_libraries;\
         createdb -U postgresadmin cca_libraries;\
         createuser -U postgresadmin --superuser postgres 2>/dev/null;\
+        psql -c \"ALTER USER postgresadmin WITH PASSWORD 'admin123';\"\
         zcat /tmp/$DB_FILE \
         | sed -E -e '/cloudsqladmin|cloudsqlsuperuser/d' \
         | psql -U postgresadmin cca_libraries;"
