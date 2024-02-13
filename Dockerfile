@@ -7,6 +7,8 @@ WORKDIR /app
 # See https://pnpm.io/cli/fetch#usage-scenario
 COPY libraries/libraries/static/ libraries/libraries/static
 COPY pnpm-lock.yaml gulpfile.js package.json ./
+# stops npm update notifier
+ENV CI=true
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
