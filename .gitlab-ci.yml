@@ -19,8 +19,7 @@ variables:
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
 services:
-  # TODO upgrade docker image ref #32
-  - docker:18.09.7
+  - docker:25.0.3
 
 stages:
   - build
@@ -29,7 +28,7 @@ stages:
 
 # Build & Push Docker image to Google Container Registry.
 docker_image_staging:
-  image: "docker:18.09.7"
+  image: "docker:25.0.3"
   stage: build
   tags:
   - build
@@ -39,7 +38,7 @@ docker_image_staging:
   variables:
     DOCKER_IMAGE_TAG: "us.gcr.io/cca-web-staging/libraries"
   services:
-    - docker:18.09.7-dind
+    - docker:25.0.3-dind
   script:
     - apk add -q py-pip make
     - docker pull -q ${DOCKER_IMAGE_TAG} || true
@@ -50,7 +49,7 @@ docker_image_staging:
 
 # Build & Push Docker image to Google Container Registry PROD
 docker_image_prod:
-  image: "docker:18.09.7"
+  image: "docker:25.0.3"
   stage: build
   tags:
   - build
@@ -61,7 +60,7 @@ docker_image_prod:
   variables:
     DOCKER_IMAGE_TAG: "us.gcr.io/cca-web-0/libraries"
   services:
-    - docker:18.09.7-dind
+    - docker:25.0.3-dind
   script:
     - apk add -q py-pip make
     - docker pull -q ${DOCKER_IMAGE_TAG} || true
