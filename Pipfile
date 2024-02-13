@@ -28,4 +28,4 @@ django-storages = {version = "==1.13.2", extras = ["google"]}
 certifi = "*"
 
 [requires]
-python_version = "3.7.13"
+python_version = "3.10.13"
