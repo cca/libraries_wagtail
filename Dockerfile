@@ -15,7 +15,7 @@ RUN pnpm install -r --offline --prod
 RUN npx gulp build
 
 # Build the Django application itself.
-FROM python:3.7.16-bullseye as libraries
+FROM python:3.10.13-bullseye as libraries
 WORKDIR /app
 ENV PYTHONPATH /app:/app/libraries
 
@@ -56,6 +56,8 @@ COPY kubernetes/uwsgi.ini kubernetes/
 ENV DJANGO_SETTINGS_MODULE libraries.settings
 
 RUN python libraries/manage.py collectstatic --no-input
+
+WORKDIR /app/libraries
 
 # Make port 80 available to the world outside this container
 EXPOSE 8000
