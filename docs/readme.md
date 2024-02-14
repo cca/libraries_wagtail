@@ -101,6 +101,22 @@ If you are working on frontend (JS, CSS via SCSS) files with a local Wagtail, th
 
 Due to our two-step build process in the Dockerfile, the application pod does not have node available so you cannot actually compile the static files on it, e.g. by running a shell on the pod and then running gulp.
 
+## Settings, Environment Variables, and Secrets
+
+We use a combination of environment variables, kubernetes secrets, and Google Secret Manager to manage Wagtail configuration. For the most part, the effect of these variables/secrets is felt in the primary settings file [base.py](../libraries/libraries/settings/base.py). The values that control settings are set like so:
+
+- Environment variables are set in the kubernetes deployment files
+  - [local configMap](../kubernetes/local/configMap.yml) and [deployment](../kubernetes/local/deployment.yml) files
+  - [staging](../kubernetes/staging.yaml)
+  - [production](../kubernetes/production.yaml)
+- Secrets are in k8s, `kubectl -n $NAMESPACE get secrets` will list them and `kubectl -n $NAMESPACE describe secret $SECRET` will show their values, which are base64 encoded
+  - Staging and production use k8s secrets but there's no need to locally
+  - Secrets have to be mounted as files or environment variables in the pod
+- Google Secret Manager is used for particularly confidential settings like the secret key, database URL, and search URL
+  - There are libraries_local and libraries_staging secrets in the CCA Web Staging project
+  - There is a libraries_production secret in the CCA Web Prod project
+  - The same service account which is used for GSB access is used to access these secrets (SecretAccessor role)
+
 ## Module (including Wagtail) Updates
 
 I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for python development as it stores an actual dependency graph rather than a list of unrelated packages like requirements.txt. For instance, if package A is changed to no longer rely on package B, pipenv removes B from the graph, but requirements doesn't know anything about 2nd order dependencies and will happily continue to install a useless piece of software.
@@ -183,13 +199,13 @@ Upgrade local postgres:
 
 ```sh
 # download the local db
-k exec (k8 pod) -- pg_dump --host postgres.libraries-wagtail --user postgresadmin cca_libraries > db.sql
+k exec (k8 pod) -- pg_dump --host postgres.libraries-wagtail --user postgres cca_libraries > db.sql
 # stop Skaffold (Ctrl + C), delete whole minikube cluster, recreate it (takes a while)
 minikube delete
 ./docs/dev.fish up
 # copy postgres db onto app pod & restore it
 k cp db.sql (k8 pod):/app
-k exec (k8 pod) -- psql -U postgresadmin -f db.sql
+k exec (k8 pod) -- psql -U postgres -f db.sql
 ```
 
 Upgrade gcloud postgres:
@@ -214,7 +230,7 @@ Upgrade gcloud postgres:
 
 ## Elasticsearch
 
-We have separate ES clusters for staging and production. Locally, we run ES without authentication. In the clusters, login with the credentials from Dashlane. Each cluster has a `libraries` user in a `libraries` role which can only access indices with the site's `ES_INDEX_PREFIX` which is in turn the kubernetes namespace of the instance (`lib-ep` for staging, `lib-production` for production).
+We have separate ES clusters for staging and production. Locally, we run ES without authentication. In the clusters, login with the credentials from Dashlane. Each cluster has a `libraries` user in a `libraries` role which can only access indices with the site's `ES_INDEX_PREFIX` which is in turn the kubernetes namespace of the instance (`lib-ep` for staging, `lib-production` for production). THe role also has `monitor` cluster access, otherwise `GET /` preflight check requests fail.
 
 Migrating Elasticsearch versions is easy compared to Postgres because we can rebuild the index from scratch, we don't need to migrate data. See [isse #54](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/54) which had more steps because it involved switching to authenticated ES but it's these steps:
 
