@@ -110,6 +110,7 @@ if set -q _flag_d;
         # copy db file from a prod GSB to a staging one
         gsutil cp $DB_URI $STAGE_DB_GSB
         echo "Switching to staging context"
+        set -gx GOOGLE_CLOUD_QUOTA_PROJECT cca-web-staging
         activate_config staging
         gcloud sql databases delete $STAGE_DB_NAME --instance $DB_INSTANCE
         gcloud sql databases create $STAGE_DB_NAME --instance $DB_INSTANCE
