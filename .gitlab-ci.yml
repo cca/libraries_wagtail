@@ -41,7 +41,7 @@ stages:
   - synchronize
   - deploy
 
-# Build & Push Docker image to Google Container Registry.
+# Build & Push Docker image to Google Artifact Registry staging
 docker_image_staging:
   image: "docker:25"
   stage: build
@@ -56,13 +56,14 @@ docker_image_staging:
     - docker:dind
   script:
     - apk add -q py-pip make
-    - docker pull -q ${DOCKER_IMAGE_TAG} || true
-    - docker build --cache-from ${DOCKER_IMAGE_TAG} -t "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA" .
+    # login first otherwise even `docker pull` throws errors
     - echo "${SA_SERVICE_ACCOUNT_KEY}" > key.json
     - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
+    - docker pull -q ${DOCKER_IMAGE_TAG} || true
+    - docker build --cache-from ${DOCKER_IMAGE_TAG} -t "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA" .
     - docker push "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
 
-# Build & Push Docker image to Google Container Registry PROD
+# Build & Push Docker image to Google Artifact Registry prod
 docker_image_prod:
   image: "docker:25"
   stage: build
@@ -78,10 +79,10 @@ docker_image_prod:
     - docker:dind
   script:
     - apk add -q py-pip make
-    - docker pull -q ${DOCKER_IMAGE_TAG} || true
-    - docker build --cache-from ${DOCKER_IMAGE_TAG} -t "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA" .
     - echo "${SA_SERVICE_ACCOUNT_PROD_KEY}" > key.json
     - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
+    - docker pull -q ${DOCKER_IMAGE_TAG} || true
+    - docker build --cache-from ${DOCKER_IMAGE_TAG} -t "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA" .
     - docker push "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
 
 # ---------------------
