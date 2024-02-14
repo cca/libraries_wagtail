@@ -8,7 +8,7 @@ django_managepy_anywhere = "==2.0"
 autopep8 = "*"
 
 [packages]
-certifi = "*"
+certifi = "==2024.2.2"
 dj-database-url = "==2.1.0"
 django = "==3.2.20"
 django-cas-ng = "==4.3.0"
