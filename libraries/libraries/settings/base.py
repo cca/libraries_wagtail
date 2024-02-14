@@ -1,27 +1,62 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from __future__ import absolute_import, unicode_literals
-import os
+import io
 import json
+import os
+
 import dj_database_url
+from google.cloud import secretmanager
 from google.oauth2.service_account import Credentials
+
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
-env = os.environ.copy()
 
-namespace = env.get("KUBERNETES_NAMESPACE", None) or env.get("LOCAL_NAMESPACE", None)
-if namespace in ["lib-ep", "lib-mg"]:
-    DEBUG = True
-    # TODO BASE_URL renamed to WAGTAILADMIN_BASE_URL in Wagtail 3.0
-    # Base URL to use when referring to full URLs within the Wagtail admin backend -
-    # e.g. in notification emails. Don't include '/admin' or a trailing slash
-    # lib-ep namespace URL is libraries-libep.cca.edu, etc.
-    BASE_URL = "https://libraries-{}.cca.edu".format(namespace.replace("-", ""))
-elif namespace == "lib-production":
-    BASE_URL = "https://libraries.cca.edu"
-elif namespace == "libraries-wagtail":  # local namespace
-    DEBUG = True
-    BASE_URL = "http://localhost"
+# need a default NS so we can run collectstatic (e.g. in Dockerfile)
+env = os.environ.copy()
+namespace = env.get("KUBERNETES_NAMESPACE", "libraries-wagtail")
+match namespace:
+    case "libraries-wagtail":
+        environment = "local"
+        gcloud_project = "cca-web-staging"
+        BASE_URL = "http://localhost"
+        DEBUG = True
+        CACHES = {
+            "default": {
+                "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+            }
+        }
+
+    case "lib-ep":
+        environment = "staging"
+        gcloud_project = "cca-web-staging"
+        BASE_URL = "https://libraries-libep.cca.edu"
+
+    case "lib-production":
+        environment = "production"
+        gcloud_project = "cca-web-0"
+        BASE_URL = "https://libraries.cca.edu"
+
+    case _:
+        raise RuntimeError(f"Unknown namespace: {namespace}")
+
+# values we don't want set during a docker build
+# TODO should be loaded via untracked file or env var #10
+SECRET_KEY = env.get("SECRET_KEY", "ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb")
+DOCKER_BUILD = SECRET_KEY == "none"
+if not DOCKER_BUILD:
+    # Load GCP credentials from service account key
+    GS_CREDENTIALS = Credentials.from_service_account_info(
+        json.loads(env.get("GS_CREDENTIALS", ""))
+    )
+    # read values from Google Secret Manager into environment, used for DB and ES URLs
+    smclient = secretmanager.SecretManagerServiceClient(credentials=GS_CREDENTIALS)
+    secret = (
+        f"projects/{gcloud_project}/secrets/libraries_{environment}/versions/latest"
+    )
+    payload = smclient.access_secret_version(name=secret).payload.data.decode("utf-8")
+    for line in io.StringIO(payload):
+        key, value = line.strip().split("=")
+        env[key] = value
 
 ALLOWED_HOSTS = ["*"]
 
@@ -105,19 +140,13 @@ AUTHENTICATION_BACKENDS = [
 CAS_CREATE_USER = False
 CAS_FORCE_CHANGE_USERNAME_CASE = "lower"
 CAS_LOGOUT_COMPLETELY = True
-CAS_SERVER_URL = env.get("CAS_SERVER_URL", "").rstrip("\n")
+CAS_SERVER_URL = env.get("CAS_SERVER_URL", "")
 LOGIN_URL = "cas_ng_login"
 WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 WAGTAIL_PASSWORD_RESET_ENABLED = False
 
-# caching only in staging, production, not local dev
-if namespace == "libraries-wagtail":
-    CACHES = {
-        "default": {
-            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
-        }
-    }
-else:
+# caching in staging & production
+if environment != "local":
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.db.DatabaseCache",
@@ -159,8 +188,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = env.get("GOOGLE_SMTP_USER", "").rstrip("\n")
-EMAIL_HOST_PASSWORD = env.get("GOOGLE_SMTP_PASS", "").rstrip("\n")
+EMAIL_HOST_USER = env.get("GOOGLE_SMTP_USER", "")
+EMAIL_HOST_PASSWORD = env.get("GOOGLE_SMTP_PASS", "")
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
@@ -197,7 +226,7 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 ####################
 
 WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
-# https://docs.wagtail.io/en/latest/advanced_topics/settings.html#wagtaildocs-serve-method
+# https://docs.wagtail.org/en/latest/reference/settings.html#wagtaildocs-serve-method
 # This should be serve_view for us so we can ensure requests are always logged
 # WAGTAILDOCS_SERVE_METHOD = 'redirect'
 
@@ -226,24 +255,13 @@ RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
 # https://docs.wagtail.org/en/latest/reference/settings.html#wagtailadmin-external-link-conversion
 WAGTAIL_EXTERNAL_LINK_CONVERSION = "confirm"
 
-# TODO should be loaded via untracked file or env var #10
-SECRET_KEY = "ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb"
-
 ADMINS = (("Eric Phetteplace", "ephetteplace@cca.edu"),)
 # don't send these emails, they tend to be redundant with ones moderators get anyways
 WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS = False
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-DATABASES = {}
 if "DATABASE_URL" in env:
-    DATABASES["default"] = dj_database_url.config()
-else:
-    DATABASES["default"] = {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": env.get("PGDATABASE", "cca_libraries"),
-        # User, host and port can be configured by the PGUSER, PGHOST and
-        # PGPORT environment variables (these get picked up by libpq).
-    }
+    DATABASES = {"default": dj_database_url.config()}
 
 # Brokenlinks app - "Summon Broken Links for Website Tests" Google Form
 # test form commented out
@@ -259,8 +277,8 @@ BROKENLINKS_HASH = {
 
 # Instagram app
 INSTAGRAM_REDIRECT_URI = "https://libraries.cca.edu/"
-INSTAGRAM_APP_ID = env.get("INSTAGRAM_APP_ID", "").rstrip("\n")
-INSTAGRAM_APP_SECRET = env.get("INSTAGRAM_SECRET", "").rstrip("\n")
+INSTAGRAM_APP_ID = env.get("INSTAGRAM_APP_ID", "")
+INSTAGRAM_APP_SECRET = env.get("INSTAGRAM_SECRET", "")
 
 # Summon app
 SUMMON_SFTP_UN = "cdi_cca-catalog@customers.na"
@@ -323,13 +341,11 @@ ES_INDEX_SETTINGS = {
         },
     }
 }
-ES_URL = env.get("ES_URL", "").rstrip("\n")
-ES_INDEX_PREFIX = env.get("ES_INDEX_PREFIX", "").rstrip("\n")
 WAGTAILSEARCH_BACKENDS = {
     "default": {
         "BACKEND": "wagtail.search.backends.elasticsearch7",
-        "URLS": [ES_URL],
-        "INDEX": ES_INDEX_PREFIX,
+        "URLS": [env.get("ES_URL", "")],
+        "INDEX": env.get("ES_INDEX_PREFIX", ""),
         "TIMEOUT": 10,
         "OPTIONS": {},
         "AUTO_UPDATE": True,
@@ -364,18 +380,14 @@ TEMPLATES = [
     }
 ]
 
-
 # ------------ #
 # Google Cloud #
 # ------------ #
-
-# Main service account for GCP
-if "GS_CREDENTIALS" in env:
+if not DOCKER_BUILD:
     INSTALLED_APPS += ("storages",)
 
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     GS_BUCKET_NAME = env.get("GS_BUCKET_NAME", "")
-    GS_USE_DOMAIN_NAMED_BUCKET = env.get("GS_USE_DOMAIN_NAMED_BUCKET", "") == "true"
 
     # Even if the bucket has public permisions, we need to set this
     # setting to `'publicRead'` to retrun a public, non-expiring URL.
@@ -384,9 +396,3 @@ if "GS_CREDENTIALS" in env:
 
     # Ensure uploaded files are given distinct names, as per valid Django storage behaviour
     GS_FILE_OVERWRITE = False
-
-    # Load credentials from service account key that grants access
-    # to the storage
-    GS_CREDENTIALS = Credentials.from_service_account_info(
-        json.loads(env["GS_CREDENTIALS"])
-    )
