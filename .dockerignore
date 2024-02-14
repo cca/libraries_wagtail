@@ -8,6 +8,7 @@
 /npm-debug.log
 /.git/
 /libraries/logs/
+!/libraries/logs/.keep
 LICENSE.txt
 .gitignore
 .scss-lint.yml
