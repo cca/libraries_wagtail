@@ -23,17 +23,17 @@
   },
   "homepage": "https://github.com/cca/libraries_wagtail#readme",
   "dependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.2",
-    "autoprefixer": "^10.4.16",
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "autoprefixer": "^10.4.17",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-postcss": "^9.0.1",
+    "gulp-postcss": "^10.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-uglify": "^3.0.2",
-    "postcss": "^8.4.31",
-    "sass": "^1.69.4"
+    "postcss": "^8.4.35",
+    "sass": "^1.70.0"
   },
   "devDependencies": {
     "sass-lint": "^1.13.1"
