@@ -50,15 +50,18 @@ if not DOCKER_BUILD:
     GS_CREDENTIALS = Credentials.from_service_account_info(
         json.loads(env.get("GS_CREDENTIALS", ""))
     )
-    # read values from Google Secret Manager into environment, used for DB and ES URLs
-    smclient = secretmanager.SecretManagerServiceClient(credentials=GS_CREDENTIALS)
-    secret = (
-        f"projects/{gcloud_project}/secrets/libraries_{environment}/versions/latest"
-    )
-    payload = smclient.access_secret_version(name=secret).payload.data.decode("utf-8")
-    for line in io.StringIO(payload):
-        key, value = line.strip().split("=", 1)
-        env[key] = value
+    if environment != "local":
+        # read values from Google Secret Manager into environment, used for DB and ES URLs
+        smclient = secretmanager.SecretManagerServiceClient(credentials=GS_CREDENTIALS)
+        secret = (
+            f"projects/{gcloud_project}/secrets/libraries_{environment}/versions/latest"
+        )
+        payload = smclient.access_secret_version(name=secret).payload.data.decode(
+            "utf-8"
+        )
+        for line in io.StringIO(payload):
+            key, value = line.strip().split("=", 1)
+            env[key] = value
 
 ALLOWED_HOSTS = ["*"]
 
@@ -212,6 +215,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
+# ! this changes to STORAGES['statisfiles']['BACKEND'] in Django 4.2
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # necessary to serve Summon files or any arbitrary static file
 WHITENOISE_ROOT = STATIC_ROOT
