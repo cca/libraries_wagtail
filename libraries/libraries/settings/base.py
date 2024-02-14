@@ -310,7 +310,7 @@ ES_INDEX_SETTINGS = {
             "char_filter": {
                 "special_char_replace": {
                     "type": "pattern_replace",
-                    "pattern": "[^\p{L}\s]",
+                    "pattern": r"[^\p{L}\s]",
                     "replacement": "",
                 }
             },
