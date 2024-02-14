@@ -55,7 +55,7 @@ if not DOCKER_BUILD:
     )
     payload = smclient.access_secret_version(name=secret).payload.data.decode("utf-8")
     for line in io.StringIO(payload):
-        key, value = line.strip().split("=")
+        key, value = line.strip().split("=", 1)
         env[key] = value
 
 ALLOWED_HOSTS = ["*"]
