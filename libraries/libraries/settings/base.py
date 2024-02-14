@@ -41,7 +41,9 @@ match namespace:
 
 # values we don't want set during a docker build
 # TODO should be loaded via untracked file or env var #10
-SECRET_KEY = env.get("SECRET_KEY", "ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb")
+SECRET_KEY = env.get(
+    "SECRET_KEY", r"ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb"
+)
 DOCKER_BUILD = SECRET_KEY == "none"
 if not DOCKER_BUILD:
     # Load GCP credentials from service account key
