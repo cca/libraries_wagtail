@@ -214,7 +214,15 @@ Upgrade gcloud postgres:
 
 ## Elasticsearch
 
-We have separate ES clusters for staging and production. Locally, we run ES without authentication. In the clusters, login with the credentials from Dashlane. Each cluster has a `libraries` role which can only access 
+We have separate ES clusters for staging and production. Locally, we run ES without authentication. In the clusters, login with the credentials from Dashlane. Each cluster has a `libraries` user in a `libraries` role which can only access indices with the site's `ES_INDEX_PREFIX` which is in turn the kubernetes namespace of the instance (`lib-ep` for staging, `lib-production` for production).
+
+Migrating Elasticsearch versions is easy compared to Postgres because we can rebuild the index from scratch, we don't need to migrate data. See [isse #54](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/54) which had more steps because it involved switching to authenticated ES but it's these steps:
+
+- Update the local k8s cluster's ES version in kubernetes/local/elasticsearch/deployment.yaml for testing
+- Update the `elasticsearch` dependency in Pipfile
+- Update `WAGTAILSEARCH_BACKENDS` in`libraries/libraries/settings/base.py` to use the new version's backend
+- Run `python manage.py update_index` to rebuild the index
+- Edit the elasticsearch URL in kubernetes/staging.yaml and then kubernetes/production.yaml
 
 ## Miscellaneous Extras
 

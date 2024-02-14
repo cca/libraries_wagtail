@@ -35,8 +35,8 @@ data:
   # DEPLOY_SERVER_NAME: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Elastic Search
-  # TODO to upgrade to es7 change this URL to es7-staging.cca.edu #54
-  ES_URL: "http://elasticsearch.elasticsearch5.svc:9200"
+  # TODO switch to secret manager and change password
+  ES_URL: "http://libraries:6aMj93YC8xp8rEDq@es7-staging.cca.edu"
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Google Cloud Storage

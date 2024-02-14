@@ -32,8 +32,6 @@ variables:
   BROKEN_LINKS_URL: 'https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse'
   INSTAGRAM_APP_ID: '123987123987456'
   INSTAGRAM_REDIRECT_URI: 'https://libraries.cca.edu'
-  ES_URL: http://elasticsearch.elasticsearch5.svc:9200
-  ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
 services:
   - docker:dind
