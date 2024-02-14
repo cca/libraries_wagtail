@@ -229,12 +229,13 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 
 WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
 # https://docs.wagtail.org/en/latest/reference/settings.html#wagtaildocs-serve-method
-# This should be serve_view for us so we can ensure requests are always logged
+# We've used this in the past to ensure document requests are logged and aren't
+# forced downloads but it's no longer needed & we have no persistent logs.
 # WAGTAILDOCS_SERVE_METHOD = 'redirect'
 
 # sets of HTML tags allowed in various rich text fields
 # full list here:
-# docs.wagtail.io/en/v2.5/advanced_topics/customisation/page_editing_interface.html#rich-text-features
+# https://docs.wagtail.io/en/latest/advanced_topics/customisation/page_editing_interface.html#rich-text-features
 RICHTEXT_BASIC = [
     "bold",
     "document-link",
@@ -362,7 +363,6 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [os.path.join(PROJECT_DIR, "templates")],
         "OPTIONS": {
-            # context_processors copied from base.py
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
@@ -392,7 +392,7 @@ if not DOCKER_BUILD:
     GS_BUCKET_NAME = env.get("GS_BUCKET_NAME", "")
 
     # Even if the bucket has public permisions, we need to set this
-    # setting to `'publicRead'` to retrun a public, non-expiring URL.
+    # setting to `'publicRead'` to return a public, non-expiring URL.
     GS_DEFAULT_ACL = "publicRead"
     GS_OBJECT_PARAMETERS = {"cache_control": "public, max-age=31536000"}
 
