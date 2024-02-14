@@ -44,7 +44,7 @@ COPY Pipfile Pipfile.lock /app/
 RUN pipenv install --system --deploy
 
 # Collect our compiled static files from the assets image
-COPY --from=assets /app/libraries/libraries/static /app/libraries/libraries/
+COPY --from=assets /app/libraries/static /app/libraries/static
 
 # Install application code. Copy only libraries dir so that changes to docs,
 # k8s, config files, etc. don't invalidate the docker cache
