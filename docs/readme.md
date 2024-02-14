@@ -115,7 +115,7 @@ We use a combination of environment variables, kubernetes secrets, and Google Se
 - Google Secret Manager is used for particularly confidential settings like the secret key, database URL, and search URL
   - There are libraries_local and libraries_staging secrets in the CCA Web Staging project
   - There is a libraries_production secret in the CCA Web Prod project
-  - The same service account which is used for GSB access is used to access these secrets (SecretAccessor role)
+  - The same service account which is used for GSB access is used to access these secrets (in a Secret Manager Secret Accessor role)
 
 ## Module (including Wagtail) Updates
 

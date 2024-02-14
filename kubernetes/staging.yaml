@@ -17,6 +17,7 @@ metadata:
   name: app
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 data:
+  # TODO review k8s secrets — some are unused (secret-key) and others should be converted to Secret Manager
   # Generic
   DJANGO_SETTINGS_MODULE: libraries.settings
   KUBERNETES_NAMESPACE: ${KUBERNETES_NAMESPACE_OVERWRITE}
@@ -35,8 +36,6 @@ data:
   # DEPLOY_SERVER_NAME: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Elastic Search
-  # TODO switch to secret manager and change password
-  ES_URL: "http://libraries:6aMj93YC8xp8rEDq@es7-staging.cca.edu"
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Google Cloud Storage
