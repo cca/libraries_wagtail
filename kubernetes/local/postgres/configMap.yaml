@@ -5,9 +5,9 @@ metadata:
   labels:
     app: postgres
 data:
-  PGDATABASE: cca_libraries
-  PGUSER: postgresadmin
-  PGPASSWORD: admin123
+  POSTGRES_DB: cca_libraries
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: admin123
 
 ---
 apiVersion: v1

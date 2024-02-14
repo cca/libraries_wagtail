@@ -66,8 +66,6 @@ spec:
                 name: app-secrets
 
           env:
-            - name: DATABASE_URL
-              value: postgres://postgresadmin:admin123@postgres.libraries-wagtail:5432/cca_libraries
             - name: GS_CREDENTIALS
               valueFrom:
                 secretKeyRef:
