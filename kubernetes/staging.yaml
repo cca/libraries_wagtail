@@ -87,6 +87,20 @@ spec:
                 secretKeyRef:
                   name: secret-key
                   key: key
+            # ! removing these causes the pod to never start even though we should get them via Secret Manager
+            # Database
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: password
+            - name: DATABASE_URL
+              value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
             # Google Cloud Storage
             - name: GS_CREDENTIALS
               valueFrom:
