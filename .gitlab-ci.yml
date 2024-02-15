@@ -29,9 +29,6 @@ variables:
   DOCKER_TLS_VERIFY: 1
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
   ROLLOUT_RESOURCE_TYPE: deployment
-  BROKEN_LINKS_URL: 'https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse'
-  INSTAGRAM_APP_ID: '123987123987456'
-  INSTAGRAM_REDIRECT_URI: 'https://libraries.cca.edu'
 
 services:
   - docker:dind
@@ -48,10 +45,11 @@ docker_image_staging:
   tags:
   - build
   rules:
-    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-(fast|nodb|full)-*/"
+    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|ep)-(fast|nodb|full)-*/"
       when: always
   variables:
-    DOCKER_IMAGE_TAG: "us.gcr.io/cca-web-staging/libraries"
+    DOCKER_IMAGE: us.gcr.io/cca-web-staging/libraries
+    DOCKER_LATEST_TAG: latest
   services:
     - docker:dind
   script:
@@ -59,9 +57,10 @@ docker_image_staging:
     # login first otherwise even `docker pull` throws errors
     - echo "${SA_SERVICE_ACCOUNT_KEY}" > key.json
     - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
-    - docker pull -q ${DOCKER_IMAGE_TAG} || true
-    - docker build --cache-from ${DOCKER_IMAGE_TAG} -t "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA" .
-    - docker push "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    # we need a consistent tag like "latest" or this docker pull fails & we lose our build cache
+    - docker pull -q "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" || true
+    - docker build --cache-from "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" -t "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" -t "${DOCKER_IMAGE}:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}" .
+    - docker push "${DOCKER_IMAGE}:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}"
 
 # Build & Push Docker image to Google Artifact Registry prod
 docker_image_prod:
@@ -78,6 +77,7 @@ docker_image_prod:
   services:
     - docker:dind
   script:
+    # TODO if latest tag works on staging update production to the same
     - apk add -q py-pip make
     - echo "${SA_SERVICE_ACCOUNT_PROD_KEY}" > key.json
     - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
@@ -109,6 +109,7 @@ docker_image_prod:
 # STAGING PROJECT SET-UP - ANCHOR DEFS
 # ---------------------------------------
 
+# ! This step is commented out in the synchronize_stage below
 # For this step to work, the gitlab ci service account must have read permissions on the production export GSB.
 # In addition, the cloud sql instance service account _must_ have the correct permissions on the GBS:
 # https://cloud.google.com/sql/docs/postgres/import-export/importing
@@ -120,8 +121,9 @@ docker_image_prod:
   - gcloud sql import sql psql14-instance gs://libraries-db-dumps-ci/${DB_FILE} --database=libraries-${KUBERNETES_NAMESPACE_OVERWRITE} -q || true
   #- gsutil rm gs://cca-manual-db-dumps/${DB_FILE}
 
+# Frequently not needed & not done during ep-fast-0.x deploys
 .provision_secrets_staging: &provision_secrets_staging
-  - kubectl get secret cloud-storage-credentials cloudsql-db-credentials secret-key instagram-secret  smtp-gmail-com-credentials summon-sftp-secrets --namespace=libraries -oyaml | sed -e '/namespace:/d;/creationTimestamp:/d;/resourceVersion:/d;/uid:/d' | kubectl apply --namespace="${KUBERNETES_NAMESPACE_OVERWRITE}" -f - || true
+  - kubectl get secret cloud-storage-credentials cloudsql-db-credentials secret-key instagram-secret smtp-gmail-com-credentials summon-sftp-secrets --namespace=libraries -oyaml | sed -e '/namespace:/d;/creationTimestamp:/d;/resourceVersion:/d;/uid:/d' | kubectl apply --namespace="${KUBERNETES_NAMESPACE_OVERWRITE}" -f - || true
 
 # ---------------------
 # DEPLOYMENTS - STAGING
@@ -132,9 +134,12 @@ docker_image_prod:
 
 .provision_storage_stage: &provision_storage_stage
   - gsutil ls -b gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/ || gsutil mb -p cca-web-staging -c STANDARD -l us-west1 -b on gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
-  - gsutil -q -m rsync -d -r gs://libraries-media-staging/  gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
+  # removed -d flag from rsync so files are not deleted from lib-ep bucket
+  - gsutil -q -m rsync -r gs://libraries-media-staging/  gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
   - gsutil iam ch allUsers:objectViewer gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
 
+# this synchronizes gs://libraries-media-staging/ with gs://libraries-media-staging-lib-ep
+# not necessary, skipped for now, edit "rules" to reactivate
 # tag example: "ep-full-0.23" or "mg-full-0.0.1".
 synchronize_stage:
   image: "google/cloud-sdk:360.0.0"
@@ -142,8 +147,9 @@ synchronize_stage:
   tags:
   - staging
   rules:
-    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-full-*/"
-      when: always
+    - when: never
+    # - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-full-*/"
+    #   when: always
   script:
     #- *export_prod_db
     - *gcloud_auth_staging
@@ -159,7 +165,7 @@ deploy_full_stage:
   tags:
   - staging
   rules:
-    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-full-*/"
+    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|ep)-full-*/"
       when: always
   script:
     - apt-get update
@@ -170,7 +176,7 @@ deploy_full_stage:
   environment:
     name: "$CI_COMMIT_REF_NAME"
 
-# ! untested, libraries does not use this
+# TODO untested, libraries does not use this, does k8s deploy but no image build
 # tag example: mg-fast-0.0.1.
 deploy_fast_stage:
   image: "google/cloud-sdk:360.0.0"
@@ -178,7 +184,7 @@ deploy_fast_stage:
   tags:
   - staging
   rules:
-    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|nlm)-fast-*/"
+    - if: "$CI_COMMIT_REF_NAME =~ /^(mg|ep)-fast-*/"
       when: always
   script:
     - apt-get update
