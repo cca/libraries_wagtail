@@ -59,6 +59,7 @@ docker_image_staging:
     - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
     # we need a consistent tag like "latest" or this docker pull fails & we lose our build cache
     - docker pull -q "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" || true
+    # TODO --cache-from didn't seem to help
     - docker build --cache-from "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" -t "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" -t "${DOCKER_IMAGE}:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}" .
     - docker push "${DOCKER_IMAGE}:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}"
 
