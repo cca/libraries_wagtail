@@ -4,7 +4,7 @@ image: docker:25.0.3-alpine3.19
 variables:
   # ! Gitlab says you can use variables in image properties but they don't work
   # Try to keep these current to receive performance and security improvements
-  # CLOUD_SDK_IMAGE: google/cloud-sdk:464.0.0-slim
+  # CLOUD_SDK_IMAGE: google/cloud-sdk:464.0.0
   # DOCKER_IMAGE: docker:25.0.3-alpine3.19
 
   # KUBE_INGRESS_BASE_DOMAIN is the application deployment.
@@ -151,7 +151,7 @@ docker_image_prod:
 # ! not necessary, skipped for now, edit "rules" to reactivate
 # tag example: "ep-full-0.23" or "mg-full-0.0.1".
 synchronize_stage:
-  image: google/cloud-sdk:464.0.0-slim
+  image: google/cloud-sdk:464.0.0
   stage: synchronize
   tags:
   - staging
@@ -169,7 +169,7 @@ synchronize_stage:
 
 # tag example: "ep-full-0.23" or "mg-full-0.0.1".
 deploy_full_stage:
-  image: google/cloud-sdk:464.0.0-slim
+  image: google/cloud-sdk:464.0.0
   stage: deploy
   tags:
   - staging
@@ -188,7 +188,7 @@ deploy_full_stage:
 # Only difference is not provisioning secrets?
 # tag example: mg-fast-0.0.1.
 deploy_fast_stage:
-  image: google/cloud-sdk:464.0.0-slim
+  image: google/cloud-sdk:464.0.0
   stage: deploy
   tags:
   - staging
@@ -232,7 +232,7 @@ deploy_fast_stage:
 
 # tag example: release-${VERSION}
 deploy_release:
-  image: google/cloud-sdk:464.0.0-slim
+  image: google/cloud-sdk:464.0.0
   stage: deploy
   tags:
   - production
