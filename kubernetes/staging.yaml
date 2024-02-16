@@ -82,11 +82,6 @@ spec:
             - configMapRef:
                 name: app
           env:
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-key
-                  key: key
             # ! removing these causes the pod to never start even though we should get them via Secret Manager
             # Database
             - name: DB_USER
@@ -116,11 +111,6 @@ spec:
             - configMapRef:
                 name: app
           env:
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-key
-                  key: key
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
@@ -303,11 +293,6 @@ spec:
                 - configMapRef:
                     name: app
               env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
                 - name: DB_USER
                   valueFrom:
                     secretKeyRef:
@@ -360,11 +345,6 @@ spec:
                 - configMapRef:
                     name: app
               env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
                 - name: DB_USER
                   valueFrom:
                     secretKeyRef:
@@ -417,11 +397,6 @@ spec:
                 - configMapRef:
                     name: app
               env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
                 - name: DB_USER
                   valueFrom:
                     secretKeyRef:
