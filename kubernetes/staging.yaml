@@ -139,17 +139,6 @@ spec:
                 secretKeyRef:
                   name: cloud-storage-credentials
                   key: credentials
-            # Instagram app secrets
-            - name: INSTAGRAM_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: instagram-secret
-                  key: instagram-secret
-            - name: INSTAGRAM_APP_ID
-              valueFrom:
-                secretKeyRef:
-                  name: instagram-secret
-                  key: app-id
             # Gmail SMTP
             - name: GOOGLE_SMTP_USER
               valueFrom:
