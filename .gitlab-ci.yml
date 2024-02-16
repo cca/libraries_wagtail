@@ -49,6 +49,7 @@ docker_image_staging:
       when: always
   variables:
     DOCKER_IMAGE: us.gcr.io/cca-web-staging/libraries
+    DOCKER_IMAGE_TAG: "${DOCKER_IMAGE}:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}"
     DOCKER_LATEST_TAG: latest
   services:
     - docker:dind
@@ -58,10 +59,13 @@ docker_image_staging:
     - echo "${SA_SERVICE_ACCOUNT_KEY}" > key.json
     - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
     # we need a consistent tag like "latest" or this docker pull fails & we lose our build cache
-    - docker pull -q "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" || true
+    - docker pull "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" || true
     # TODO --cache-from didn't seem to help
-    - docker build --cache-from "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" -t "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" -t "${DOCKER_IMAGE}:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}" .
+    - docker build --cache-from "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" -t "${DOCKER_IMAGE_TAG}" .
     - docker push "${DOCKER_IMAGE}:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}"
+    # remove the latest tag from our previous image and add it to the one we just created
+    - docker image remove "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" || true
+    - docker tag "${DOCKER_IMAGE_TAG}" "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}"" || true
 
 # Build & Push Docker image to Google Artifact Registry prod
 docker_image_prod:
