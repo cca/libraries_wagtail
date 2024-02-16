@@ -140,7 +140,7 @@ docker_image_prod:
   - gsutil iam ch allUsers:objectViewer gs://libraries-media-staging-"${KUBERNETES_NAMESPACE_OVERWRITE}"/
 
 # this synchronizes gs://libraries-media-staging/ with gs://libraries-media-staging-lib-ep
-# not necessary, skipped for now, edit "rules" to reactivate
+# ! not necessary, skipped for now, edit "rules" to reactivate
 # tag example: "ep-full-0.23" or "mg-full-0.0.1".
 synchronize_stage:
   image: "google/cloud-sdk:360.0.0"
@@ -177,7 +177,7 @@ deploy_full_stage:
   environment:
     name: "$CI_COMMIT_REF_NAME"
 
-# TODO untested, libraries does not use this, does k8s deploy but no image build
+# Only difference is not provisioning secrets?
 # tag example: mg-fast-0.0.1.
 deploy_fast_stage:
   image: "google/cloud-sdk:360.0.0"

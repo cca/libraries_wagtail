@@ -17,7 +17,6 @@ namespace = env.get("KUBERNETES_NAMESPACE", "libraries-wagtail")
 match namespace:
     case "libraries-wagtail":
         environment = "local"
-        gcloud_project = "cca-web-staging"
         BASE_URL = "http://localhost"
         DEBUG = True
         CACHES = {
@@ -28,24 +27,17 @@ match namespace:
 
     case "lib-ep":
         environment = "staging"
-        gcloud_project = "cca-web-staging"
         BASE_URL = "https://libraries-libep.cca.edu"
 
     case "lib-production":
         environment = "production"
-        gcloud_project = "cca-web-0"
         BASE_URL = "https://libraries.cca.edu"
 
     case _:
         raise RuntimeError(f"Unknown namespace: {namespace}")
 
 # values we don't want set during a docker build
-# TODO should be loaded via untracked file or env var #10
-SECRET_KEY = env.get(
-    "SECRET_KEY", r"ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb"
-)
-DOCKER_BUILD = SECRET_KEY == "none"
-if not DOCKER_BUILD:
+if not "DOCKER_BUILD" in env:
     # Load GCP credentials from service account key
     GS_CREDENTIALS = Credentials.from_service_account_info(
         json.loads(env.get("GS_CREDENTIALS", ""))
@@ -53,9 +45,7 @@ if not DOCKER_BUILD:
     if environment != "local":
         # read values from Google Secret Manager into environment, used for DB and ES URLs
         smclient = secretmanager.SecretManagerServiceClient(credentials=GS_CREDENTIALS)
-        secret = (
-            f"projects/{gcloud_project}/secrets/libraries_{environment}/versions/latest"
-        )
+        secret = f"projects/{env['GS_PROJECT_ID']}/secrets/libraries_{environment}/versions/latest"
         payload = smclient.access_secret_version(name=secret).payload.data.decode(
             "utf-8"
         )
@@ -63,6 +53,10 @@ if not DOCKER_BUILD:
             key, value = line.strip().split("=", 1)
             env[key] = value
 
+# TODO should be loaded via untracked file or env var #10
+SECRET_KEY = env.get(
+    "SECRET_KEY", r"ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb"
+)
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
@@ -389,7 +383,7 @@ TEMPLATES = [
 # ------------ #
 # Google Cloud #
 # ------------ #
-if not DOCKER_BUILD:
+if not "DOCKER_BUILD" in env:
     INSTALLED_APPS += ("storages",)
 
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"

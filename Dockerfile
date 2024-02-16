@@ -55,7 +55,7 @@ COPY kubernetes/uwsgi.ini /app/libraries/
 # Settings environment variable
 ENV DJANGO_SETTINGS_MODULE libraries.settings
 
-RUN SECRET_KEY=none python manage.py collectstatic --no-input
+RUN DOCKER_BUILD=true python manage.py collectstatic --no-input
 
 # Make port 80 available to the world outside this container
 EXPOSE 8000
