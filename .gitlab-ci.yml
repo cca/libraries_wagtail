@@ -2,9 +2,11 @@
 image: docker:25-alpine
 
 variables:
+  # ! Gitlab says you can use variables in image properties but they do not work
+  # https://docs.gitlab.com/ee/ci/yaml/index.html#image
   # Try to keep these current to receive performance and security improvements
-  CLOUD_SDK_IMAGE: google/cloud-sdk:464.0.0-slim
-  DOCKER_IMAGE: 25.0.3-alpine3.19
+  # CLOUD_SDK_IMAGE: google/cloud-sdk:464.0.0-slim
+  # DOCKER_IMAGE: 25.0.3-alpine3.19
 
   # KUBE_INGRESS_BASE_DOMAIN is the application deployment.
   # domain and should be set as a variable at the group or project level.
@@ -46,7 +48,7 @@ stages:
 
 # Build & Push Docker image to Google Artifact Registry staging
 docker_image_staging:
-  image: $DOCKER_IMAGE
+  image: 25.0.3-alpine3.19
   stage: build
   tags:
   - build
@@ -71,7 +73,7 @@ docker_image_staging:
 
 # Build & Push Docker image to Google Artifact Registry prod
 docker_image_prod:
-  image: $DOCKER_IMAGE
+  image: 25.0.3-alpine3.19
   stage: build
   tags:
   - build
@@ -150,7 +152,7 @@ docker_image_prod:
 # ! not necessary, skipped for now, edit "rules" to reactivate
 # tag example: "ep-full-0.23" or "mg-full-0.0.1".
 synchronize_stage:
-  image: $CLOUD_SDK_IMAGE
+  image: google/cloud-sdk:464.0.0-slim
   stage: synchronize
   tags:
   - staging
@@ -168,7 +170,7 @@ synchronize_stage:
 
 # tag example: "ep-full-0.23" or "mg-full-0.0.1".
 deploy_full_stage:
-  image: $CLOUD_SDK_IMAGE
+  image: google/cloud-sdk:464.0.0-slim
   stage: deploy
   tags:
   - staging
@@ -187,7 +189,7 @@ deploy_full_stage:
 # Only difference is not provisioning secrets?
 # tag example: mg-fast-0.0.1.
 deploy_fast_stage:
-  image: $CLOUD_SDK_IMAGE
+  image: google/cloud-sdk:464.0.0-slim
   stage: deploy
   tags:
   - staging
@@ -231,7 +233,7 @@ deploy_fast_stage:
 
 # tag example: release-${VERSION}
 deploy_release:
-  image: $CLOUD_SDK_IMAGE
+  image: google/cloud-sdk:464.0.0-slim
   stage: deploy
   tags:
   - production
