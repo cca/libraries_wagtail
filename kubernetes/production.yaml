@@ -83,11 +83,6 @@ spec:
             - configMapRef:
                 name: app
           env:
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-key
-                  key: key
             # Database
             - name: DB_USER
               valueFrom:
@@ -116,11 +111,6 @@ spec:
             - configMapRef:
                 name: app
           env:
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-key
-                  key: key
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
@@ -139,28 +129,6 @@ spec:
                 secretKeyRef:
                   name: cloud-storage-credentials
                   key: credentials
-            # Instagram app secrets
-            - name: INSTAGRAM_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: instagram-secret
-                  key: instagram-secret
-            - name: INSTAGRAM_APP_ID
-              valueFrom:
-                secretKeyRef:
-                  name: instagram-secret
-                  key: app-id
-            # Gmail SMTP
-            - name: GOOGLE_SMTP_USER
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-gmail-com-credentials
-                  key: username
-            - name: GOOGLE_SMTP_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-gmail-com-credentials
-                  key: password
           # Define the port our application listens on.
           ports:
             - containerPort: 8000
@@ -323,11 +291,6 @@ spec:
                 - configMapRef:
                     name: app
               env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
                 - name: DB_USER
                   valueFrom:
                     secretKeyRef:
@@ -378,11 +341,6 @@ spec:
                 - configMapRef:
                     name: app
               env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
                 - name: DB_USER
                   valueFrom:
                     secretKeyRef:
@@ -400,17 +358,6 @@ spec:
                     secretKeyRef:
                       name: cloud-storage-credentials
                       key: credentials
-                # Instagram app secrets
-                - name: INSTAGRAM_SECRET
-                  valueFrom:
-                    secretKeyRef:
-                      name: instagram-secret
-                      key: instagram-secret
-                - name: INSTAGRAM_APP_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: instagram-secret
-                      key: app-id
 
 ---
 apiVersion: batch/v1
@@ -445,11 +392,6 @@ spec:
                 - configMapRef:
                     name: app
               env:
-                - name: SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: secret-key
-                      key: key
                 - name: DB_USER
                   valueFrom:
                     secretKeyRef:
