@@ -3,7 +3,7 @@ image: docker:25-alpine
 
 variables:
   # Try to keep these current to receive performance and security improvements
-  CLOUD_SDK_IMAGE: google/cloud-sdk:464.0.0-slim
+  CLOUD_SDK_IMAGE: google/cloud-sdk:464.0.0-alpine
   DOCKER_IMAGE: 25.0.3-alpine3.19
 
   # KUBE_INGRESS_BASE_DOMAIN is the application deployment.
