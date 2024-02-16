@@ -54,11 +54,12 @@ docker_image_staging:
     - docker:dind
   script:
     - apk add -q py-pip make
-    # login first otherwise even `docker pull` throws errors
+    # login first otherwise `docker pull` throws errors
     - echo "${SA_SERVICE_ACCOUNT_KEY}" > key.json
     - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
     # we need a consistent tag like "latest" or this docker pull fails & we lose our build cache
     - docker pull --quiet "${DOCKER_IMAGE}:latest" || true
+    # must build with --build-arg BUILDKIT_INLINE_CACHE=1 or image doesn't work with --cache-form
     - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from "${DOCKER_IMAGE}:latest" -t "${DOCKER_IMAGE_TAG}" .
     - docker tag "${DOCKER_IMAGE_TAG}" "${DOCKER_IMAGE}:latest"
     - docker push --all-tags "${DOCKER_IMAGE}"
@@ -74,17 +75,19 @@ docker_image_prod:
     - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
       when: always
   variables:
-    DOCKER_IMAGE_TAG: "us.gcr.io/cca-web-0/libraries"
+    DOCKER_IMAGE: "us.gcr.io/cca-web-0/libraries"
+    DOCKER_IMAGE_TAG: "${DOCKER_IMAGE}:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}"
   services:
     - docker:dind
   script:
-    # TODO if latest tag works on staging update production to the same
     - apk add -q py-pip make
     - echo "${SA_SERVICE_ACCOUNT_PROD_KEY}" > key.json
     - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
-    - docker pull -q ${DOCKER_IMAGE_TAG} || true
-    - docker build --cache-from ${DOCKER_IMAGE_TAG} -t "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA" .
-    - docker push "$DOCKER_IMAGE_TAG:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    - docker pull -q "${DOCKER_IMAGE_TAG}:latest" || true
+    # must build with --build-arg BUILDKIT_INLINE_CACHE=1 or image doesn't work with --cache-form
+    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from "${DOCKER_IMAGE}:latest" -t "${DOCKER_IMAGE_TAG}" .
+    - docker tag "${DOCKER_IMAGE_TAG}" "${DOCKER_IMAGE}:latest"
+    - docker push --all-tags "${DOCKER_IMAGE}"
 
 # ---------------------
 # Google Authentication
