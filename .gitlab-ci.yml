@@ -3,7 +3,7 @@ image: docker:25-alpine
 
 variables:
   # Try to keep these current to receive performance and security improvements
-  CLOUD_SDK_IMAGE: google/cloud-sdk:464.0.0-alpine
+  CLOUD_SDK_IMAGE: google/cloud-sdk:464.0.0-slim
   DOCKER_IMAGE: 25.0.3-alpine3.19
 
   # KUBE_INGRESS_BASE_DOMAIN is the application deployment.
@@ -59,7 +59,6 @@ docker_image_staging:
   services:
     - docker:dind
   script:
-    - apk add -q py-pip make
     # login first otherwise `docker pull` throws errors
     - echo "${SA_SERVICE_ACCOUNT_KEY}" > key.json
     - docker login -u _json_key --password-stdin https://us.gcr.io < key.json
@@ -86,7 +85,6 @@ docker_image_prod:
   services:
     - docker:dind
   script:
-    - apk add -q py-pip make
     - echo "${SA_SERVICE_ACCOUNT_PROD_KEY}" > key.json
     - docker login -u _json_key --password-stdin https://us-west2-docker.pkg.dev < key.json
     - docker pull --quiet "${DOCKER_IMAGE}:latest" || true
