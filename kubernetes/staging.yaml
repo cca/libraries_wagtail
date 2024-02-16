@@ -139,17 +139,6 @@ spec:
                 secretKeyRef:
                   name: cloud-storage-credentials
                   key: credentials
-            # Gmail SMTP
-            - name: GOOGLE_SMTP_USER
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-gmail-com-credentials
-                  key: username
-            - name: GOOGLE_SMTP_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-gmail-com-credentials
-                  key: password
           # Define the port our application listens on.
           ports:
             - containerPort: 8000
@@ -395,17 +384,6 @@ spec:
                     secretKeyRef:
                       name: cloud-storage-credentials
                       key: credentials
-                # Instagram app secrets
-                - name: INSTAGRAM_SECRET
-                  valueFrom:
-                    secretKeyRef:
-                      name: instagram-secret
-                      key: instagram-secret
-                - name: INSTAGRAM_APP_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: instagram-secret
-                      key: app-id
 
 ---
 apiVersion: batch/v1
