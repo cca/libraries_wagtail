@@ -61,7 +61,7 @@ docker_image_staging:
     # we need a consistent tag like "latest" or this docker pull fails & we lose our build cache
     - docker pull --quiet "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" || true
     - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from "${DOCKER_IMAGE}:${DOCKER_LATEST_TAG}" -t "${DOCKER_IMAGE_TAG}" -t "${DOCKER_LATEST_TAG}" .
-    - docker push --all-tags "${DOCKER_IMAGE}:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}"
+    - docker push --all-tags
 
 # Build & Push Docker image to Google Artifact Registry prod
 docker_image_prod:
