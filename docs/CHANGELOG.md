@@ -1,13 +1,18 @@
 # Changelog
 
-## 3.x.x
+## 4.0.0
 
-**YYYY-MM-DD**:
+**2024-02-16**: a huge number of critical software updates. If nothing seems different after this upgrade, that's a good thing! These upgrades position us to upgrade Wagtail itself which will bring new features.
 
 - [#52](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/52) anchor links now account for the fixed header
 - [#33](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/33) fixed a long-running challenge of serving media files when developing locally
 - a large number of dependency updates, switch from deprecated [node-sass](https://www.npmjs.com/package/node-sass) to [dart-sass](https://www.npmjs.com/package/sass)
 - upgrade the site's PostgresQL database from 9.6 to 14.7 (for production, staging is 14.9)
+- [#54](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/54) upgrade the site's search engine (Elasticsearch) from 5 to 7
+- [#55](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/55) upgrade python from 3.7 to 3.10
+- [#10](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/10) hide `SECRET_KEY` from the code base
+- use Google Secret Manager for some app secrets (Elasticsearch, email, and Instagram credentials)
+- improve CI/CD pipeline (skip unneeded step for staging, use cache when building Docker images) and switch to Artifact Registry
 
 ## 3.3.0
 
