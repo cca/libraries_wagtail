@@ -318,7 +318,7 @@ metadata:
   name: instagram
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  suspend: false
+  suspend: true
   # times are UTC
   schedule: "10 19 * * *"
   failedJobsHistoryLimit: 2
