@@ -292,7 +292,7 @@ spec:
               imagePullPolicy: IfNotPresent
               args:
                 - python
-                - libraries/manage.py
+                - manage.py
                 - summon_deletes
               volumeMounts:
                 - name: summon-sftp-secrets
@@ -335,7 +335,7 @@ metadata:
 spec:
   suspend: false
   # times are UTC
-  schedule: "0 2 * * *"
+  schedule: "10 19 * * *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   # ttlSecondsAfterFinished: 900
@@ -353,7 +353,7 @@ spec:
               imagePullPolicy: IfNotPresent
               args:
                 - python
-                - libraries/manage.py
+                - manage.py
                 - instagram
               # Env variables form ConfigMap
               envFrom:
@@ -410,7 +410,7 @@ spec:
               imagePullPolicy: IfNotPresent
               args:
                 - python
-                - libraries/manage.py
+                - manage.py
                 - publish_scheduled_pages
               # Env variables form ConfigMap
               envFrom:

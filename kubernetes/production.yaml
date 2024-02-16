@@ -312,7 +312,7 @@ spec:
               imagePullPolicy: Always
               args:
                 - python
-                - libraries/manage.py
+                - manage.py
                 - summon_deletes
               volumeMounts:
                 - name: summon-sftp-secrets
@@ -371,7 +371,7 @@ spec:
               imagePullPolicy: Always
               args:
                 - python
-                - libraries/manage.py
+                - manage.py
                 - instagram
               # Env variables form ConfigMap
               envFrom:
@@ -438,7 +438,7 @@ spec:
               imagePullPolicy: Always
               args:
                 - python
-                - libraries/manage.py
+                - manage.py
                 - publish_scheduled_pages
               # Env variables form ConfigMap
               envFrom:
