@@ -18,14 +18,13 @@ spec:
         - command:
             - /bin/sh
             - -exc
-            - |
-              cp /config/elasticsearch.yml /usr/share/elasticsearch/config
-              exec bash bin/es-docker
+            - /usr/local/bin/docker-entrypoint.sh eswrapper
           env:
-            - name: ES_JAVA_OPTS
-              value: -Xms1024m -Xmx1024m
-          # TODO: use version of elasticsearch used in production
-          image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+            - name: discovery.type
+              value: single-node
+          # ! need arm64 images for M2 mac only published by elasticsearch themselves, not on docker hub
+          # ! https://www.docker.elastic.co/r/elasticsearch
+          image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3-arm64
           imagePullPolicy: IfNotPresent
           name: elasticsearch
           ports:
@@ -42,8 +41,6 @@ spec:
           volumeMounts:
             - mountPath: /usr/share/elasticsearch/data
               name: data
-            - mountPath: /config
-              name: config
       initContainers:
         - command:
             - chown
@@ -57,10 +54,6 @@ spec:
             - mountPath: /usr/share/elasticsearch/data
               name: data
       volumes:
-        - configMap:
-            defaultMode: 420
-            name: elasticsearch-config
-          name: config
         - name: data
           persistentVolumeClaim:
             claimName: elasticsearch-pv-volumeclaim

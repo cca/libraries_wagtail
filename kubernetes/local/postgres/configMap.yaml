@@ -6,7 +6,7 @@ metadata:
     app: postgres
 data:
   POSTGRES_DB: cca_libraries
-  POSTGRES_USER: postgresadmin
+  POSTGRES_USER: postgres
   POSTGRES_PASSWORD: admin123
 
 ---

@@ -28,7 +28,7 @@ function start -d 'start the local wagtail application'
     # start minikube
     if not minikube status &>/dev/null
         # keep this & the version in /docs/setup.ush in sync with our gke cluster
-        minikube start --kubernetes-version=1.25.10
+        minikube start --kubernetes-version=1.26.8
     end
     echo "✅  Minikube is running"
 
@@ -49,6 +49,7 @@ function stop -d 'stop the local development tools'
     pkill -f 'skaffold dev'
     # libraries-wagtail namespace never seems to terminate properly
     set NS libraries-wagtail
+    # TODO this errors if the namespace doesn't exist
     kubectl get ns $NS -ojson | jq '.spec.finalizers = []' | kubectl replace --raw "/api/v1/namespaces/$NS/finalize" -f - >/dev/null
     echo "Stopping minikube"
     # if you try to stop minikube & it's not started it loops infinitely

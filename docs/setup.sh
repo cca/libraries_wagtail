@@ -31,17 +31,20 @@ echo -e "Start Docker before this step.\nDo you want to load the (s)taging or (p
 read -r -n 1 -p "[n, p, s]? " result
 echo
 
+# The version we're running on staging see `kubectl version`
+K8S_VERSION=1.26.8
+
 case ${result} in
     "n")
         echo "Skipping database download. You can run ./docs/sync.fish to download the database later."
         ;;
     "p")
-        minikube start --kubernetes-version=1.25.10
+        minikube start --kubernetes-version=$K8S_VERSION
         skaffold run -p db-only
         ./docs/sync.fish --prod --db
         ;;
     "s")
-        minikube start --kubernetes-version=1.25.10
+        minikube start --kubernetes-version=$K8S_VERSION
         skaffold run -p db-only
         ./docs/sync.fish --stage --db
         ;;

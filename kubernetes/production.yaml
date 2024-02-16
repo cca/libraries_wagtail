@@ -34,7 +34,6 @@ data:
   # DEPLOY_SERVER_NAME: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Elastic Search
-  ES_URL: "http://elasticsearch.elasticsearch5.svc:9200"
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Google Cloud Storage
@@ -71,7 +70,7 @@ spec:
 
       initContainers:
         - name: init-app
-          image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+          image: us-west2-docker.pkg.dev/cca-web-0/docker-web/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
           imagePullPolicy: Always
           command:
             [
@@ -110,7 +109,7 @@ spec:
                   key: credentials
       containers:
         - name: app
-          image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+          image: us-west2-docker.pkg.dev/cca-web-0/docker-web/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
           imagePullPolicy: Always
           # Env variables form ConfigMap
           envFrom:
@@ -309,7 +308,7 @@ spec:
                 secretName: summon-sftp-secrets
           containers:
             - name: summon
-              image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us-west2-docker.pkg.dev/cca-web-0/docker-web/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
@@ -368,7 +367,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: instagram
-              image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us-west2-docker.pkg.dev/cca-web-0/docker-web/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python
@@ -435,7 +434,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: publish-scheduled-pages
-              image: us.gcr.io/cca-web-0/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: us-west2-docker.pkg.dev/cca-web-0/docker-web/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
               imagePullPolicy: Always
               args:
                 - python

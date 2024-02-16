@@ -17,12 +17,13 @@ metadata:
   name: app
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 data:
+  # TODO review k8s secrets — some are unused (secret-key) and others should be converted to Secret Manager
   # Generic
   DJANGO_SETTINGS_MODULE: libraries.settings
   KUBERNETES_NAMESPACE: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # CAS
-  CAS_SERVER_URL: "https://sso.cca.edu/cas/login"
+  CAS_SERVER_URL: "https://sso5-stage.cca.edu/cas/login"
 
   # Media
   MEDIA_URL: "https://storage.googleapis.com/libraries-staging-${KUBERNETES_NAMESPACE_OVERWRITE}/"
@@ -35,7 +36,6 @@ data:
   # DEPLOY_SERVER_NAME: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Elastic Search
-  ES_URL: "http://elasticsearch.elasticsearch5.svc:9200"
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
   # Google Cloud Storage
@@ -87,6 +87,7 @@ spec:
                 secretKeyRef:
                   name: secret-key
                   key: key
+            # ! removing these causes the pod to never start even though we should get them via Secret Manager
             # Database
             - name: DB_USER
               valueFrom:
@@ -138,28 +139,6 @@ spec:
                 secretKeyRef:
                   name: cloud-storage-credentials
                   key: credentials
-            # Instagram app secrets
-            - name: INSTAGRAM_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: instagram-secret
-                  key: instagram-secret
-            - name: INSTAGRAM_APP_ID
-              valueFrom:
-                secretKeyRef:
-                  name: instagram-secret
-                  key: app-id
-            # Gmail SMTP
-            - name: GOOGLE_SMTP_USER
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-gmail-com-credentials
-                  key: username
-            - name: GOOGLE_SMTP_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-gmail-com-credentials
-                  key: password
           # Define the port our application listens on.
           ports:
             - containerPort: 8000
@@ -288,10 +267,8 @@ metadata:
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
   suspend: true
-  # run at convenient times for testing, not the same as prod
+  # times are UTC
   schedule: "30 20 * * *"
-  # default when not testing this job: run once on January 1st
-  # schedule: "0 0 1 1 *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   # https://kubernetes.io/docs/concepts/workloads/controllers/job/#clean-up-finished-jobs-automatically
@@ -356,9 +333,9 @@ metadata:
   name: instagram
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  suspend: true
-  # run daily at midnight (UTC) / 5pm PT
-  schedule: "0 0 * * *"
+  suspend: false
+  # times are UTC
+  schedule: "0 2 * * *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   # ttlSecondsAfterFinished: 900
@@ -405,17 +382,6 @@ spec:
                     secretKeyRef:
                       name: cloud-storage-credentials
                       key: credentials
-                # Instagram app secrets
-                - name: INSTAGRAM_SECRET
-                  valueFrom:
-                    secretKeyRef:
-                      name: instagram-secret
-                      key: instagram-secret
-                - name: INSTAGRAM_APP_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: instagram-secret
-                      key: app-id
 
 ---
 apiVersion: batch/v1

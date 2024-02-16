@@ -24,7 +24,14 @@ flags. This is always a unidirectional sync from prod to staging."
 end
 
 function activate_config
-    gcloud config configurations activate $argv[1]
+    # no need to activate if the current config is already set
+    if test -f ~/.config/gcloud/active_config
+        set -g CURRENT_CONFIG (cat ~/.config/gcloud/active_config)
+        if test $argv[1] = $CURRENT_CONFIG
+            return
+        end
+    end
+    gcloud config configurations activate $argv[1] >/dev/null
     or begin
         echo "Error: unable to activate $argv[1] gcloud configuration; does it exist?
     Check with 'gcloud config configurations list' and if it does not exist
@@ -43,6 +50,7 @@ set STAGE_DB_GSB gs://libraries-db-dumps-ci
 if set -q _flag_p
     echo "Using production context"
     set CTX production
+    set -gx GOOGLE_CLOUD_QUOTA_PROJECT cca-web-0
     activate_config production
     set DB_NAME libraries-lib-production
     set DB_GSB gs://cca-manual-db-dumps
@@ -50,6 +58,7 @@ if set -q _flag_p
 else if set -q _flag_s
     echo "Using staging context"
     set CTX staging
+    set -gx GOOGLE_CLOUD_QUOTA_PROJECT cca-web-staging
     activate_config staging
     set DB_NAME $STAGE_DB_NAME
     set DB_GSB $STAGE_DB_GSB
@@ -101,6 +110,7 @@ if set -q _flag_d;
         # copy db file from a prod GSB to a staging one
         gsutil cp $DB_URI $STAGE_DB_GSB
         echo "Switching to staging context"
+        set -gx GOOGLE_CLOUD_QUOTA_PROJECT cca-web-staging
         activate_config staging
         gcloud sql databases delete $STAGE_DB_NAME --instance $DB_INSTANCE
         gcloud sql databases create $STAGE_DB_NAME --instance $DB_INSTANCE
@@ -139,17 +149,17 @@ this command again." 1>&2
         end
         echo "Found Postgres pod $PG_POD"
 
-        # export database to GSB and then download it
+        # Export database to GSB and then download it, copy to pod, and restore.
+        # We delete cloudsql users to prevent errors when the export is restored.
         export_db
         gsutil cp $DB_URI .
         echo "Using $PG_POD to restore $DB_NAME from $DB_FILE"
         kubectl -n libraries-wagtail cp ./$DB_FILE $PG_POD:/tmp/$DB_FILE
         kubectl -n libraries-wagtail exec $PG_POD -- sh -c "\
-        dropdb -U postgresadmin cca_libraries;\
-        createdb -U postgresadmin cca_libraries;\
-        createuser -U postgresadmin --superuser postgres 2>/dev/null;\
+        dropdb -U postgres cca_libraries;\
+        createdb -U postgres cca_libraries;\
         zcat /tmp/$DB_FILE \
         | sed -E -e '/cloudsqladmin|cloudsqlsuperuser/d' \
-        | psql -U postgresadmin cca_libraries;"
+        | psql -U postgres cca_libraries;"
     end
 end
