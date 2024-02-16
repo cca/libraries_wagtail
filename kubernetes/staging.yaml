@@ -267,10 +267,8 @@ metadata:
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
   suspend: true
-  # run at convenient times for testing, not the same as prod
+  # times are UTC
   schedule: "30 20 * * *"
-  # default when not testing this job: run once on January 1st
-  # schedule: "0 0 1 1 *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   # https://kubernetes.io/docs/concepts/workloads/controllers/job/#clean-up-finished-jobs-automatically
@@ -335,9 +333,9 @@ metadata:
   name: instagram
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  suspend: true
-  # run daily at midnight (UTC) / 5pm PT
-  schedule: "0 0 * * *"
+  suspend: false
+  # times are UTC
+  schedule: "0 2 * * *"
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   # ttlSecondsAfterFinished: 900
