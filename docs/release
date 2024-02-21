@@ -19,6 +19,7 @@ else
     set NEXT_EP_TAG (string join . $EP_VERSION)
     git tag $NEXT_EP_TAG
 end
+git push
 git push --tags
 sleep 2
 glab ci status -l
