@@ -24,6 +24,7 @@ def all_blog_posts():
 # we don't really use a blog index page but we need this here
 # for the home > blog index > blog page URL hierarcy
 class BlogIndex(Page):
+    page_description = "The parent index of all library news articles."
     parent_page_types = ["home.HomePage"]
     subpage_types = ["blog.BlogPage"]
     max_count = 1
@@ -53,6 +54,7 @@ class BlogIndex(Page):
 
 
 class BlogPage(Page):
+    page_description = "A library news article."
     parent_page_types = ["blog.BlogIndex"]
     subpage_types = []
 

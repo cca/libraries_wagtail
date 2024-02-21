@@ -199,6 +199,7 @@ def get_hours_for_lib(libname, for_date=datetime.date.today()):
 
 
 class HoursPage(Page):
+    page_description = "A page that displays the open hours for all library branches."
     parent_page_types = ["categories.RowComponent"]
     subpage_types = []
     max_count = 1

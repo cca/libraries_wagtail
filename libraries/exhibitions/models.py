@@ -29,6 +29,7 @@ def editor_js():
 # Typical setup: Exhibits Index can only have Exhibit children,
 # Exhibits can only have the Exhibits Index as a parent
 class ExhibitsIndexPage(Page):
+    page_description = "The parent index of all library exhibits."
     parent_page_types = ["home.HomePage"]
     subpage_types = ["exhibitions.ExhibitPage"]
     max_count = 1
@@ -94,6 +95,7 @@ class ExhibitsIndexPage(Page):
 
 
 class ExhibitPage(Page):
+    page_description = "A digital library exhibit with gallery of works."
     parent_page_types = ["exhibitions.ExhibitsIndexPage"]
     subpage_types = []  # no children allowed
 

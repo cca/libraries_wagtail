@@ -13,6 +13,7 @@ from instagram.models import Instagram
 
 
 class HomePage(Page):
+    page_description = "The home page of the site."
     background_image = models.ForeignKey(
         "wagtailimages.Image",
         null=True,

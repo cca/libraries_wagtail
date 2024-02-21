@@ -22,6 +22,9 @@ def get_category(page):
 
 
 class CategoryPage(Page):
+    page_description = (
+        "Top-level category page for services, collections, and about us."
+    )
     parent_page_types = ["home.HomePage"]
     subpage_types = [
         "categories.RowComponent",
@@ -47,6 +50,7 @@ class CategoryPage(Page):
 
 # reuses blocks from the BlogPage template
 class ServicePage(Page):
+    page_description = "Individual, fully-featured page of content."
     parent_page_types = [
         "categories.RowComponent",
         "categories.ServicePage",
@@ -141,6 +145,9 @@ class ServicePage(Page):
 # also since the RowComponent is never directly rendered we can't use its
 # get_context() method to retrieve child pages, that has to be done in template
 class RowComponent(Page):
+    page_description = (
+        "Represents a row of pages in a Category—does not have its own URL."
+    )
     parent_page_types = ["categories.CategoryPage"]
     subpage_types = [
         "categories.ServicePage",
@@ -183,6 +190,7 @@ class RowComponent(Page):
 # ServicePage & AboutUsPage are two different templates for the same
 # sort of grandchild content (CategoryPage > RowComponent > Service/AboutUsPage)
 class AboutUsPage(Page):
+    page_description = "A simpler page of content."
     parent_page_types = [
         "categories.RowComponent",
         "categories.ServicePage",
@@ -273,6 +281,7 @@ class AboutUsPage(Page):
 
 
 class ExternalLink(Page):
+    page_description = "Redirects to an external URL."
     # only used for linking items in a row to external locations
     parent_page_types = [
         "categories.RowComponent",
