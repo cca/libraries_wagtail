@@ -4,18 +4,18 @@ if test "$argv[1]" = "-h"; or test "$argv[1]" = "--help"; or test "$argv[1]" = "
     echo "create and push a release tag that triggers a CI build"
     echo "passing 'prod' creates a production release, otherwise it's staging"
     exit 0
-else if test $argv[1] = "prod"; or test $argv[1] = "production"
+else if test "$argv[1]" = "prod"; or test "$argv[1]" = "production"
     set LATEST_RELEASE_TAG (git tags | grep 'release-' | sort | tail -n 1)
     # tag format release-x.y.z
     set RELEASE_VERSION (string split . $LATEST_RELEASE_TAG)
-    set RELEASE_VERSION[3] (math $LATEST_RELEASE_VERSION[3] + 1)
+    set RELEASE_VERSION[3] (math $RELEASE_VERSION[3] + 1)
     set NEXT_RELEASE_TAG (string join . $RELEASE_VERSION)
     git tag $NEXT_RELEASE_TAG
 else
     set LATEST_EP_TAG (git tags | grep 'ep-full-0.' | sort | tail -n 1)
     # tag format ep-full-x.y
     set EP_VERSION (string split . $LATEST_EP_TAG)
-    set EP_VERSION[2] (math $LATEST_EP_VERSION[2] + 1)
+    set EP_VERSION[2] (math $EP_VERSION[2] + 1)
     set NEXT_EP_TAG (string join . $EP_VERSION)
     git tag $NEXT_EP_TAG
 end
