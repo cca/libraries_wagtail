@@ -6,7 +6,7 @@ import requests
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand
 
-from wagtail.core.models import Collection
+from wagtail.models import Collection
 from wagtail.images.models import Image
 
 from instagram.api import get_instagram, refresh_token

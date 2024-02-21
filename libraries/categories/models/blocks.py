@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.forms import ChoiceField
 from django.forms.utils import ErrorList
 
-from wagtail.core.blocks import ChoiceBlock, StructBlock, StructValue, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock, ListBlock
+from wagtail.blocks import ChoiceBlock, StructBlock, StructValue, StreamBlock, CharBlock, FieldBlock, RichTextBlock, TextBlock, RawHTMLBlock, URLBlock, PageChooserBlock, ListBlock
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
 

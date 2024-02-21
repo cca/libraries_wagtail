@@ -4,18 +4,15 @@ from django.db import models
 
 from modelcluster.fields import ParentalKey
 
-from wagtail.core import hooks
-from wagtail.core.models import Orderable, Page
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import (
+from wagtail import hooks
+from wagtail.models import Orderable, Page
+from wagtail.fields import RichTextField, StreamField
+from wagtail.admin.panels import (
     FieldPanel,
     HelpPanel,
     InlinePanel,
     MultiFieldPanel,
-    StreamFieldPanel,
 )
-from wagtail.documents.edit_handlers import DocumentChooserPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
 from categories.models import BaseStreamBlock
@@ -189,7 +186,7 @@ class ExhibitPage(Page):
         ),
         MultiFieldPanel(
             [
-                StreamFieldPanel("description"),
+                FieldPanel("description"),
                 FieldPanel("location"),
                 FieldPanel("dates"),
                 FieldPanel("creators"),
@@ -288,7 +285,7 @@ class HeaderImage(Orderable):
     )
 
     panels = [
-        ImageChooserPanel("image"),
+        FieldPanel("image"),
     ]
 
 
@@ -346,8 +343,8 @@ class ExhibitArtwork(Orderable):
         FieldPanel("title"),
         FieldPanel("creator"),
         FieldPanel("link"),
-        ImageChooserPanel("image", classname="js-image"),
-        DocumentChooserPanel("media", classname="js-media"),
+        FieldPanel("image", classname="js-image"),
+        FieldPanel("media", classname="js-media"),
         FieldPanel("embed_code", classname="js-embed_code"),
         FieldPanel("description"),
     ]

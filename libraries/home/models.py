@@ -1,10 +1,9 @@
 from django.conf import settings
 from django.db import models
 
-from wagtail.core.models import Page
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.models import Page
+from wagtail.fields import RichTextField, StreamField
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 
 from blog.models import all_blog_posts
 from categories.models import LinkBlock
@@ -51,16 +50,16 @@ class HomePage(Page):
     parent_page_types = []
 
     content_panels = Page.content_panels + [
-        ImageChooserPanel("background_image"),
+        FieldPanel("background_image"),
         FieldPanel("image_attribution"),
         MultiFieldPanel(
             [
                 FieldPanel("services_text"),
-                StreamFieldPanel("services_link"),
+                FieldPanel("services_link"),
                 FieldPanel("collections_text"),
-                StreamFieldPanel("collections_link"),
+                FieldPanel("collections_link"),
                 FieldPanel("about_us_text"),
-                StreamFieldPanel("about_us_link"),
+                FieldPanel("about_us_link"),
             ],
             heading="Category Descriptions",
         ),

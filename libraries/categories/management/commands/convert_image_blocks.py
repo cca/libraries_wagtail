@@ -6,7 +6,7 @@ One-time StreamField migration:
 import logging
 
 from django.core.management.base import BaseCommand
-from wagtail.core.blocks.stream_block import StreamValue
+from wagtail.blocks.stream_block import StreamValue
 
 from blog.models import BlogPage
 from categories.models import ServicePage

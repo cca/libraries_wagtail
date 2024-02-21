@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 
 import categories.models
 from django.db import migrations
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='blogpage',
             name='body',
-            field=wagtail.core.fields.StreamField((('subheading', wagtail.core.blocks.CharBlock(classname='title', icon='title', template='categories/blocks/subheading.html')), ('paragraph', wagtail.core.blocks.RichTextBlock(icon='pilcrow', template='categories/blocks/paragraph.html')), ('image', wagtail.core.blocks.StructBlock((('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.RichTextBlock(blank=True))))), ('pullquote', wagtail.core.blocks.StructBlock((('quote', wagtail.core.blocks.TextBlock('quote title')), ('name', wagtail.core.blocks.CharBlock(blank=True)), ('position', wagtail.core.blocks.CharBlock(blank=True, label='Position or affiliation'))))), ('snippet', wagtail.core.blocks.RichTextBlock(template='categories/blocks/snippet.html')), ('html', categories.models.EmbedHTML(label='Embed code'))), null=True, verbose_name='Page content'),
+            field=wagtail.fields.StreamField((('subheading', wagtail.blocks.CharBlock(classname='title', icon='title', template='categories/blocks/subheading.html')), ('paragraph', wagtail.blocks.RichTextBlock(icon='pilcrow', template='categories/blocks/paragraph.html')), ('image', wagtail.blocks.StructBlock((('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.RichTextBlock(blank=True))))), ('pullquote', wagtail.blocks.StructBlock((('quote', wagtail.blocks.TextBlock('quote title')), ('name', wagtail.blocks.CharBlock(blank=True)), ('position', wagtail.blocks.CharBlock(blank=True, label='Position or affiliation'))))), ('snippet', wagtail.blocks.RichTextBlock(template='categories/blocks/snippet.html')), ('html', categories.models.EmbedHTML(label='Embed code'))), null=True, verbose_name='Page content'),
         ),
     ]

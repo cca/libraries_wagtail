@@ -2,7 +2,7 @@ import logging
 
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 logger = logging.getLogger('mgmt_cmd.script')
 

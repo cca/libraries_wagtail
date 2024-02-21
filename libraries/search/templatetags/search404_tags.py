@@ -1,7 +1,7 @@
 from django import template
 from django.urls import reverse
 
-from wagtail.core.models import Page
+from wagtail.models import Page
 from urllib.parse import unquote_plus
 
 from categories.models import RowComponent

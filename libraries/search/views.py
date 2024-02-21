@@ -3,7 +3,7 @@ import logging
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import redirect, render
 
-from wagtail.core.models import Page
+from wagtail.models import Page
 from wagtail.search.models import Query
 
 from categories.models import RowComponent

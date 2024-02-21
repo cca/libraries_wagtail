@@ -21,7 +21,7 @@ l18n = "==2021.3"
 psycopg2 = "==2.9.9"
 pysftp = "==0.2.9"
 uwsgi = "==2.0.24"
-wagtail = "==2.16.3"
+wagtail = "==3.0.3"
 whitenoise = {version = "==6.5.0", extras = ["brotli"]}
 xmltodict = "==0.13.0"
 

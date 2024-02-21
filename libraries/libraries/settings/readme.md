@@ -1,6 +1,6 @@
 # Settings
 
-Our current setup only use a base.py settings file (loaded via the __init__.py file in this directory) in all contexts with a few conditional expressions based on the k8s namespace environment variable to `DEBUG` and the site's `BASE_URL`.
+Our current setup only use a base.py settings file (loaded via the __init__.py file in this directory) in all contexts with a few conditional expressions based on the k8s namespace environment variable to `DEBUG` and the site's `WAGTAILADMIN_BASE_URL`.
 
 ## Old Setup
 
@@ -20,4 +20,4 @@ local.py - the context file would load this. It is meant for _machine-specific_ 
 
 Running `python manage.py runserver --settings libraries.settings.dev` loads a specific settings module with the testing server. The Skaffold dev server executes the `runserver` command without specifying a settings module (see kubernetes/local/scripts/init.sh) which defaults to loading `libraries.settings`.
 
-Using uWSGI, add a line like `evn = DJANGO_SETTINGS_MODULE=libraries.settings.dev` to the uwsigi.ini file (see kubernetes/uwsgi.ini) being referenced by uwgsi's startup command (see Dockerfile).
+Using uWSGI, add a line like `env = DJANGO_SETTINGS_MODULE=libraries.settings.dev` to the uwsigi.ini file (see kubernetes/uwsgi.ini) being referenced by uwgsi's startup command (see Dockerfile).

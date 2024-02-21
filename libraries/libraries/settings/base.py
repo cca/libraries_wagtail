@@ -17,7 +17,7 @@ namespace = env.get("KUBERNETES_NAMESPACE", "libraries-wagtail")
 match namespace:
     case "libraries-wagtail":
         environment = "local"
-        BASE_URL = "http://localhost"
+        WAGTAILADMIN_BASE_URL = "http://localhost"
         DEBUG = True
         CACHES = {
             "default": {
@@ -27,11 +27,11 @@ match namespace:
 
     case "lib-ep":
         environment = "staging"
-        BASE_URL = "https://libraries-libep.cca.edu"
+        WAGTAILADMIN_BASE_URL = "https://libraries-libep.cca.edu"
 
     case "lib-production":
         environment = "production"
-        BASE_URL = "https://libraries.cca.edu"
+        WAGTAILADMIN_BASE_URL = "https://libraries.cca.edu"
 
     case _:
         raise RuntimeError(f"Unknown namespace: {namespace}")
@@ -85,7 +85,7 @@ INSTALLED_APPS = [
     # https://docs.wagtail.org/en/stable/reference/contrib/searchpromotions.html
     "wagtail.contrib.search_promotions",
     "wagtail.contrib.table_block",
-    "wagtail.core",
+    "wagtail",
     "wagtail.documents",
     "wagtail.embeds",
     "wagtail.images",

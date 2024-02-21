@@ -4,8 +4,8 @@ import categories.models
 from django.db import migrations, models
 import django.db.models.deletion
 import modelcluster.fields
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('creator', models.TextField(blank=True, verbose_name='Creator(s)')),
                 ('link', models.TextField(blank=True, help_text='Optional, if provided the title will be hyperlinked to this URL.')),
                 ('embed_code', models.TextField(blank=True, help_text='Optional, use this for HTML embeds, videos, audio, etc.')),
-                ('description', wagtail.core.fields.RichTextField(blank=True, help_text='Notes or a general description.')),
+                ('description', wagtail.fields.RichTextField(blank=True, help_text='Notes or a general description.')),
                 ('image', models.ForeignKey(blank=True, help_text='Image (used as the thumbnail if this isn\'t an "image" type work)', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='wagtailimages.Image')),
             ],
             options={
@@ -42,12 +42,12 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('display_template', models.CharField(choices=[('banner', 'Single header image'), ('foursquare', 'Four square header images')], default='banner', help_text='There are two layouts for the header; one large banner image or four square images set to the left of the title.', max_length=20)),
-                ('location', wagtail.core.fields.RichTextField(blank=True, help_text='E.g. Simpson, Meyer')),
-                ('dates', wagtail.core.fields.RichTextField(blank=True, help_text='Time period when the exibit ran.')),
-                ('creators', wagtail.core.fields.RichTextField(blank=True, help_text='Name(s) of artists and curators.')),
-                ('reception', wagtail.core.fields.RichTextField(blank=True, help_text='Details about the reception like date/time.')),
-                ('description', wagtail.core.fields.StreamField([('subheading', wagtail.core.blocks.CharBlock(classname='title', icon='title', template='categories/blocks/subheading.html')), ('paragraph', wagtail.core.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link', 'h3', 'ol', 'ul', 'image', 'embed', 'hr'], icon='pilcrow', template='categories/blocks/paragraph.html')), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link'], required=False))])), ('linked_image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link'], required=False)), ('link', wagtail.core.blocks.URLBlock())])), ('pullquote', wagtail.core.blocks.StructBlock([('quote', wagtail.core.blocks.TextBlock('quote title')), ('name', wagtail.core.blocks.CharBlock(required=False)), ('position', wagtail.core.blocks.CharBlock(label='Position or affiliation', required=False))])), ('snippet', wagtail.core.blocks.RichTextBlock(label='Callout', template='categories/blocks/snippet.html')), ('html', categories.models.EmbedHTML(label='Embed code')), ('row', wagtail.core.blocks.StreamBlock([('paragraph', wagtail.core.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link', 'h3', 'ol', 'ul', 'image', 'embed', 'hr'], icon='pilcrow', template='categories/blocks/paragraph.html')), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link'], required=False))])), ('linked_image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link'], required=False)), ('link', wagtail.core.blocks.URLBlock())])), ('pullquote', wagtail.core.blocks.StructBlock([('quote', wagtail.core.blocks.TextBlock('quote title')), ('name', wagtail.core.blocks.CharBlock(required=False)), ('position', wagtail.core.blocks.CharBlock(label='Position or affiliation', required=False))])), ('snippet', wagtail.core.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link', 'h3', 'ol', 'ul', 'image', 'embed', 'hr'], label='Callout', template='categories/blocks/snippet.html'))], max_num=2))], null=True, verbose_name='Introduction/Description')),
-                ('epilogue', wagtail.core.fields.RichTextField(blank=True, help_text='Footer text (e.g. for licensing, attribution)')),
+                ('location', wagtail.fields.RichTextField(blank=True, help_text='E.g. Simpson, Meyer')),
+                ('dates', wagtail.fields.RichTextField(blank=True, help_text='Time period when the exibit ran.')),
+                ('creators', wagtail.fields.RichTextField(blank=True, help_text='Name(s) of artists and curators.')),
+                ('reception', wagtail.fields.RichTextField(blank=True, help_text='Details about the reception like date/time.')),
+                ('description', wagtail.fields.StreamField([('subheading', wagtail.blocks.CharBlock(classname='title', icon='title', template='categories/blocks/subheading.html')), ('paragraph', wagtail.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link', 'h3', 'ol', 'ul', 'image', 'embed', 'hr'], icon='pilcrow', template='categories/blocks/paragraph.html')), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link'], required=False))])), ('linked_image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link'], required=False)), ('link', wagtail.blocks.URLBlock())])), ('pullquote', wagtail.blocks.StructBlock([('quote', wagtail.blocks.TextBlock('quote title')), ('name', wagtail.blocks.CharBlock(required=False)), ('position', wagtail.blocks.CharBlock(label='Position or affiliation', required=False))])), ('snippet', wagtail.blocks.RichTextBlock(label='Callout', template='categories/blocks/snippet.html')), ('html', categories.models.EmbedHTML(label='Embed code')), ('row', wagtail.blocks.StreamBlock([('paragraph', wagtail.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link', 'h3', 'ol', 'ul', 'image', 'embed', 'hr'], icon='pilcrow', template='categories/blocks/paragraph.html')), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link'], required=False))])), ('linked_image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link'], required=False)), ('link', wagtail.blocks.URLBlock())])), ('pullquote', wagtail.blocks.StructBlock([('quote', wagtail.blocks.TextBlock('quote title')), ('name', wagtail.blocks.CharBlock(required=False)), ('position', wagtail.blocks.CharBlock(label='Position or affiliation', required=False))])), ('snippet', wagtail.blocks.RichTextBlock(features=['bold', 'italic', 'link', 'document-link', 'h3', 'ol', 'ul', 'image', 'embed', 'hr'], label='Callout', template='categories/blocks/snippet.html'))], max_num=2))], null=True, verbose_name='Introduction/Description')),
+                ('epilogue', wagtail.fields.RichTextField(blank=True, help_text='Footer text (e.g. for licensing, attribution)')),
             ],
             options={
                 'abstract': False,
@@ -58,8 +58,8 @@ class Migration(migrations.Migration):
             name='ExhibitsIndexPage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('front_matter', wagtail.core.fields.RichTextField(blank=True, help_text='Text that appears at the top of the index page by the title.')),
-                ('epilogue', wagtail.core.fields.RichTextField(blank=True, help_text='Bottom text just above the footer (e.g. for licensing, attribution notes).')),
+                ('front_matter', wagtail.fields.RichTextField(blank=True, help_text='Text that appears at the top of the index page by the title.')),
+                ('epilogue', wagtail.fields.RichTextField(blank=True, help_text='Bottom text just above the footer (e.g. for licensing, attribution notes).')),
             ],
             options={
                 'abstract': False,

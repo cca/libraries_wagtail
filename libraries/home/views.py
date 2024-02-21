@@ -1,5 +1,5 @@
 from wagtail.admin.views.reports import PageReportView
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from categories.models.pages import RowComponent
 

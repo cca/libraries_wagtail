@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 
 # Custom validation for Page's clean() method to require search_description
