@@ -75,7 +75,7 @@ spec:
             [
               "sh",
               "-c",
-              "django-admin.py migrate --noinput && django-admin.py createcachetable",
+              "python manage.py migrate --noinput && python manage.py createcachetable",
             ]
           # Env variables form ConfigMap
           envFrom:
