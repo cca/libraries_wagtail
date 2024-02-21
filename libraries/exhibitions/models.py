@@ -160,6 +160,7 @@ class ExhibitPage(Page):
         BaseStreamBlock(),
         verbose_name="Description",
         null=True,
+        use_json_field=True,
     )
     epilogue = RichTextField(
         blank=True,

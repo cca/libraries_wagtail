@@ -67,7 +67,9 @@ class BlogPage(Page):
     )
 
     # we reuse the same StreamField from categories
-    body = StreamField(BaseStreamBlock(), verbose_name="Page content", null=True)
+    body = StreamField(
+        BaseStreamBlock(), verbose_name="Page content", null=True, use_json_field=True
+    )
 
     # for backwards compatibility with our Drupal blog posts
     # this should be the _only_ rich text field without a "features" property

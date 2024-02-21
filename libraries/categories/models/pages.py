@@ -82,18 +82,21 @@ class ServicePage(Page):
         BaseStreamBlock(),
         verbose_name="Page content",
         null=True,
+        use_json_field=True,
     )
     sidebar_cards = StreamField(
         StreamBlock([("card", SidebarCardBlock())], required=False),
         verbose_name="Cards in the right-hand column",
         blank=True,
         null=True,
+        use_json_field=True,
     )
     resources = StreamField(
         StreamBlock([("link", LinkBlock())], required=False),
         verbose_name="List of resource links",
         blank=True,
         null=True,
+        use_json_field=True,
     )
     order = models.IntegerField(
         default=1,
@@ -199,18 +202,21 @@ class AboutUsPage(Page):
         AboutUsStreamBlock(),
         verbose_name="Page content",
         null=True,
+        use_json_field=True,
     )
     sidebar_cards = StreamField(
         StreamBlock([("card", SidebarCardBlock())], required=False),
         verbose_name="Cards in the right-hand column",
         blank=True,
         null=True,
+        use_json_field=True,
     )
     resources = StreamField(
         StreamBlock([("link", LinkBlock())], required=False),
         verbose_name="List of resource links",
         blank=True,
         null=True,
+        use_json_field=True,
     )
     main_image = models.ForeignKey(
         "wagtailimages.Image",
