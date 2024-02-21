@@ -120,14 +120,23 @@ We use a combination of environment variables, kubernetes secrets, and Google Se
 
 ## Module (including Wagtail) Updates
 
-I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for python development as it stores an actual dependency graph rather than a list of unrelated packages like requirements.txt. For instance, if package A is changed to no longer rely on package B, pipenv removes B from the graph, but requirements doesn't know anything about 2nd order dependencies and will happily continue to install a useless piece of software.
+See [Upgrading Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html) but I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for dependencies. Pipenv stores a dependency graph rather than a list of unrelated packages like requirements.txt. For instance, if package A is changed to no longer rely on package B, pipenv removes B from the graph, but requirements doesn't know anything about 2nd order dependencies and happily continues to install a useless piece of software. Upgrade outline:
 
-Wagtail, and often Django, updates require running a few extra steps on the app pod:
+- Read Wagtail [release notes](https://docs.wagtail.org/en/stable/releases/) and make note of any breaking changes
+- Upgrade blocking dependencies (e.g. Django, python itself) in Pipfile, run `pipenv lock` to update lockfile
+  - It's best to pin dependencies to a specific version, e.g. `Django = "==3.2.8"` rather than `Django = ">=3.2.8"`
+  - Major Django updates usually require database migrations, too
+- If there were significant dependency changes, do a full test/release cycle _at least_ on the staging instance
+- Make Wagtail changes, e.g. editing module paths or fixing deprecation warnings
+- Update Wagtail in the same manner as above (edit Pipfile, `pipenv lock`)
+- Run `migrate` on the app pod:
 
 ```sh
 > alias k 'kubectl -nlibraries-wagtail' # save a lot of typing
-> k exec (k get pods -o name | grep wagtail) -- /app/libraries/manage.py migrate
+> k exec (k get pods -o name | grep wagtail) -- python manage.py migrate
 ```
+
+The upgrade notes say to run `python manage.py makemigrations` before migrate but technically all db migrations should already be included so I'm not sure if that step is necessary. If migrations are needed, the local test server will tell you so on startup.
 
 ## Static Files
 
@@ -166,7 +175,7 @@ When a model is changed, we must generate migration files that implement the cha
 ```sh
 > # make edits to a models.py file
 > k8 sh # enter the pod running the app using the `k8` helper
-> cd libraries; python manage.py makemigration -n "name_of_feature" # create migrations
+> python manage.py makemigration -n "name_of_feature" # create named migrations
 > python manage.py migrate # apply migrations
 > exit # leave the pod
 > ./docs/get_migrations.fish # copy the migration files off the pod
