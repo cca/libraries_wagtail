@@ -389,9 +389,6 @@ if not "DOCKER_BUILD" in env:
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     GS_BUCKET_NAME = env.get("GS_BUCKET_NAME", "")
 
-    # Even if the bucket has public permisions, we need to set this
-    # setting to `'publicRead'` to return a public, non-expiring URL.
-    GS_DEFAULT_ACL = "publicRead"
     GS_OBJECT_PARAMETERS = {"cache_control": "public, max-age=31536000"}
 
     # Ensure uploaded files are given distinct names, as per valid Django storage behaviour

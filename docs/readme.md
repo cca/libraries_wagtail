@@ -164,7 +164,7 @@ The Wagtail app uses a `GS_BUCKET` env var to know which bucket to use in which 
 
 See the bottom of base.py for how these env vars are used. This is also where we tell Google to set a long-lived cache control header on all objects. This improves performance and our "whitenoise" static file library uses cache busting parameters in file names anyways.
 
-All buckets allow public access (give user `allUsers` the `Storage Object Viewer` role) though it would be difficult to guess the URL of a resource that is not linked off of our websites.
+All buckets allow public access (give user `allUsers` the `Storage Object Viewer` role) though it would be difficult to guess the URL of a resource that is not linked off of our websites. Buckets should use **Uniform** and not **Fine-grained** access control on the Permissions tab (as of Wagtail 3.0 / Django 4.0 / django-storages-google 1.14.2).
 
 The CI/CD pipeline does some juggling with media files, copying from _another_ intermediary bucket to the ones that are actually used to serve resources for the website.
 

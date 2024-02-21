@@ -10,10 +10,10 @@ autopep8 = "*"
 [packages]
 certifi = "==2024.2.2"
 dj-database-url = "==2.1.0"
-django = "==3.2.20"
+django = "==4.0.10"
 django-cas-ng = "==5.0.1"
 django-extensions = "==3.2.3"
-django-storages = {version = "==1.13.2", extras = ["google"]}
+django-storages = {version = "==1.14.2", extras = ["google"]}
 djangorestframework-simplejwt = "==5.2.2"
 elasticsearch = "==7.17.9"
 google-cloud-secret-manager = "2.18.1"
