@@ -14,7 +14,7 @@ django = "==4.0.10"
 django-cas-ng = "==5.0.1"
 django-extensions = "==3.2.3"
 django-storages = {version = "==1.14.2", extras = ["google"]}
-djangorestframework-simplejwt = "==5.2.2"
+djangorestframework-simplejwt = "==5.3.1"
 elasticsearch = "==7.17.9"
 google-cloud-secret-manager = "2.18.1"
 l18n = "==2021.3"
