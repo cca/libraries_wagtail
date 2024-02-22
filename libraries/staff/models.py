@@ -4,7 +4,7 @@ from django.db import models
 from modelcluster.fields import ParentalKey
 
 from wagtail.snippets.models import register_snippet
-from wagtail.models import Orderable, Page
+from wagtail.models import Orderable, Page, PreviewableMixin, RevisionMixin
 from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.search import index
@@ -12,7 +12,7 @@ from wagtail.search import index
 
 # model for library staff
 @register_snippet
-class StaffMember(models.Model):
+class StaffMember(RevisionMixin, models.Model):
     name = models.CharField(max_length=150, blank=False)
     email = models.EmailField(default="username@cca.edu")
     phone = models.CharField(
