@@ -16,7 +16,7 @@ django-extensions = "==3.2.3"
 django-storages = {version = "==1.14.2", extras = ["google"]}
 djangorestframework-simplejwt = "==5.3.1"
 elasticsearch = "==7.17.9"
-google-cloud-secret-manager = "2.18.1"
+google-cloud-secret-manager = "2.18.2"
 l18n = "==2021.3"
 psycopg2 = "==2.9.9"
 pysftp = "==0.2.9"

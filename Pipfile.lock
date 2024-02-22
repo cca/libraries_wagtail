@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0dee4b766f996ba8bac529b79440381b0ff936058df9d78181662f086e5b899c"
+            "sha256": "4fb85e80551e11a9fd2b416240b92a559c00f0cd157a9b8789a7a2c88427d3f5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -526,12 +526,12 @@
         },
         "google-cloud-secret-manager": {
             "hashes": [
-                "sha256:310555f3c8cb977f4a46d4454eca2c83fed6a09f3c4b35b84f6fa1f8fef55024",
-                "sha256:38e00ece9abf466cb449991b1a141a69690c6d51fe18456e531faf4935fbade3"
+                "sha256:a00d62115a70083e86b1d44ca7ebcae041b36a44cc62ea57de4005731f8d3c88",
+                "sha256:bb2f2b23a588f9eeae51df4a028d6198a603231a056f838e6a476b5aecadbbca"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.7'",
-            "version": "==2.18.1"
+            "version": "==2.18.2"
         },
         "google-cloud-storage": {
             "hashes": [
