@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.1.0
+
+**2024-02-22**: upgrade to Wagtail 3.0 which features a big overhaul of the editorial UI. More software updates.
+
+- The editorial UI looks very different, see the [Wagtail 3.0 release notes](https://docs.wagtail.org/en/stable/releases/3.0.html#page-editor-redesign) for specific details.
+- Scissors icon lets you split a Paragraph block in two
+- Paragraphs support embedded content (e.g. YouTube videos) though it displays very small
+- Our pages types have brief descriptions in the admin UI
+- Duplicate image upload detection (I haven't gotten this to work in my testing, though)
+- More dependency upgrades (whitenoise, uWSGI, Django, django-storages, djangorestframework-simplejwt, django-cas-ng)
+
 ## 4.0.0
 
 **2024-02-16**: a huge number of critical software updates. If nothing seems different after this upgrade, that's a good thing! These upgrades position us to upgrade Wagtail itself which will bring new features.
