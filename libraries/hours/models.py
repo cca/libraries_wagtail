@@ -55,7 +55,7 @@ class OpenHours(models.Model):
     sun = models.CharField(max_length=150)
 
     panels = [
-        FieldPanel("label", classname="full title"),
+        FieldPanel("label", classname="title"),
         FieldPanel("library"),
         MultiFieldPanel(
             [
@@ -108,7 +108,7 @@ class Closure(models.Model):
     )
 
     panels = [
-        FieldPanel("label", classname="full title"),
+        FieldPanel("label", classname="title"),
         FieldPanel("library"),
         MultiFieldPanel(
             [
