@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
     <head>
+        {# Wagtail 4 preview pane links open in new tab #}
+        {% if request.in_preview_panel %}<base target="_blank">{% endif %}
         {% include 'components/head/head.html' %}
         {% block schema_org %}{% endblock %}
     </head>

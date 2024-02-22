@@ -1,10 +1,12 @@
 {% load alert_tags wagtailuserbar %}
 {% load static from static %}
 {# based on libraries/templates/base.html but different CSS #}
-
 <!DOCTYPE html>
 <html class="no-js" lang="en">
     <head>
+        {# Wagtail 4 preview pane links open in new tab #}
+        {% if request.in_preview_panel %}
+        <base target="_blank">{% endif %}
         {% include 'components/head.html' %}
         {% block schema_org %}{% endblock %}
     </head>
