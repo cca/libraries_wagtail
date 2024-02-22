@@ -106,6 +106,8 @@ class CardBlock(StructBlock):
         help_text="Should be 3x2 aspect ratio but may be stretched if used in a row without an equal distribution. Resized to roughly 345x230."
     )
     link = LinkBlock()
+    # TODO use Wagtail 4.0 "HTML-aware max_length validation and character count on RichTextField and RichTextBlock"
+    # TODO maybe lets us get rid of truncation in the template?
     body = RichTextBlock(features=settings.RICHTEXT_BASIC)
 
     class Meta:
@@ -126,6 +128,7 @@ class SidebarCardBlock(StructBlock):
 
 
 class PullQuoteBlock(StructBlock):
+    # TODO use help_text instead of positional argument?
     quote = TextBlock("quote title")
     name = CharBlock(required=False)
     position = CharBlock(required=False, label="Position or affiliation")

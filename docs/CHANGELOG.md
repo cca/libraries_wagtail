@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.2.0
+
+**2024-XX-XX**: upgrade to Wagtail 4.0 or more!
+
+- Wagtail 4.0 [page editor resedign](https://docs.wagtail.org/en/stable/releases/4.0.html#page-editor-redesign)
+- Wagtail 4.0 [rich text improvements](https://docs.wagtail.org/en/stable/releases/4.0.html#rich-text-improvements)
+- Live preview panel—see changes in real time
+- You can sort [images](https://libraries.cca.edu/admin/images/) by different fields
+- Fuzzy matching in searches, e.g. "libary" will match "library"
+
 ## 4.1.0
 
 **2024-02-22**: upgrade to Wagtail 3.0 which features a big overhaul of the editorial UI. More software updates.
