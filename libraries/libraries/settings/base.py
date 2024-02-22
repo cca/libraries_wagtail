@@ -231,6 +231,9 @@ WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
 # forced downloads but it's no longer needed & we have no persistent logs.
 # WAGTAILDOCS_SERVE_METHOD = 'redirect'
 
+# https://docs.wagtail.org/en/stable/reference/settings.html#wagtailadmin-unsafe-page-deletion-limit
+WAGTAILADMIN_UNSAFE_PAGE_DELETION_LIMIT = 5
+
 # sets of HTML tags allowed in various rich text fields
 # full list here:
 # https://docs.wagtail.io/en/latest/advanced_topics/customisation/page_editing_interface.html#rich-text-features
