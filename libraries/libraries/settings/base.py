@@ -265,16 +265,20 @@ if "DATABASE_URL" in env:
     DATABASES = {"default": dj_database_url.config()}
 
 # Brokenlinks app - "Summon Broken Links for Website Tests" Google Form
-# test form commented out
-# BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse"
-BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehVHSXLkZ5_gcAYxh5ZEktbU-0axbakVONq9lavfP1SXGc_A/formResponse"
-BROKENLINKS_HASH = {
+# These are the input name attribute values if
+# They're the same for test & live forms, maybe because test is a copy?
+BROKENLINKS_HASH: dict[str, str] = {
     "openurl": "entry.1430108689",
     "permalink": "entry.743539962",
     "type": "entry.1515176237",
     "email": "entry.1509607699",
     "comments": "entry.249064033",
 }
+if environment == "production":
+    BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehVHSXLkZ5_gcAYxh5ZEktbU-0axbakVONq9lavfP1SXGc_A/formResponse"
+else:
+    # test form for local and staging
+    BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse"
 
 # Instagram app
 INSTAGRAM_REDIRECT_URI = "https://libraries.cca.edu/"
