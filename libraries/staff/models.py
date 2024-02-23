@@ -1,18 +1,24 @@
+import logging
+
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
 from modelcluster.fields import ParentalKey
 
 from wagtail.snippets.models import register_snippet
-from wagtail.models import Orderable, Page, PreviewableMixin, RevisionMixin
+from wagtail.models import Orderable, Page, PreviewableMixin
 from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.search import index
 
 
+logger = logging.getLogger(__name__)
+
+
 # model for library staff
 @register_snippet
-class StaffMember(RevisionMixin, models.Model):
+class StaffMember(PreviewableMixin, models.Model):
     name = models.CharField(max_length=150, blank=False)
     email = models.EmailField(default="username@cca.edu")
     phone = models.CharField(
@@ -32,6 +38,9 @@ class StaffMember(RevisionMixin, models.Model):
     bio = RichTextField(
         features=settings.RICHTEXT_BASIC, help_text="A single 4-5 sentence paragraph."
     )
+    revisions = GenericRelation(
+        "wagtailcore.Revision", related_query_name="staff_member"
+    )
     slug = models.CharField(max_length=150)
 
     panels = [
@@ -47,10 +56,18 @@ class StaffMember(RevisionMixin, models.Model):
         FieldPanel("bio"),
     ]
 
+    def get_preview_context(self, request, mode_name):
+        ctx = super().get_preview_context(request, mode_name)
+        ctx["staff_member"] = {"staff_member": self}
+        return ctx
+
+    def get_preview_template(self, request, mode_name):
+        return "staff/staff_member.html"
+
     # on save generate slug from email address
-    def save(self):
+    def save(self, *args, **kwargs):
         self.slug = self.email.replace("@cca.edu", "")
-        return super(StaffMember, self).save()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
