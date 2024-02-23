@@ -162,24 +162,6 @@ LOGIN_REDIRECT_URL = "wagtailadmin_home"
 
 from .logging import LOGGING
 
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            os.path.join(PROJECT_DIR, "templates"),
-        ],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
-        },
-    },
-]
-
 WSGI_APPLICATION = "libraries.wsgi.application"
 
 # Mail
@@ -366,7 +348,10 @@ WAGTAILSEARCH_BACKENDS = {
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(PROJECT_DIR, "templates")],
+        "DIRS": [
+            os.path.join(PROJECT_DIR, "templates"),
+        ],
+        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -374,18 +359,19 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
-            "loaders": [
-                (
-                    "django.template.loaders.cached.Loader",
-                    [
-                        "django.template.loaders.filesystem.Loader",
-                        "django.template.loaders.app_directories.Loader",
-                    ],
-                ),
-            ],
         },
-    }
+    },
 ]
+if environment != "local":
+    TEMPLATES[0]["OPTIONS"]["loaders"] = [
+        (
+            "django.template.loaders.cached.Loader",
+            [
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
+            ],
+        ),
+    ]
 
 # ------------ #
 # Google Cloud #
