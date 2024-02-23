@@ -363,6 +363,7 @@ TEMPLATES = [
     },
 ]
 if environment != "local":
+    TEMPLATES[0]["APP_DIRS"] = False
     TEMPLATES[0]["OPTIONS"]["loaders"] = [
         (
             "django.template.loaders.cached.Loader",
