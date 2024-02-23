@@ -5,4 +5,4 @@ until psql -c '\l' -o /dev/null; do
   sleep 1
 done
 
-python /app/libraries/manage.py runserver 0.0.0.0:8000
+cd /app/libraries && python manage.py runserver localhost:8000
