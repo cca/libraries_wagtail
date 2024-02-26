@@ -50,8 +50,11 @@ def search(request):
     # Search
     if type == "services" and search_query:
         logger.info("Wagtail search, query: {}".format(search_query))
-        # exclude RowComponent pages
+        # decided against Fuzzy matching, returns too many irrelevant results
+        # every search returns almost every page on the site
+        # https://docs.wagtail.org/en/stable/topics/search/searching.html#fuzzy-matching
         search_results = (
+            # exclude RowComponent pages
             Page.objects.not_type(RowComponent)
             .live()
             .search(search_query, operator="and")

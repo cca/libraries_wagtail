@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.2.0
+## 4.1.1
 
 **2024-XX-XX**: upgrade to Wagtail 4.1 which has even more page editing features!
 
@@ -11,7 +11,6 @@
   - Type forward slash `/` to bring up a list of available formats (lists, heading) and our blocks (linked image, card, etc). You can insert a block in the middle of a Paragraph to split it in two, which replaces the scissors icon from the last release
 - Live preview panel—see changes in real time
 - You can sort [images](https://libraries.cca.edu/admin/images/) by different fields
-- Fuzzy matching in searches, e.g. "libary" will match "library"
 - "What's New" section on the admin dashboard and a new Help menu
 
 ## 4.1.0
