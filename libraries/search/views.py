@@ -54,7 +54,7 @@ def search(request):
         search_results = (
             Page.objects.not_type(RowComponent)
             .live()
-            .search(search_query), operator="and")
+            .search(search_query, operator="and")
         )
         query = Query.get(search_query)
         # Record hit
@@ -63,9 +63,7 @@ def search(request):
         # ! we don't expose exhibits search anywhere
         logger.info("Exhibits search, query: {}".format(search_query))
         search_results = (
-            Page.objects.type(ExhibitPage)
-            .live()
-            .search(search_query), operator="and")
+            Page.objects.type(ExhibitPage).live().search(search_query, operator="and")
         )
         query = Query.get(search_query)
         query.add_hit()

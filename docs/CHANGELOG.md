@@ -2,13 +2,17 @@
 
 ## 4.2.0
 
-**2024-XX-XX**: upgrade to Wagtail 4.0 or more!
+**2024-XX-XX**: upgrade to Wagtail 4.1 which has even more page editing features!
 
 - Wagtail 4.0 [page editor resedign](https://docs.wagtail.org/en/stable/releases/4.0.html#page-editor-redesign)
-- Wagtail 4.0 [rich text improvements](https://docs.wagtail.org/en/stable/releases/4.0.html#rich-text-improvements)
+- Minimap of the page in a right-hand panel that expands on hover, I've found this sort of buggy, it will collapse before you can click on anything unless you keep your cursor far to the right
+- "Collapse all" / "Expand all" buttons in the upper right for sections of the page
+- A series of [rich text improvements](https://docs.wagtail.org/en/stable/releases/4.0.html#rich-text-improvements)
+  - Type forward slash `/` to bring up a list of available formats (lists, heading) and our blocks (linked image, card, etc). You can insert a block in the middle of a Paragraph to split it in two, which replaces the scissors icon from the last release
 - Live preview panel—see changes in real time
 - You can sort [images](https://libraries.cca.edu/admin/images/) by different fields
 - Fuzzy matching in searches, e.g. "libary" will match "library"
+- "What's New" section on the admin dashboard and a new Help menu
 
 ## 4.1.0
 
