@@ -1,4 +1,5 @@
 """JSON API View for the Hours app."""
+
 import datetime
 
 from django.shortcuts import redirect
@@ -40,10 +41,10 @@ def hours(request):
     HTTP JsonResponse, whether error or data
 
     """
-    if request.GET.get('format', '').lower() == 'json':
+    if request.GET.get("format", "").lower() == "json":
         # can request hours for a given day, or library
-        library = request.GET.get('library', None)
-        date = request.GET.get('date', datetime.date.today())
+        library = request.GET.get("library", None)
+        date = request.GET.get("date", datetime.date.today())
         err = validate(library, date)
         if err is not None:
             return err
@@ -52,13 +53,10 @@ def hours(request):
 
         if library:
             hrs = get_hours_for_lib(library, date)
-            print('library hours', hrs)
+            print("library hours", hrs)
 
             if hrs:
-                response = JsonResponse({
-                    'library': library,
-                    'hours': hrs
-                })
+                response = JsonResponse({"library": library, "hours": hrs})
                 response["Access-Control-Allow-Origin"] = "*"
 
         # we have a date but no library, show all libraries on that date
@@ -70,8 +68,8 @@ def hours(request):
         # we didn't find any hours via either of the above methods
         if hrs is None:
             return error_response(
-                "no hours set found for library with name '{}' on date '{}'"
-                .format(library, date))
+                f"No hours set found for library with name '{library}' on date '{date}'."
+            )
 
         return response
 
@@ -103,18 +101,17 @@ def validate(library, date):
     # check that library is in our list
     if library and library not in libraries:
         return error_response(
-            "Library '{}' does not exist. List of libraries: {}"
-            .format(library, libraries))
+            f"Library '{library}' does not exist. List of libraries: {libraries}"
+        )
 
     # if date string is provided must be in YYYY-MM-DD form
     # check that date value is valid
     if isinstance(date, str):
         try:
-            datetime.datetime.strptime(date, '%Y-%m-%d')
+            datetime.datetime.strptime(date, "%Y-%m-%d")
         except ValueError:
             return error_response(
-                ("Unable to parse provided date string '{}'. "
-                 "Dates must be in YYYY-MM-DD format.")
-                .format(date))
+                f"Unable to parse provided date string '{date}'. Dates must be in YYYY-MM-DD format."
+            )
 
     return None

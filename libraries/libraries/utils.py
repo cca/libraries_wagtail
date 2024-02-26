@@ -9,6 +9,8 @@ from wagtail.models import Page
 # https://github.com/wagtail/wagtail/blob/main/wagtail/core/models.py#L437
 def validate_clean(self):
     if not Page._slug_is_available(self.slug, self.get_parent(), self):
-        raise ValidationError({'slug': _("This slug is already in use")})
-    if self.search_description is None or self.search_description == '':
-        raise ValidationError({'search_description': _("A Search Description is required.")})
+        raise ValidationError({"slug": _("This slug is already in use")})
+    if self.search_description is None or self.search_description == "":
+        raise ValidationError(
+            {"search_description": _("A Search Description is required.")}
+        )

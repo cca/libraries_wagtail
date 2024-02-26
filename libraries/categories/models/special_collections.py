@@ -14,7 +14,9 @@ from libraries.utils import validate_clean
 
 # Another child of RowComponent but with a very different structure & template
 class SpecialCollectionsPage(Page):
-    page_description = "List page (of places, collections, etc.) with an image for each item."
+    page_description = (
+        "List page (of places, collections, etc.) with an image for each item."
+    )
     parent_page_types = [
         "categories.RowComponent",
         "categories.ServicePage",

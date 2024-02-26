@@ -8,7 +8,9 @@ from categories.models.pages import RowComponent
 class NoSearchDescriptionReport(PageReportView):
 
     def get_queryset(self):
-        return Page.objects.not_type(RowComponent).filter(search_description='', depth__gte=2)
+        return Page.objects.not_type(RowComponent).filter(
+            search_description="", depth__gte=2
+        )
 
-    title = 'Pages lacking a Search Description'
-    header_icon = 'search'
+    title = "Pages lacking a Search Description"
+    header_icon = "search"

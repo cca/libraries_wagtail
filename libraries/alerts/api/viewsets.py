@@ -6,7 +6,7 @@ from wagtail.models import Site
 from alerts.models import Alert
 from .serializers import AlertSerializer
 
-PAGE_ANCESTORS_CACHE_KEY = 'page_ancestors_{page_pk}'
+PAGE_ANCESTORS_CACHE_KEY = "page_ancestors_{page_pk}"
 
 
 def purge_ancestors_cache(instance, **kwargs):
@@ -18,7 +18,7 @@ class AlertViewset(viewsets.ModelViewSet):
     serializer_class = AlertSerializer
     permission_classes = [permissions.AllowAny]
 
-    @action(detail=True, methods=['post', 'delete'])
+    @action(detail=True, methods=["post", "delete"])
     def clear_site_cache(self, request, pk=None):
         for site in Site.objects.all():
             # clear site cache
