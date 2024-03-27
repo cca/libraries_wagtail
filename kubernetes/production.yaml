@@ -263,6 +263,7 @@ spec:
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   jobTemplate:
+    backoffLimit: 2
     spec:
       template:
         metadata:
@@ -322,6 +323,7 @@ spec:
   successfulJobsHistoryLimit: 2
   jobTemplate:
     spec:
+      backoffLimit: 0
       template:
         metadata:
           labels:
