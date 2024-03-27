@@ -63,7 +63,13 @@ def linkify_text(text):
 
 def get_instagram():
     # just grab the latest OAuth token we have
-    token = InstagramOAuthToken.objects.last().token
+    OAuthToken = InstagramOAuthToken.objects.last()
+    if OAuthToken is None:
+        return {
+            "error_type": "NoOAuthToken",
+            "error_message": "No Instagram OAuth token found in database. Run `python manage.py get_oauth_token` and follow the instructions to add one.",
+        }
+    token = OAuthToken.token
     url = (
         "https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink,thumbnail_url,username&access_token="
         + token
