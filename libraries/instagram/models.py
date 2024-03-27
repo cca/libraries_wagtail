@@ -10,6 +10,7 @@ class Instagram(models.Model):
         blank=True,
         help_text="Text of gram with hashtags & usernames converted to <a> links",
     )
+    # TODO instagram actually has image URLs longer than 500 characters
     image_url = models.URLField(blank=False, max_length=500)
     image = models.ForeignKey(
         "wagtailimages.Image",

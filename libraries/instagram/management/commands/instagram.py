@@ -89,7 +89,7 @@ class Command(BaseCommand):
                 text=insta["text"],
                 html=insta["html"],
                 ig_id=insta["id"],
-                image_url=insta["image"],
+                image_url=insta["thumbnail_url"] or insta["image"],
                 image=image,
                 username=insta["username"],
             )
