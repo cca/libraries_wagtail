@@ -265,8 +265,8 @@ spec:
   # Our server k8s does not support this yet
   # ttlSecondsAfterFinished: 900
   jobTemplate:
-    backoffLimit: 2
     spec:
+      backoffLimit: 2
       template:
         metadata:
           labels:
@@ -326,8 +326,8 @@ spec:
   successfulJobsHistoryLimit: 2
   # ttlSecondsAfterFinished: 900
   jobTemplate:
-    backoffLimit: 0
     spec:
+      backoffLimit: 0
       template:
         metadata:
           labels:
