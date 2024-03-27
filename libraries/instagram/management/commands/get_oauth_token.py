@@ -20,17 +20,24 @@ class Command(BaseCommand):
             and hasattr(settings, "INSTAGRAM_REDIRECT_URI")
             and settings.INSTAGRAM_REDIRECT_URI != ""
         ):
-            self.stdout.write(
-                "Visit https://api.instagram.com/oauth/authorize?client_id={}&redirect_uri={}&scope=user_profile,user_media&response_type=code in a web browser, accept the prompt, then copy the code out of the URL that you are redirected to.".format(
-                    settings.INSTAGRAM_APP_ID, settings.INSTAGRAM_REDIRECT_URI
+            # we need user input for this part
+            if self.stdout.isatty():
+                self.stdout.write(
+                    "Visit https://api.instagram.com/oauth/authorize?client_id={}&redirect_uri={}&scope=user_profile,user_media&response_type=code in a web browser, accept the prompt, then copy the code out of the URL that you are redirected to.".format(
+                        settings.INSTAGRAM_APP_ID, settings.INSTAGRAM_REDIRECT_URI
+                    )
                 )
-            )
-            code = input("Response code:")
-            if get_token_from_code(code):
-                logger.info("Added a new Instagram access token.")
+                code = input("Response code:")
+                if get_token_from_code(code):
+                    logger.info("Added a new Instagram access token.")
+                else:
+                    # any specific errors are logged in get_token_from_code()
+                    logger.info("Failed to acquire Instagram access token.")
+                    exit(1)
             else:
-                # any specific errors are logged in get_token_from_code()
-                logger.info("Failed to acquire Instagram access token.")
+                logger.error(
+                    "Stdin is not a TTY; this script requires user input, please run it in a terminal."
+                )
                 exit(1)
         else:
             logger.error(
