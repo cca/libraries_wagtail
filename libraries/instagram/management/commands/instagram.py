@@ -55,7 +55,11 @@ class Command(BaseCommand):
                 exit(0)
 
             # First add the image to Instagram collection in Wagtail
-            response = requests.get(insta["image"])
+            # Videos have a thumbnail_url we use instead of media_url, images do not
+            if insta["thumbnail_url"] is not None:
+                response = requests.get(insta["thumbnail_url"])
+            else:
+                response = requests.get(insta["image"])
 
             collections = Collection.objects.filter(name="Instagram")
             if collections.exists():

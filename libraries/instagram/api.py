@@ -87,6 +87,7 @@ def get_instagram():
             "id": gram["id"],
             "image": gram["media_url"],
             "text": text,
+            "thumbnail_url": gram.get("thumbnail_url", None),
             "username": gram["username"],
         }
 
