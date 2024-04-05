@@ -1,0 +1,5 @@
+{
+    "workbench.editor.customLabels.patterns": {
+        "**/readme.md": "${dirname} readme"
+    }
+}
