@@ -8,9 +8,9 @@ WORKDIR /app
 COPY libraries/libraries/static/ libraries/libraries/static
 COPY pnpm-lock.yaml gulpfile.js package.json ./
 # stops npm update notifier
-ENV CI true
-ENV PNPM_HOME /pnpm
-ENV PATH "$PNPM_HOME:$PATH"
+ENV CI=true
+ENV PNPM_HOME=/pnpm
+ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch --prod
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install -r --offline --prod --frozen-lockfile
@@ -20,7 +20,7 @@ RUN npx gulp build
 # Build the Django application itself. Python version matches the one in Pipfile.
 FROM python:3.10.13-bullseye as libraries
 WORKDIR /app/libraries
-ENV PYTHONPATH /app:/app/libraries
+ENV PYTHONPATH=/app:/app/libraries
 
 # Install non-python dependencies, rsync needed to fetch media files
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -37,7 +37,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" | tee 
     && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies
-ENV PIP_ROOT_USER_ACTION ignore
+ENV PIP_ROOT_USER_ACTION=ignore
 RUN pip install pipenv
 COPY Pipfile Pipfile.lock /app/
 # system: install deps in system python, deploy: throw error if lockfile doesn't match Pipfile
@@ -53,7 +53,7 @@ COPY libraries /app/libraries/
 COPY kubernetes/uwsgi.ini /app/libraries/
 
 # Settings environment variable
-ENV DJANGO_SETTINGS_MODULE libraries.settings
+ENV DJANGO_SETTINGS_MODULE=libraries.settings
 
 RUN DOCKER_BUILD=true python manage.py collectstatic --no-input
 
