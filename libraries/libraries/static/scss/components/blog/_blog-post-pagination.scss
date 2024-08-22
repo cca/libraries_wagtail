@@ -15,9 +15,10 @@
 }
 
 .blog-post-pagination__item {
-    @include clearfix;
     flex: 1 0 50%;
     margin-top: 40px;
+
+    @include clearfix;
 }
 
 .blog-post-pagination__link {

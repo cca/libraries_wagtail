@@ -4,7 +4,6 @@
 // ===================================
 
 .header {
-    @include clearfix;
     background: $white;
     border-bottom: 1px solid $header-border-color;
     height: $header-height-small;
@@ -12,6 +11,8 @@
     top: 0;
     width: 100%;
     z-index: 100;
+
+    @include clearfix;
 
     @include respond($break-medium) {
         height: $header-height-large;

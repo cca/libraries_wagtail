@@ -2,11 +2,12 @@
 // Exhibits site max-width wrapper
 // ========================================
 .wrapper {
-    @include clearfix;
     margin: 0 auto;
     max-width: $site-max-width;
     padding: 0 $wrapper-default-horizontal-padding;
     position: relative;
+
+    @include clearfix;
 
     @include respond($break-medium) {
         padding: 0 $wrapper-medium-horizontal-padding;

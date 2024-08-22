@@ -5,15 +5,17 @@
 .wrapper--staff {
 
     &.wrapper--search {
+        margin-top: 0;
+
         @include respond($break-medium) {
             margin-top: 0;
             max-width: 1000px;
         }
-
-        margin-top: 0;
     }
 
     .search-list {
+        padding: 20px 0 0;
+
         @include respond($break-medium) {
             display: flex;
             flex-wrap: wrap;
@@ -23,28 +25,26 @@
                 max-width: 50%;
             }
         }
-
-        padding: 20px 0 0;
     }
 
     .search-result {
+        display: block;
+
         @include respond($break-medium) {
             display: flex;
         }
-
-        display: block;
     }
 
     .search-result__image {
-        @include respond($break-medium) {
-            display: flex;
-            margin: 0;
-        }
-
         display: block;
         height: 150px;
         margin: 0 auto 20px;
         width: 150px;
+
+        @include respond($break-medium) {
+            display: flex;
+            margin: 0;
+        }
     }
 
     // slightly bump text size on mobile for readability
