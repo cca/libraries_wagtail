@@ -8,12 +8,12 @@ from either the staging or production instances. Options:"
     echo -e "\t-s, --stage\tuse the staging cluster"
     echo -e "\t-p, --prod\tuse the production cluster"
     echo -e "\t-d, --db\tsynchronize the database (default)"
-    echo -e "\t-m, --media\tdownload media files (images, videos, documents). This does
-\tnot delete any local files, it merely fills in the ones you're missing."
+    echo -e "\t-m, --media\tsync media files (images, videos, documents). Does not
+\tdownload files but uses rsync on (local, stage, prod) storage buckets."
     echo -e "\nExamples:"
     echo -e "\tsync.fish -s — sync the staging database locally"
     echo -e "\tsync.fish -s --db --media — sync the staging database and media locally"
-    echo -e "\tsync.fish --prod --media — download production media (but not the database)"
+    echo -e "\tsync.fish --prod --media — sync production media (but not the database)"
     echo -e "\tsync.fish --prod --stage --db — sync production database to staging"
     echo -e "\n'Staging' here refers to Eric's libraries-libep.cca.edu site and its related
 database and media files, NOT Mark's libraries-libmg.cca.edu site. If we feel a need
