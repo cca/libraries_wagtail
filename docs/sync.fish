@@ -83,7 +83,7 @@ end
 if set -q _flag_m
     if set -q _flag_p
         # sync prod cloud storage to staging
-        echo -e "\nOpening Google Cloud Transfer Service; run the existing job for syncing libraries media"
+        echo -e "\nSince the prod and staging/local buckets live in different GCP projects, we have to use Google Cloud Transfer Service. Look for existing jobs for syncing libraries media."
         open "https://console.cloud.google.com/transfer/jobs?project=cca-web-0"
     else
         # implies --stage flag, sync staging media to local cloud storage
