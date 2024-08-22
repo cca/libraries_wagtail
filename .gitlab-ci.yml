@@ -49,8 +49,6 @@ stages:
 docker_image_staging:
   image: docker:25.0.3-alpine3.19
   stage: build
-  tags:
-  - build
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^(mg|ep)-(fast|nodb|full)-*/"
       when: always
@@ -74,9 +72,6 @@ docker_image_staging:
 docker_image_prod:
   image: docker:25.0.3-alpine3.19
   stage: build
-  tags:
-  - build
-  - production
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
       when: always
@@ -153,8 +148,6 @@ docker_image_prod:
 synchronize_stage:
   image: google/cloud-sdk:464.0.0
   stage: synchronize
-  tags:
-  - staging
   rules:
     - when: never
     # - if: "$CI_COMMIT_REF_NAME =~ /^(mg|jj|althea|ep)-full-*/"
@@ -171,8 +164,6 @@ synchronize_stage:
 deploy_full_stage:
   image: google/cloud-sdk:464.0.0
   stage: deploy
-  tags:
-  - staging
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^(mg|ep)-full-*/"
       when: always
@@ -190,8 +181,6 @@ deploy_full_stage:
 deploy_fast_stage:
   image: google/cloud-sdk:464.0.0
   stage: deploy
-  tags:
-  - staging
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^(mg|ep)-fast-*/"
       when: always
@@ -234,8 +223,6 @@ deploy_fast_stage:
 deploy_release:
   image: google/cloud-sdk:464.0.0
   stage: deploy
-  tags:
-  - production
   rules:
     - if: "$CI_COMMIT_REF_NAME =~ /^release-*/"
       when: manual
