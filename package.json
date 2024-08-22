@@ -5,8 +5,10 @@
   "scripts": {
     "build": "gulp build",
     "css": "gulp css",
+    "eslint": "eslint --cache .",
     "js": "gulp js",
-    "test": "sass-lint --verbose --no-exit",
+    "sass-lint": "sass-lint --verbose --no-exit",
+    "test": "eslint --cache .; sass-lint --verbose --no-exit",
     "watch": "gulp"
   },
   "browserslist": [
@@ -36,38 +38,12 @@
     "sass": "^1.77.8"
   },
   "devDependencies": {
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0",
     "sass-lint": "^1.13.1"
   },
   "engines": {
     "node": "~20"
   },
-  "sasslintConfig": ".sass-lint.yml",
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es6": true
-    },
-    "extends": "eslint:recommended",
-    "rules": {
-      "globals": {
-        "require": true
-      },
-      "indent": [
-        "error",
-        4
-      ],
-      "linebreak-style": [
-        "error",
-        "unix"
-      ],
-      "quotes": [
-        "error",
-        "single"
-      ],
-      "semi": [
-        "error",
-        "never"
-      ]
-    }
-  }
+  "sasslintConfig": ".sass-lint.yml"
 }
