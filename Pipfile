@@ -8,21 +8,21 @@ django_managepy_anywhere = "==2.0"
 autopep8 = "*"
 
 [packages]
-certifi = "==2024.2.2"
-dj-database-url = "==2.1.0"
+certifi = "==2024.7.4"
+dj-database-url = "==2.2.0"
 django = "==4.1.13"
 django-cas-ng = "==5.0.1"
 django-extensions = "==3.2.3"
 django-storages = {version = "==1.14.2", extras = ["google"]}
 djangorestframework-simplejwt = "==5.3.1"
 elasticsearch = "==7.17.9"
-google-cloud-secret-manager = "2.18.2"
+google-cloud-secret-manager = "2.20.2"
 l18n = "==2021.3"
 psycopg2 = "==2.9.9"
 pysftp = "==0.2.9"
-uwsgi = "==2.0.24"
+uwsgi = "==2.0.26"
 wagtail = "==4.1.9"
-whitenoise = {version = "==6.6.0", extras = ["brotli"]}
+whitenoise = {version = "==6.7.0", extras = ["brotli"]}
 xmltodict = "==0.13.0"
 
 [requires]
