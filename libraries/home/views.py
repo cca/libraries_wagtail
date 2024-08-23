@@ -8,8 +8,11 @@ from categories.models.pages import RowComponent
 class NoSearchDescriptionReport(PageReportView):
 
     def get_queryset(self):
-        return Page.objects.not_type(RowComponent).filter(
-            search_description="", depth__gte=2
+        # Pages without a search_description sorted reverse chronologically by last updated
+        return (
+            Page.objects.not_type(RowComponent)
+            .filter(search_description="", depth__gte=2)
+            .order_by("-last_published_at")
         )
 
     title = "Pages lacking a Search Description"
