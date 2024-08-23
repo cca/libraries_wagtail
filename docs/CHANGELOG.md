@@ -2,12 +2,13 @@
 
 ## 4.2.0
 
-**2024-MM-DD**: upgrade to Wagtail 4.2 and change the main building address.
+**2024-08-23**: upgrade to Wagtail 4.2 and change the main building address.
 
 - Change the building address to 145 Hooper in the footer and schema.org metadata
 - New [Accessibility Checker](https://docs.wagtail.org/en/stable/releases/4.2.html#accessibility-checker-integration) when you are signed in as an editor
 - Fix an accessibility issue highlighted by the checker! The header hierarchy in the site footer
 - [Rich text editor improvements](https://docs.wagtail.org/en/stable/releases/4.2.html#rich-text-improvements), you can choose between an inline floating toolbar or a fixed one
+- Sort the "Pages lacking a Search Description" report by date last published
 - Minor upgrades to non-Wagtail/Django dependencies
 - Add [eslint](https://eslint.org/) to aid consistent JavaScript style
 - Reformat many SCSS (due to the [mixed declarations](https://sass-lang.com/documentation/breaking-changes/mixed-decls/) deprecation) and JS files (thanks to `eslint`)
