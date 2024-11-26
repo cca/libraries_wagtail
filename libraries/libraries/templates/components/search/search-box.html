@@ -8,40 +8,22 @@
 
 	{% include 'components/search/search-input.html' %}
 
-	<label
-		tabindex="0"
-		class="search-box__type-label"
-	>
-		<input
-			{# different search defaults depending on context #}
-			{% if not site_search and not exhibits %}
-				checked="checked"
-			{% endif %}
-			class="search-box__type-input"
-			name="searchType"
-			tabindex="-1"
-			type="radio"
-			value="all"
-		/>
-		Books, databases, & more
-	</label>
+	<fieldset>
+		<legend class="sr-only">Search type</legend>
+		<label tabindex="0" class="search-box__type-label">
+			<input {# different search defaults depending on context #} {% if not site_search and not exhibits %}
+				checked="checked" {% endif %} class="search-box__type-input" name="searchType" tabindex="-1" type="radio"
+				value="all" />
+			Books, databases, & more
+		</label>
 
-	<label
-		tabindex="0"
-		class="search-box__type-label"
-	>
-		<input
-			{% if site_search or exhibits %}
-				checked="checked"
-			{% endif %}
-			class="search-box__type-input"
-			name="searchType"
-			tabindex="-1"
-			type="radio"
-			value="services"
-		/>
-		Pages & people
-	</label>
+		<label tabindex="0" class="search-box__type-label">
+			<input {% if site_search or exhibits %} checked="checked" {% endif %} class="search-box__type-input"
+				name="searchType" tabindex="-1" type="radio" value="services" />
+			Pages & people
+		</label>
+	</fieldset>
+
 	<input type="hidden" name="page" value="1">
 
 	{% if search_results.paginator.count > 0 %}
