@@ -11,15 +11,3 @@ This app is also the sole reason for two files under kubernetes/assets. We authe
 The first time the task runs, there are no previous iterations, which can cause an error. The management command accepts a "date last run" argument so you can run `python manage.py summon_deletes "MM/DD/YYYY"` the first time. Note that **Koha has changed the date format for report parameters _multiple times_** so we may need to try a few different formats and edit the command if they change it again.
 
 After the initial run, the task can be added as a cron job and run regularly.
-
-## Custom JavaScript
-
-Summon lets you load a custom JavaScript file under the setting "[Summon 2.0 External Script](https://customize.summon.serialssolutions.com/settings#Summon20ExternalScript)". Our JS does a few things:
-
-- provide our "broken link" reporting (mostly copied from Fairfield U's code)
-- insert a custom CSS file (which Summon doesn't provide an option for)
-- initialize Google Tag Manager (we are using Tabatha Farney's [GTM configuration for Summon](https://github.com/tabathafarney/GoogleTagManager-Summon))
-
-The JavaScript and SCSS source files are under libraries/libraries/static/summon and have their own gulp build tasks summonCSS, summonJS, and summon (for both).
-
-The easiest way to test is to use [our Summon preview environment](https://cca.preview.summon.serialssolutions.com) if it's available; edit here, push changes to a staging site, swap in the staging site URL in the [preview site's settings](https://customize.preview.summon.serialssolutions.com/settings#Summon20ExternalScript). Since the preview site is not always available, we may need to do this swap on the live Summon instance sometimes.

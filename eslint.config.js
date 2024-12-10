@@ -6,7 +6,7 @@ module.exports = [
     // "global" ignores must be alone in a config object
     // https://eslint.org/docs/latest/use/configure/configuration-files#globally-ignoring-files-with-ignores
     {ignores: ["**/*.min.js"]},
-    // client-side js for the website & summon
+    // client-side js for the website
     {
         files: ["libraries/**/*.js"],
         languageOptions: {

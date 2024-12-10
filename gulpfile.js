@@ -14,17 +14,11 @@ const settings = {
     dist: {
         css: dist + '/css/',
         js: dist + '/js/',
-        summon: dist + '/summon/'
     },
     src: {
         // JavaScript src
         exhibits: [source + '/js/exhibits.js'],
         js: [source + '/js/src/*.js'],
-        summon: {
-            css: [source + '/summon/scss/summon.scss'],
-            // babel throws an error if you provide these in the wrong order
-            js: [source + '/summon/broken-link-modal.js', source + '/summon/css-and-gtm.js']
-        },
         // SASS src
         styles: [
             source + '/scss/main.scss'
@@ -63,36 +57,16 @@ function mainJS() {
         .pipe(dest('libraries/' + settings.dist.js))
 }
 
-function summonCSS() {
-    return src(settings.src.summon.css)
-        .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-        .pipe(postcss([ autoprefixer() ]))
-        .pipe(dest(settings.dist.summon))
-        .pipe(dest('libraries/' + settings.dist.summon))
-}
-
-function summonJS() {
-    return src(settings.src.summon.js)
-        .pipe(concat('summon.min.js'))
-        .pipe(babel({ presets: ['@babel/preset-env'] }))
-        .pipe(uglify())
-        .pipe(dest(settings.dist.summon))
-        .pipe(dest('libraries/' + settings.dist.summon))
-}
-
 // watch each main set of files & run its associated task
 function defaultTask() {
     watch(settings.src.exhibits, exhibitsJS)
     watch(settings.src.js, mainJS)
     watch(settings.src.scss, allCSS)
-    watch(settings.src.summon.js, summonJS)
-    watch(settings.src.summon.css, summonCSS)
 }
 
 // expose all tasks
 exports.js = mainJS
 exports.css = allCSS
 exports.exhibits = exhibitsJS
-exports.build = parallel(allCSS, mainJS, exhibitsJS, summonCSS, summonJS)
-exports.summon = parallel(summonCSS, summonJS)
+exports.build = parallel(allCSS, mainJS, exhibitsJS)
 exports.default = defaultTask
