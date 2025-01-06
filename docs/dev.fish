@@ -11,10 +11,11 @@ function start -d 'start the local wagtail application'
     if not docker info &>/dev/null
         if command --query dockerd
             dockerd &>/dev/null &
-        else if [ -d /Applications/Docker.app ]
-            open -a /Applications/Docker.app
+        else if docker desktop &>/dev/null
+            # docker desktop has a CLI as of version 4.37
+            docker desktop start
         else
-            echo "Error: dockerd isn't in PATH and /Applications/Docker.app doesn't exist, are you sure you have Docker installed?"
+            echo "Error: dockerd isn't in PATH and the 'docker desktop' command doesn't work, are you sure you have Docker installed?" >&2
             exit 1
         end
 
@@ -59,8 +60,7 @@ function stop -d 'stop the local development tools'
         minikube stop
     end
     echo "Quitting Docker Desktop"
-    osascript -l JavaScript -e "Application('Docker Desktop').quit()" >/dev/null
-    osascript -l JavaScript -e "Application('Docker').quit()" >/dev/null
+    docker desktop stop 2>/dev/null || osascript -l JavaScript -e "Application('Docker').quit()" >/dev/null
 end
 
 function cleanup -d 'free up disk space by deleting older docker images'
