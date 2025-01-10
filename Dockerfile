@@ -55,10 +55,10 @@ COPY kubernetes/uwsgi.ini /app/libraries/
 # Settings environment variable
 ENV DJANGO_SETTINGS_MODULE=libraries.settings
 
-RUN DOCKER_BUILD=true python manage.py collectstatic --no-input
+RUN DOCKER_BUILD=true python /app/libraries/manage.py collectstatic --no-input
 
 # Make port 80 available to the world outside this container
 EXPOSE 8000
 
 # Start Django
-CMD ["uwsgi", "--ini", "uwsgi.ini"]
+CMD ["uwsgi", "--ini", "/app/libraries/uwsgi.ini"]
