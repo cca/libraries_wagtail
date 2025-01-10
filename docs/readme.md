@@ -4,7 +4,7 @@ This folder contains the generic documentation for the CCA Libraries Wagtail sit
 
 ## Running Wagtail Locally
 
-The ./docs/setup.sh script should get you all the needed dependencies. These are extra details and some manual steps.
+The ./docs/setup.sh script should get us all the needed dependencies. These are extra details and some manual steps.
 
 We need docker, minikube, kubectl, and skaffold. Many of these are available from different places but they're also all on homebrew. The other sensible place to get these tools is as [gcloud](https://cloud.google.com/sdk/docs/install) CLI components, which we need to interact with our cloud-hosted resources (databases, static files, servers) anyways. To use them, we make sure that the "bin" subfolder inside the gcloud tools is on our path.
 
@@ -21,7 +21,7 @@ We currently run the entire app in minikube, including postgres database and ela
 
 ### Port-forwarding
 
-If you use dev.fish, Skaffold should mostly take care of this for you. Otherwise, there are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:
+If we use dev.fish, Skaffold should mostly take cares of this. Otherwise, there are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:
 
 1. (easiest) run `skaffold dev` with the `--port-forward` flag. The [port-forward](https://skaffold.dev/docs/pipeline-stages/port-forwarding/) configuration is in Skaffold.yml. If we omit this from the Skaffold profile but use the `--port-forward` flag, Skaffold will automatically create forwarding for all services, but if the pods are recreated it will not recreate the forwarding, so this is not recommended.
 2. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000`, this is what Skaffold does behind the scenes
@@ -75,6 +75,8 @@ We can see more info on minikube's usage with `docker system df` and `docker sys
 
 **dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when we're done. Note that this is just a convenience; there's no reason we cannot manage the development tools individually.
 
+**release** increments the latest tag that triggers our CI/CD workflow and pushes the tag to the remote. `./docs/release prod` does a production release. _This script might need to change when we migrate off of Gitlab CI to GitHub_.
+
 ## Development Git Flow
 
 Outline:
@@ -120,23 +122,29 @@ We use a combination of environment variables, kubernetes secrets, and Google Se
 
 ## Module (including Wagtail) Updates
 
-See [Upgrading Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html) but I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for dependencies. Pipenv stores a dependency graph rather than a list of unrelated packages like requirements.txt. For instance, if package A is changed to no longer rely on package B, pipenv removes B from the graph, but requirements doesn't know anything about 2nd order dependencies and happily continues to install a useless piece of software. Upgrade outline:
+See [Upgrading Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html) but I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for dependencies. Pipenv stores a dependency graph rather than a list of unrelated packages like requirements.txt. Upgrade outline:
 
 - Read Wagtail [release notes](https://docs.wagtail.org/en/stable/releases/) and make note of any breaking changes
-- Upgrade blocking dependencies (e.g. Django, python itself) in Pipfile, run `pipenv lock` to update lockfile
+- Upgrade blocking dependencies (e.g. Django, Python itself) in Pipfile, run `pipenv lock` to update lockfile
   - It's best to pin dependencies to a specific version, e.g. `Django = "==3.2.8"` rather than `Django = ">=3.2.8"`
   - Major Django updates usually require database migrations, too
 - If there were significant dependency changes, do a full test/release cycle _at least_ on the staging instance
 - Make Wagtail changes, e.g. editing module paths or fixing deprecation warnings
 - Update Wagtail in the same manner as above (edit Pipfile, `pipenv lock`)
-- Run `migrate` on the app pod:
+- Run `migrate` on the app pod (using [libraries k8s aliases](https://github.com/cca/libraries-k8s)):
 
 ```sh
-> alias k 'kubectl -nlibraries-wagtail' # save a lot of typing
+> set -gx NS lib-production
 > k exec (k get pods -o name | grep wagtail) -- python manage.py migrate
 ```
 
-The upgrade notes say to run `python manage.py makemigrations` before migrate but technically all db migrations should already be included so I'm not sure if that step is necessary. If migrations are needed, the local test server will tell you so on startup.
+The upgrade notes say to run `python manage.py makemigrations` before migrate but technically all db migrations should already be included so that step _should_ be necessary. If migrations are needed, the local test server tells us so on startup.
+
+## Installing dependencies locally
+
+We generally should not need to install the Python dependencies on our host laptop since the app runs in Minikube. However, sometimes various `pipenv` operations expect a functioning virtualenv to exist.
+
+If installing locally, note that `uwsgi` has trouble building against managed python installations, see [this comment](https://github.com/astral-sh/uv/issues/6488#issuecomment-2345417341) for instance. The solution is to set a `LIBRARY_PATH` shell var that points to the "lib" directory of our local python. With `mise` and fish shell, this looks like `set -x LIBRARY_PATH (mise where python)/lib`.
 
 ## Static Files
 
@@ -145,8 +153,6 @@ We put _all_ static (CSS, JS) files under the main app's static folder, in libra
 We use [Gulp](http://gulpjs.com/) for our front-end build tool. Note that tools like autoprefixer are solving some bugs, so switching might result in some style problems (e.g., the radio buttons on the home page search box need autoprefixer).
 
 `npm run` builds the site's assets and `npm watch` watches for changes and rebuilds. See the Gulpfile for more information on these tasks. We should be able to run these tasks on our host laptop and not inside the development app container; the changes will not trigger an image rebuild (which would slow down development terribly) and should be automatically [synced](https://skaffold.dev/docs/pipeline-stages/filesync/) to the container if Skaffold is working properly. Portal takes a different approach to the problem of syncing assets without rebuilding the image and mounts the local application code into the app container as a volume, but this adds complexity to the local kubernetes configuration.
-
-There are two folders under the main static directory ("moodle" and "summmon") for hosting static files used in external services that cannot host their own content. The Summon files are contained within this project (see libraries/summon and the summon Gulp tasks) while the Moodle files are created in the [Moodle Styles](https://github.com/cca/moodle-styles) project.
 
 ## Media
 
