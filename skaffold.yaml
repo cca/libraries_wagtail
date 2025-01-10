@@ -36,25 +36,26 @@ profiles:
         # we use "manual" and not "infer" because infer does not work with our multi-stage Docker build:
         # "For multi-stage Dockerfiles, Skaffold only examines the last stage. Use manual sync rules to
         # sync file copies from other stages."
+        # Sync dest is relative to image WORKDIR but we need it to be /app or things are synced 1 level too deep
         manual:
         - src: libraries/**/*.py
-          dest: .
+          dest: /app
         - src: libraries/**/templates/**/*.html
-          dest: .
+          dest: /app
         # we have to sync SASS files too, even though they're not needed on the app container,
         # or else changes to them trigger a rebuild
         - src: libraries/**/*.scss
-          dest: .
+          dest: /app
         - src: libraries/**/*.css
-          dest: .
+          dest: /app
         - src: libraries/**/*.js
-          dest: .
+          dest: /app
         - src: libraries/**/fonts/*
-          dest: .
+          dest: /app
         - src: libraries/libraries/static/images/*
-          dest: .
+          dest: /app
         - src: libraries/**/*.md
-          dest: .
+          dest: /app
       docker:
         dockerfile: Dockerfile
   manifests:
