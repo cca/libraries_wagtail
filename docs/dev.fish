@@ -28,8 +28,8 @@ function start -d 'start the local wagtail application'
 
     # start minikube
     if not minikube status &>/dev/null
-        # keep this & the version in /docs/setup.ush in sync with our gke cluster
-        minikube start --kubernetes-version=1.26.8
+        # keep this & the version in /docs/setup.sh in sync with our gke cluster
+        minikube start --kubernetes-version=1.30.5
     end
     echo "✅  Minikube is running"
 

@@ -32,7 +32,7 @@ read -r -n 1 -p "[n, p, s]? " result
 echo
 
 # The version we're running on staging see `kubectl version`
-K8S_VERSION=1.26.8
+K8S_VERSION=1.30.5
 
 case ${result} in
     "n")
