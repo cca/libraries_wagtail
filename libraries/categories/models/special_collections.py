@@ -58,8 +58,8 @@ class SpecialCollectionsPage(Page):
         index.RelatedFields(
             "special_collections",
             [
-                index.SearchField("title"),
-                index.SearchField("blurb"),
+                index.AutocompleteField("title"),
+                index.AutocompleteField("blurb"),
             ],
         ),
     ]

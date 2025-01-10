@@ -257,19 +257,19 @@ p { font-size: 1.2em; }
 
     # index related ExhibitArtworks
     search_fields = Page.search_fields + [
-        index.SearchField("description"),
-        index.SearchField("location"),
-        index.SearchField("dates"),
-        index.SearchField("reception"),
-        index.SearchField("creators"),
-        index.SearchField("epilogue"),
+        index.AutocompleteField("description"),
+        index.AutocompleteField("location"),
+        index.AutocompleteField("dates"),
+        index.AutocompleteField("reception"),
+        index.AutocompleteField("creators"),
+        index.AutocompleteField("epilogue"),
         index.RelatedFields(
             "exhibit_artwork",
             [
-                index.SearchField("title"),
-                index.SearchField("creator"),
-                index.SearchField("description"),
-                index.SearchField("link"),
+                index.AutocompleteField("title"),
+                index.AutocompleteField("creator"),
+                index.AutocompleteField("description"),
+                index.AutocompleteField("link"),
             ],
         ),
     ]

@@ -131,7 +131,7 @@ class StaffListPage(Page, index.Indexed):
         return "\n".join(staff_fields)
 
     search_fields = Page.search_fields + [
-        index.SearchField("get_related_staff_for_search")
+        index.AutocompleteField("get_related_staff_for_search")
     ]
 
     class Meta:

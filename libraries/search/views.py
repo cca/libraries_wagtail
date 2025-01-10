@@ -5,8 +5,8 @@ from django.shortcuts import redirect, render
 
 from wagtail.models import Page
 from wagtail.search.models import Query
+from wagtail.search.query import Fuzzy
 
-from categories.models import RowComponent
 from exhibitions.models import ExhibitPage
 
 logger = logging.getLogger(__name__)
@@ -53,12 +53,9 @@ def search(request):
         # decided against Fuzzy matching, returns too many irrelevant results
         # every search returns almost every page on the site
         # https://docs.wagtail.org/en/stable/topics/search/searching.html#fuzzy-matching
-        search_results = (
-            # exclude RowComponent pages
-            Page.objects.not_type(RowComponent)
-            .live()
-            .search(search_query, operator="and")
-        )
+        # Wagtail 5.0 disabled partial matches in ES so we switched to use .autocomplete
+        # https://docs.wagtail.org/en/stable/releases/5.0.html#elasticsearch-backend-no-longer-performs-partial-matching-on-search
+        search_results = Page.objects.live().autocomplete(search_query, operator="and")
         query = Query.get(search_query)
         # Record hit
         query.add_hit()
@@ -66,7 +63,9 @@ def search(request):
         # ! we don't expose exhibits search anywhere
         logger.info("Exhibits search, query: {}".format(search_query))
         search_results = (
-            Page.objects.type(ExhibitPage).live().search(search_query, operator="and")
+            Page.objects.type(ExhibitPage)
+            .live()
+            .autocomplete(search_query, operator="and")
         )
         query = Query.get(search_query)
         query.add_hit()

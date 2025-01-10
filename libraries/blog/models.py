@@ -119,7 +119,7 @@ class BlogPage(Page):
         verbose_name = "News article"
 
     search_fields = Page.search_fields + [
-        index.SearchField("imported_body"),
+        index.AutocompleteField("imported_body"),
     ]
 
     content_panels = Page.content_panels + [

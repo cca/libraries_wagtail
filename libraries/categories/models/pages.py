@@ -107,9 +107,9 @@ class ServicePage(Page):
         help_text="Defines the sort order in the parent row (lower numbers go first).",
     )
     search_fields = Page.search_fields + [
-        index.SearchField("body"),
-        index.SearchField("sidebar_cards"),
-        index.SearchField("resources"),
+        index.AutocompleteField("body"),
+        index.AutocompleteField("sidebar_cards"),
+        index.AutocompleteField("resources"),
     ]
 
     def category(self):
@@ -160,6 +160,7 @@ class RowComponent(Page):
     summary = RichTextField(features=settings.RICHTEXT_BASIC)
     # no need for a promote tab since slug & search_desc aren't used
     promote_panels = []
+    search_fields = []
 
     content_panels = Page.content_panels + [
         FieldPanel("summary"),
@@ -247,9 +248,9 @@ class AboutUsPage(Page):
         help_text="Defines the sort order in the parent row (lower numbers go first).",
     )
     search_fields = Page.search_fields + [
-        index.SearchField("body"),
-        index.SearchField("sidebar_cards"),
-        index.SearchField("resources"),
+        index.AutocompleteField("body"),
+        index.AutocompleteField("sidebar_cards"),
+        index.AutocompleteField("resources"),
     ]
 
     content_panels = Page.content_panels + [
