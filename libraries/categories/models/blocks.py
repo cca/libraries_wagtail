@@ -44,6 +44,8 @@ class LinkBlock(StructBlock):
         # build up a list of (name, value) tuples to be passed to the StructValue constructor
         result = []
         errors = {}
+        err_msg: str = ""
+        # TODO is this really necessary or can it be simplified?
         for name, val in value.items():
             try:
                 result.append((name, self.child_blocks[name].clean(val)))
@@ -51,29 +53,17 @@ class LinkBlock(StructBlock):
                 errors[name] = ErrorList([e])
 
         if value["external_url"] and value["page"]:
-            e = ErrorList(
-                [
-                    ValidationError(
-                        "Links cannot have both an external URL and an internal page."
-                    )
-                ]
-            )
+            err_msg = "Links cannot have both an external URL and an internal page."
+            e = ErrorList([ValidationError(err_msg)])
             # we put the error in both the child blocks to aid with display
             errors["external_url"] = errors["page"] = e
         elif not value["external_url"] and not value["page"]:
-            e = ErrorList(
-                [
-                    ValidationError(
-                        "Links must have either an external URL or an internal page."
-                    )
-                ]
-            )
+            err_msg = "Links must have either an external URL or an internal page."
+            e = ErrorList([ValidationError(err_msg)])
             errors["external_url"] = e
 
         if errors:
-            # The message here is arbitrary - StructBlock.render_form will suppress it
-            # and delegate the errors contained in the 'params' dict to the child blocks instead
-            raise ValidationError("Validation error in StructBlock", params=errors)
+            raise ValidationError(err_msg, params=errors)
 
         return self._to_struct_value(result)
 
