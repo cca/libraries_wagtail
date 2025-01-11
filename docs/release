@@ -21,5 +21,3 @@ else
 end
 git push
 git push --tags
-sleep 2
-glab ci status -l
