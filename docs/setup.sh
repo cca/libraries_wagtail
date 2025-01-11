@@ -18,9 +18,11 @@ checkfor skaffold || brew install skaffold
 checkfor gcloud || echo "Google Cloud SDK is used to sync media and database files from the cloud. Install it yourself by following the instructions on https://cloud.google.com/sdk/docs/install-sdk"
 
 # Provide minikube with expanded resources
-minikube config set vm-driver docker
 minikube config set cpus 4
+# Make this match the version we're using GKE; see `kubectl version`
+minikube config set kubernetes-version 1.30.5
 minikube config set memory 8192
+minikube config set vm-driver docker
 # minikube addons enable metrics-server
 
 [ -e "$(dirname "$0")/../kubernetes/local/secrets.env" ] || echo -e "\nObtain a copy of secrets.env from a developer and place it in kubernetes/local\n"
@@ -31,20 +33,18 @@ echo -e "Start Docker before this step.\nDo you want to load the (s)taging or (p
 read -r -n 1 -p "[n, p, s]? " result
 echo
 
-# The version we're running on staging see `kubectl version`
-K8S_VERSION=1.30.5
 
 case ${result} in
     "n")
         echo "Skipping database download. You can run ./docs/sync.fish to download the database later."
         ;;
     "p")
-        minikube start --kubernetes-version=$K8S_VERSION
+        minikube start
         skaffold run -p db-only
         ./docs/sync.fish --prod --db
         ;;
     "s")
-        minikube start --kubernetes-version=$K8S_VERSION
+        minikube start
         skaffold run -p db-only
         ./docs/sync.fish --stage --db
         ;;
