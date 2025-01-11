@@ -13,15 +13,15 @@ dj-database-url = "==2.2.0"
 django = "==4.1.13"
 django-cas-ng = "==5.0.1"
 django-extensions = "==3.2.3"
-django-storages = {version = "==1.14.2", extras = ["google"]}
+django-storages = {version = "==1.14.4", extras = ["google"]}
 djangorestframework-simplejwt = "==5.3.1"
-elasticsearch = "==7.17.9"
-google-cloud-secret-manager = "2.20.2"
+elasticsearch = "==7.17.12"
+google-cloud-secret-manager = "2.22.0"
 l18n = "==2021.3"
-psycopg2 = "==2.9.9"
+psycopg2 = "==2.9.10"
 pysftp = "==0.2.9"
 uwsgi = "==2.0.26"
-xmltodict = "==0.13.0"
+xmltodict = "==0.14.2"
 wagtail = "==5.0.5"
 whitenoise = {version = "==6.7.0", extras = ["brotli"]}
 
