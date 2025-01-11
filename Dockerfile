@@ -18,7 +18,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install -r --offline --pr
 RUN npx gulp build
 
 # Build the Django application itself. Python version matches the one in Pipfile.
-FROM python:3.10.13-bullseye as libraries
+FROM python:3.10.13-bullseye AS libraries
 WORKDIR /app/libraries
 ENV PYTHONPATH=/app:/app/libraries
 
