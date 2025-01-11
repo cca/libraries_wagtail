@@ -5,4 +5,6 @@ until psql -c '\l' -o /dev/null; do
   sleep 1
 done
 
-cd /app/libraries && python manage.py runserver localhost:8000
+cd /app/libraries || (echo "Unable to enter /app/libraries"  >&2; exit 1)
+python manage.py update_index &
+python manage.py runserver localhost:8000
