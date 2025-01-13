@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6d35a41a46abe5ffdf019e8b6658e655a955c6d1995bfb374aed65bed67cc4a6"
+            "sha256": "f235ebe8d80b974ee280a667eba50acc2e7594c2d3701e481481b403a7d32cf0"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -432,20 +432,20 @@
         },
         "dj-database-url": {
             "hashes": [
-                "sha256:3e792567b0aa9a4884860af05fe2aa4968071ad351e033b6db632f97ac6db9de",
-                "sha256:9f9b05058ddf888f1e6f840048b8d705ff9395e3b52a07165daa3d8b9360551b"
+                "sha256:ae52e8e634186b57e5a45e445da5dc407a819c2ceed8a53d1fac004cc5288787",
+                "sha256:bb0d414ba0ac5cd62773ec7f86f8cc378a9dbb00a80884c2fc08cc570452521e"
             ],
             "index": "pypi",
-            "version": "==2.2.0"
+            "version": "==2.3.0"
         },
         "django": {
             "hashes": [
-                "sha256:04ab3f6f46d084a0bba5a2c9a93a3a2eb3fe81589512367a75f79ee8acf790ce",
-                "sha256:94a3f471e833c8f124ee7a2de11e92f633991d975e3fa5bdd91e8abd66426318"
+                "sha256:3a93350214ba25f178d4045c0786c61573e7dbfa3c509b3551374f1e11ba8de0",
+                "sha256:6b56d834cc94c8b21a8f4e775064896be3b4a4ca387f2612d4406a5927cd2fdc"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==4.1.13"
+            "version": "==4.2.17"
         },
         "django-cas-ng": {
             "hashes": [
@@ -475,11 +475,11 @@
         },
         "django-modelcluster": {
             "hashes": [
-                "sha256:0caed8a0e889f3abb92f144670878a466ef954ffa6c4c7b9c80e6426b720a49d",
-                "sha256:a8783d6565a0663f41cd6003ea361c3a5711e8a2a326160f1ec1eceb3e973d4f"
+                "sha256:0102d00e6b884721ba21e32edb716548e0dead7880e130aa2e04854bd384a42f",
+                "sha256:839b0ddb4a1a6f5fc7d9f2f029614a84350b41315bdb80a9c8b755baaa2297f2"
             ],
-            "markers": "python_version >= '3.8'",
-            "version": "==6.3"
+            "markers": "python_version >= '3.9'",
+            "version": "==6.4"
         },
         "django-permissionedforms": {
             "hashes": [
@@ -518,20 +518,20 @@
         },
         "djangorestframework": {
             "hashes": [
-                "sha256:3ccc0475bce968608cf30d07fb17d8e52d1d7fc8bfe779c905463200750cbca6",
-                "sha256:f88fad74183dfc7144b2756d0d2ac716ea5b4c7c9840995ac3bfd8ec034333c1"
+                "sha256:2b8871b062ba1aefc2de01f773875441a961fefbf79f5eed1e32b2f096944b20",
+                "sha256:36fe88cd2d6c6bec23dca9804bab2ba5517a8bb9d8f47ebc68981b56840107ad"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==3.15.1"
+            "markers": "python_version >= '3.8'",
+            "version": "==3.15.2"
         },
         "djangorestframework-simplejwt": {
             "hashes": [
-                "sha256:381bc966aa46913905629d472cd72ad45faa265509764e20ffd440164c88d220",
-                "sha256:6c4bd37537440bc439564ebf7d6085e74c5411485197073f508ebdfa34bc9fae"
+                "sha256:7aec953db9ed4163430c16d086eecb0f028f814ce6bba62b06c25919261e9077",
+                "sha256:cccecce1a0e1a4a240fae80da73e5fc23055bababb8b67de88fa47cd36822320"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.8'",
-            "version": "==5.3.1"
+            "markers": "python_version >= '3.9'",
+            "version": "==5.4.0"
         },
         "draftjs-exporter": {
             "hashes": [
@@ -1211,11 +1211,11 @@
                 "brotli"
             ],
             "hashes": [
-                "sha256:58c7a6cd811e275a6c91af22e96e87da0b1109e9a53bb7464116ef4c963bf636",
-                "sha256:a1ae85e01fdc9815d12fa33f17765bc132ed2c54fa76daf9e39e879dd93566f6"
+                "sha256:486bd7267a375fa9650b136daaec156ac572971acc8bf99add90817a530dd1d4",
+                "sha256:df12dce147a043d1956d81d288c6f0044147c6d2ab9726e5772ac50fb45d2280"
             ],
-            "markers": "python_version >= '3.8'",
-            "version": "==6.7.0"
+            "markers": "python_version >= '3.9'",
+            "version": "==6.8.2"
         },
         "willow": {
             "hashes": [
