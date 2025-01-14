@@ -19,6 +19,8 @@ Docker Desktop provides visualizations of resources (images, volumes). We need t
 
 We currently run the entire app in minikube, including postgres database and elasticsearch, but other CCA teams (like cca.edu) are moving to running only Wagtail locally while using a cloud-hosted database and search engine. Ngoc has a notebook on how this conversion worked if we want to go that route.
 
+To authenticate locally, be sure to use `127.0.0.1` as the server domain, not `locahost`, as SSO is configured to work with the former and not the latter.
+
 ### Port-forwarding
 
 If we use dev.fish, Skaffold should mostly take cares of this. Otherwise, there are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:

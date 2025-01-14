@@ -17,7 +17,7 @@ namespace = env.get("KUBERNETES_NAMESPACE", "libraries-wagtail")
 match namespace:
     case "libraries-wagtail":
         environment = "local"
-        WAGTAILADMIN_BASE_URL = "http://localhost"
+        WAGTAILADMIN_BASE_URL = "http://127.0.0.1"
         DEBUG = True
         CACHES = {
             "default": {
