@@ -22,6 +22,7 @@ end
 
 # app id should not change often
 # may need to update User Agent periodically?
+echo "Requesting data from Instagram"
 set response_code (curl --output $file.gz --write-out "%{response_code}" \
     --header "x-ig-app-id: 936619743392459" \
     --header "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36" \
@@ -47,5 +48,5 @@ gunzip $file.gz
 and k cp $file (k8 pod):/tmp/$file
 and k exec (k8 pod) -- python manage.py instagram --json /tmp/$file
 if [ $status -eq 0 ]
-    rm -v $file
+    rm $file
 end
