@@ -316,59 +316,6 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: instagram
-  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
-spec:
-  suspend: true
-  # times are UTC
-  schedule: "10 19 * * *"
-  failedJobsHistoryLimit: 2
-  successfulJobsHistoryLimit: 2
-  # ttlSecondsAfterFinished: 900
-  jobTemplate:
-    spec:
-      backoffLimit: 0
-      template:
-        metadata:
-          labels:
-            app: libraries
-        spec:
-          restartPolicy: Never
-          containers:
-            - name: instagram
-              image: us.gcr.io/cca-web-staging/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-              imagePullPolicy: IfNotPresent
-              args:
-                - python
-                - manage.py
-                - instagram
-              # Env variables form ConfigMap
-              envFrom:
-                - configMapRef:
-                    name: app
-              env:
-                - name: DB_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: username
-                - name: DB_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloudsql-db-credentials
-                      key: password
-                - name: DATABASE_URL
-                  value: postgres://$(DB_USER):$(DB_PASSWORD)@cloudsqlproxy:5432/$(DB_NAME)
-                - name: GS_CREDENTIALS
-                  valueFrom:
-                    secretKeyRef:
-                      name: cloud-storage-credentials
-                      key: credentials
-
----
-apiVersion: batch/v1
-kind: CronJob
-metadata:
   name: publish-scheduled-pages
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
