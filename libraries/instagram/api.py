@@ -81,10 +81,14 @@ def get_instagram() -> dict[str, str]:
     try:
         response.raise_for_status()
     except:
+        # TODO email site admins
         logger.error(
-            f"Error retrieving Instagram data. Response: {response.status_code} {response.url}.\nHeaders: {response.headers}\nText: {response.text}"
+            f"Error retrieving Instagram data. Response: {response.status_code} {response.url}\nText: {response.text}"
         )
-        return {}
+        return {
+            "error_type": "HTTP Status Error",
+            "error_message": response.text,
+        }
     insta = response.json()
 
     if "data" in insta:

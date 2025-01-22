@@ -24,7 +24,7 @@ class Command(BaseCommand):
         # did we get an error?
         if "error_type" in insta:
             logger.critical(
-                f'Unable to retrieve latest Instagram. IG Error Type: {insta["error_type"]}. Message: {insta["error_message"]}'
+                f'Unable to retrieve latest Instagram. Error Type: {insta["error_type"]}. Message: {insta["error_message"]}'
             )
             exit(1)
 
