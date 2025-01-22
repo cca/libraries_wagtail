@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     "wagtail.contrib.forms",
     "wagtail.admin",
     "wagtail.contrib.redirects",
+    "wagtail.contrib.settings",
     "wagtail.contrib.styleguide",
     # https://docs.wagtail.org/en/stable/reference/contrib/legacy_richtext.html
     "wagtail.contrib.legacy.richtext",
@@ -264,11 +265,6 @@ if environment == "production":
 else:
     # test form for local and staging
     BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse"
-
-# Instagram app
-INSTAGRAM_REDIRECT_URI = "https://libraries.cca.edu/"
-INSTAGRAM_APP_ID = env.get("INSTAGRAM_APP_ID", "")
-INSTAGRAM_APP_SECRET = env.get("INSTAGRAM_SECRET", "")
 
 # Summon app
 SUMMON_SFTP_UN = "cdi_cca-catalog@customers.na"

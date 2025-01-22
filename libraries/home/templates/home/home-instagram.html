@@ -5,7 +5,11 @@
 	<div class="home-news-item__image-wrapper home-news-item__image-wrapper--instagram">
 		<a href="https://www.instagram.com/{{ instagram.username }}/">
 			{% if instagram.image %}
-				{% image instagram.image width-312 alt="CCA Libraries Instagram" class="home-news-item__image" %}
+				{% if instagram.accessibility_caption %}
+					{% image instagram.image alt=instagram.accessibility_caption width-312 class="home-news-item__image" %}
+				{% else %}
+					{% image instagram.image alt="CCA Libraries Instagram" width-312 class="home-news-item__image" %}
+				{% endif %}
 			{% else %}
 			<img
 				alt="Instagram image"

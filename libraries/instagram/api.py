@@ -1,12 +1,13 @@
+import json
 import logging
 import re
 import requests
 
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
+from wagtail.models import Site
 
-from .models import InstagramOAuthToken
+from .models import InstagramSettings
 
 # these functions will be used inside management scripts exclusively
 logger = logging.getLogger("mgmt_cmd.script")
@@ -61,125 +62,72 @@ def linkify_text(text):
     return html
 
 
-def get_instagram():
-    # just grab the latest OAuth token we have
-    OAuthToken = InstagramOAuthToken.objects.last()
-    if OAuthToken is None:
-        return {
-            "error_type": "NoOAuthToken",
-            "error_message": "No Instagram OAuth token found in database. Run `python manage.py get_oauth_token` and follow the instructions to add one.",
-        }
-    token = OAuthToken.token
-    url = (
-        "https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink,thumbnail_url,username&access_token="
-        + token
+def get_instagram() -> dict[str, str]:
+    default_site = Site.objects.filter(is_default_site=True)[0]
+    ig_settings = InstagramSettings.for_site(site=default_site)
+    headers = {
+        # this is internal ID of an instegram backend app. It doesn't change often.
+        "x-ig-app-id": ig_settings.ig_app_id,
+        # use browser-like features
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9,ru;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept": "*/*",
+    }
+    response = requests.get(
+        f"https://i.instagram.com/api/v1/users/web_profile_info/?username={ig_settings.instagram_account}",
+        headers=headers,
     )
-    response = requests.get(url)
+    try:
+        response.raise_for_status()
+    except:
+        logger.error(
+            f"Error retrieving Instagram data. Response: {response.status_code} {response.url}.\nHeaders: {response.headers}\nText: {response.text}"
+        )
+        return {}
     insta = response.json()
 
     if "data" in insta:
-        gram = insta["data"][0]
-        text = gram["caption"]
+        gram = insta["data"]["user"]["edge_owner_to_timeline_media"]["edges"][0]["node"]
+        # caption is ["edge_media_to_caption"]["edges"][0]["node"]["text"]
+        # where edges is empty list if there is no caption
+        # I did not see an example of multiple captions or a non-text node
+        first_caption = ""
+        if len(gram.get("edge_media_to_caption", {}).get("edges", [])):
+            first_caption = (
+                gram["edge_media_to_caption"]["edges"][0]
+                .get("node", {})
+                .get("text", "")
+            )
 
-        output = {
+        return {
+            # AI-generated
+            "accessibility_caption": gram.get("accessibility_caption", ""),
             # link hashtags & usernames as they'd appear on IG itself
-            "html": linkify_text(text),
-            "id": gram["id"],
-            "image": gram["media_url"],
-            "text": text,
-            "thumbnail_url": gram.get("thumbnail_url", None),
-            "username": gram["username"],
+            "html": linkify_text(first_caption),
+            "id": gram.get("id", ""),
+            "image": gram.get("display_url", ""),
+            "raw_json": json.dumps(gram),
+            "text": first_caption,
+            # there's also gram["thumbnail_resources"] which is a list of {src,config_width,config_height} objects
+            "thumbnail_url": gram.get("thumbnail_src", ""),
+            "url": (
+                f"https://instagram.com/p/{gram.get('shortcode')}"
+                if gram.get("shortcode")
+                else ""
+            ),
+            # should always be the same as ig_settings.instagram_account
+            "username": gram.get("owner", {}).get("username", ""),
         }
 
     elif "error" in insta:
-        output = {
-            "error_type": insta["error"]["type"],
-            "error_message": insta["error"]["message"],
+        return {
+            "error_type": insta.get("error", {}).get("type", ""),
+            "error_message": insta.get("error", {}).get("message", ""),
         }
 
     else:
-        output = {
+        return {
             "error_type": "GenericError",
-            "error_message": 'No "error" object containing an error type or message was present in the Instagram API response. This likely means a network connection problem or that Instagram changed the structure of their error messages.',
+            "error_message": 'No "error" object containing an error type or message was present in the Instagram response but we also could not find the data we were looking for. This likely means a network connection problem or Instagram changed their data structure.',
         }
-
-    return output
-
-
-def get_token_from_code(code):
-    """Turn a code from the app's redirect URI into a long-lived OAuth access token.
-
-    Parameters
-    ----------
-    code : str
-        the "code" parameter in the app's redirect URI
-
-    Returns
-    -------
-    boolean
-        True if token was successfully obtained, False if an error occurred.
-    """
-    if len(code) == 0:
-        logger.info("No response code provided.")
-        return False
-
-    data = {
-        "client_id": settings.INSTAGRAM_APP_ID,
-        "client_secret": settings.INSTAGRAM_APP_SECRET,
-        # strip the final two "#_" characters in case user included them
-        "code": code.rstrip("#_"),
-        "grant_type": "authorization_code",
-        "redirect_uri": settings.INSTAGRAM_REDIRECT_URI,
-    }
-    logger.info("obtaining short-lived Instagram access token")
-    response = requests.post("https://api.instagram.com/oauth/access_token", data=data)
-    shortlived_token = response.json().get("access_token")
-    if not shortlived_token:
-        logger.error(
-            "Failed to acquire shortlived access token. Response JSON: {}".format(
-                response.json()
-            )
-        )
-        return False
-
-    # https://developers.facebook.com/docs/instagram-basic-display-api/reference/access_token
-    # exchange this worthless shortlived token for a long-lived one
-    # Facebook is GREAT at API design, by the way, really love their work
-    logger.info("obtaining long-lived Instagram access token")
-    ll_response = requests.get(
-        "https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret={}&access_token={}".format(
-            settings.INSTAGRAM_APP_SECRET, shortlived_token
-        )
-    )
-    token = ll_response.json().get("access_token")
-
-    if token:
-        InstagramOAuthToken.objects.create(token=token)
-        return True
-    logger.error(
-        "Failed to acquire long-lived OAuth token. Response JSON: {}".format(
-            response.json()
-        )
-    )
-    return False
-
-
-def refresh_token(token):
-    """refresh Instagram long-lived access token
-    where the word "refresh" means "replace", it is not the same token"""
-    response = requests.get(
-        "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token={}".format(
-            token
-        )
-    )
-    new_token = response.json().get("access_token")
-    if new_token:
-        InstagramOAuthToken.objects.create(token=new_token)
-        logger.info("Successfully refreshed long-lived Instagram access token.")
-        return new_token
-    logger.critical(
-        "Unable to refresh long-lived Instagram access token. Response JSON: {}".format(
-            response.json()
-        )
-    )
-    return None
