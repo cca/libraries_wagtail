@@ -10,7 +10,8 @@ Instagram appears to block data center IP addresses, if we try to run this whole
 
 ```sh
 # cronjob to run at 2pm every weekday and logs to cron.log in our home directory
-0 14 * * 1-5 NS=lib-production cd /path/to/wagtail && ./libraries/instagram/ig.fish 2&>> ~/cron.log
+NS=lib-production
+0 14 * * 1-5 cd /path/to/wagtail && ./libraries/instagram/ig.fish 2&>> ~/cron.log
 ```
 
 We should regularly review ig.fish. It uses an internal app ID that might change and we may also want to update the User Agent header to be a more current version.
