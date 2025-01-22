@@ -1,15 +1,12 @@
 import json
 import logging
 import re
-import requests
+from typing import Any
 
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
-from wagtail.models import Site
 
-from .models import InstagramSettings
-
-# these functions will be used inside management scripts exclusively
+# these functions are used inside management scripts exclusively
 logger = logging.getLogger("mgmt_cmd.script")
 validate_url = URLValidator()
 
@@ -62,37 +59,17 @@ def linkify_text(text):
     return html
 
 
-def get_instagram() -> dict[str, str]:
-    default_site = Site.objects.filter(is_default_site=True)[0]
-    ig_settings = InstagramSettings.for_site(site=default_site)
-    headers = {
-        # this is internal ID of an instegram backend app. It doesn't change often.
-        "x-ig-app-id": ig_settings.ig_app_id,
-        # use browser-like features
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
-        "Accept-Language": "en-US,en;q=0.9,ru;q=0.8",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept": "*/*",
-    }
-    response = requests.get(
-        f"https://i.instagram.com/api/v1/users/web_profile_info/?username={ig_settings.instagram_account}",
-        headers=headers,
-    )
-    try:
-        response.raise_for_status()
-    except:
-        # TODO email site admins
-        logger.error(
-            f"Error retrieving Instagram data. Response: {response.status_code} {response.url}\nText: {response.text}"
-        )
-        return {
-            "error_type": "HTTP Status Error",
-            "error_message": response.text,
-        }
-    insta = response.json()
-
+def get_instagram(insta: dict[str, Any]) -> dict[str, str]:
+    """Parse Instagram API for the data we're interested in"""
     if "data" in insta:
-        gram = insta["data"]["user"]["edge_owner_to_timeline_media"]["edges"][0]["node"]
+        media: dict[str, Any] = (
+            insta.get("data", {})
+            .get("user", {})
+            .get("edge_owner_to_timeline_media", {})
+        )
+        if len(media.get("edges", [])) == 0:
+            raise ValueError("Unable to find posts in Instagram JSON data.")
+        gram = media["edges"][0]["node"]
         # caption is ["edge_media_to_caption"]["edges"][0]["node"]["text"]
         # where edges is empty list if there is no caption
         # I did not see an example of multiple captions or a non-text node
@@ -105,7 +82,6 @@ def get_instagram() -> dict[str, str]:
             )
 
         return {
-            # AI-generated
             "accessibility_caption": gram.get("accessibility_caption", ""),
             # link hashtags & usernames as they'd appear on IG itself
             "html": linkify_text(first_caption),
@@ -124,14 +100,5 @@ def get_instagram() -> dict[str, str]:
             "username": gram.get("owner", {}).get("username", ""),
         }
 
-    elif "error" in insta:
-        return {
-            "error_type": insta.get("error", {}).get("type", ""),
-            "error_message": insta.get("error", {}).get("message", ""),
-        }
-
     else:
-        return {
-            "error_type": "GenericError",
-            "error_message": 'No "error" object containing an error type or message was present in the Instagram response but we also could not find the data we were looking for. This likely means a network connection problem or Instagram changed their data structure.',
-        }
+        raise ValidationError("Could not find data property in Instagram JSON.")
