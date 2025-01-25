@@ -1,9 +1,12 @@
+@use "../../settings/breakpoints";
+@use "../../utilities/respond";
+
 // ========================================
 // Collections page list of collections
 // ========================================
 
 .collections-list {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         left: 230px;
         position: relative;
         width: calc(100% - 230px);

@@ -1,3 +1,8 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ===========================================
 // The search-box component is used in
 // the header and home-hero. The position
@@ -5,11 +10,11 @@
 // ===========================================
 
 .search-box {
-    background: $white;
+    background: colors.$white;
     padding: 20px;
 
-    @include respond($break-medium) {
-        border: 1px solid black(.1);
+    @include respond.respond(breakpoints.$break-medium) {
+        border: 1px solid colors.black(.1);
     }
 
     // Pass-through to the <input> component
@@ -23,7 +28,7 @@
     font-weight: 700;
     margin: 0 0 10px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 22px;
         margin: 0 0 15px;
     }
@@ -31,11 +36,11 @@
 
 .search-box__type-label {
     display: block;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 13px;
     margin: 0 0 20px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: inline-block;
         margin: 0 15px 0 0;
     }
@@ -51,7 +56,7 @@
 
 .search-box__number-results {
     display: none;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
     padding: 25px 0 0;
 }

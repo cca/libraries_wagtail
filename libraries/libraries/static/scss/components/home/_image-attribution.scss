@@ -1,3 +1,8 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/vars";
+@use "../../utilities/respond";
+
 // ===================================
 // Attribution text for the home page's
 // large background image, placed just
@@ -6,18 +11,18 @@
 
 // sits outside .wrapper so no margin/padding by default
 .home-image-attribution {
-    font: 11px $font-family-serif;
+    font: 11px variables.$font-family-serif;
     margin-top: -1 * 15px + 4px;
-    max-width: $site-max-width;
+    max-width: breakpoints.$site-max-width;
     padding: 0 15px;
     position: relative;
 
-    @include respond($break-medium) {
-        margin-top: -1 * $home-hero-medium-bottom-margin + 4px;
-        padding: 0 $wrapper-medium-horizontal-padding;
+    @include respond.respond(breakpoints.$break-medium) {
+        margin-top: -1 * vars.$home-hero-medium-bottom-margin + 4px;
+        padding: 0 vars.$wrapper-medium-horizontal-padding;
     }
 
-    @include respond($break-large) {
-        margin-top: -1 * $home-hero-large-bottom-margin + 4px;
+    @include respond.respond(breakpoints.$break-large) {
+        margin-top: -1 * vars.$home-hero-large-bottom-margin + 4px;
     }
 }

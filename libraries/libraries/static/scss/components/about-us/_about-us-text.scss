@@ -1,3 +1,7 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../utilities/respond";
+
 // ========================================
 // About us page text
 // ========================================
@@ -7,7 +11,7 @@
     font-weight: 700;
     margin: 0 0 24px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 28px;
         margin: 0 0 30px;
     }
@@ -19,7 +23,7 @@
     flex-wrap: wrap;
     margin: 0 0 24px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex-wrap: nowrap;
     }
 }
@@ -29,18 +33,18 @@
     // fix embedded fixed-width iframes overflowing on mobile
     overflow: hidden;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 2 0 30%;
     }
 }
 
 .about-us-text {
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 16px;
     font-weight: 300;
     line-height: 1.4em;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         margin: 0 0 24px;
     }
 }
@@ -50,7 +54,7 @@
     margin: 0 0 20px;
     order: 0;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 1 1 20%;
         margin: 0 0 0 40px;
         order: 1;

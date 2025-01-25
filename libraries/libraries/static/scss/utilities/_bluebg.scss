@@ -1,22 +1,24 @@
+@use "../settings/colors";
+
 @mixin blue-background {
-    background-color: $ccaBlue;
-    color: $white;
+    background-color: colors.$ccaBlue;
+    color: colors.$white;
 
     h4 {
-        color: $white;
+        color: colors.$white;
     }
 
     a {
-        border-bottom: solid 3px $ccaTeal;
-        color: $white;
+        border-bottom: solid 3px colors.$ccaTeal;
+        color: colors.$white;
         margin: .5em 0;
         padding: 0;
         text-decoration: none;
 
         &:hover {
-            background-color: $ccaTeal;
+            background-color: colors.$ccaTeal;
             border-bottom: 0;
-            color: $white;
+            color: colors.$white;
             margin: 0 -.25em;
             padding: .5em .25em;
         }

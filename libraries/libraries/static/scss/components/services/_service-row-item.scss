@@ -1,3 +1,8 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ===================================
 // Services page row and all of it's
 // contents.
@@ -11,16 +16,16 @@
     flex-wrap: wrap;
 
     &:not(:nth-of-type(3n)) {
-        border-bottom: 1px solid black(.1);
+        border-bottom: 1px solid colors.black(.1);
         margin: 0 0 15px;
     }
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 0 0 30%;
 
         &:not(:nth-of-type(3n)) {
             border-bottom: 0;
-            border-right: 1px solid black(.1);
+            border-right: 1px solid colors.black(.1);
             margin-right: 24px;
             padding-right: 24px;
         }
@@ -29,15 +34,15 @@
 
 // vary color based on category
 .page--services .service-row-item__title {
-    border-bottom: 2px solid $blue;
+    border-bottom: 2px solid colors.$blue;
 }
 
 .page--about-us .service-row-item__title {
-    border-bottom: 2px solid $green;
+    border-bottom: 2px solid colors.$green;
 }
 
 .page--collections .service-row-item__title {
-    border-bottom: 2px solid $purple;
+    border-bottom: 2px solid colors.$purple;
 }
 
 .service-row-item__title {
@@ -50,7 +55,7 @@
     opacity: .8;
     padding: 0 0 2px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         padding: 0 0 5px;
     }
 
@@ -67,7 +72,7 @@
 
 .service-row-item__text {
     flex: 0 0 100%;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
     font-weight: 300;
     line-height: 1.4em;
@@ -98,7 +103,7 @@
 }
 
 .service-row-item__name {
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 13px;
     font-weight: 700;
     line-height: 1.2em;
@@ -106,7 +111,7 @@
 }
 
 .service-row-item__position {
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 12px;
     line-height: 1.2em;
 }

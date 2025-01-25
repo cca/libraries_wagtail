@@ -1,13 +1,18 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // modified from Portal's static/styles/portal/sass/partials/components/_cards.scss
 .card {
-    border: 1px solid $ccaLightGray;
+    border: 1px solid colors.$ccaLightGray;
     height: 400px;
     margin: 1em auto;
     overflow: hidden;
     position: relative;
     width: 100%;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         width: 50%;
     }
 
@@ -28,17 +33,17 @@
         margin: 0 0 2em;
         width: 100%;
 
-        @include respond($break-medium) {
+        @include respond.respond(breakpoints.$break-medium) {
             width: 70%;
         }
     }
 
     &__title {
-        background-color: rgba($ccaVeryLightGray, .9);
+        background-color: rgba(colors.$ccaVeryLightGray, .9);
         bottom: 0;
-        color: $blue;
+        color: colors.$blue;
         cursor: pointer;
-        font: 14px $font-family-sans-serif;
+        font: 14px variables.$font-family-sans-serif;
         left: 0;
         margin: 0;
         padding: 10px;
@@ -57,7 +62,7 @@
         }
 
         &:hover .card__title {
-            color: $turquoise;
+            color: colors.$turquoise;
         }
     }
 
@@ -88,11 +93,11 @@
 
 .card--carousel .card__title,
 .card--sidebar .card__title {
-    background-color: rgba($blue, .9);
-    color: $white;
+    background-color: rgba(colors.$blue, .9);
+    color: colors.$white;
     font-size: 18px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 14px;
     }
 }

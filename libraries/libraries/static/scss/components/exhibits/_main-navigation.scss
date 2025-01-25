@@ -1,12 +1,17 @@
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../settings/component-specific";
+@use "../../utilities/respond";
+
 // ========================================
 // Main website navigation in the header.
 // ========================================
 .main-navigation {
-    background: $black;
-    color: $white;
+    background: colors.$black;
+    color: colors.$white;
     flex: 1;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: flex;
         float: right;
         margin-right: 20px;
@@ -18,13 +23,13 @@
 
 .main-navigation__item {
     border-bottom: 1px solid black(.1);
-    color: $white;
+    color: colors.$white;
     display: inline-block;
     padding: 0 13px 3px;
     transition: border .3s ease;
 
-    @include respond($break-medium) {
-        border-bottom: $nav-border-bottom solid transparent;
+    @include respond.respond(breakpoints.$break-medium) {
+        border-bottom: component-specific.$nav-border-bottom solid transparent;
         display: inline-block;
         padding: 0 13px;
         // to make bottom border align perfectly with black header bar
@@ -33,8 +38,8 @@
 }
 
 .main-navigation__item:hover {
-    border-color: $turquoise;
-    color: $turquoise;
+    border-color: colors.$turquoise;
+    color: colors.$turquoise;
 }
 
 .main-navigation__link {
@@ -44,10 +49,10 @@
     padding: 20px 20px 18px 16px; // border offset
     text-decoration: none;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 16px;
-        height: $header-height-small - $nav-border-bottom;
-        line-height: $header-height-small + 10;
+        height: component-specific.$header-height-small - component-specific.$nav-border-bottom;
+        line-height: component-specific.$header-height-small + 10;
         padding: 0;
     }
 }

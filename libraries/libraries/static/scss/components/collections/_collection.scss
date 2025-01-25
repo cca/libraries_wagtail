@@ -1,11 +1,17 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/clearfix";
+@use "../../utilities/respond";
+
 // ========================================
 // Collection page collection item
 // ========================================
 
 .collection {
-    @include clearfix;
+    @include clearfix.clearfix;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         margin: 0 0 20px;
         position: relative;
     }
@@ -15,7 +21,7 @@
     &:nth-of-type(even) .collection__content {
         float: left;
 
-        @include respond($break-large) {
+        @include respond.respond(breakpoints.$break-large) {
             left: 0;
             right: auto;
         }
@@ -28,24 +34,24 @@
     height: 200px;
     width: 100%;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         height: 300px;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         height: 400px;
     }
 }
 
 .collection__content {
-    background: $white;
+    background: colors.$white;
     float: right;
     padding: 15px 15px 0;
     position: relative;
     top: -40px;
     width: calc(100% - 40px);
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         bottom: 0;
         float: none;
         padding: 25px;
@@ -64,7 +70,7 @@
     padding: 0 0 3px;
     text-decoration: none;
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         font-size: 28px;
     }
 
@@ -81,19 +87,19 @@
 
 // vary color by section
 .page--collections .collection__title-text {
-    border-bottom: 2px solid $purple;
+    border-bottom: 2px solid colors.$purple;
 }
 
 .page--about-us .collection__title-text {
-    border-bottom: 2px solid $green;
+    border-bottom: 2px solid colors.$green;
 }
 
 .page--services .collection__title-text {
-    border-bottom: 2px solid $blue;
+    border-bottom: 2px solid colors.$blue;
 }
 
 .collection__text {
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
     line-height: 1.4em;
 }

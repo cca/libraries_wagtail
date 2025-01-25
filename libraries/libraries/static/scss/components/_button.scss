@@ -1,8 +1,11 @@
+@use "../bootstrap/variables";
+@use "../settings/colors";
+
 .button {
-    border: 2px solid $black;
+    border: 2px solid colors.$black;
     border-radius: 100px;
     display: inline-block;
-    font-family: $font-family-sans-serif;
+    font-family: variables.$font-family-sans-serif;
     font-weight: bold;
     margin-left: -10px;
     padding: 7px 17px;
@@ -11,6 +14,6 @@
     text-decoration: none;
 
     &:hover {
-        border-color: $btn-hover-light-gray;
+        border-color: colors.$btn-hover-light-gray;
     }
 }

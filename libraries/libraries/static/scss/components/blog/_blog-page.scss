@@ -1,9 +1,12 @@
+@use "../../settings/breakpoints";
+@use "../../utilities/respond";
+
 // ========================================
 // Blog page content wrapper
 // ========================================
 
 .blog-page {
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         display: flex;
         padding-top: 30px;
         position: relative;

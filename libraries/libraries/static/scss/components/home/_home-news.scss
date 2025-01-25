@@ -1,3 +1,6 @@
+@use "../../settings/breakpoints";
+@use "../../utilities/respond";
+
 // ===================================
 // Home page news section.
 // ===================================
@@ -11,7 +14,7 @@
 .home-news__list {
     flex: 1 0 100%;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 1 0 70%;
     }
 }

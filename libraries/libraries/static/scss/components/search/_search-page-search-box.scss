@@ -1,3 +1,7 @@
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ==========================================
 // Search page search box. This component
 // wraps the search-box component to
@@ -5,10 +9,10 @@
 // ==========================================
 
 .search-page-search-box {
-    background: $grey;
+    background: colors.$grey;
     display: none;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: block;
     }
 

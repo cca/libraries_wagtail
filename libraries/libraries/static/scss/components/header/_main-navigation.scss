@@ -1,3 +1,8 @@
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../settings/component-specific";
+@use "../../utilities/respond";
+
 // ========================================
 // Main website navigation in the header.
 // On mobile it is a dropdown menu.
@@ -5,13 +10,13 @@
 $mainnav-border-bottom: 3px;
 
 .main-navigation {
-    background: $white;
+    background: colors.$white;
     display: none;
     position: absolute;
-    top: $header-height-small;
+    top: component-specific.$header-height-small;
     width: 100%;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: flex;
         float: right;
         margin-right: 20px;
@@ -30,24 +35,24 @@ $mainnav-border-bottom: 3px;
 // On the home page the search icon is
 // hidden so we can remove the right margin
 .page--home .main-navigation {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         margin-right: 0;
     }
 }
 
 .main-navigation__item {
-    border-bottom: 1px solid black(.1);
+    border-bottom: 1px solid colors.black(.1);
     border-left: 3px solid transparent;
     display: block;
     transition: border .3s ease;
 
-    @include respond(0, $break-medium) {
+    @include respond.respond(0, breakpoints.$break-medium) {
         &:last-of-type {
             border-bottom: 0;
         }
     }
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         border-bottom: $mainnav-border-bottom solid transparent;
         border-left: 0;
         display: inline-block;
@@ -57,68 +62,68 @@ $mainnav-border-bottom: 3px;
 
 .main-navigation__item:hover {
     &:first-of-type {
-        border-left-color: $blue;
+        border-left-color: colors.$blue;
     }
 
     &:nth-of-type(2) {
-        border-left-color: $purple;
+        border-left-color: colors.$purple;
     }
 
     &:nth-of-type(3) {
-        border-left-color: $green;
+        border-left-color: colors.$green;
     }
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         &:first-of-type {
-            border-bottom-color: $blue;
+            border-bottom-color: colors.$blue;
         }
 
         &:nth-of-type(2) {
-            border-bottom-color: $purple;
+            border-bottom-color: colors.$purple;
         }
 
         &:nth-of-type(3) {
-            border-bottom-color: $green;
+            border-bottom-color: colors.$green;
         }
     }
 }
 
 .page--services .main-navigation__item:first-of-type {
-    border-left-color: $blue;
+    border-left-color: colors.$blue;
 
-    @include respond($break-medium) {
-        border-bottom-color: $blue;
+    @include respond.respond(breakpoints.$break-medium) {
+        border-bottom-color: colors.$blue;
     }
 }
 
 .page--collections .main-navigation__item:nth-of-type(2) {
-    border-left-color: $purple;
+    border-left-color: colors.$purple;
 
-    @include respond($break-medium) {
-        border-bottom-color: $purple;
+    @include respond.respond(breakpoints.$break-medium) {
+        border-bottom-color: colors.$purple;
     }
 }
 
 .page--about-us .main-navigation__item:nth-of-type(3) {
-    border-left-color: $green;
+    border-left-color: colors.$green;
 
-    @include respond($break-medium) {
-        border-bottom-color: $green;
+    @include respond.respond(breakpoints.$break-medium) {
+        border-bottom-color: colors.$green;
     }
 }
 
 .main-navigation__link {
-    color: $black;
+    color: colors.$black;
     display: block;
     font-size: 18px;
     font-weight: 700;
     padding: 20px 20px 20px 16px; // border offset
     text-decoration: none;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 16px;
-        height: $header-height-large - $mainnav-border-bottom;
-        line-height: $header-height-large + 10;
+        height: component-specific.$header-height-large - $mainnav-border-bottom;
+        line-height: component-specific.$header-height-large + 10;
         padding: 0;
     }
 }

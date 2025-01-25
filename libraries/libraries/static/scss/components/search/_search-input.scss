@@ -1,3 +1,5 @@
+@use "../../settings/colors";
+
 // ===========================================
 // The search box <input>
 // ===========================================
@@ -7,7 +9,7 @@
 }
 
 .search-input__input {
-    border: 1px solid black(.1);
+    border: 1px solid colors.black(.1);
     font-size: 16px;
     padding: 12px;
     width: 100%;

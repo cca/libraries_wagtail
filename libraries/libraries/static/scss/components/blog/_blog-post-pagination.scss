@@ -1,15 +1,21 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/clearfix";
+@use "../../utilities/respond";
+
 // ========================================
 // Blog post pagination
 // ========================================
 
 .blog-post-pagination {
-    border-top: 1px solid black(.1);
+    border-top: 1px solid colors.black(.1);
     display: flex;
     flex-direction: column;
     padding: 20px 0 0;
     position: relative;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex-direction: row;
     }
 }
@@ -18,7 +24,7 @@
     flex: 1 0 50%;
     margin-top: 40px;
 
-    @include clearfix;
+    @include clearfix.clearfix;
 }
 
 .blog-post-pagination__link {
@@ -27,7 +33,7 @@
     text-decoration: none;
     transition: opacity .3s ease;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: block;
         width: 60%;
     }
@@ -38,7 +44,7 @@
 }
 
 .blog-post-pagination__link--next {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         float: right;
         text-align: right;
     }
@@ -51,7 +57,7 @@
     height: 65px;
     width: 100px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         margin: 0 0 7px;
     }
 }
@@ -61,21 +67,21 @@
     flex-direction: column;
     margin-left: 1rem;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         margin: 0;
     }
 }
 
 .blog-post-pagination__type {
     align-self: flex-start;
-    border-bottom: 2px solid $green;
+    border-bottom: 2px solid colors.$green;
     font-size: 16px;
     font-weight: 700;
     letter-spacing: .1em;
     margin: 0 0 7px;
 
     // on large screen, right-align the "next article" label
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         &.next {
             align-self: flex-end;
         }
@@ -84,14 +90,14 @@
 
 .blog-post-pagination__post-title {
     align-self: flex-end;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
     line-height: 1.6em;
 }
 
 .blog-post-pagination__post-title-text {
-    @include respond(0, $break-medium) {
-        border-bottom: 1px solid $green;
+    @include respond.respond(0, breakpoints.$break-medium) {
+        border-bottom: 1px solid colors.$green;
         padding: 0 0 2px;
     }
 }

@@ -1,3 +1,5 @@
+@use "../../settings/colors";
+
 // ========================================
 // Breadcrumb navigation
 // ========================================
@@ -15,15 +17,15 @@
 
 // vary breadcrumb color based on category
 .page--services .breadcrumb__link {
-    border-bottom: 2px solid $blue;
+    border-bottom: 2px solid colors.$blue;
 }
 
 .page--about-us .breadcrumb__link {
-    border-bottom: 2px solid $green;
+    border-bottom: 2px solid colors.$green;
 }
 
 .page--collections .breadcrumb__link {
-    border-bottom: 2px solid $purple;
+    border-bottom: 2px solid colors.$purple;
 }
 
 .breadcrumb__link {

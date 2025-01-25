@@ -1,24 +1,29 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ===================================
 // Footer section (wrapper)
 // ===================================
 
 .footer-section {
-    border-bottom: 1px solid black(.2);
+    border-bottom: 1px solid colors.black(.2);
     flex: 1 0 100%;
     margin: 0 0 15px;
     padding: 10px 0 15px;
 
-    @include respond($break-small) {
+    @include respond.respond(breakpoints.$break-small) {
         flex: 1 0 50%;
     }
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         border-bottom: 0;
         flex: 1 0 32%;
         padding-right: 10px;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         &:not(.footer-section--info) {
             padding-right: 40px;
         }
@@ -30,17 +35,17 @@
 }
 
 .footer-section--links {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 0 0 30%;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex: 0 0 24%;
     }
 }
 
 .footer-section--info {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: flex;
         flex-wrap: wrap;
         order: 3;
@@ -61,7 +66,7 @@
 .footer-section__link {
     color: inherit;
     display: block;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 12px;
     line-height: 1.5em;
     margin: 0 0 10px;
@@ -72,14 +77,14 @@
 }
 
 .footer-section__link--question {
-    font-family: $font-family-sans-serif;
+    font-family: variables.$font-family-sans-serif;
     font-size: 14px;
     font-weight: 700;
     margin: 0 0 10px;
 }
 
 .footer-section__text {
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 12px;
     line-height: 1.6em;
     margin: 0 0 15px;
@@ -87,7 +92,7 @@
 
 .footer-section__sites {
     display: flex;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 12px;
 }
 
@@ -106,7 +111,7 @@
 }
 
 .footer-section__content {
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex: 1 0 50%;
         order: 2;
     }
@@ -115,7 +120,7 @@
 .footer-section__links {
     margin-left: -10px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 1 0 50%;
     }
 }
@@ -123,7 +128,7 @@
 .footer-section__social-link {
     color: inherit;
     display: block;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 13px;
     padding: 0 10px 14px;
     text-decoration: underline;

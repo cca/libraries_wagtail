@@ -1,13 +1,19 @@
+@use "../../bootstrap/mixins/image";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../settings/font-families";
+@use "../../utilities/respond";
+
 // ===================================
 // Works gallery
 // laid out with masonry
 // ===================================
 img {
-    @include img-responsive;
+    @include image.img-responsive;
 }
 
 .gallery {
-    border-top: 1px solid $black;
+    border-top: 1px solid colors.$black;
     margin-bottom: 2em;
 
     &__fallback-image {
@@ -35,9 +41,9 @@ img {
 
         // Audio "play" button
         &--audio {
-            background: rgba($black, .7);
+            background: rgba(colors.$black, .7);
             border-radius: 50%;
-            fill: $white;
+            fill: colors.$white;
             height: 56px;
             padding: 13px;
             width: 56px;
@@ -46,12 +52,12 @@ img {
 }
 
 .gallery--title {
-    font-family: $font-family-sans-serif;
+    font-family: font-families.$font-family-sans-serif;
     font-size: 150%;
     font-weight: 700;
     margin: 40px 0 30px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 200%;
     }
 }
@@ -63,7 +69,7 @@ img {
     // stop images from being wider than phone screen
     max-width: 100%;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: inline-block;
         overflow: hidden;
         position: relative;
@@ -82,11 +88,11 @@ img {
 }
 
 .gallery--work__metadata {
-    background: $white;
+    background: colors.$white;
     overflow: hidden;
     padding: 1em 0 2em;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: inline-block;
         font-size: 12px;
         left: 0;
@@ -100,7 +106,7 @@ img {
     }
 }
 
-@include respond($break-medium) {
+@include respond.respond(breakpoints.$break-medium) {
     .gallery--work:hover .gallery--work__metadata {
         transform: translateY(-100%);
     }

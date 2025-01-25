@@ -1,3 +1,8 @@
+@use "../../settings/colors";
+@use "../../settings/component-specific";
+@use "../../settings/font-families";
+@use "settings";
+
 // ===================================
 // Overrides of main site _page.scss
 // which is also included
@@ -5,9 +10,9 @@
 $text-selectors: '.blog-post__image-description, .blog-post__paragraph, .blog-post__quote-cite-name, .blog-post__quote-cite-position, .blog-post__snippet-text';
 
 .page {
-    background: $white;
+    background: colors.$white;
     // default to serif (Merriweather/The Serif) font
-    font-family: $font-family-serif;
+    font-family: font-families.$font-family-serif;
     // non-standard, autoprefixer can't handle this property because the values
     // differ with each implementation (W3C, Firefox, Chrome)
     // sass-lint:disable no-misspelled-properties
@@ -25,32 +30,32 @@ $text-selectors: '.blog-post__image-description, .blog-post__paragraph, .blog-po
     // variable with list of selectors) that have a font-family defined on them
     // There is definitely a cleaner way to do this.
     .font--monospace {
-        font-family: $font-family-monospace;
+        font-family: font-families.$font-family-monospace;
 
         #{$text-selectors} {
-            font-family: $font-family-monospace;
+            font-family: font-families.$font-family-monospace;
         }
     }
 
     .font--sans-serif {
-        font-family: $font-family-sans-serif;
+        font-family: font-families.$font-family-sans-serif;
 
         #{$text-selectors} {
-            font-family: $font-family-sans-serif;
+            font-family: font-families.$font-family-sans-serif;
         }
     }
 
     .font--stencil {
-        font-family: $font-family-stencil;
+        font-family: font-families.$font-family-stencil;
 
         #{$text-selectors} {
-            font-family: $font-family-stencil;
+            font-family: font-families.$font-family-stencil;
         }
     }
 }
 
 .page--with-alert main {
-    margin-top: $alert-max-height;
+    margin-top: component-specific.$alert-max-height;
 }
 
 .page--overlay::after {
@@ -62,7 +67,7 @@ $text-selectors: '.blog-post__image-description, .blog-post__paragraph, .blog-po
     position: fixed;
     right: 0;
     top: 0;
-    z-index: $exhib-page-overlay-z;
+    z-index: settings.$exhib-page-overlay-z;
 }
 
 .epilogue {

@@ -1,3 +1,9 @@
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../settings/font-families";
+@use "../../utilities/respond";
+@use "settings";
+
 // ===================================
 // Metadata related to exhibit
 // Description | Location, Dates, Creator, Reception
@@ -6,13 +12,13 @@
 .wrapper--details {
     margin-bottom: 2em;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: flex;
     }
 }
 
 .metadata {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: flex;
         flex: 1;
         flex-wrap: wrap;
@@ -22,19 +28,19 @@
 }
 
 .metadata--element {
-    border-top: 1px solid $grey-border;
+    border-top: 1px solid settings.$grey-border;
     padding: 1em 0;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         border: 0;
-        border-left: 1px solid $grey-border;
+        border-left: 1px solid settings.$grey-border;
         flex: 0 50%;
         margin-bottom: 2em;
         padding: 1em;
     }
 
     dt {
-        font-family: $font-family-sans-serif;
+        font-family: font-families.$font-family-sans-serif;
         font-size: 16px;
         font-weight: 700;
         padding: 1em 0;
@@ -42,10 +48,10 @@
 }
 
 .description {
-    border-top: 1px solid $black;
+    border-top: 1px solid colors.$black;
     padding: 2em 1em 0 0;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         border: 0;
         flex: 1;
         order: 1;

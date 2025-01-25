@@ -1,16 +1,22 @@
+@use "../../bootstrap/mixins/clearfix";
+@use "../../settings/breakpoints";
+@use "../../settings/vars";
+@use "../../utilities/respond";
+@use "settings";
+
 // ========================================
 // Exhibits site max-width wrapper
 // ========================================
 .wrapper {
     margin: 0 auto;
-    max-width: $site-max-width;
-    padding: 0 $wrapper-default-horizontal-padding;
+    max-width: breakpoints.$site-max-width;
+    padding: 0 settings.$wrapper-default-horizontal-padding;
     position: relative;
 
-    @include clearfix;
+    @include clearfix.clearfix;
 
-    @include respond($break-medium) {
-        padding: 0 $wrapper-medium-horizontal-padding;
+    @include respond.respond(breakpoints.$break-medium) {
+        padding: 0 vars.$wrapper-medium-horizontal-padding;
     }
 }
 
@@ -18,7 +24,7 @@
     align-items: center;
     display: flex;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: block;
     }
 }
@@ -26,9 +32,9 @@
 .wrapper--search {
     margin-top: 230px; // search box offset
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         margin-top: 0;
-        max-width: $site-max-width-search;
+        max-width: breakpoints.$site-max-width-search;
     }
 }
 

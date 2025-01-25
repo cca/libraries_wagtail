@@ -1,3 +1,7 @@
+@use "../../settings/breakpoints";
+@use "../../settings/vars";
+@use "../../utilities/respond";
+
 // ===================================
 // Home page hero. It is a parent to
 // the search-box.
@@ -7,16 +11,16 @@
     background-image: url('/static/images/home-hero-bg.png');
     background-position: top center;
     background-size: cover;
-    margin: 0 0 $home-hero-default-bottom-margin;
+    margin: 0 0 vars.$home-hero-default-bottom-margin;
     padding: 100px 0 30px;
     position: relative;
 
-    @include respond($break-medium) {
-        margin: 0 0 $home-hero-medium-bottom-margin;
+    @include respond.respond(breakpoints.$break-medium) {
+        margin: 0 0 vars.$home-hero-medium-bottom-margin;
     }
 
-    @include respond($break-large) {
-        margin: 0 0 $home-hero-large-bottom-margin;
+    @include respond.respond(breakpoints.$break-large) {
+        margin: 0 0 vars.$home-hero-large-bottom-margin;
     }
 }
 
@@ -24,7 +28,7 @@
     margin: 0 auto 20px;
     max-width: 560px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         margin-bottom: 70px;
     }
 }

@@ -1,17 +1,22 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ========================================
 // Blog page sidebar list item
 // ========================================
 
 .blog-sidebar-item {
-    border-bottom: 1px solid black(.1);
+    border-bottom: 1px solid colors.black(.1);
     margin: 0 0 15px;
     padding: 0 0 15px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 1 0 50%;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         border-bottom: 0;
         flex: 1 0 100%;
         margin: 0 0 5px;
@@ -24,7 +29,7 @@
     text-decoration: none;
     transition: opacity .3s ease;
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex-wrap: wrap;
     }
 }
@@ -40,7 +45,7 @@
     height: 80px;
     width: 125px;
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         height: 70px;
         margin: 0 0 10px;
         width: 110px;
@@ -49,18 +54,18 @@
 
 .blog-sidebar-item__title {
     flex: 1 1;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
     line-height: 1.6em;
     padding: 0 25px 0 15px;
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex: 1 0 100%;
         padding: 0;
     }
 }
 
 .blog-sidebar-item__title-text {
-    border-bottom: 1px solid $green;
+    border-bottom: 1px solid colors.$green;
     padding: 0 0 2px;
 }

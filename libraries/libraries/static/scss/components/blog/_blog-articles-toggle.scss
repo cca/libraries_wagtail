@@ -1,19 +1,24 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ========================================
 // Blog page "More articles" toggle
 // ========================================
 
 .blog-articles-toggle {
-    border-bottom: 1px solid black(.15);
+    border-bottom: 1px solid colors.black(.15);
     color: inherit;
     display: block;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
     padding: 12px 15px;
     position: relative;
     text-decoration: none;
     transition: background .3s ease;
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         display: none;
     }
 }
@@ -35,7 +40,7 @@
 }
 
 .blog-articles-toggle:hover {
-    background: black(.01);
+    background: colors.black(.01);
 }
 
 .blog-articles-toggle--is-active {

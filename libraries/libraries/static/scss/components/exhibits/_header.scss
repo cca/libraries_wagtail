@@ -1,23 +1,30 @@
+@use "../../bootstrap/mixins/clearfix";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../settings/component-specific";
+@use "../../utilities/respond";
+@use "settings";
+
 // ===================================
 // Exhibits header
 // black background, white font, teal links
 // ===================================
 
 .header {
-    background: $black;
-    height: $header-height-small;
+    background: colors.$black;
+    height: component-specific.$header-height-small;
     margin: 0 auto;
-    max-width: $site-max-width;
+    max-width: breakpoints.$site-max-width;
     width: 100%;
 
-    @include clearfix;
+    @include clearfix.clearfix;
 }
 
 .header__home-link {
     flex: 2;
     max-width: 240px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: block;
         height: auto;
         max-width: 240px;
@@ -38,16 +45,16 @@
 }
 
 .header__nav-link {
-    border-bottom: $nav-border-bottom solid transparent;
-    border-left: 1px solid $grey-border;
+    border-bottom: component-specific.$nav-border-bottom solid transparent;
+    border-left: 1px solid settings.$grey-border;
     display: block;
     float: right;
-    height: $header-height-small - $nav-border-bottom;
+    height: component-specific.$header-height-small - component-specific.$nav-border-bottom;
     position: relative;
     transition: background .3s ease;
-    width: $header-height-small;
+    width: component-specific.$header-height-small;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         // borders for search icon which is still visible
         border: 1px solid transparent;
         border-right: 0;
@@ -57,14 +64,14 @@
 }
 
 .header__nav-link:hover {
-    border-bottom: $nav-border-bottom solid $white;
+    border-bottom: component-specific.$nav-border-bottom solid colors.$white;
 }
 
 // Search modifier
 .header__nav-link--search {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: block;
-        height: $header-height-large - 20px;
+        height: component-specific.$header-height-large - 20px;
         position: absolute;
         right: 0;
         top: 0;
@@ -84,7 +91,7 @@
     transform: translateX(-50%);
     width: 30px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         top: 16px;
     }
 }

@@ -1,3 +1,6 @@
+@use "../../bootstrap/variables";
+@use "../../settings/colors";
+
 // ========================================
 // "Product grid" (grid of gray cards with thumbnails) block
 // copied from Portal https://github.com/cca/portal/blob/master/portal/static/styles/portal/sass/partials/components/_blocks.scss
@@ -11,19 +14,19 @@
         height: 100%;
         padding: 10px;
 
-        @media (min-width: $screen-xs-min) {
+        @media (min-width: variables.$screen-xs-min) {
             padding: 10px 7px;
         }
     }
 
     &__content {
-        background-color: $ccaVeryLightGray;
+        background-color: colors.$ccaVeryLightGray;
         height: 325px;
         overflow: hidden;
         padding: 20px;
         width: 275px;
 
-        @media (min-width: $screen-xs-min) {
+        @media (min-width: variables.$screen-xs-min) {
             padding: 20px 10px;
             width: 216px;
         }
@@ -35,7 +38,7 @@
     }
 
     &__no-link-item {
-        background-color: $white;
+        background-color: colors.$white;
     }
 
     &__img {
@@ -56,21 +59,21 @@
         text-align: center;
         width: 230px;
 
-        @media (min-width: $screen-xs-min) {
+        @media (min-width: variables.$screen-xs-min) {
             margin-top: 16px;
             width: 190px;
         }
     }
 
     &__title {
-        color: $ccaBlue;
+        color: colors.$ccaBlue;
         font-size: 18px;
         margin-bottom: 8px;
         word-break: keep-all;
     }
 
     &__caption {
-        color: $black;
+        color: colors.$black;
         display: block;
         font-size: 16px;
         overflow: hidden;

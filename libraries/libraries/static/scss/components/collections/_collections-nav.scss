@@ -1,3 +1,8 @@
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/clearfix";
+@use "../../utilities/respond";
+
 // ========================================
 // Collections page navigation ul element
 // ========================================
@@ -5,10 +10,10 @@
 .collections-nav {
     margin: 0 15px 10px;
 
-    @include clearfix; // fix margins
+    @include clearfix.clearfix; // fix margins
 
-    @include respond($break-medium) {
-        background: $white;
+    @include respond.respond(breakpoints.$break-medium) {
+        background: colors.$white;
         margin: 0;
         max-height: calc(100vh - 200px);
         position: fixed;

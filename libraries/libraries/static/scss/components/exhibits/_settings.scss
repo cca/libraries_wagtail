@@ -1,7 +1,12 @@
-$grey-border: lighten($black, 75%);
-$site-max-width: 1360px;
+@use "sass:color";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../settings/vars";
+
+$grey-border: color.adjust(colors.$black, $lightness: 75%);
+breakpoints.$site-max-width: 1360px;
 $wrapper-default-horizontal-padding: 15px;
-$wrapper-medium-horizontal-padding: 50px;
+vars.$wrapper-medium-horizontal-padding: 50px;
 
 // we need elements to layer in this order: search box on top of everything, page
 // overlay grays out everything else, banner title sits on top of its bg image

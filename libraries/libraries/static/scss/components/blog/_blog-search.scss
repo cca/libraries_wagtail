@@ -1,13 +1,17 @@
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ========================================
 // Blog page search component
 // ========================================
 
 .blog-search {
-    background: $grey;
+    background: colors.$grey;
     margin: 0 0 15px;
     padding: 15px;
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         background: transparent;
         margin: 0 0 20px;
         padding: 0;
@@ -36,7 +40,7 @@
     font-weight: 700;
     margin: 0 0 10px;
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         font-size: 16px;
     }
 }

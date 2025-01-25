@@ -1,22 +1,28 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../settings/component-specific";
+@use "../../utilities/respond";
+
 .alert-banner {
     align-items: center;
-    background-color: $ccaRed;
-    color: $white;
+    background-color: colors.$ccaRed;
+    color: colors.$white;
     display: flex;
-    font-family: $font-family-sans-serif;
+    font-family: variables.$font-family-sans-serif;
     font-size: 14px;
     font-weight: 400;
     justify-content: center;
     margin-bottom: 4px;
-    max-height: $alert-max-height;
+    max-height: component-specific.$alert-max-height;
     padding: 16px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 18px;
     }
 
     &__icon {
-        background-color: $white;
+        background-color: colors.$white;
         float: left;
         height: 24px;
         margin-right: 8px;
@@ -37,7 +43,7 @@
     }
 
     a {
-        color: $white;
+        color: colors.$white;
         font-weight: 400;
         text-decoration: underline;
     }

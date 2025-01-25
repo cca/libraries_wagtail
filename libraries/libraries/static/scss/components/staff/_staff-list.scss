@@ -1,3 +1,6 @@
+@use "../../settings/breakpoints";
+@use "../../utilities/respond";
+
 // ===================================
 // Staff list page
 // borrows most styles from search
@@ -7,7 +10,7 @@
     &.wrapper--search {
         margin-top: 0;
 
-        @include respond($break-medium) {
+        @include respond.respond(breakpoints.$break-medium) {
             margin-top: 0;
             max-width: 1000px;
         }
@@ -16,7 +19,7 @@
     .search-list {
         padding: 20px 0 0;
 
-        @include respond($break-medium) {
+        @include respond.respond(breakpoints.$break-medium) {
             display: flex;
             flex-wrap: wrap;
 
@@ -30,7 +33,7 @@
     .search-result {
         display: block;
 
-        @include respond($break-medium) {
+        @include respond.respond(breakpoints.$break-medium) {
             display: flex;
         }
     }
@@ -41,7 +44,7 @@
         margin: 0 auto 20px;
         width: 150px;
 
-        @include respond($break-medium) {
+        @include respond.respond(breakpoints.$break-medium) {
             display: flex;
             margin: 0;
         }

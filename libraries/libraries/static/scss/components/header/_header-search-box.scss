@@ -1,3 +1,7 @@
+@use "../../settings/breakpoints";
+@use "../../settings/component-specific";
+@use "../../utilities/respond";
+
 // ========================================
 // Header search box. This component
 // wraps the search-box component to
@@ -8,12 +12,12 @@
 .header-search-box {
     display: none;
     position: absolute;
-    top: $header-height-small;
+    top: component-specific.$header-height-small;
     width: 100%;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         right: 0;
-        top: $header-height-large - 10px;
+        top: component-specific.$header-height-large - 10px;
         width: 500px;
     }
 
@@ -21,7 +25,7 @@
     .search-box__title {
         display: none;
 
-        @include respond($break-medium) {
+        @include respond.respond(breakpoints.$break-medium) {
             display: block;
         }
     }
@@ -35,7 +39,7 @@
 // page (> medium viewport) becuase there
 // is a standalone search-box
 .page--search .header-search-box {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         display: none;
     }
 }

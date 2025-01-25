@@ -1,3 +1,7 @@
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ===================================
 // Home hero info box. Holds general
 // information about the site and
@@ -6,20 +10,20 @@
 
 .home-info-box {
     align-items: stretch;
-    background: black(.65);
+    background: colors.black(.65);
     display: flex;
     flex-wrap: wrap;
     padding: 18px;
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex-wrap: nowrap;
         padding: 30px;
     }
 }
 
 .home-info-box__item {
-    border-bottom: 2px solid white(.4);
-    color: $white;
+    border-bottom: 2px solid colors.white(.4);
+    color: colors.$white;
     flex: 1 0 100%;
     margin: 0 0 20px;
     padding: 0 0 20px 10px;
@@ -30,13 +34,13 @@
         margin-bottom: 0;
     }
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         border-bottom: 0;
         flex: 1 0 50%;
         padding: 0 40px 0 30px;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex: 1 0 20%;
         margin: 0;
     }
@@ -45,7 +49,7 @@
 .home-info-box__item:nth-of-type(2)::after,
 .home-info-box__item:nth-of-type(3)::after,
 .home-info-box__item:nth-of-type(4)::after {
-    background: $blue; // services
+    background: colors.$blue; // services
     content: '';
     height: 100%;
     left: 0;
@@ -53,17 +57,17 @@
     top: 0;
     width: 2px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         height: 100%;
     }
 }
 
 .home-info-box__item:nth-of-type(3)::after {
-    background: $purple; // collections
+    background: colors.$purple; // collections
 }
 
 .home-info-box__item:nth-of-type(4)::after {
-    background: $green; // about us
+    background: colors.$green; // about us
 }
 
 .home-info-box__item-title {
@@ -72,14 +76,14 @@
     letter-spacing: .06em;
     margin: 2px 0 10px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 24px;
         margin: 2px 0 20px;
     }
 }
 
 .home-info-box__item-link {
-    border-bottom: 1px solid $white;
+    border-bottom: 1px solid colors.$white;
     color: inherit;
     display: inline-block;
     line-height: 1.3em;
@@ -99,10 +103,10 @@
     // the extra selectors are for specifity
     // to override the `.rich-text a[href]` rule in components/misc/rich-text.scss
     .rich-text a[href] {
-        color: $info-box-link-blue;
+        color: colors.$info-box-link-blue;
     }
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 14px;
     }
 }

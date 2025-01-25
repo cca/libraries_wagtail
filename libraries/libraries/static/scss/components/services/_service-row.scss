@@ -1,3 +1,8 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ===================================
 // Services page row and all of it's
 // contents.
@@ -8,10 +13,10 @@
     flex-wrap: wrap;
 
     &:not(:last-of-type) {
-        border-bottom: 2px solid $black;
+        border-bottom: 2px solid colors.$black;
         margin: 0 0 15px;
 
-        @include respond($break-medium) {
+        @include respond.respond(breakpoints.$break-medium) {
             margin: 0 0 30px;
             padding: 0 0 15px;
         }
@@ -24,25 +29,25 @@
     font-weight: 700;
     margin: 0 0 15px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 28px;
         margin: 0 0 30px;
     }
 }
 
 .service-row__summary {
-    border-bottom: 1px solid black(.1);
+    border-bottom: 1px solid colors.black(.1);
     flex: 0 0 100%;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
     font-weight: 300;
     line-height: 1.4em;
     margin: 0 0 15px;
     padding: 0 0 15px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         border-bottom: 0;
-        border-right: 1px solid black(.1);
+        border-right: 1px solid colors.black(.1);
         flex: 0 0 26%;
         font-size: 16px;
         line-height: 1.6em;
@@ -50,7 +55,7 @@
         padding-right: 24px;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex: 0 0 23%;
     }
 }
@@ -59,7 +64,7 @@
     display: flex;
     flex-wrap: wrap;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 1 0 50%;
     }
 }

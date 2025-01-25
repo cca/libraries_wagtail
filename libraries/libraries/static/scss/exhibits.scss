@@ -7,64 +7,64 @@
 // ===================================
 
 // Fonts
-@import 'fonts/cca-fonts';
+@use 'fonts/cca-fonts';
 
 // Settings
-@import 'settings/animations';
-@import 'settings/breakpoints';
-@import 'settings/colors';
-@import 'settings/component-specific';
-@import 'settings/font-families';
-@import 'settings/vars';
-@import 'components/exhibits/settings';
+@use 'settings/animations';
+@use 'settings/breakpoints';
+@use 'settings/colors';
+@use 'settings/component-specific';
+@use 'settings/font-families';
+@use 'settings/vars';
+@use 'components/exhibits/settings';
 
 // Utilities
-@import 'utilities/clearfix';
-@import 'utilities/respond';
-@import 'utilities/sronly';
-@import 'utilities/text';
+@use 'utilities/clearfix';
+@use 'utilities/respond';
+@use 'utilities/sronly';
+@use 'utilities/text';
 
 // Reset
-@import 'reset/reset';
-@import 'reset/box-sizing';
-@import 'bootstrap/mixins';
+@use 'reset/reset';
+@use 'reset/box-sizing';
+@use 'bootstrap/mixins';
 
 // -- Footer
-@import 'components/footer/footer-section';
-@import 'components/footer/footer';
+@use 'components/footer/footer-section';
+@use 'components/footer/footer';
 
 // -- Forms
-@import 'components/forms/checkbox';
-@import 'components/forms/label';
+@use 'components/forms/checkbox';
+@use 'components/forms/label';
 
 // -- Search
 // These are a subset of the main site's search components plus one
 // Exhibits-specific file of overrides.
-@import 'components/header/header-search-box';
-@import 'components/search/search-box';
-@import 'components/search/search-input';
-@import 'components/search/search-pagination';
-@import 'components/exhibits/search';
+@use 'components/header/header-search-box';
+@use 'components/search/search-box';
+@use 'components/search/search-input';
+@use 'components/search/search-pagination';
+@use 'components/exhibits/search';
 
 // -- Misc
-@import 'components/misc/link';
-@import 'components/misc/rich-text';
+@use 'components/misc/link';
+@use 'components/misc/rich-text';
 
 // -- Blog
 // Has necessary block styles for callouts, blockquotes
-@import 'components/blog/blog-post';
+@use 'components/blog/blog-post';
 
 // -- Exhibits-specific
-@import 'components/exhibits/banner';
-@import 'components/exhibits/details';
-@import 'components/exhibits/foursquare';
-@import 'components/exhibits/gallery';
-@import 'components/exhibits/header';
-@import 'components/exhibits/index';
-@import 'components/exhibits/lightgallery';
-@import 'components/exhibits/main-navigation';
-@import 'components/exhibits/page';
-@import 'components/exhibits/wrapper';
+@use 'components/exhibits/banner';
+@use 'components/exhibits/details';
+@use 'components/exhibits/foursquare';
+@use 'components/exhibits/gallery';
+@use 'components/exhibits/header';
+@use 'components/exhibits/index';
+@use 'components/exhibits/lightgallery';
+@use 'components/exhibits/main-navigation';
+@use 'components/exhibits/page';
+@use 'components/exhibits/wrapper';
 
 // -- Alerts
-@import 'components/alerts/alert-banner';
+@use 'components/alerts/alert-banner';

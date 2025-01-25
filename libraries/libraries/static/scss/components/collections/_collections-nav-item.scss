@@ -1,3 +1,8 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ========================================
 // Collections page navigation item
 // ========================================
@@ -6,14 +11,14 @@
     display: block;
     margin: 0 0 23px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         margin: 0;
 
         &.collections-nav-item--is-active,
         &:hover {
             // vary color by section
             .collections-nav-item__link {
-                border-left-color: $purple;
+                border-left-color: colors.$purple;
                 padding-left: 15px;
             }
 
@@ -26,22 +31,22 @@
 
 // some of the more complicated vary-color-by-section due to nesting
 .page--services .collections-nav-item {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         &.collections-nav-item--is-active,
         &:hover {
             .collections-nav-item__link {
-                border-left-color: $blue;
+                border-left-color: colors.$blue;
             }
         }
     }
 }
 
 .page--about-us .collections-nav-item {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         &.collections-nav-item--is-active,
         &:hover {
             .collections-nav-item__link {
-                border-left-color: $green;
+                border-left-color: colors.$green;
             }
         }
     }
@@ -49,26 +54,26 @@
 
 // vary color by section
 .page--about-us .collections-nav-item__link {
-    border-bottom: 2px solid $green;
+    border-bottom: 2px solid colors.$green;
 }
 
 .page--services .collections-nav-item__link {
-    border-bottom: 2px solid $blue;
+    border-bottom: 2px solid colors.$blue;
 }
 
 .page--collections .collections-nav-item__link {
-    border-bottom: 2px solid $purple;
+    border-bottom: 2px solid colors.$purple;
 }
 
 .page .collections-nav-item__link {
     color: inherit;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 15px;
     padding: 0 0 2px;
     text-decoration: none;
 
-    @include respond($break-medium) {
-        border-bottom: 1px solid black(.1);
+    @include respond.respond(breakpoints.$break-medium) {
+        border-bottom: 1px solid colors.black(.1);
         border-left: 2px solid transparent;
         display: block;
         font-size: 12px;
@@ -82,25 +87,25 @@
 .collections-nav-item__link:hover {
     opacity: .7;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         opacity: 1;
     }
 }
 
 .page--collections .collections-nav-item__text {
-    @include respond($break-medium) {
-        border-bottom: 1px solid $purple;
+    @include respond.respond(breakpoints.$break-medium) {
+        border-bottom: 1px solid colors.$purple;
     }
 }
 
 .page--about-us .collections-nav-item__text {
-    @include respond($break-medium) {
-        border-bottom: 1px solid $green;
+    @include respond.respond(breakpoints.$break-medium) {
+        border-bottom: 1px solid colors.$green;
     }
 }
 
 .page--services .collections-nav-item__text {
-    @include respond($break-medium) {
-        border-bottom: 1px solid $blue;
+    @include respond.respond(breakpoints.$break-medium) {
+        border-bottom: 1px solid colors.$blue;
     }
 }

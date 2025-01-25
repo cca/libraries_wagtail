@@ -1,139 +1,139 @@
 // Boostrap Mixins
 // import them all as some are dependencies of other BS utilities
-@import 'bootstrap/mixins/alerts';
-@import 'bootstrap/mixins/background-variant';
-@import 'bootstrap/mixins/border-radius';
-@import 'bootstrap/mixins/buttons';
-@import 'bootstrap/mixins/center-block';
-@import 'bootstrap/mixins/clearfix';
-@import 'bootstrap/mixins/forms';
-@import 'bootstrap/mixins/gradients';
-@import 'bootstrap/mixins/grid-framework';
-@import 'bootstrap/mixins/grid';
-@import 'bootstrap/mixins/hide-text';
-@import 'bootstrap/mixins/image';
-@import 'bootstrap/mixins/labels';
-@import 'bootstrap/mixins/list-group';
-@import 'bootstrap/mixins/nav-divider';
-@import 'bootstrap/mixins/nav-vertical-align';
-@import 'bootstrap/mixins/opacity';
-@import 'bootstrap/mixins/pagination';
-@import 'bootstrap/mixins/panels';
-@import 'bootstrap/mixins/progress-bar';
-@import 'bootstrap/mixins/reset-filter';
-@import 'bootstrap/mixins/reset-text';
-@import 'bootstrap/mixins/resize';
-@import 'bootstrap/mixins/responsive-visibility';
-@import 'bootstrap/mixins/size';
-@import 'bootstrap/mixins/tab-focus';
-@import 'bootstrap/mixins/table-row';
-@import 'bootstrap/mixins/text-emphasis';
-@import 'bootstrap/mixins/text-overflow';
-@import 'bootstrap/mixins/vendor-prefixes';
+@use 'bootstrap/mixins/alerts';
+@use 'bootstrap/mixins/background-variant';
+@use 'bootstrap/mixins/border-radius';
+@use 'bootstrap/mixins/buttons';
+@use 'bootstrap/mixins/center-block';
+@use 'bootstrap/mixins/clearfix';
+@use 'bootstrap/mixins/forms';
+@use 'bootstrap/mixins/gradients';
+@use 'bootstrap/mixins/grid-framework';
+@use 'bootstrap/mixins/grid';
+@use 'bootstrap/mixins/hide-text';
+@use 'bootstrap/mixins/image';
+@use 'bootstrap/mixins/labels';
+@use 'bootstrap/mixins/list-group';
+@use 'bootstrap/mixins/nav-divider';
+@use 'bootstrap/mixins/nav-vertical-align';
+@use 'bootstrap/mixins/opacity';
+@use 'bootstrap/mixins/pagination';
+@use 'bootstrap/mixins/panels';
+@use 'bootstrap/mixins/progress-bar';
+@use 'bootstrap/mixins/reset-filter';
+@use 'bootstrap/mixins/reset-text';
+@use 'bootstrap/mixins/resize';
+@use 'bootstrap/mixins/responsive-visibility';
+@use 'bootstrap/mixins/size';
+@use 'bootstrap/mixins/tab-focus';
+@use 'bootstrap/mixins/table-row';
+@use 'bootstrap/mixins/text-emphasis';
+@use 'bootstrap/mixins/text-overflow';
+@use 'bootstrap/mixins/vendor-prefixes';
 
 // Fonts
-@import 'fonts/cca-fonts';
+@use 'fonts/cca-fonts';
 
 // Settings
-@import 'settings/animations';
-@import 'settings/breakpoints';
-@import 'settings/colors';
-@import 'settings/component-specific';
-@import 'settings/font-families';
-@import 'settings/vars';
+@use 'settings/animations';
+@use 'settings/breakpoints';
+@use 'settings/colors';
+@use 'settings/component-specific';
+@use 'settings/font-families';
+@use 'settings/vars';
 
 // Utilities
-@import 'utilities/bluebg';
-@import 'utilities/clearfix';
-@import 'utilities/respond';
-@import 'utilities/sronly';
-@import 'utilities/text';
-@import 'bootstrap/variables';
-@import 'bootstrap/code'; // depends on vars above
-@import 'bootstrap/responsive-embed';
-@import 'bootstrap/responsive-utilities';
-@import 'bootstrap/buttons';
+@use 'utilities/bluebg';
+@use 'utilities/clearfix' as clearfix2;
+@use 'utilities/respond';
+@use 'utilities/sronly';
+@use 'utilities/text';
+@use 'bootstrap/variables';
+@use 'bootstrap/code'; // depends on vars above
+@use 'bootstrap/responsive-embed';
+@use 'bootstrap/responsive-utilities';
+@use 'bootstrap/buttons' as buttons2;
 
 // Reset
-@import 'reset/reset';
-@import 'reset/box-sizing';
+@use 'reset/reset';
+@use 'reset/box-sizing';
 
 // Components (a-z)
 
 // -- About Us
-@import 'components/about-us/about-us-text';
+@use 'components/about-us/about-us-text';
 
 // -- Blocks
-@import 'components/blocks/card';
-@import 'components/blocks/product-grid-block';
+@use 'components/blocks/card';
+@use 'components/blocks/product-grid-block';
 
 // -- Blog
-@import 'components/blog/blog-articles-toggle';
-@import 'components/blog/blog-page';
-@import 'components/blog/blog-post-pagination';
-@import 'components/blog/blog-post';
-@import 'components/blog/blog-search';
-@import 'components/blog/blog-sidebar-item';
-@import 'components/blog/blog-sidebar';
+@use 'components/blog/blog-articles-toggle';
+@use 'components/blog/blog-page';
+@use 'components/blog/blog-post-pagination';
+@use 'components/blog/blog-post';
+@use 'components/blog/blog-search';
+@use 'components/blog/blog-sidebar-item';
+@use 'components/blog/blog-sidebar';
 
 // -- Collections
-@import 'components/collections/collection';
-@import 'components/collections/collections-list';
-@import 'components/collections/collections-nav-item';
-@import 'components/collections/collections-nav';
-@import 'components/collections/collections-title';
+@use 'components/collections/collection';
+@use 'components/collections/collections-list';
+@use 'components/collections/collections-nav-item';
+@use 'components/collections/collections-nav';
+@use 'components/collections/collections-title';
 
 // -- Footer
-@import 'components/footer/footer-section';
-@import 'components/footer/footer';
+@use 'components/footer/footer-section';
+@use 'components/footer/footer';
 
 // -- Forms
-@import 'components/forms/checkbox';
-@import 'components/forms/label';
+@use 'components/forms/checkbox';
+@use 'components/forms/label';
 
 // -- Header
-@import 'components/header/header-search-box';
-@import 'components/header/header';
-@import 'components/header/main-navigation';
+@use 'components/header/header-search-box';
+@use 'components/header/header';
+@use 'components/header/main-navigation';
 
 // -- Alerts
-@import 'components/alerts/alert-banner';
+@use 'components/alerts/alert-banner';
 
 // -- Home page
-@import 'components/home/home-hero';
-@import 'components/home/home-info-box-times';
-@import 'components/home/home-info-box';
-@import 'components/home/home-info-box-links';
-@import 'components/home/image-attribution';
-@import 'components/home/home-news-item';
-@import 'components/home/home-news';
+@use 'components/home/home-hero';
+@use 'components/home/home-info-box-times';
+@use 'components/home/home-info-box';
+@use 'components/home/home-info-box-links';
+@use 'components/home/image-attribution';
+@use 'components/home/home-news-item';
+@use 'components/home/home-news';
 
 // -- Hours
 // Table styles borrowed from Bootstrap
-@import 'bootstrap/tables';
+@use 'bootstrap/tables';
 
 // -- Misc
-@import 'components/misc/anchor';
-@import 'components/misc/breadcrumb';
-@import 'components/misc/link';
-@import 'components/misc/page';
-@import 'components/misc/rich-text';
-@import 'components/misc/target';
-@import 'components/misc/wrapper';
-@import 'components/button';
+@use 'components/misc/anchor';
+@use 'components/misc/breadcrumb';
+@use 'components/misc/link';
+@use 'components/misc/page';
+@use 'components/misc/rich-text';
+@use 'components/misc/target';
+@use 'components/misc/wrapper';
+@use 'components/button';
 
 // -- Search page and components
-@import 'components/search/search-box';
-@import 'components/search/search-input';
-@import 'components/search/search-list';
-@import 'components/search/search-page-search-box';
-@import 'components/search/search-pagination';
-@import 'components/search/search-result';
+@use 'components/search/search-box';
+@use 'components/search/search-input';
+@use 'components/search/search-list';
+@use 'components/search/search-page-search-box';
+@use 'components/search/search-pagination';
+@use 'components/search/search-result';
 
 // -- Services page
-@import 'components/services/service-row-item';
-@import 'components/services/service-row';
-@import 'components/services/services';
+@use 'components/services/service-row-item';
+@use 'components/services/service-row';
+@use 'components/services/services';
 
 // -- Staff List page
-@import 'components/staff/staff-list';
+@use 'components/staff/staff-list';

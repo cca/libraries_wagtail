@@ -1,8 +1,10 @@
+@use "colors";
+
 // ===================================
 // Component sepcific variables
 // ===================================
 
-$header-border-color: black(.1);
+$header-border-color: colors.black(.1);
 $header-height-small: 60px;
 $header-height-large: 80px;
 

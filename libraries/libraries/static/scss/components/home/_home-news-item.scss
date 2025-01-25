@@ -1,3 +1,8 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ===================================
 // Home page news item.
 // ===================================
@@ -7,7 +12,7 @@
     flex-wrap: wrap;
     margin: 0 0 24px;
 
-    @include respond($break-small) {
+    @include respond.respond(breakpoints.$break-small) {
         flex-wrap: nowrap;
     }
 }
@@ -16,12 +21,12 @@
     flex: 1 0 100%;
     flex-wrap: wrap;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 1 0 30%;
         padding: 0 0 0 10px;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         padding: 0 0 0 30px;
     }
 }
@@ -31,17 +36,17 @@
     flex: 1 0 100%;
     margin: 0 0 10px;
 
-    @include respond($break-small) {
+    @include respond.respond(breakpoints.$break-small) {
         flex: 1 0 30%;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex: 1 0 45%;
     }
 }
 
 .home-news-item__image-wrapper--instagram {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 1 0 100%;
     }
 }
@@ -54,8 +59,8 @@
 
 .home-news-item__featured-flag {
     // make the fade gradient start after text ends
-    background-image: linear-gradient(to right, $ccaPurple, $ccaPurple 29%, $white);
-    color: $white;
+    background-image: linear-gradient(to right, colors.$ccaPurple, colors.$ccaPurple 29%, colors.$white);
+    color: colors.$white;
     font-style: oblique;
     margin: 0 0 .5em;
     padding: .5em;
@@ -65,22 +70,22 @@
 .home-news-item__content {
     flex: 1 0 100%;
 
-    @include respond($break-small) {
+    @include respond.respond(breakpoints.$break-small) {
         flex: 1 0 70%;
         padding: 0 10px;
     }
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         padding: 0 20px;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex: 1 0 55%;
     }
 }
 
 .home-news-item__content--instagram {
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 1 0 100%;
         padding: 0;
     }
@@ -88,11 +93,11 @@
 
 .home-news-item__date {
     display: none;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 12px;
     margin: 0 0 6px;
 
-    @include respond($break-small) {
+    @include respond.respond(breakpoints.$break-small) {
         display: block;
     }
 }
@@ -103,14 +108,14 @@
     line-height: 1.4em;
     margin: 0 0 7px;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 18px;
         margin: 0 0 12px;
     }
 }
 
 .home-news-item__link {
-    border-bottom: 2px solid $turquoise;
+    border-bottom: 2px solid colors.$turquoise;
     color: inherit;
     text-decoration: none;
 }
@@ -120,7 +125,7 @@
 }
 
 .home-news-item__text {
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
     // hyphens & word-break together fix layout bug
     // stops long text (e.g. a URL) from ballooning the size of element
@@ -128,7 +133,7 @@
     line-height: 1.4em;
     word-break: break-word;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         font-size: 16px;
     }
 }

@@ -1,9 +1,13 @@
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ===================================
 // Main website footer.
 // ===================================
 
 .footer {
-    background: $grey;
+    background: colors.$grey;
     padding: 15px 0;
     position: relative;
     z-index: 100;
@@ -13,7 +17,7 @@
     display: flex;
     flex-wrap: wrap;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex-wrap: nowrap;
     }
 }

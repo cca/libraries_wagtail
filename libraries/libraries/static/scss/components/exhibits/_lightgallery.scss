@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "../../settings/colors";
+@use "../../settings/font-families";
+
 // ===================================
 // Overrides/edits to lightGallery.js
 // styles http://sachinchoolur.github.io/lightGallery
@@ -10,7 +14,7 @@
 // we have to use an ID here to override lightGallery CSS
 // sass-lint:disable no-ids,no-important
 #lg-counter {
-    color: $turquoise !important;
+    color: colors.$turquoise !important;
     font-size: 18px;
 }
 // sass-lint:enable no-ids,no-important
@@ -19,7 +23,7 @@ $sub-html-padding: 40px;
 
 // 1st selector needed just for specificity
 .lg-outer .lg-sub-html {
-    color: $white;
+    color: colors.$white;
     display: flex;
     padding: 0 $sub-html-padding;
     text-align: left;
@@ -53,7 +57,7 @@ $sub-html-padding: 40px;
 
         // dark gray line inbetween responsibility & description
         &::before {
-            border-left: 1px solid lighten($black, 30%);
+            border-left: 1px solid color.adjust(colors.$black, $lightness: 30%);
             content: '';
             height: 60px;
             position: absolute;
@@ -63,7 +67,7 @@ $sub-html-padding: 40px;
     }
 
     .gallery--work__title {
-        font-family: $font-family-sans-serif;
+        font-family: font-families.$font-family-sans-serif;
         font-size: 20px;
     }
 
@@ -75,7 +79,7 @@ $sub-html-padding: 40px;
         display: block;
 
         a {
-            color: $turquoise;
+            color: colors.$turquoise;
             text-decoration: none;
         }
     }

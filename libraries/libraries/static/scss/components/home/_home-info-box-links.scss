@@ -1,3 +1,5 @@
+@use "../../settings/colors";
+
 // ===================================
 // Links in the home hero box beneath
 // each of the 3 columns. The links
@@ -7,7 +9,7 @@
     text-align: center;
 
     a {
-        color: $white;
+        color: colors.$white;
     }
 
     // 2nd link if there are 2 links

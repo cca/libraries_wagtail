@@ -1,3 +1,8 @@
+@use "../../bootstrap/variables";
+@use "../../settings/breakpoints";
+@use "../../settings/colors";
+@use "../../utilities/respond";
+
 // ===================================
 // Home hero info box. Holds general
 // information about the site and
@@ -5,18 +10,18 @@
 // ===================================
 
 .home-info-box-times {
-    color: $white;
+    color: colors.$white;
     flex: 1 0 100%;
     padding: 0 0 30px;
     position: relative;
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         flex: 0 0 50%;
         order: 3;
         padding: 0;
     }
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         flex: 0 0 20%;
     }
 }
@@ -43,10 +48,10 @@
 }
 
 .home-info-box-times__timetable {
-    border-top: 1px solid white(.4);
+    border-top: 1px solid colors.white(.4);
     display: flex;
     flex-wrap: wrap;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
     letter-spacing: .04em;
     line-height: 20px;
@@ -56,7 +61,7 @@
 
 .home-info-box-times__timetable-name,
 .home-info-box-times__timetable-times {
-    border-bottom: 1px solid white(.4);
+    border-bottom: 1px solid colors.white(.4);
     flex: 1 0 50%;
     margin: 0 0 10px;
     padding: 0 0 10px;
@@ -70,7 +75,7 @@
 
 .home-info-box-times__link {
     color: inherit;
-    font-family: $font-family-serif;
+    font-family: variables.$font-family-serif;
     font-size: 14px;
 }
 

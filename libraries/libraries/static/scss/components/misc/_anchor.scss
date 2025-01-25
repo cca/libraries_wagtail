@@ -1,11 +1,15 @@
+@use "../../settings/breakpoints";
+@use "../../settings/component-specific";
+@use "../../utilities/respond";
+
 // hidden anchor that offsets the fixed header
 .anchor {
     display: block;
     position: relative;
-    top: -1 * $header-height-small;
+    top: -1 * component-specific.$header-height-small;
     visibility: hidden;
 
-    @include respond($break-medium) {
-        top: -1 * $header-height-large;
+    @include respond.respond(breakpoints.$break-medium) {
+        top: -1 * component-specific.$header-height-large;
     }
 }

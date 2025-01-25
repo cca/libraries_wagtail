@@ -1,6 +1,9 @@
+@use "../../settings/component-specific";
+@use "settings";
+
 .header-search-box {
-    top: $header-height-small;
-    z-index: $exhib-search-box-z;
+    top: component-specific.$header-height-small;
+    z-index: settings.$exhib-search-box-z;
 }
 
 // center pagination

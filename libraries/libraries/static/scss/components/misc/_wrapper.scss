@@ -1,25 +1,30 @@
+@use "../../settings/breakpoints";
+@use "../../settings/vars";
+@use "../../utilities/clearfix";
+@use "../../utilities/respond";
+
 // ========================================
 // Site max-width wrapper
 // ========================================
 
 .wrapper {
     margin: 0 auto;
-    max-width: $site-max-width;
+    max-width: breakpoints.$site-max-width;
     padding: 0 15px;
     position: relative;
 
-    @include clearfix;
+    @include clearfix.clearfix;
 
-    @include respond($break-medium) {
-        padding: 0 $wrapper-medium-horizontal-padding;
+    @include respond.respond(breakpoints.$break-medium) {
+        padding: 0 vars.$wrapper-medium-horizontal-padding;
     }
 }
 
 .wrapper--header {
     padding: 0;
 
-    @include respond($break-medium) {
-        padding: 0 $wrapper-medium-horizontal-padding;
+    @include respond.respond(breakpoints.$break-medium) {
+        padding: 0 vars.$wrapper-medium-horizontal-padding;
     }
 }
 
@@ -30,8 +35,8 @@
 .wrapper--collections {
     padding: 0;
 
-    @include respond($break-medium) {
-        padding: 0 $wrapper-medium-horizontal-padding;
+    @include respond.respond(breakpoints.$break-medium) {
+        padding: 0 vars.$wrapper-medium-horizontal-padding;
         position: relative;
     }
 }
@@ -39,16 +44,16 @@
 .wrapper--search {
     margin-top: 230px; // search box offset
 
-    @include respond($break-medium) {
+    @include respond.respond(breakpoints.$break-medium) {
         margin-top: 0;
-        max-width: $site-max-width-search;
+        max-width: breakpoints.$site-max-width-search;
     }
 }
 
 .wrapper--blog {
     padding: 0;
 
-    @include respond($break-large) {
+    @include respond.respond(breakpoints.$break-large) {
         padding: 0 15px;
     }
 }
