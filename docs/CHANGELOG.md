@@ -1,5 +1,25 @@
 # Changelog
 
+## 5.0.0
+
+**2024-01-30**: upgrade to Wagtail 5.0, fix Instagram (again), accessibility improvements on the home page.
+
+- Many [new features from Wagtail 5.0](https://guide.wagtail.org/en-latest/releases/new-in-wagtail-5-0/):
+  - See how many times an image is used before deleting it
+  - SVG image uploads
+  - Always-on minimap in editor
+  - Dark mode admin theme
+- Refactor our CSS to fix SASS deprecations (`@use` and namespaced variables)
+- New process for adding Instagram post to home page
+- Many accessibility improvements
+  - Wagtail accessibility checker improvements
+  - Use Instagram's accessibility caption as alt text. It is machine-generated when we do not provide one (but we should be providing these!)
+  - Many home page improvements: remove redundant link titles, add h1 tag, fieldset for search radio buttons
+- Better error messages for Link Blocks
+- Remove Summon custom JS/CSS; this is added to the Summon admin console now
+- Upgrade Django and many other dependencies
+- Local development fixes and improvements
+
 ## 4.2.0
 
 **2024-08-23**: upgrade to Wagtail 4.2 and change the main building address.
