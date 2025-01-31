@@ -10,7 +10,7 @@ autopep8 = "*"
 [packages]
 certifi = "==2024.12.14"
 dj-database-url = "==2.3.0"
-django = "==4.2.17"
+django = "==4.2.18"
 django-cas-ng = "==5.0.1"
 django-extensions = "==3.2.3"
 django-storages = {version = "==1.14.4", extras = ["google"]}
