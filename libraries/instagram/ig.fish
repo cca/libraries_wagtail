@@ -7,6 +7,7 @@ set username $DEFAULT_USERNAME
 if contains help $argv || contains -- -h $argv || contains -- --help $argv
     echo -e "\tUsage: ./libraries/instagram/ig.fish [username]\n"
     echo "Update the Instagram post on the home page. Uses the $DEFAULT_USERNAME account by default. This script downloads JSON data from Instagram, pushes to a running pod based on the NS env var, and runs the instagram management command that creates a new Instagram object and downloads its media."
+    exit
 end
 
 if not set --query NS
