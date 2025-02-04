@@ -11,6 +11,7 @@ COPY pnpm-lock.yaml gulpfile.js package.json ./
 ENV CI=true
 ENV PNPM_HOME=/pnpm
 ENV PATH="$PNPM_HOME:$PATH"
+RUN npm install --global corepack@latest
 RUN corepack enable
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch --prod
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install -r --offline --prod --frozen-lockfile
