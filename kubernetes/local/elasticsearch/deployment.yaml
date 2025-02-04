@@ -18,13 +18,11 @@ spec:
         - command:
             - /bin/sh
             - -exc
-            - /usr/local/bin/docker-entrypoint.sh eswrapper
+            - "grep xpack.security.enabled /usr/share/elasticsearch/config/elasticsearch.yml || echo 'xpack.security.enabled: false' >> /usr/share/elasticsearch/config/elasticsearch.yml; /usr/local/bin/docker-entrypoint.sh eswrapper"
           env:
             - name: discovery.type
               value: single-node
-          # ! need arm64 images for M2 mac only published by elasticsearch themselves, not on docker hub
-          # ! https://www.docker.elastic.co/r/elasticsearch
-          image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3-arm64
+          image: elasticsearch:7.17.27
           imagePullPolicy: IfNotPresent
           name: elasticsearch
           ports:
