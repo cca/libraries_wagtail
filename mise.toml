@@ -1,0 +1,7 @@
+[env]
+# matches versions below, in Dockerfile, and in pyproject.toml
+UV_PYTHON = "3.10.13"
+
+[tools]
+node = "20.18.1"
+python = "3.10.13"

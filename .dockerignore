@@ -15,6 +15,7 @@ LICENSE.txt
 readme.md
 # Distribution / packaging
 .Python
+.venv/
 env/
 build/
 develop-eggs/

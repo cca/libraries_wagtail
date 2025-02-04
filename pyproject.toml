@@ -1,0 +1,50 @@
+[project]
+name = "libraries_wagtail"
+version = "5.0.0"
+description = "CCA Libraries Wagtail website"
+authors = [
+    {"name"= "Eric Phetteplace", email = "ephetteplace@cca.edu"},
+    {"name"= "Mark Goh", email = "mgoh@cca.edu"},
+]
+license = "ECL-2.0"
+license-files = ["LICENSE.txt"]
+readme = "readme.md"
+# matches version in Dockerfile and mise.toml
+requires-python = "==3.10.13"
+dependencies = [
+    "certifi==2024.12.14",
+    "dj-database-url==2.3.0",
+    "django==4.2.17",
+    "django-cas-ng==5.0.1",
+    "django-extensions==3.2.3",
+    "django-storages[google]==1.14.4",
+    "djangorestframework-simplejwt==5.4.0",
+    "elasticsearch==7.17.12",
+    "google-cloud-secret-manager==2.22.0",
+    "l18n==2021.3",
+    "psycopg2==2.9.10",
+    "pysftp==0.2.9",
+    "uwsgi==2.0.26",
+    "xmltodict==0.14.2",
+    "wagtail==5.0.5",
+    "whitenoise[brotli]==6.8.2",
+]
+
+[project.urls]
+changelog = "https://github.com/cca/libraries_wagtail/tree/main/docs/CHANGELOG.md"
+documentation = "https://github.com/cca/libraries_wagtail/tree/main/docs"
+homepage = "https://github.com/cca/libraries_wagtail"
+issues = "https://github.com/cca/libraries_wagtail/issues"
+repository = "https://github.com/cca/libraries_wagtail"
+
+[tool.uv]
+dev-dependencies = [
+    "autopep8",
+    "django_managepy_anywhere==2.0",
+]
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+
+[tool.uv.sources]

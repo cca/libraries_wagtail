@@ -11,15 +11,16 @@ COPY pnpm-lock.yaml gulpfile.js package.json ./
 ENV CI=true
 ENV PNPM_HOME=/pnpm
 ENV PATH="$PNPM_HOME:$PATH"
-RUN npm install --global corepack@latest
+RUN npm install --global corepack@latest && npm cache clean --force
 RUN corepack enable
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch --prod
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install -r --offline --prod --frozen-lockfile
 # this builds files into /app/libraries/static, see gulpfile
 RUN npx gulp build
 
-# Build the Django application itself. Python version matches the one in Pipfile.
+# Build the Django application itself. Python version matches the one in mise.toml and pyproject.toml.
 FROM python:3.10.13-bullseye AS libraries
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 WORKDIR /app/libraries
 ENV PYTHONPATH=/app:/app/libraries
 
@@ -37,12 +38,13 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" | tee 
     apt-get install --no-install-recommends postgresql-client-14 -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Install python dependencies
-ENV PIP_ROOT_USER_ACTION=ignore
-RUN pip install pipenv
-COPY Pipfile Pipfile.lock /app/
-# system: install deps in system python, deploy: throw error if lockfile doesn't match Pipfile
-RUN pipenv install --system --deploy
+# Install python dependencies into system python
+ENV UV_COMPILE_BYTECODE=1
+ENV UV_PROJECT_ENVIRONMENT=/usr/local
+ENV UV_PYTHON_PREFERENCE=system
+COPY pyproject.toml uv.lock /app/
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
+# ? do I need another uv sync after COPY libraries /app/libraries?
 
 # Collect our compiled static files from the assets image
 COPY --from=assets /app/libraries/static /app/libraries/libraries/static

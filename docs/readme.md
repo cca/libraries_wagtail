@@ -124,15 +124,16 @@ We use a combination of environment variables, kubernetes secrets, and Google Se
 
 ## Module (including Wagtail) Updates
 
-See [Upgrading Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html) but I prefer to use [pipenv](https://pipenv.pypa.io/en/latest/) for dependencies. Pipenv stores a dependency graph rather than a list of unrelated packages like requirements.txt. Upgrade outline:
+See [Upgrading Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html) but I prefer to use [uv](https://docs.astral.sh/uv/) for dependencies. `uv` is faster and stores a dependency graph rather than a list of unrelated packages like requirements.txt. Upgrade outline:
 
+- Identify target versions to upgrade to (`uv pip list --outdated` helps)
 - Read Wagtail [release notes](https://docs.wagtail.org/en/stable/releases/) and make note of any breaking changes
-- Upgrade blocking dependencies (e.g. Django, Python itself) in Pipfile, run `pipenv lock` to update lockfile
-  - It's best to pin dependencies to a specific version, e.g. `Django = "==3.2.8"` rather than `Django = ">=3.2.8"`
-  - Major Django updates usually require database migrations, too
+- Upgrade blocking dependencies (e.g. Django, Python itself) in [pyproject.toml](../pyproject.toml), then run `uv lock` to update the lockfile
+  - It's best to pin dependencies to a specific version, e.g. `"Django==3.2.8"` rather than `"Django>=3.2.8"`
+  - Major Django updates can require database migrations, too
 - If there were significant dependency changes, do a full test/release cycle _at least_ on the staging instance
 - Make Wagtail changes, e.g. editing module paths or fixing deprecation warnings
-- Update Wagtail in the same manner as above (edit Pipfile, `pipenv lock`)
+- Update Wagtail in the same manner as above (edit pyproject, `uv lock`)
 - Run `migrate` on the app pod (using [libraries k8s aliases](https://github.com/cca/libraries-k8s)):
 
 ```sh
@@ -144,7 +145,7 @@ The upgrade notes say to run `python manage.py makemigrations` before migrate bu
 
 ## Installing dependencies locally
 
-We generally should not need to install the Python dependencies on our host laptop since the app runs in Minikube. However, sometimes various `pipenv` operations expect a functioning virtualenv to exist.
+We do not need to install the Python dependencies on our host laptop since the app runs in Minikube. However, some `uv` commands (like running `uv pip list --outdated` to find outdated dependencies) expect a functioning virtualenv to exist.
 
 If installing locally, note that `uwsgi` has trouble building against managed python installations, see [this comment](https://github.com/astral-sh/uv/issues/6488#issuecomment-2345417341) for instance. The solution is to set a `LIBRARY_PATH` shell var that points to the "lib" directory of our local python. With `mise` and fish shell, this looks like `set -x LIBRARY_PATH (mise where python)/lib`.
 
@@ -253,7 +254,7 @@ We have separate ES clusters for staging and production. Locally, we run ES with
 Migrating Elasticsearch versions is easy compared to Postgres because we can rebuild the index from scratch, we don't need to migrate data. See [isse #54](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/54) which had more steps because it involved switching to authenticated ES but it's these steps:
 
 - Update the local k8s cluster's ES version in kubernetes/local/elasticsearch/deployment.yaml for testing
-- Update the `elasticsearch` dependency in Pipfile
+- Update the `elasticsearch` dependency in pyproject.toml
 - Update `WAGTAILSEARCH_BACKENDS` in`libraries/libraries/settings/base.py` to use the new version's backend
 - Run `python manage.py update_index` to rebuild the index
 - Edit the elasticsearch URL in kubernetes/staging.yaml and then kubernetes/production.yaml
