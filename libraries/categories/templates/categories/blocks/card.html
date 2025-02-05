@@ -1,13 +1,12 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% comment %} based on Portal's "card" template {% endcomment %}
 <section class="card">
-    <!-- TODO: try h3 for a11y header hierarchy -->
-    <h4 class="card__header">
+    <h3 class="card__header">
         <a class="card__link" href="{{ value.link.url }}">
             {% image value.thumbnail fill-600x400 class="card__thumb" %}
             <span class="card__title">{{ value.link.text|truncatewords:20 }}</span>
         </a>
-    </h4>
+    </h3>
     <div class="card__body">
         {% comment %}
         truncated on a bit of a "magic number" but this _usually_ results
