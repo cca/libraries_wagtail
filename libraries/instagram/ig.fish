@@ -47,7 +47,7 @@ end
 # unzip, copy to app pod, and pass to mgmt cmd
 gunzip $file.gz
 and k cp $file (k8 pod):/tmp/$file
-and k exec (k8 pod) -- python manage.py instagram --json /tmp/$file
+and k exec (k8 pod) --container app -- python manage.py instagram --json /tmp/$file
 if [ $status -eq 0 ]
     rm $file
 end
