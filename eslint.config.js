@@ -5,7 +5,7 @@ module.exports = [
     js.configs.recommended,
     // "global" ignores must be alone in a config object
     // https://eslint.org/docs/latest/use/configure/configuration-files#globally-ignoring-files-with-ignores
-    {ignores: ["**/*.min.js"]},
+    {ignores: ["**/*.min.js", ".venv/**"]},
     // client-side js for the website
     {
         files: ["libraries/**/*.js"],

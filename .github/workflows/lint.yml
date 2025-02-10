@@ -1,0 +1,25 @@
+name: 'CSS & JS Lint'
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'dev'
+
+jobs:
+  lint:
+    name: 'Lint'
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v4.2.2'
+      - name: 'pnpm install'
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: true
+          version: 10
+      # see package.json for specific arguments passed to linters
+      - name: 'JavaScript Lint'
+        run: npm run eslint
+      - name: 'SCSS Lint'
+        run: npm run sass-lint
