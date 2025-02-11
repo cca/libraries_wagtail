@@ -1,37 +1,4 @@
-# https://medium.com/@sbkapelner/building-and-pushing-to-artifact-registry-with-github-actions-7027b3e443c1
-#
-# This workflow will build a docker container, publish it to Google Container
-# Registry, and deploy it to GKE when there is a push to the "main"
-# branch.
-#
-# To configure this workflow:
-#
-# 1. Enable the following Google Cloud APIs:
-#
-#    - Artifact Registry (artifactregistry.googleapis.com)
-#    - Google Kubernetes Engine (container.googleapis.com)
-#    - IAM Credentials API (iamcredentials.googleapis.com)
-#
-#    You can learn more about enabling APIs at
-#    https://support.google.com/googleapi/answer/6158841.
-#
-# 2. Ensure that your repository contains the necessary configuration for your
-#    Google Kubernetes Engine cluster, including deployment.yml,
-#    kustomization.yml, service.yml, etc.
-#
-# 3. Create and configure a Workload Identity Provider for GitHub:
-#    https://github.com/google-github-actions/auth#preferred-direct-workload-identity-federation.
-#
-#    Depending on how you authenticate, you will need to grant an IAM principal
-#    permissions on Google Cloud:
-#
-#    - Artifact Registry Administrator (roles/artifactregistry.admin)
-#    - Kubernetes Engine Developer (roles/container.developer)
-#
-#    You can learn more about setting IAM permissions at
-#    https://cloud.google.com/iam/docs/manage-access-other-resources
-#
-# 5. Change the values in the "env" block to match your values.
+# Build a Docker image and push it to Google Artifact Registry
 
 name: 'Build Wagtail Image'
 
