@@ -28,3 +28,6 @@ libraries/libraries/static/css
 *.min.js
 *.min.js.map
 .eslintcache
+
+# https://github.com/google-github-actions/auth
+gha-creds-*.json

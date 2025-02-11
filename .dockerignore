@@ -32,3 +32,6 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# https://github.com/google-github-actions/auth
+gha-creds-*.json
