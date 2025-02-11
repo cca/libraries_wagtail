@@ -1,7 +1,7 @@
-@use "../../settings/colors";
-@use "../../settings/component-specific";
-@use "../../settings/font-families";
-@use "settings";
+@use '../../settings/colors';
+@use '../../settings/component-specific';
+@use '../../settings/font-families';
+@use 'settings';
 
 // ===================================
 // Overrides of main site _page.scss
@@ -13,17 +13,12 @@ $text-selectors: '.blog-post__image-description, .blog-post__paragraph, .blog-po
     background: colors.$white;
     // default to serif (Merriweather/The Serif) font
     font-family: font-families.$font-family-serif;
-    // non-standard, autoprefixer can't handle this property because the values
-    // differ with each implementation (W3C, Firefox, Chrome)
-    // sass-lint:disable no-misspelled-properties
-    font-smooth: always;
-    // sass-lint:enable no-misspelled-properties
     line-height: 1.5;
     min-width: 360px;
     text-rendering: optimizeLegibility;
-    // sass-lint:disable no-duplicate-properties
+    // stylelint-disable no-duplicate-properties
     text-rendering: geometricPrecision;
-    // sass-lint:enable no-duplicate-properties
+    // stylelint-enable no-duplicate-properties
 
     // override font based on the value of main_body_font
     // Due to the way inheritance works, we need to reiterate all the blocks (see

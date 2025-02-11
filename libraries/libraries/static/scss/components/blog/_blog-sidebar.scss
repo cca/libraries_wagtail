@@ -1,6 +1,6 @@
-@use "../../settings/breakpoints";
-@use "../../settings/colors";
-@use "../../utilities/respond";
+@use '../../settings/breakpoints';
+@use '../../settings/colors';
+@use '../../utilities/respond';
 
 // ========================================
 // Blog page sidebar component
@@ -28,9 +28,9 @@
         // saves us having to handle this in JS because
         // of the mobile toggle.
 
-        // sass-lint:disable no-important
+        // stylelint-disable declaration-no-important
         display: block !important;
-        // sass-lint:enable no-important
+        // stylelint-enable declaration-no-important
     }
 }
 

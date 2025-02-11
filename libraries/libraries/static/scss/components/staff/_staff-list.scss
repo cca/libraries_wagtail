@@ -1,12 +1,11 @@
-@use "../../settings/breakpoints";
-@use "../../utilities/respond";
+@use '../../settings/breakpoints';
+@use '../../utilities/respond';
 
 // ===================================
 // Staff list page
 // borrows most styles from search
 // ===================================
 .wrapper--staff {
-
     &.wrapper--search {
         margin-top: 0;
 

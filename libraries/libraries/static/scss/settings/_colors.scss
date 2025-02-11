@@ -25,7 +25,7 @@ $turquoise: rgba(23, 191, 179, 1);
 
 // component colors
 $btn-hover-light-gray: rgb(35, 35, 35);
-$info-box-link-blue: #14C4FF;
+$info-box-link-blue: #14c4ff;
 
 // these are copied from Portal & used to recreate its "cards" feature
 // see portal/static/styles/portal/sass/partials/_variables.scss
@@ -33,10 +33,10 @@ $info-box-link-blue: #14C4FF;
 // (prefixed with `cca` not to conflict with Bootstrap colors)
 
 // Primary Colors
-$ccaTeal:  #00bfb3;
+$ccaTeal: #00bfb3;
 
 // Secondary Colors
-$ccaCoolGray:  #888b8d;
+$ccaCoolGray: #888b8d;
 $ccaWarmGray: #6e6259;
 $ccaBeige: #dfd1a7;
 
@@ -59,4 +59,4 @@ $ccaLightGray: #a7aab0;
 $ccaVeryLightGray: #edeeee;
 $ccaLightBeige: #fdfaf3;
 $ccaVeryDarkGray: #222;
-$ccaMedGray:  #ccc;
+$ccaMedGray: #ccc;

@@ -1,6 +1,6 @@
-@use "sass:color";
-@use "../../settings/colors";
-@use "../../settings/font-families";
+@use 'sass:color';
+@use '../../settings/colors';
+@use '../../settings/font-families';
 
 // ===================================
 // Overrides/edits to lightGallery.js
@@ -12,12 +12,12 @@
 // selector overrides a lot easier, also just logical.
 
 // we have to use an ID here to override lightGallery CSS
-// sass-lint:disable no-ids,no-important
+// stylelint-disable declaration-no-important
 #lg-counter {
     color: colors.$turquoise !important;
     font-size: 18px;
 }
-// sass-lint:enable no-ids,no-important
+// stylelint-enable declaration-no-important
 
 $sub-html-padding: 40px;
 

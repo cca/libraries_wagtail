@@ -1,8 +1,8 @@
-@use "../../bootstrap/variables";
-@use "../../settings/breakpoints";
-@use "../../settings/colors";
-@use "../../settings/component-specific";
-@use "../../utilities/respond";
+@use '../../bootstrap/variables';
+@use '../../settings/breakpoints';
+@use '../../settings/colors';
+@use '../../settings/component-specific';
+@use '../../utilities/respond';
 
 // ========================================
 // Page is a class attached to the <body>
@@ -12,17 +12,12 @@
 .page {
     background: colors.$white;
     font-family: variables.$font-family-sans-serif;
-    // non-standard, autoprefixer can't handle this property because the values
-    // differ with each implementation (W3C, Firefox, Chrome)
-    // sass-lint:disable no-misspelled-properties
-    font-smooth: always;
-    // sass-lint:enable no-misspelled-properties
     min-width: 360px;
     padding-top: component-specific.$header-height-small;
     text-rendering: optimizeLegibility;
-    // sass-lint:disable no-duplicate-properties
+    // stylelint-disable no-duplicate-properties
     text-rendering: geometricPrecision;
-    // sass-lint:enable no-duplicate-properties
+    // stylelint-enable no-duplicate-properties
 
     // push page body down if alert banner is present, not necessary on home page
     &--with-alert:not(.page--home) {

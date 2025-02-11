@@ -1,7 +1,7 @@
-@use "sass:color";
-@use "../../settings/breakpoints";
-@use "../../settings/colors";
-@use "../../settings/vars";
+@use 'sass:color';
+@use '../../settings/breakpoints';
+@use '../../settings/colors';
+@use '../../settings/vars';
 
 $grey-border: color.adjust(colors.$black, $lightness: 75%);
 breakpoints.$site-max-width: 1360px;

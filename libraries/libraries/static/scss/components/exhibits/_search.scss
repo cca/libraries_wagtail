@@ -1,5 +1,5 @@
-@use "../../settings/component-specific";
-@use "settings";
+@use '../../settings/component-specific';
+@use 'settings';
 
 .header-search-box {
     top: component-specific.$header-height-small;

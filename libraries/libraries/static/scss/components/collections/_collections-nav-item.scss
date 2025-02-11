@@ -1,7 +1,7 @@
-@use "../../bootstrap/variables";
-@use "../../settings/breakpoints";
-@use "../../settings/colors";
-@use "../../utilities/respond";
+@use '../../bootstrap/variables';
+@use '../../settings/breakpoints';
+@use '../../settings/colors';
+@use '../../utilities/respond';
 
 // ========================================
 // Collections page navigation item
@@ -80,7 +80,7 @@
         line-height: 1.5em;
         padding: 15px 15px 15px 5px;
         transition: padding .3s ease,
-        border-left .3s ease;
+            border-left .3s ease;
     }
 }
 

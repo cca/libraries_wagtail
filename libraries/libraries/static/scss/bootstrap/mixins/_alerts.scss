@@ -1,15 +1,16 @@
-@use "sass:color";
+@use 'sass:color';
 // Alerts
 
 @mixin alert-variant($background, $border, $text-color) {
-  background-color: $background;
-  border-color: $border;
-  color: $text-color;
+    background-color: $background;
+    border-color: $border;
+    color: $text-color;
 
-  hr {
-    border-top-color: color.adjust($border, $lightness: -5%);
-  }
-  .alert-link {
-    color: color.adjust($text-color, $lightness: -10%);
-  }
+    hr {
+        border-top-color: color.adjust($border, $lightness: -5%);
+    }
+
+    .alert-link {
+        color: color.adjust($text-color, $lightness: -10%);
+    }
 }

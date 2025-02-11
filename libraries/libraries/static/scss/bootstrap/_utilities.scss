@@ -7,16 +7,20 @@
 // -------------------------
 
 .clearfix {
-  @include clearfix;
+    @include clearfix;
 }
+
 .center-block {
-  @include center-block;
+    @include center-block;
 }
+
+// stylelint-disable declaration-no-important
 .pull-right {
-  float: right !important;
+    float: right !important;
 }
+
 .pull-left {
-  float: left !important;
+    float: left !important;
 }
 
 
@@ -25,16 +29,20 @@
 
 // Note: Deprecated .hide in favor of .hidden or .sr-only (as appropriate) in v3.0.1
 .hide {
-  display: none !important;
+    display: none !important;
 }
+
 .show {
-  display: block !important;
+    display: block !important;
 }
+// styelint-enable declaration-no-important
+
 .invisible {
-  visibility: hidden;
+    visibility: hidden;
 }
+
 .text-hide {
-  @include text-hide;
+    @include text-hide;
 }
 
 
@@ -43,7 +51,7 @@
 // Credit: HTML5 Boilerplate
 
 .hidden {
-  display: none !important;
+    display: none !important;
 }
 
 
@@ -51,5 +59,5 @@
 // -------------------------
 
 .affix {
-  position: fixed;
+    position: fixed;
 }
