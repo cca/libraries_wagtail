@@ -22,4 +22,4 @@ jobs:
       - name: 'JavaScript Lint'
         run: npm run eslint
       - name: 'SCSS Lint'
-        run: npm run sass-lint
+        run: npm run stylelint

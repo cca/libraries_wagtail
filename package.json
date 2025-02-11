@@ -7,7 +7,7 @@
     "css": "gulp css",
     "eslint": "eslint --cache .",
     "js": "gulp js",
-    "sass-lint": "sass-lint --verbose --no-exit",
+    "stylelint": "stylelint --cache --config .stylelintrc.json --fix **/*.scss",
     "test": "eslint --cache .; sass-lint --verbose --no-exit",
     "watch": "gulp"
   },
@@ -34,16 +34,19 @@
     "gulp-postcss": "^10.0.0",
     "gulp-sass": "^6.0.0",
     "gulp-uglify": "^3.0.2",
-    "postcss": "^8.5.1",
+    "postcss": "^8",
     "sass": "^1.83.4"
   },
   "devDependencies": {
     "eslint": "^9.19.0",
     "globals": "^15.14.0",
-    "sass-lint": "^1.13.1"
+    "postcss-scss": "^4.0.9",
+    "stylelint": "^16.14.1",
+    "stylelint-config-sass-guidelines": "^12.1.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-scss": "^6.11.0"
   },
   "engines": {
     "node": "~20"
-  },
-  "sasslintConfig": ".sass-lint.yml"
+  }
 }
