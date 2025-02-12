@@ -29,7 +29,9 @@ minikube config set vm-driver docker
 
 [ -e "$(dirname "$0")/../kubernetes/assets/cdi_cca.key" ] || echo -e "\nObtain a copy of the Summon SFTP private key from a developer (it is in Dashlane as \"Summon MFT\") and save it as kubernetes/assets/cdi_cca.key\n"
 
-echo -e "Start Docker before this step.\nDo you want to load the (s)taging or (p)roduction database into your local minikube cluster now? You need gcloud installed and docker running but this shouldn't require a secrets.env file. Type \"n\" for \"no\". "
+docker desktop start
+
+echo -e "Do you want to load the (s)taging or (p)roduction database into your local minikube cluster now? You need gcloud installed and docker running but this shouldn't require a secrets.env file. Type \"n\" for \"no\". "
 read -r -n 1 -p "[n, p, s]? " result
 echo
 
