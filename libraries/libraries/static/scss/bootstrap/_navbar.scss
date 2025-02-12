@@ -2,7 +2,7 @@
 // Navbars
 // --------------------------------------------------
 // stylelint-disable declaration-no-important
-
+@use 'sass:color';
 // Wrapper and base class
 //
 // Provide a static navbar from which we expand to create full-width, fixed, and
@@ -612,7 +612,7 @@
 
     .navbar-collapse,
     .navbar-form {
-        border-color: darken($navbar-inverse-bg, 7%);
+        border-color: color.adjust($navbar-inverse-bg, $lightness: -7%);
     }
 
     // Dropdowns
