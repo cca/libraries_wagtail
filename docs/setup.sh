@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+DIR="$(dirname "$0")"
+
 checkfor () {
     command -v "$1" >/dev/null 2>&1 || {
         echo -e >&2 "\e[31mMissing $1\e[0m"
@@ -11,7 +13,7 @@ checkfor brew || {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
     /usr/local/bin/brew shellenv | source
 }
-brew bundle install --file "$(dirname "$0")"/Brewfile
+brew bundle install --file "$DIR/Brewfile"
 checkfor gcloud || echo "Google Cloud SDK is used to sync media and database files from the cloud. Install it yourself by following the instructions on https://cloud.google.com/sdk/docs/install-sdk"
 
 # Provide minikube with expanded resources
@@ -22,9 +24,9 @@ minikube config set memory 8192
 minikube config set vm-driver docker
 # minikube addons enable metrics-server
 
-[ -e "$(dirname "$0")/../kubernetes/local/secrets.env" ] || echo -e "\nObtain a copy of secrets.env from a developer and place it in kubernetes/local\n"
+[ -e "$DIR/../kubernetes/local/secrets.env" ] || echo -e "\nObtain a copy of secrets.env from a developer and place it in kubernetes/local\n"
 
-[ -e "$(dirname "$0")/../kubernetes/assets/cdi_cca.key" ] || echo -e "\nObtain a copy of the Summon SFTP private key from a developer (it is in Dashlane as \"Summon MFT\") and save it as kubernetes/assets/cdi_cca.key\n"
+[ -e "$DIR/../kubernetes/assets/cdi_cca.key" ] || echo -e "\nObtain a copy of the Summon SFTP private key from a developer (it is in Dashlane as \"Summon MFT\") and save it as kubernetes/assets/cdi_cca.key\n"
 
 docker desktop start
 
