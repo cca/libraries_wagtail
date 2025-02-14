@@ -11,10 +11,7 @@ checkfor brew || {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
     /usr/local/bin/brew shellenv | source
 }
-checkfor fish || brew install fish
-checkfor docker || brew install --cask docker
-checkfor minikube || brew install minikube
-checkfor skaffold || brew install skaffold
+brew bundle install --file "$(dirname "$0")"/Brewfile
 checkfor gcloud || echo "Google Cloud SDK is used to sync media and database files from the cloud. Install it yourself by following the instructions on https://cloud.google.com/sdk/docs/install-sdk"
 
 # Provide minikube with expanded resources

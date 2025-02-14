@@ -1,0 +1,5 @@
+brew "fish"
+brew "minikube"
+brew "skaffold"
+
+cask "docker"
