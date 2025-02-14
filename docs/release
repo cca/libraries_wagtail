@@ -21,6 +21,7 @@ else if test "$argv[1]" = prod; or test "$argv[1]" = production
     end
     git tag $NEXT_VERSION_TAG
 else
+    # ! This section needs a rewrite to work with new staging tags
     # Staging release: ep-full-N pushes to staging cluster. No other tags, no release in GH.
     set LATEST_EP_TAG (git tags | grep 'ep-full-' | sort | tail -n 1)
     set EP_VERSION (string split - $LATEST_EP_TAG)
