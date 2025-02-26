@@ -16,32 +16,19 @@ metadata:
   name: app
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 data:
+  KUBERNETES_NAMESPACE: ${KUBERNETES_NAMESPACE_OVERWRITE}
   # Generic
   DJANGO_SETTINGS_MODULE: libraries.settings
-  KUBERNETES_NAMESPACE: ${KUBERNETES_NAMESPACE_OVERWRITE}
-
-  # CAS
   CAS_SERVER_URL: "https://sso.cca.edu/cas/login"
-
-  # Media
   MEDIA_URL: "https://storage.googleapis.com/libraries-${KUBERNETES_NAMESPACE_OVERWRITE}/"
-
-  # Review Apps
-  DEPLOY_RELEASE: ${KUBERNETES_NAMESPACE_OVERWRITE}
-  # DEPLOY_RELEASE: ${CI_COMMIT_REF_NAME}
-  # DEPLOY_COMMIT_HASH: ${CI_COMMIT_SHORT_SHA}
-  # DEPLOY_BRANCH_NAME: ${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}
-  # DEPLOY_SERVER_NAME: ${KUBERNETES_NAMESPACE_OVERWRITE}
-
-  # Elastic Search
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}
-
-  # Google Cloud Storage
+  DB_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
+  # For static files in Google Cloud Storage & secrets in Secret Manager
   GS_PROJECT_ID: cca-web-0
   GS_BUCKET_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
-
-  # Database
-  DB_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
+  # Review Apps
+  # ? Where is this used?
+  DEPLOY_RELEASE: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
 ---
 # The application itself.
@@ -70,7 +57,7 @@ spec:
 
       initContainers:
         - name: init-app
-          image: us-west2-docker.pkg.dev/cca-web-0/docker-web/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+          image: ${IMAGE}
           imagePullPolicy: Always
           command:
             [
@@ -104,7 +91,7 @@ spec:
                   key: credentials
       containers:
         - name: app
-          image: us-west2-docker.pkg.dev/cca-web-0/docker-web/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+          image: ${IMAGE}
           imagePullPolicy: Always
           # Env variables form ConfigMap
           envFrom:
@@ -277,7 +264,7 @@ spec:
                 secretName: summon-sftp-secrets
           containers:
             - name: summon
-              image: us-west2-docker.pkg.dev/cca-web-0/docker-web/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: ${IMAGE}
               imagePullPolicy: Always
               args:
                 - python
@@ -332,7 +319,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: publish-scheduled-pages
-              image: us-west2-docker.pkg.dev/cca-web-0/docker-web/libraries:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+              image: ${IMAGE}
               imagePullPolicy: Always
               args:
                 - python

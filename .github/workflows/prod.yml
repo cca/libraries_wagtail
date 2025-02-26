@@ -136,7 +136,7 @@ jobs:
           kubectl get namespace ${K8S_NAMESPACE} || kubectl create namespace ${K8S_NAMESPACE}
 
           # Apply configuration with error checking
-          if ! cat kubernetes/staging.yaml | envsubst | kubectl apply -f -; then
+          if ! cat kubernetes/production.yaml | envsubst | kubectl apply -f -; then
             echo "Failed to apply Kubernetes configuration"
             exit 1
           fi
