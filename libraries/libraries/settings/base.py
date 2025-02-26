@@ -180,8 +180,22 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Allow SVG uploads
-WAGTAILIMAGES_EXTENSIONS: list[str] = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
+# Allow AIVF (5.1) & SVG (5.0) uploads
+WAGTAILIMAGES_EXTENSIONS: list[str] = [
+    "avif",
+    "gif",
+    "jpg",
+    "jpeg",
+    "png",
+    "svg",
+    "webp",
+]
+# https://docs.wagtail.org/en/stable/advanced_topics/images/image_file_formats.html#image-file-formats
+# By default AVIF and WEBP are converted to PNG but we would rather use the more modern formats
+WAGTAILIMAGES_FORMAT_CONVERSIONS: dict[str, str] = {
+    "avif": "avif",
+    "webp": "webp",
+}
 
 # Static files (CSS, JavaScript, Images)
 STATICFILES_FINDERS = [
