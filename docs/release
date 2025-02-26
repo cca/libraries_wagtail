@@ -5,34 +5,43 @@ if test "$argv[1]" = -h; or test "$argv[1]" = --help; or test "$argv[1]" = help
     echo "passing 'prod' creates a production release, otherwise it's staging"
     exit 0
 else if test "$argv[1]" = prod; or test "$argv[1]" = production
-    # Production release: release-N.N.N pushes to production cluster and creates a semantic
+    # Production release: prod-deploy-N deploys to production cluster and creates a semantic
     # version release with a release in GitHub with a summary of changes.
     set PROD_RELEASE true
-    set LAST_RELEASE_TAG (git tags | grep 'release-' | sort | tail -n 1)
-    set RELEASE_VERSION (string split . $LAST_RELEASE_TAG)
-    set RELEASE_VERSION[3] (math $RELEASE_VERSION[3] + 1)
-    set NEXT_RELEASE_TAG (string join . $RELEASE_VERSION)
+    set LATEST_TAG (git tag --list 'prod-deploy-*' --sort=-v:refname | head -n 1)
+    set TAG_COMPONENTS (string split . $LATEST_TAG)
+    set TAG_COMPONENTS[3] (math $TAG_COMPONENTS[3] + 1)
+    set NEXT_TAG (string join . $TAG_COMPONENTS)
 
-    set LAST_VERSION_TAG (git tags | grep 'v' | sort | tail -n 1)
+    set LAST_VERSION_TAG (git tag --list 'v*' --sort=-v:refname | head -n 1)
     while not string match --regex v[0-9]+\.[0-9]+\.[0-9]+ $NEXT_VERSION_TAG
         echo "Enter a v tag with a valid semantic version string like v1.2.3 (vN.N.N)."
         read --prompt-str "The last version was $LAST_VERSION_TAG. What is the new one? " \
             --command "$LAST_VERSION_TAG" NEXT_VERSION_TAG
     end
-    git tag $NEXT_VERSION_TAG
+    if test -z "$NEXT_VERSION_TAG"
+        echo "No version tag was provided, exiting without doing anything." 2>&1
+        exit 1
+    end
 else
-    # ! This section needs a rewrite to work with new staging tags
-    # Staging release: ep-full-N pushes to staging cluster. No other tags, no release in GH.
-    set LATEST_EP_TAG (git tags | grep 'ep-full-' | sort | tail -n 1)
-    set EP_VERSION (string split - $LATEST_EP_TAG)
-    set EP_VERSION[3] (math $EP_VERSION[3] + 1)
-    set NEXT_EP_TAG (string join - $EP_VERSION)
-    git tag $NEXT_EP_TAG
+    # Deafult to staging deploy: stg-deploy-N. No other tags, no release in GH.
+    set LATEST_TAG (git tag --list 'stg-deploy-*' --sort=-v:refname | head -n 1)
+    if test -z "$LATEST_TAG"
+        set NEXT_TAG stg-deploy-1
+    else
+        set TAG_COMPONENTS (string split - $LATEST_TAG)
+        set TAG_COMPONENTS[3] (math $TAG_COMPONENTS[3] + 1)
+        set NEXT_TAG (string join - $TAG_COMPONENTS)
+    end
 end
 
 git push
-git push --tags
+git tag $NEXT_TAG
+git push origin $NEXT_TAG
 
-if [ "$PROD_RELEASE" = true ]
-    gh release create $NEXT_VERSION_TAG --verify-tag --generate-notes --notes-start-tag $LAST_VERSION_TAG
+if set --query PROD_RELEASE
+    gh release create $NEXT_TAG --verify-tag --generate-notes --notes-start-tag $LAST_VERSION_TAG
 end
+
+sleep 1
+gh run watch
