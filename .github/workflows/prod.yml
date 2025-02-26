@@ -1,28 +1,28 @@
-# git tag stg-build-X -> build docker image
-# git tag stg-deploy-X -> build image & deploy to GKE
-name: 'Staging CD'
+# git tag prod-build-X -> build docker image
+# git tag prod-deploy-X -> build image & deploy to GKE
+name: 'Production CD'
 on:
   push:
     tags:
-      - 'stg-build-*'
-      - 'stg-deploy-*'
+      - 'prod-build-*'
+      - 'prod-deploy-*'
 
 env:
-  GAR_LOCATION: 'us-west1'
-  PROJECT_ID: 'cca-web-staging'
-  REPOSITORY: 'us-west1-docker.pkg.dev/cca-web-staging/cca-docker-web'
+  GAR_LOCATION: 'us-west2'
+  PROJECT_ID: 'cca-web-0'
+  REPOSITORY: 'us-west2-docker.pkg.dev/cca-web-0/docker-web'
   IMAGE: 'libraries'
-  SERVICE_ACCOUNT: 'libraries-wagtail-gh-actions@cca-web-staging.iam.gserviceaccount.com'
-  WORKLOAD_IDENTITY_PROVIDER: projects/316944295291/locations/global/workloadIdentityPools/github/providers/libraries-wagtail
+  SERVICE_ACCOUNT: 'libraries-wagtail-gh-actions@cca-web-0.iam.gserviceaccount.com'
+  WORKLOAD_IDENTITY_PROVIDER: projects/681601623218/locations/global/workloadIdentityPools/github/providers/libraries-wagtail
   CLUSTER_LOCATION: 'us-west1-b'
-  CLUSTER_NAME: 'ccaedu-stg'
-  K8S_NAMESPACE: 'lib-ep'
+  CLUSTER_NAME: 'ccaedu-prod'
+  K8S_NAMESPACE: 'lib-production'
 
 jobs:
   build:
-    name: Setup, Build, and Push Docker image to Artifact Registry
+    name: 'Setup, Build, and Push Docker image to Artifact Registry'
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
 
     permissions:
       contents: read
@@ -61,7 +61,7 @@ jobs:
           password: ${{ steps.auth.outputs.auth_token }}
           registry: ${{ env.GAR_LOCATION }}-docker.pkg.dev
 
-      # Unique Docker tag like stg-deploy-20-abcd123
+      # Unique Docker tag like prod-deploy-20-abcd123
       - name: Generate tags
         id: tag
         run: |
@@ -90,9 +90,9 @@ jobs:
 
   deploy:
     needs: build
-    if: startsWith(github.ref_name, 'stg-deploy-')
+    if: startsWith(github.ref_name, 'prod-deploy-')
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
 
     permissions:
       contents: read
