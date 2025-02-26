@@ -14,6 +14,8 @@
         {{page.front_matter|richtext}}
     </section>
 
+    {% comment %} for header hierarchy reasons {% endcomment %}
+    <h2 class="sr-only">Exhibits List</h2>
     <ul class="exhibits--list">
     {% for exhibit in exhibits %}
         <li class="exhibits--list__exhibit">
