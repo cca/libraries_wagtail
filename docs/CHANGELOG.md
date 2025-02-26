@@ -6,7 +6,7 @@
 
 - Fixes several header hierarchy accessibility issues across the site (Category pages, Exhibits index, Hours page, card blocks)
 - Fix positioning of search icon underline on the search page itself
-- [Wagtail 5.1](https://docs.wagtail.org/en/latest/releases/5.1.html#wagtail-5-1-release-notes): a smaller release in terms of noticeable features with AVIF image support
+- [Wagtail 5.1](https://guide.wagtail.org/en-latest/releases/new-in-wagtail-5-1/): a smaller release in terms of noticeable features with AVIF image support
 - Various other dependency upgrades
 - Refines the Instagram script
 - Migrate SCSS linting to [stylelint](https://stylelint.io/) and fix linting issues
