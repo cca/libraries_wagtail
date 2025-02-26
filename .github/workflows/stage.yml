@@ -132,10 +132,9 @@ jobs:
         env:
           # see staging.yaml for needed vars, most are derived from namespace
           IMAGE: ${{ env.REPOSITORY }}/${{ env.IMAGE}}:${{ steps.tag.outputs.tag }}
-          KUBERNETES_NAMESPACE_OVERWRITE: ${{ env.K8S_NAMESPACE }}
         run: |
           # Ensure namespace exists
-          kubectl get namespace ${KUBERNETES_NAMESPACE_OVERWRITE} || kubectl create namespace ${KUBERNETES_NAMESPACE_OVERWRITE}
+          kubectl get namespace ${K8S_NAMESPACE} || kubectl create namespace ${K8S_NAMESPACE}
 
           # Apply configuration with error checking
           if ! cat kubernetes/staging.yaml | envsubst | kubectl apply -f -; then
@@ -144,9 +143,9 @@ jobs:
           fi
 
           # Wait for deployment to roll out
-          kubectl rollout status deployment/app --namespace ${KUBERNETES_NAMESPACE_OVERWRITE} --timeout=300s
+          kubectl rollout status deployment/app --namespace ${K8S_NAMESPACE} --timeout=300s
 
       - name: Verify deployment
         run: |
-          kubectl wait --for=condition=available deployment/app --namespace ${KUBERNETES_NAMESPACE_OVERWRITE} --timeout=60s
-          kubectl get pods --namespace ${KUBERNETES_NAMESPACE_OVERWRITE} --selector app=libraries -o jsonpath='{.items[*].status.containerStatuses[*].ready}' | grep -q true
+          kubectl wait --for=condition=available deployment/app --namespace ${K8S_NAMESPACE} --timeout=60s
+          kubectl get pods --namespace ${K8S_NAMESPACE} --selector app=libraries -o jsonpath='{.items[*].status.containerStatuses[*].ready}' | grep -q true
