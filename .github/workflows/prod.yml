@@ -132,7 +132,7 @@ jobs:
           # see staging.yaml for needed vars, most are derived from namespace
           IMAGE: ${{ env.REPOSITORY }}/${{ env.IMAGE}}:${{ steps.tag.outputs.tag }}
           # needed in the env for production.yaml
-          KUBERNETES_NAMESPACE_OVERWITE: ${{ env.K8S_NAMESPACE }}
+          KUBERNETES_NAMESPACE_OVERWRITE: ${{ env.K8S_NAMESPACE }}
         run: |
           # Ensure namespace exists
           kubectl get namespace ${K8S_NAMESPACE} || kubectl create namespace ${K8S_NAMESPACE}
