@@ -1,8 +1,20 @@
 # Changelog
 
+## 5.1.0
+
+**2025-02-26**: upgrade to Wagtail 5.1, AVIF image support, accessibility improvements.
+
+- Fixes several header hierarchy accessibility issues across the site (Category pages, Exhibits index, Hours page, card blocks)
+- Fix positioning of search icon underline on the search page itself
+- [Wagtail 5.1](https://docs.wagtail.org/en/latest/releases/5.1.html#wagtail-5-1-release-notes): a smaller release in terms of noticeable features with AVIF image support
+- Various other dependency upgrades
+- Refines the Instagram script
+- Migrate SCSS linting to [stylelint](https://stylelint.io/) and fix linting issues
+- Migrate CI/CD entirely to GitHub Actions from Gitlab
+
 ## 5.0.0
 
-**2024-01-30**: upgrade to Wagtail 5.0, fix Instagram (again), accessibility improvements on the home page.
+**2025-01-30**: upgrade to Wagtail 5.0, fix Instagram (again), accessibility improvements on the home page.
 
 - Many [new features from Wagtail 5.0](https://guide.wagtail.org/en-latest/releases/new-in-wagtail-5-0/):
   - See how many times an image is used before deleting it
