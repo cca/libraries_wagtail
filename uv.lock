@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = "==3.10.13"
 
 [[package]]
@@ -664,7 +665,7 @@ requires-dist = [
     { name = "psycopg2", specifier = "==2.9.10" },
     { name = "pysftp", specifier = "==0.2.9" },
     { name = "uwsgi", specifier = "==2.0.28" },
-    { name = "wagtail", specifier = "==5.0.5" },
+    { name = "wagtail", specifier = "==5.1.3" },
     { name = "whitenoise", extras = ["brotli"], specifier = "==6.8.2" },
     { name = "xmltodict", specifier = "==0.14.2" },
 ]
@@ -756,6 +757,29 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/b6/f5/f71fe1888b96083b3f6dfa0709101f61fc9e972c0c8d04e9d93ccef2a045/pillow-10.4.0-pp310-pypy310_pp73-manylinux_2_28_aarch64.whl", hash = "sha256:dc3e2db6ba09ffd7d02ae9141cfa0ae23393ee7687248d46a7507b75d610f4f5", size = 3476125 },
     { url = "https://files.pythonhosted.org/packages/96/b9/c0362c54290a31866c3526848583a2f45a535aa9d725fd31e25d318c805f/pillow-10.4.0-pp310-pypy310_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:02a2be69f9c9b8c1e97cf2713e789d4e398c751ecfd9967c18d0ce304efbf885", size = 3579373 },
     { url = "https://files.pythonhosted.org/packages/52/3b/ce7a01026a7cf46e5452afa86f97a5e88ca97f562cafa76570178ab56d8d/pillow-10.4.0-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:0755ffd4a0c6f267cccbae2e9903d95477ca2f77c4fcf3a3a09570001856c8a5", size = 2554661 },
+]
+
+[[package]]
+name = "pillow-heif"
+version = "0.21.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pillow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/65/f5/993804c7c626256e394f2dcb90ee739862ae22151bd7df00e014f5206573/pillow_heif-0.21.0.tar.gz", hash = "sha256:07aee1bff05e5d61feb989eaa745ae21b367011fd66ee48f7732931f8a12b49b", size = 16178019 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e5/db/3ba4aed5d9fa96977f7c4d99175370b4eb66037cd6dd51e9564173eb0856/pillow_heif-0.21.0-cp310-cp310-macosx_13_0_x86_64.whl", hash = "sha256:f54609401164b0cb58000bd2516a88516b5e3e9b2f9c52ad9500575f1851da5e", size = 5400647 },
+    { url = "https://files.pythonhosted.org/packages/57/a5/2025e27d2e16718c31c57f020d3074472afb8ac8b2a15d06fc1ae6d7209f/pillow_heif-0.21.0-cp310-cp310-macosx_14_0_arm64.whl", hash = "sha256:d0a68246340d4fad4f10721a1a50b87a7011f1bd18d0a7b7d231e196776d0260", size = 3967414 },
+    { url = "https://files.pythonhosted.org/packages/03/5d/50ecd65d19246335b894323c4041b7bdb910fa1d2d3e42e71a0173b7d208/pillow_heif-0.21.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:208b066bc7349b1ea1447199668edb6e2f74f36df54c86457ecb0131db8294df", size = 6965327 },
+    { url = "https://files.pythonhosted.org/packages/5e/d7/ebe4524eb30375c94c1761c6ce7ed8800ffd212592e354f93eb866c27f5d/pillow_heif-0.21.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:cea6f1519a9c486baf3bdf63487fa3f699402724895d64841bb4636258a87c90", size = 7801581 },
+    { url = "https://files.pythonhosted.org/packages/30/a8/0811b191dab2c7e8eb35915d221312189b3f54dc09a6fac48fe521b30dec/pillow_heif-0.21.0-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:7f9e939cd8e343237800fe998e26558a82cb25496b74d7674f29e75dc87eb636", size = 8301022 },
+    { url = "https://files.pythonhosted.org/packages/c3/a1/c2c95ee65209910fd4ef161a3932ac2c7f0401c2f0ea76ff66b24745e444/pillow_heif-0.21.0-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:8b30fbbb672a3413413bcfc726f9994e495c647c6b96ab9f832dccb61b67fb2f", size = 9050354 },
+    { url = "https://files.pythonhosted.org/packages/2f/c5/f3ab23f0440736a7b343200f7535d02a8fa2d5897318a23212e5a9b6b720/pillow_heif-0.21.0-cp310-cp310-win_amd64.whl", hash = "sha256:9807c955ea7ed2caa5d105aea7d870d8c0958079ed2aba39a6ace7ef82aad402", size = 8691061 },
+    { url = "https://files.pythonhosted.org/packages/7a/94/4436c95e491ac921788ff9d34ebfe55cf8d5d6a870e7d67ea557b6d3040f/pillow_heif-0.21.0-pp310-pypy310_pp73-macosx_13_0_x86_64.whl", hash = "sha256:9305aa837ce77d98a8b5e7bc8f86eeaefb52237686d84d60de11d55bad541d7f", size = 5389392 },
+    { url = "https://files.pythonhosted.org/packages/af/8f/f645a9f1b620d3fa7da3d278dcea763b6519b52e4c1ef7d5472925657f59/pillow_heif-0.21.0-pp310-pypy310_pp73-macosx_14_0_arm64.whl", hash = "sha256:fc9bfc50f55267d13b0abf63bd7d141b92a39e09812dadee1a88b5863d9b8808", size = 3963965 },
+    { url = "https://files.pythonhosted.org/packages/83/ff/aad1abae74d28aff860d94f15651745ae293d43ec8d61634f8d31beeda13/pillow_heif-0.21.0-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:03273b94a7548ba615f6bfc1031137f1a025b657226de6c3f09f84945295f565", size = 6924584 },
+    { url = "https://files.pythonhosted.org/packages/51/c6/0a74b847691093942de3253866dfb0e72847155ef7756c9fb783ac184361/pillow_heif-0.21.0-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6576c9c7713e33150395cdc6e9cf59efd8f42c5783cf0764092ba50a048ee2c6", size = 7758733 },
+    { url = "https://files.pythonhosted.org/packages/36/2f/6479ed40a11a255603bcc7037b831512c4df075ac96cf4f20776c6c3c104/pillow_heif-0.21.0-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:2813c34cdd3f07e406b6a2cb216019409eb62270e6799088ddf3d4cb08a0d503", size = 8691502 },
 ]
 
 [[package]]
@@ -1001,7 +1025,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/24/c2/d58480aadc9a1f420
 
 [[package]]
 name = "wagtail"
-version = "5.0.5"
+version = "5.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyascii" },
@@ -1020,11 +1044,11 @@ dependencies = [
     { name = "pillow" },
     { name = "requests" },
     { name = "telepath" },
-    { name = "willow" },
+    { name = "willow", extra = ["heif"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2d/75/6d11362191ace6000c71545f97627fa0a82a1e68f5fc4dd13680832da2a3/wagtail-5.0.5.tar.gz", hash = "sha256:cbdef3e08d87a949cb2a63afb73c112e8921bb91608711fa1a9608f5591a77e2", size = 6177177 }
+sdist = { url = "https://files.pythonhosted.org/packages/c7/ed/667a07b9b3a014469aceb70950e5a74b4ee2fcb597e9ecfb2ae6545c67d9/wagtail-5.1.3.tar.gz", hash = "sha256:45fac794e4c20c7e75b018069d7f9761f25faa3619ef30df24013ca24abf9a74", size = 6261667 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f3/81/c877b13d3324c4bfa7fe1fbd1dc15388e065b0787d5dbfda914810a2e7fa/wagtail-5.0.5-py3-none-any.whl", hash = "sha256:ec59a23013ef8cbc260d95ed73977010985edf5f8cb6097fdd740db6854babee", size = 8735440 },
+    { url = "https://files.pythonhosted.org/packages/3b/5a/289cb92d881ad10a8d2efd7e57ba9d0d6f9e2ebeca6c4c5c78b48c29eb43/wagtail-5.1.3-py3-none-any.whl", hash = "sha256:f4a6cc2adc40f687d8fb62fed2d4fc0804941dfa45b4624887f260dc6cf6b9f2", size = 8885637 },
 ]
 
 [[package]]
@@ -1061,6 +1085,11 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/e1/96/71ade7a7f58b597873ec34ccc1d9a61bd00def099f37544c0dd17a00da12/willow-1.6.3.tar.gz", hash = "sha256:143cefd30d3bb816cdff857c454da24991dda35a0315ea795101675e0b14262f", size = 112128 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/75/a9/4752fccf68f64500ce23f0618f1da7533deb3f74a8bc6ed6d4e473a4d2e9/willow-1.6.3-py3-none-any.whl", hash = "sha256:f4b17a16c6315864604dadb6cdf2987d0b685e295cca74c6da28b94167a3126e", size = 118095 },
+]
+
+[package.optional-dependencies]
+heif = [
+    { name = "pillow-heif" },
 ]
 
 [[package]]
