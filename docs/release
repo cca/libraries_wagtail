@@ -9,9 +9,9 @@ else if test "$argv[1]" = prod; or test "$argv[1]" = production
     # version release with a release in GitHub with a summary of changes.
     set PROD_RELEASE true
     set LATEST_TAG (git tag --list 'prod-deploy-*' --sort=-v:refname | head -n 1)
-    set TAG_COMPONENTS (string split . $LATEST_TAG)
+    set TAG_COMPONENTS (string split - $LATEST_TAG)
     set TAG_COMPONENTS[3] (math $TAG_COMPONENTS[3] + 1)
-    set NEXT_TAG (string join . $TAG_COMPONENTS)
+    set NEXT_TAG (string join - $TAG_COMPONENTS)
 
     set LAST_VERSION_TAG (git tag --list 'v*' --sort=-v:refname | head -n 1)
     while not string match --regex v[0-9]+\.[0-9]+\.[0-9]+ $NEXT_VERSION_TAG
@@ -22,6 +22,9 @@ else if test "$argv[1]" = prod; or test "$argv[1]" = production
     if test -z "$NEXT_VERSION_TAG"
         echo "No version tag was provided, exiting without doing anything." 2>&1
         exit 1
+    else
+        git tag $NEXT_VERSION_TAG
+        git push origin $NEXT_VERSION_TAG
     end
 else
     # Deafult to staging deploy: stg-deploy-N. No other tags, no release in GH.
@@ -40,7 +43,7 @@ git tag $NEXT_TAG
 git push origin $NEXT_TAG
 
 if set --query PROD_RELEASE
-    gh release create $NEXT_TAG --verify-tag --generate-notes --notes-start-tag $LAST_VERSION_TAG
+    gh release create $NEXT_VERSION_TAG --verify-tag --generate-notes --notes-start-tag $LAST_VERSION_TAG
 end
 
 sleep 1
