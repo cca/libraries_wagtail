@@ -108,11 +108,9 @@
 
 .page--search .header__nav-link--search.header__nav-link--is-active {
     @include respond.respond(breakpoints.$break-medium) {
+        border: 0;
         border-bottom: component-specific.$nav-border-bottom solid colors.$black;
-        border-left: 0;
-        border-right: 0;
-        border-top: 0;
-        bottom: 4px; // border adjustment
+        bottom: 1px; // border adjustment
         top: auto;
 
         .header__icon {
