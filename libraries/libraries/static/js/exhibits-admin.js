@@ -34,15 +34,15 @@ $(() => {
             .find('.js-type').trigger('change')
     })
 
-    // auto-tag images with the slugified title of the exhibition
+    // auto-tag images with the title of the exhibition
     // fires whenever we're on the image "Upload" tab of an exhibit
     if ($('#id_exhibit_artwork-FORMS').length) {
-        $(document).on('click', '.modal-content a[href="#upload"]', () => {
+        $(document).on('click', '#tab-label-upload', () => {
             // select "Exhibitions Media" collection (ID = 7)
-            $('#id_image-chooser-upload-collection option[value="7"]').prop("selected", true)
-            var title = `"${$('#id_title').val()}"`
+            $('#id_image-chooser-upload-collection').val("7")
+            var title = `"${$('#id_title').val().trim()}"`
             // instantiate tagit first, for some reason it's often not ready
-            $('.tagit').tagit().tagit("createTag", title)
+            if (title) $('.tagit').tagit().tagit("createTag", title)
         })
     }
 
