@@ -46,5 +46,5 @@ if set --query PROD_RELEASE
     gh release create $NEXT_VERSION_TAG --verify-tag --generate-notes --notes-start-tag $LAST_VERSION_TAG
 end
 
-sleep 1
+sleep 2
 gh run watch
