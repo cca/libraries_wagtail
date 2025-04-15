@@ -27,7 +27,7 @@ else if test "$argv[1]" = prod; or test "$argv[1]" = production
         git push origin $NEXT_VERSION_TAG
     end
 else
-    # Deafult to staging deploy: stg-deploy-N. No other tags, no release in GH.
+    # Default to staging deploy: stg-deploy-N. No other tags, no release in GH.
     set LATEST_TAG (git tag --list 'stg-deploy-*' --sort=-v:refname | head -n 1)
     if test -z "$LATEST_TAG"
         set NEXT_TAG stg-deploy-1
