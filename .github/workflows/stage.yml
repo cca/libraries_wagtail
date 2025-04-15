@@ -82,10 +82,10 @@ jobs:
         uses: docker/build-push-action@v6.14.0
         with:
           cache-to: type=inline
-          cache-from: type=registry,ref=${{ env.REPOSITORY }}/${{ env.IMAGE}}:latest
+          cache-from: type=registry,ref=${{ env.REPOSITORY }}/${{ env.IMAGE }}:latest
           tags: |
-            ${{ env.REPOSITORY }}/${{ env.IMAGE}}:latest
-            ${{ env.REPOSITORY }}/${{ env.IMAGE}}:${{ steps.tag.outputs.tag }}
+            ${{ env.REPOSITORY }}/${{ env.IMAGE }}:latest
+            ${{ env.REPOSITORY }}/${{ env.IMAGE }}:${{ steps.tag.outputs.tag }}
           push: true
 
   deploy:
