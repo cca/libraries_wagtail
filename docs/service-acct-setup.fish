@@ -1,15 +1,17 @@
 #!/usr/bin/env fish
-set PROJECT_ID gcp-project-name
-set SA libraries-wagtail-gh-actions
+set APP libraries
+set PROJECT_ID cca-web-staging
+set SA $APP-gh-actions
 set SERVICE_ACCOUNT_EMAIL $SA@$PROJECT_ID.iam.gserviceaccount.com
-set GAR_LOCATION gcp-us-location
-set GAR_REPO name-of-repo
+set GAR_LOCATION us-west2
+set GAR_REPO docker-web
 set GITHUB_REPO cca/libraries_wagtail
 
 # create a Service Account (SA)
 gcloud iam service-accounts create $SA --project $PROJECT_ID
 
 # create a workload identity pool
+# if you've run this script before the GitHub WIP will already exist
 gcloud iam workload-identity-pools create github \
     --project=$PROJECT_ID \
     --location=global \
@@ -17,17 +19,17 @@ gcloud iam workload-identity-pools create github \
 
 # create workload identity pool provider, could use different display name
 # ! assumes repository organization is CCA
-gcloud iam workload-identity-pools providers create-oidc libraries-wagtail \
+gcloud iam workload-identity-pools providers create-oidc $APP \
     --project=$PROJECT_ID \
     --location="global" \
     --workload-identity-pool="github" \
-    --display-name="My GitHub repo Provider" \
+    --display-name="$APP GitHub repo Provider" \
     --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository,attribute.repository_owner=assertion.repository_owner" \
     --attribute-condition="assertion.repository_owner == 'cca'" \
     --issuer-uri="https://token.actions.githubusercontent.com"
 
 # this is the WORKLOAD_IDENTITY_PROVIDER in the workflow
-gcloud iam workload-identity-pools providers describe libraries-wagtail \
+gcloud iam workload-identity-pools providers describe $APP \
     --project=$PROJECT_ID \
     --location="global" \
     --workload-identity-pool="github" \
