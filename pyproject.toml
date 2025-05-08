@@ -14,7 +14,7 @@ requires-python = "==3.10.13"
 dependencies = [
     "certifi==2025.1.31",
     "dj-database-url==2.3.0",
-    "django==4.2.19",
+    "django==4.2.21",
     "django-cas-ng==5.0.1",
     "django-extensions==3.2.3",
     "django-storages[google]==1.14.4",
