@@ -51,7 +51,7 @@ Note that persistent volumes are stored _on the minikube server_ in the /data di
 ```fish
 # set your local docker environment to reference the minikube docker
 > minikube -p minikube docker-env | source
-> docker images
+> docker images --filter reference=libraries-wagtail
 REPOSITORY        TAG                                                                IMAGE ID       CREATED         SIZE
 libraries-wagtail 552e430472ee46b4a5b551dd13e84243a9c6dbcd4a116689bbf06ede8fbd3884   552e430472ee   2 weeks ago     1.24GB
 libraries-wagtail ep-full-0.28                                                       552e430472ee   2 weeks ago     1.24GB
