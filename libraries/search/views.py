@@ -5,7 +5,6 @@ from django.shortcuts import redirect, render
 
 from wagtail.models import Page
 from wagtail.search.models import Query
-from wagtail.search.query import Fuzzy
 
 from exhibitions.models import ExhibitPage
 
