@@ -142,7 +142,6 @@ class ExhibitPage(Page):
         features=settings.RICHTEXT_BASIC,  # type: ignore
         help_text="E.g. Simpson, Meyer",
     )
-    # TODO if we split this into two date fields we can fix the schema.org data
     dates = RichTextField(
         blank=True,
         features=settings.RICHTEXT_BASIC,  # type: ignore
@@ -183,7 +182,6 @@ class ExhibitPage(Page):
                 FieldPanel("gallery_columns"),
                 FieldPanel("gallery_spacing"),
                 FieldPanel("main_body_font"),
-                FieldPanel("featured"),  # TODO move this to promote panel
             ],
             heading="Theme",
         ),
@@ -214,6 +212,7 @@ p { font-size: 1.2em; }
         InlinePanel("exhibit_artwork", label="Exhibit pieces"),
         FieldPanel("epilogue"),
     ]
+    promote_panels = [FieldPanel("featured")] + Page.promote_panels
 
     @property
     def column_width(self):
