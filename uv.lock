@@ -313,15 +313,42 @@ google = [
 ]
 
 [[package]]
+name = "django-stubs-ext"
+version = "5.2.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fc/06/5e94715d103e6cc72380cb0d0b6682a7d5ad2c366cee478c94d77aad777d/django_stubs_ext-5.2.2.tar.gz", hash = "sha256:d9d151b919fe2438760f5bd938f03e1cb08c84d0651f9e5917f1313907e42683", size = 6244, upload-time = "2025-07-17T08:34:35.054Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4e/38/2903676f97f7902ee31984a06756b0e8836e897f4b617e1a03be4a43eb4f/django_stubs_ext-5.2.2-py3-none-any.whl", hash = "sha256:8833bbe32405a2a0ce168d3f75a87168f61bd16939caf0e8bf173bccbd8a44c5", size = 8816, upload-time = "2025-07-17T08:34:33.715Z" },
+]
+
+[[package]]
 name = "django-taggit"
-version = "3.1.0"
+version = "6.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e7/3d/660e401d6e64401fc4b87373c95bbd7481429cce9a28a6f8137383188d89/django-taggit-3.1.0.tar.gz", hash = "sha256:c8f2e4eae387939089b3d75d1d8649e008880970c068ce9d0e82f87fd5e29508", size = 58238, upload-time = "2022-11-18T04:58:47.172Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/34/a6/f1beaf8f552fe90c153cc039316ebab942c23dfbc88588dde081fefca816/django_taggit-6.1.0.tar.gz", hash = "sha256:c4d1199e6df34125dd36db5eb0efe545b254dec3980ce5dd80e6bab3e78757c3", size = 38151, upload-time = "2024-09-29T08:07:39.477Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d5/73/ed9e158f7dd52a31ab83c6d8bf083478d859dd8a64f72ebcdd4b3c8ccbfa/django_taggit-3.1.0-py3-none-any.whl", hash = "sha256:543218ac346fbe02a65733e0341c91b57a3e0f7a41568966b26f1cea9edc4805", size = 60199, upload-time = "2022-11-18T04:58:32.067Z" },
+    { url = "https://files.pythonhosted.org/packages/6b/34/4185c345530b91d05cb82e05d07148f481a5eb5dc2ac44e092b3daa6f206/django_taggit-6.1.0-py3-none-any.whl", hash = "sha256:ab776264bbc76cb3d7e49e1bf9054962457831bd21c3a42db9138b41956e4cf0", size = 75749, upload-time = "2024-09-29T08:07:14.612Z" },
+]
+
+[[package]]
+name = "django-tasks"
+version = "0.8.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "django-stubs-ext" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ce/d9/3670506bf2a5173310ec221cc7d24585e0d91627d86c1f0a6fbe243fbb4a/django_tasks-0.8.1.tar.gz", hash = "sha256:32673a9f56108ac1ea4664dc62580e5fc3536dd40858b38fd3b6a099913244b7", size = 31407, upload-time = "2025-07-04T15:51:59.68Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c2/56/da9b5df9bad6322d8a2cf38a60ecaa834fc5a9ee995a9647d2e87708ca73/django_tasks-0.8.1-py3-none-any.whl", hash = "sha256:5323f3858f7ea99d899a772b832098d8d694444b291c24f1e0ed5446272b880b", size = 43085, upload-time = "2025-07-04T15:51:58.087Z" },
 ]
 
 [[package]]
@@ -572,19 +599,6 @@ wheels = [
 ]
 
 [[package]]
-name = "html5lib"
-version = "1.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "six" },
-    { name = "webencodings" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ac/b6/b55c3f49042f1df3dcd422b7f224f939892ee94f22abcf503a9b7339eaf2/html5lib-1.1.tar.gz", hash = "sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f", size = 272215, upload-time = "2020-06-22T23:32:38.834Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/6c/dd/a834df6482147d48e225a49515aabc28974ad5a4ca3215c18a882565b028/html5lib-1.1-py2.py3-none-any.whl", hash = "sha256:0d78f8fde1c230e99fe37986a60526d7049ed4bf8a9fadbad5f00e22e58e041d", size = 112173, upload-time = "2020-06-22T23:32:36.781Z" },
-]
-
-[[package]]
 name = "idna"
 version = "3.10"
 source = { registry = "https://pypi.org/simple" }
@@ -604,6 +618,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ff/9c/13d732e16e8fbdef7e68f4f339f3b86618430d4003c7ffe82e15bf925d7c/l18n-2021.3.tar.gz", hash = "sha256:1956e890d673d17135cc20913253c154f6bc1c00266c22b7d503cc1a5a42d848", size = 50712, upload-time = "2021-11-12T09:32:36.255Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/6c/e7/dfa82d0bb2b314950e457a755463b429090127ffc0ab9d8d14ef4563ad44/l18n-2021.3-py3-none-any.whl", hash = "sha256:78495d1df95b6f7dcc694d1ba8994df709c463a1cbac1bf016e1b9a5ce7280b9", size = 51534, upload-time = "2021-11-12T09:32:34.296Z" },
+]
+
+[[package]]
+name = "laces"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/74/9a/9192d6a74e2c6db4f705dd98f56be488e47373172c13f4916aeabc4d68b8/laces-0.1.2.tar.gz", hash = "sha256:3218e09c1889ae5cf3fc7a82f5bb63ec0c7879889b6a9760bfc42323c694b84d", size = 29264, upload-time = "2025-01-14T04:37:34.805Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/60/fe/31f76f5cb2579bdda208aa257ce5482653f22ab1bad3e128fe2f803fa2f1/laces-0.1.2-py3-none-any.whl", hash = "sha256:980cdaf9a31e883a2b8198132e2388931a4eb8814f5bfa5d8bba13ff9f657b7c", size = 22462, upload-time = "2025-01-14T04:37:30.636Z" },
 ]
 
 [[package]]
@@ -648,7 +674,7 @@ requires-dist = [
     { name = "psycopg2", specifier = "==2.9.10" },
     { name = "pysftp", specifier = "==0.2.9" },
     { name = "uwsgi", specifier = "==2.0.30" },
-    { name = "wagtail", specifier = "==5.2.8" },
+    { name = "wagtail", specifier = "==7.1" },
     { name = "whitenoise", extras = ["brotli"], specifier = "==6.9.0" },
     { name = "xmltodict", specifier = "==0.14.2" },
 ]
@@ -947,6 +973,15 @@ wheels = [
 ]
 
 [[package]]
+name = "typing-extensions"
+version = "4.14.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/98/5a/da40306b885cc8c09109dc2e1abd358d5684b1425678151cdaed4731c822/typing_extensions-4.14.1.tar.gz", hash = "sha256:38b39f4aeeab64884ce9f74c94263ef78f3c22467c8724005483154c26648d36", size = 107673, upload-time = "2025-07-04T13:28:34.16Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b5/00/d631e67a838026495268c2f6884f3711a15a9a2a96cd244fdaea53b823fb/typing_extensions-4.14.1-py3-none-any.whl", hash = "sha256:d1e1e3b58374dc93031d6eda2420a48ea44a36c2b4766a4fdeb3710755731d76", size = 43906, upload-time = "2025-07-04T13:28:32.743Z" },
+]
+
+[[package]]
 name = "tzdata"
 version = "2025.1"
 source = { registry = "https://pypi.org/simple" }
@@ -972,7 +1007,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/6f/f0/d794e9c7359f488b1
 
 [[package]]
 name = "wagtail"
-version = "5.2.8"
+version = "7.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyascii" },
@@ -982,29 +1017,20 @@ dependencies = [
     { name = "django-modelcluster" },
     { name = "django-permissionedforms" },
     { name = "django-taggit" },
+    { name = "django-tasks" },
     { name = "django-treebeard" },
     { name = "djangorestframework" },
     { name = "draftjs-exporter" },
-    { name = "html5lib" },
-    { name = "l18n" },
+    { name = "laces" },
     { name = "openpyxl" },
     { name = "pillow" },
     { name = "requests" },
     { name = "telepath" },
     { name = "willow", extra = ["heif"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/36/13/a45e3a18a3e2b503fad7c7bc581d8e82c3cbaff101de8834feaa9005f87c/wagtail-5.2.8.tar.gz", hash = "sha256:92262336a6744de1b3015ae3c04135edd5e4d7722fb2e99e1b6e9191686bc3f9", size = 6390120, upload-time = "2025-02-03T15:52:16.777Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d6/ea/add56413b037c741facca3fb7ccb09004ef559b7bbb0b8aeca87bb8bf8c7/wagtail-7.1.tar.gz", hash = "sha256:e1de2af82b62cbf4d3b77a93c55779bc67ad7b3179b6b4f824ec4f214d570c01", size = 6771177, upload-time = "2025-08-04T15:25:22.168Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/85/53/69c569334486dd9bc84d941c08f4f563a58dbcca2db20d0f4b5ef176e0de/wagtail-5.2.8-py3-none-any.whl", hash = "sha256:dc2bfa1b7f434515182bc81c7a6e7a3b59c93f15f3ccd06c6389de2f26e4099d", size = 9009518, upload-time = "2025-02-03T15:52:10.247Z" },
-]
-
-[[package]]
-name = "webencodings"
-version = "0.5.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0b/02/ae6ceac1baeda530866a85075641cec12989bd8d31af6d5ab4a3e8c92f47/webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923", size = 9721, upload-time = "2017-04-05T20:21:34.189Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/f4/24/2a3e3df732393fed8b3ebf2ec078f05546de641fe1b667ee316ec1dcf3b7/webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78", size = 11774, upload-time = "2017-04-05T20:21:32.581Z" },
+    { url = "https://files.pythonhosted.org/packages/c9/28/d59856235237e405d30cc0d2059a07c17394644d31d0cc6d0e17882d999f/wagtail-7.1-py3-none-any.whl", hash = "sha256:ddffde38873044bf98e2ce77bd7ad728a29633775efb1be7a68a636698a8381e", size = 9263788, upload-time = "2025-08-04T15:25:15.466Z" },
 ]
 
 [[package]]
@@ -1023,15 +1049,15 @@ brotli = [
 
 [[package]]
 name = "willow"
-version = "1.6.3"
+version = "1.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "defusedxml" },
     { name = "filetype" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e1/96/71ade7a7f58b597873ec34ccc1d9a61bd00def099f37544c0dd17a00da12/willow-1.6.3.tar.gz", hash = "sha256:143cefd30d3bb816cdff857c454da24991dda35a0315ea795101675e0b14262f", size = 112128, upload-time = "2023-11-26T22:47:02.658Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a3/bd/2a383be24c3e47423aa9b0aa5b4ca818ef193506b58800dd51e1b89d7bb3/willow-1.11.0.tar.gz", hash = "sha256:70292b2d0cd2d5bb4076f0b3d61308aeaa0b225f3970d00752f08a8fd386c3d1", size = 113827, upload-time = "2025-07-16T08:46:26.939Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/75/a9/4752fccf68f64500ce23f0618f1da7533deb3f74a8bc6ed6d4e473a4d2e9/willow-1.6.3-py3-none-any.whl", hash = "sha256:f4b17a16c6315864604dadb6cdf2987d0b685e295cca74c6da28b94167a3126e", size = 118095, upload-time = "2023-11-26T22:47:00.564Z" },
+    { url = "https://files.pythonhosted.org/packages/c1/05/b3f1b443c31ad871c48e19ea2be189681c2df4ccf594b1dd83d6775c032b/willow-1.11.0-py3-none-any.whl", hash = "sha256:0a4388dbf18726eef8f27449659047689c39b7023045ca5a8a75410d3864ee6f", size = 119459, upload-time = "2025-07-16T08:46:25.596Z" },
 ]
 
 [package.optional-dependencies]
