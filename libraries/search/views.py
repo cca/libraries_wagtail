@@ -4,6 +4,8 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import redirect, render
 
 from wagtail.models import Page
+
+# TODO in Wagtail 6.0 Query moves to wagtail.contrib.search_promotions
 from wagtail.search.models import Query
 
 from exhibitions.models import ExhibitPage
@@ -55,10 +57,7 @@ def search(request):
         # Wagtail 5.0 disabled partial matches in ES so we switched to use .autocomplete
         # https://docs.wagtail.org/en/stable/releases/5.0.html#elasticsearch-backend-no-longer-performs-partial-matching-on-search
         search_results = Page.objects.live().autocomplete(search_query, operator="and")
-        # ? What is Query doing here?
-        # ! Also it should come from wagtail.contrib.search_promotions & not wagtailsearch.Query
         query = Query.get(search_query)
-        # Record hit
         query.add_hit()
     elif type == "exhibits" and search_query:
         # ! we don't expose exhibits search anywhere
@@ -68,8 +67,6 @@ def search(request):
             .live()
             .autocomplete(search_query, operator="and")
         )
-        # ? What is Query doing here?
-        # ! Also it should come from wagtail.contrib.search_promotions & not wagtailsearch.Query
         query = Query.get(search_query)
         query.add_hit()
     else:
