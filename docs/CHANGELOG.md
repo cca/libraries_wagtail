@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.2.0
+
+**2025-08-??**: upgrade to Wagtail 5.2, other upgrades, 404 page improvements, fix Exhibits bugs.
+
+- [Wagtail 5.2](https://guide.wagtail.org/en-latest/releases/new-in-wagtail-5-2/): new page listing view, added backend features related to images and search results.
+- Update Python from 3.10 to 3.12 and the web server's operating system from Debian Bullseye to Bookworm. These are fairly major upgrades that should make the site faster and more secure. Several other python dependencies also received minor upgrades.
+- Fix [two bugs](https://github.com/cca/libraries_wagtail/issues/178) with creating Exhibitions: images are not being auto-tagged again and the logic around work types' required fields has returned.
+- Improve 404 page search and [fix its link to site search](https://github.com/cca/libraries_wagtail/issues/181)
+- Accessibility improvements to decorative, linked images seen in sidebars and "cards"
+
 ## 5.1.0
 
 **2025-02-26**: upgrade to Wagtail 5.1, AVIF image support, accessibility improvements.

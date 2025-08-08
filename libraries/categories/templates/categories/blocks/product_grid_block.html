@@ -10,7 +10,12 @@
         <div class="product-grid-block__item">
             <div class="product-grid-block__content {% if not item.external_url and not item.page %}product-grid-block__no-link-item{% endif %}">
                 <div class="product-grid-block__img">
-                    {% image item.image fill-150x150 %}
+                    {% if item.external_url or item.page %}
+                        {% comment %} no alt text in linked image {% endcomment %}
+                        {% image item.image fill-150x150 alt="" %}
+                    {% else %}
+                        {% image item.image fill-150x150 %}
+                    {% endif %}
                 </div>
                 <div class="product-grid-block__text">
                     {% if item.title %}

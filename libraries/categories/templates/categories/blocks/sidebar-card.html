@@ -1,11 +1,11 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-{% comment %} we inline the if-else because Django doesn't allow "set" tag {% endcomment %}
+{# we inline the if-else because Django doesn't allow "set" tag #}
 <div class="card card--no-border card--no-fixed-height card--sidebar {% if mobile %}visible-xs visible-sm{% else %}hidden-xs hidden-sm{% endif %}">
     <a class="card__link" href="{{ value.link.url }}">
         {% if value.image %}
-            {% image value.image fill-400x400 class="card__thumb" %}
+            {% image value.image fill-400x400 alt="" class="card__thumb" %}
         {% elif value.link.page.specific.main_image %}
-            {% image value.link.page.specific.main_image fill-400x400 class="card__thumb" %}
+            {% image value.link.page.specific.main_image fill-400x400 alt="" class="card__thumb" %}
         {% endif %}
         <span class="bg-blue card__title">
             {{ value.link.text }}
