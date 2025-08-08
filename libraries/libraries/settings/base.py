@@ -53,7 +53,8 @@ if not "DOCKER_BUILD" in env:
             key, value = line.strip().split("=", 1)
             env[key] = value
 
-# TODO should be loaded via untracked file or env var #10
+# TODO we'd like to hide this but docker image won't build without it
+# TODO because we run a mgmt cmd (collectstatic)
 SECRET_KEY = env.get(
     "SECRET_KEY", r"ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb"
 )
@@ -209,7 +210,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
-# ! this changes to STORAGES['statisfiles']['BACKEND'] in Django 4.2
+# ! this changes to STORAGES['staticfiles']['BACKEND'] in Django 4.2
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # necessary to serve Summon files or any arbitrary static file
 WHITENOISE_ROOT = STATIC_ROOT
@@ -237,7 +238,7 @@ WAGTAILADMIN_UNSAFE_PAGE_DELETION_LIMIT = 5
 # sets of HTML tags allowed in various rich text fields
 # full list here:
 # https://docs.wagtail.io/en/latest/advanced_topics/customisation/page_editing_interface.html#rich-text-features
-RICHTEXT_BASIC = [
+RICHTEXT_BASIC: list[str] = [
     "bold",
     "document-link",
     "italic",
@@ -246,7 +247,7 @@ RICHTEXT_BASIC = [
     "subscript",
     "superscript",
 ]
-RICHTEXT_ADVANCED = RICHTEXT_BASIC + [
+RICHTEXT_ADVANCED: list[str] = RICHTEXT_BASIC + [
     "code",
     "embed",
     "h3",
