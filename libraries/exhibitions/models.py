@@ -20,7 +20,7 @@ from libraries.utils import validate_clean
 
 
 # logic for showing/hiding appropriate art work fields based on type
-@hooks.register("insert_editor_js")
+@hooks.register("insert_editor_js")  # type: ignore
 def editor_js():
     file = settings.STATIC_URL + "js/exhibits-admin.js"
     return '<script src="{0}"></script>'.format(file)
@@ -73,13 +73,13 @@ class ExhibitsIndexPage(Page):
 
     front_matter = RichTextField(
         blank=True,
-        features=settings.RICHTEXT_ADVANCED,
+        features=settings.RICHTEXT_ADVANCED,  # type: ignore
         help_text="Text that appears at the top of the index page by the title.",
     )
 
     epilogue = RichTextField(
         blank=True,
-        features=settings.RICHTEXT_ADVANCED,
+        features=settings.RICHTEXT_ADVANCED,  # type: ignore
         help_text="Bottom text just above the footer (e.g. for licensing, attribution notes).",
     )
     order = models.IntegerField(
@@ -139,23 +139,23 @@ class ExhibitPage(Page):
     # details about exhibition
     location = RichTextField(
         blank=True,
-        features=settings.RICHTEXT_BASIC,
+        features=settings.RICHTEXT_BASIC,  # type: ignore
         help_text="E.g. Simpson, Meyer",
     )
     # TODO if we split this into two date fields we can fix the schema.org data
     dates = RichTextField(
         blank=True,
-        features=settings.RICHTEXT_BASIC,
+        features=settings.RICHTEXT_BASIC,  # type: ignore
         help_text="Time period when the exibit ran.",
     )
     creators = RichTextField(
         blank=True,
-        features=settings.RICHTEXT_BASIC,
+        features=settings.RICHTEXT_BASIC,  # type: ignore
         help_text="Name(s) of artists and curators.",
     )
     reception = RichTextField(
         blank=True,
-        features=settings.RICHTEXT_BASIC,
+        features=settings.RICHTEXT_BASIC,  # type: ignore
         help_text="Details about the reception like date/time.",
     )
     description = StreamField(
@@ -166,7 +166,7 @@ class ExhibitPage(Page):
     )
     epilogue = RichTextField(
         blank=True,
-        features=settings.RICHTEXT_ADVANCED,
+        features=settings.RICHTEXT_ADVANCED,  # type: ignore
         help_text="Footer text (e.g. for licensing, attribution)",
     )
     content_panels = Page.content_panels + [
@@ -183,7 +183,7 @@ class ExhibitPage(Page):
                 FieldPanel("gallery_columns"),
                 FieldPanel("gallery_spacing"),
                 FieldPanel("main_body_font"),
-                FieldPanel("featured"),
+                FieldPanel("featured"),  # TODO move this to promote panel
             ],
             heading="Theme",
         ),
@@ -276,7 +276,7 @@ p { font-size: 1.2em; }
 
 
 class HeaderImage(Orderable):
-    page = ParentalKey(ExhibitPage, related_name="header_image")
+    page = ParentalKey(ExhibitPage, related_name="header_image")  # type: ignore
 
     image = models.ForeignKey(
         "wagtailimages.Image",
@@ -294,7 +294,7 @@ class HeaderImage(Orderable):
 
 # represents one piece of media/art work for display in the gallery
 class ExhibitArtwork(Orderable):
-    page = ParentalKey(ExhibitPage, related_name="exhibit_artwork")
+    page = ParentalKey(ExhibitPage, related_name="exhibit_artwork")  # type: ignore
 
     type_choices = (
         ("image", "Image"),
@@ -337,11 +337,12 @@ class ExhibitArtwork(Orderable):
     )
     description = RichTextField(
         blank=True,
-        features=settings.RICHTEXT_BASIC,
+        features=settings.RICHTEXT_BASIC,  # type: ignore
         help_text="Notes or a general description.",
     )
 
     panels = [
+        # classname stopped working, the data attributes are hooks for exhibits-admin.js
         FieldPanel("type", classname="js-type"),
         FieldPanel("title"),
         FieldPanel("creator"),
