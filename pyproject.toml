@@ -9,8 +9,8 @@ authors = [
 license = "ECL-2.0"
 license-files = ["LICENSE.txt"]
 readme = "readme.md"
-# matches version in Dockerfile and mise.toml
-requires-python = "==3.10.13"
+# Python version must match Dockerfile and mise.toml
+requires-python = "==3.12.11"
 dependencies = [
     "dj-database-url==3.0.1",
     "django==4.2.23",

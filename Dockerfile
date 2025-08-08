@@ -18,33 +18,33 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install -r --offline --pr
 # this builds files into /app/libraries/static, see gulpfile
 RUN npx gulp build
 
-# Build the Django application itself. Python version matches the one in mise.toml and pyproject.toml.
-FROM python:3.10.13-bullseye AS libraries
+# Build the Django application itself. Python version must match mise.toml and pyproject.toml.
+FROM python:3.12.11-bookworm AS libraries
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 WORKDIR /app/libraries
 ENV PYTHONPATH=/app:/app/libraries
 
 # Install non-python dependencies, rsync needed to fetch media files
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    # build-essential & libssl-dev needed to build uWSGI
+    build-essential \
     ca-certificates \
+    libssl-dev \
+    # needed for `pg_dump` and `python manage.py dbshell`
+    postgresql-client \
     rsync \
     && rm -rf /var/lib/apt/lists/*
 
-# Install postgresl-client, needed for
-# `kubectl exec pg_dump` and `kubectl django-admin dbshell`
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" | tee -a /etc/apt/sources.list.d/pgdg.list && \
-    curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg && \
-    apt-get update -y && \
-    apt-get install --no-install-recommends postgresql-client-14 -y \
-    && rm -rf /var/lib/apt/lists/*
-
 # Install python dependencies into system python
+# OpenSSL 3.0 compatibility flags for uWSGI
+ENV CFLAGS="-Wno-error=deprecated-declarations"
+ENV CPPFLAGS="-DOPENSSL_API_COMPAT=0x10100000L -DOPENSSL_NO_DEPRECATED"
+ENV LDFLAGS="-lssl -lcrypto"
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_PROJECT_ENVIRONMENT=/usr/local
 ENV UV_PYTHON_PREFERENCE=system
 COPY pyproject.toml uv.lock /app/
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
-# ? do I need another uv sync after COPY libraries /app/libraries?
 
 # Collect our compiled static files from the assets image
 COPY --from=assets /app/libraries/static /app/libraries/libraries/static
