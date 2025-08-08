@@ -18,7 +18,7 @@ dependencies = [
     "django-extensions==4.1",
     "django-storages[google]==1.14.6",
     "djangorestframework-simplejwt==5.5.1",
-    "elasticsearch==7.17.12",
+    "elasticsearch==9.1.0",
     "google-cloud-secret-manager==2.24.0",
     "l18n==2021.3",
     "psycopg2==2.9.10",

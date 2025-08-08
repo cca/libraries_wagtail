@@ -372,16 +372,30 @@ wheels = [
 ]
 
 [[package]]
-name = "elasticsearch"
-version = "7.17.12"
+name = "elastic-transport"
+version = "9.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/07/ee/68fdc04a4ef1a5026d6331196109714c8569ee70d072af8a479fa60f33c8/elasticsearch-7.17.12.tar.gz", hash = "sha256:a1f5733ae8cf1dbf0a78593389f2503c87dd97429976099832bf0626cdfaac8b", size = 248018, upload-time = "2024-09-19T07:30:22.503Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ae/1f/2d1a1790df2b75e1e1eb90d8a3fe066a47ef95e34430657447e549cc274c/elastic_transport-9.1.0.tar.gz", hash = "sha256:1590e44a25b0fe208107d5e8d7dea15c070525f3ac9baafbe4cb659cd14f073d", size = 76483, upload-time = "2025-07-24T16:41:31.017Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b0/9b/3dbb82aa27b4cbafd2600dcd74c88c4c710cfdacc3249d9c581916cfe359/elasticsearch-7.17.12-py2.py3-none-any.whl", hash = "sha256:468fd5eef703c0d9238e29bcaf3a6fe4d6b092f917959fbf41f48f8fea3df2f8", size = 385970, upload-time = "2024-09-19T07:30:18.008Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/5d/dd5a919dd887fe20a91f18faf5b4345ee3a058e483d2aa84cef0f2567e17/elastic_transport-9.1.0-py3-none-any.whl", hash = "sha256:369fa56874c74daae4ea10cbf40636d139f38f42bec0e006b9cd45a168ee7fce", size = 65142, upload-time = "2025-07-24T16:41:29.648Z" },
+]
+
+[[package]]
+name = "elasticsearch"
+version = "9.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "elastic-transport" },
+    { name = "python-dateutil" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/29/1e/22097cdcdfcdd3bdb417e339d97e7cdb4618f480a0abb8410065d0b08415/elasticsearch-9.1.0.tar.gz", hash = "sha256:764d2f724eac94f6bf9903e4feae07112643a9efcfdc5c868c1b69bd48c52e09", size = 848897, upload-time = "2025-07-30T08:54:52.253Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f3/90/922dcce6273efe7663ad10ed01f122cd09ecf1845855f4b27741c432920f/elasticsearch-9.1.0-py3-none-any.whl", hash = "sha256:96bb473dc70dbd94c37c4b05a0d2511af95d1b2db1657796f42546ef631cbbe4", size = 929547, upload-time = "2025-07-30T08:54:47.949Z" },
 ]
 
 [[package]]
@@ -642,7 +656,7 @@ requires-dist = [
     { name = "django-extensions", specifier = "==4.1" },
     { name = "django-storages", extras = ["google"], specifier = "==1.14.6" },
     { name = "djangorestframework-simplejwt", specifier = "==5.5.1" },
-    { name = "elasticsearch", specifier = "==7.17.12" },
+    { name = "elasticsearch", specifier = "==9.1.0" },
     { name = "google-cloud-secret-manager", specifier = "==2.24.0" },
     { name = "l18n", specifier = "==2021.3" },
     { name = "psycopg2", specifier = "==2.9.10" },
@@ -875,6 +889,18 @@ wheels = [
 ]
 
 [[package]]
+name = "python-dateutil"
+version = "2.9.0.post0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3", size = 342432, upload-time = "2024-03-01T18:36:20.211Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl", hash = "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427", size = 229892, upload-time = "2024-03-01T18:36:18.57Z" },
+]
+
+[[package]]
 name = "pytz"
 version = "2025.1"
 source = { registry = "https://pypi.org/simple" }
@@ -944,6 +970,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/65/58/5de8765687d6f9dfcbb72c89251036c3b901126404f872b936b13377a3fe/telepath-0.3.1.tar.gz", hash = "sha256:925c0609e0a8a6488ec4a55b19d485882cf72223b2b19fe2359a50fddd813c9c", size = 11622, upload-time = "2023-06-12T12:07:42.559Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5f/50/0f246d316f223b14ba5a88fbe2ff0b480d4a6064b866d48008dd57fd5930/telepath-0.3.1-py38-none-any.whl", hash = "sha256:c280aa8e77ad71ce80e96500a4e4d4a32f35b7e0b52e896bb5fde9a5bcf0699a", size = 10926, upload-time = "2023-06-12T12:07:41.443Z" },
+]
+
+[[package]]
+name = "typing-extensions"
+version = "4.14.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/98/5a/da40306b885cc8c09109dc2e1abd358d5684b1425678151cdaed4731c822/typing_extensions-4.14.1.tar.gz", hash = "sha256:38b39f4aeeab64884ce9f74c94263ef78f3c22467c8724005483154c26648d36", size = 107673, upload-time = "2025-07-04T13:28:34.16Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b5/00/d631e67a838026495268c2f6884f3711a15a9a2a96cd244fdaea53b823fb/typing_extensions-4.14.1-py3-none-any.whl", hash = "sha256:d1e1e3b58374dc93031d6eda2420a48ea44a36c2b4766a4fdeb3710755731d76", size = 43906, upload-time = "2025-07-04T13:28:32.743Z" },
 ]
 
 [[package]]
