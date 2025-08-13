@@ -216,16 +216,16 @@ wheels = [
 
 [[package]]
 name = "django"
-version = "4.2.23"
+version = "5.0.14"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asgiref" },
     { name = "sqlparse" },
     { name = "tzdata", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b5/20/02242739714eb4e53933d6c0fe2c57f41feb449955b0aa39fc2da82b8f3c/django-4.2.23.tar.gz", hash = "sha256:42fdeaba6e6449d88d4f66de47871015097dc6f1b87910db00a91946295cfae4", size = 10448384, upload-time = "2025-06-10T10:06:34.574Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9d/a4/cc0205045386b5be8eecb15a95f290383d103f0db5f7e34f93dcc340d5b0/Django-5.0.14.tar.gz", hash = "sha256:29019a5763dbd48da1720d687c3522ef40d1c61be6fb2fad27ed79e9f655bc11", size = 10644306, upload-time = "2025-04-02T11:24:41.396Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/cb/44/314e8e4612bd122dd0424c88b44730af68eafbee88cc887a86586b7a1f2a/django-4.2.23-py3-none-any.whl", hash = "sha256:dafbfaf52c2f289bd65f4ab935791cb4fb9a198f2a5ba9faf35d7338a77e9803", size = 7993904, upload-time = "2025-06-10T10:06:28.092Z" },
+    { url = "https://files.pythonhosted.org/packages/c0/93/eabde8789f41910845567ebbff5aacd52fd80e54c934ce15b83d5f552d2c/Django-5.0.14-py3-none-any.whl", hash = "sha256:e762bef8629ee704de215ebbd32062b84f4e56327eed412e5544f6f6eb1dfd74", size = 8185934, upload-time = "2025-04-02T11:24:36.888Z" },
 ]
 
 [[package]]
@@ -314,14 +314,14 @@ google = [
 
 [[package]]
 name = "django-taggit"
-version = "3.1.0"
+version = "5.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e7/3d/660e401d6e64401fc4b87373c95bbd7481429cce9a28a6f8137383188d89/django-taggit-3.1.0.tar.gz", hash = "sha256:c8f2e4eae387939089b3d75d1d8649e008880970c068ce9d0e82f87fd5e29508", size = 58238, upload-time = "2022-11-18T04:58:47.172Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/10/eb/269501702e231b552f68d813d0a07ac1ea81fd25a3c92fb0f249818f0f39/django-taggit-5.0.1.tar.gz", hash = "sha256:edcd7db1e0f35c304e082a2f631ddac2e16ef5296029524eb792af7430cab4cc", size = 60372, upload-time = "2023-10-29T11:57:20.124Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d5/73/ed9e158f7dd52a31ab83c6d8bf083478d859dd8a64f72ebcdd4b3c8ccbfa/django_taggit-3.1.0-py3-none-any.whl", hash = "sha256:543218ac346fbe02a65733e0341c91b57a3e0f7a41568966b26f1cea9edc4805", size = 60199, upload-time = "2022-11-18T04:58:32.067Z" },
+    { url = "https://files.pythonhosted.org/packages/07/18/94a45c8c50592d5cf7d73a9111053917c3684fda031c988041396bb3e588/django_taggit-5.0.1-py3-none-any.whl", hash = "sha256:a0ca8a28b03c4b26c2630fd762cb76ec39b5e41abf727a7b66f897a625c5e647", size = 61141, upload-time = "2023-10-29T11:56:57.954Z" },
 ]
 
 [[package]]
@@ -607,8 +607,20 @@ wheels = [
 ]
 
 [[package]]
+name = "laces"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/74/9a/9192d6a74e2c6db4f705dd98f56be488e47373172c13f4916aeabc4d68b8/laces-0.1.2.tar.gz", hash = "sha256:3218e09c1889ae5cf3fc7a82f5bb63ec0c7879889b6a9760bfc42323c694b84d", size = 29264, upload-time = "2025-01-14T04:37:34.805Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/60/fe/31f76f5cb2579bdda208aa257ce5482653f22ab1bad3e128fe2f803fa2f1/laces-0.1.2-py3-none-any.whl", hash = "sha256:980cdaf9a31e883a2b8198132e2388931a4eb8814f5bfa5d8bba13ff9f657b7c", size = 22462, upload-time = "2025-01-14T04:37:30.636Z" },
+]
+
+[[package]]
 name = "libraries-wagtail"
-version = "5.0.0"
+version = "5.2.0"
 source = { virtual = "." }
 dependencies = [
     { name = "dj-database-url" },
@@ -637,7 +649,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "dj-database-url", specifier = "==3.0.1" },
-    { name = "django", specifier = "==4.2.23" },
+    { name = "django", specifier = "==5.0.14" },
     { name = "django-cas-ng", specifier = "==5.0.1" },
     { name = "django-extensions", specifier = "==4.1" },
     { name = "django-storages", extras = ["google"], specifier = "==1.14.6" },
@@ -648,7 +660,7 @@ requires-dist = [
     { name = "psycopg2", specifier = "==2.9.10" },
     { name = "pysftp", specifier = "==0.2.9" },
     { name = "uwsgi", specifier = "==2.0.30" },
-    { name = "wagtail", specifier = "==5.2.8" },
+    { name = "wagtail", specifier = "==6.0.6" },
     { name = "whitenoise", extras = ["brotli"], specifier = "==6.9.0" },
     { name = "xmltodict", specifier = "==0.14.2" },
 ]
@@ -972,7 +984,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/6f/f0/d794e9c7359f488b1
 
 [[package]]
 name = "wagtail"
-version = "5.2.8"
+version = "6.0.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyascii" },
@@ -987,15 +999,16 @@ dependencies = [
     { name = "draftjs-exporter" },
     { name = "html5lib" },
     { name = "l18n" },
+    { name = "laces" },
     { name = "openpyxl" },
     { name = "pillow" },
     { name = "requests" },
     { name = "telepath" },
     { name = "willow", extra = ["heif"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/36/13/a45e3a18a3e2b503fad7c7bc581d8e82c3cbaff101de8834feaa9005f87c/wagtail-5.2.8.tar.gz", hash = "sha256:92262336a6744de1b3015ae3c04135edd5e4d7722fb2e99e1b6e9191686bc3f9", size = 6390120, upload-time = "2025-02-03T15:52:16.777Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ee/cf/d97ca7e7bf82e1dede67229d5173bc50969800ab21c2ce2aad44e4a84753/wagtail-6.0.6.tar.gz", hash = "sha256:c00a05eb4cee1e4bbfe7550e30ec121ecdb5143e328d75aaa586b93dff5d1b95", size = 6269592, upload-time = "2024-07-11T10:48:15.825Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/85/53/69c569334486dd9bc84d941c08f4f563a58dbcca2db20d0f4b5ef176e0de/wagtail-5.2.8-py3-none-any.whl", hash = "sha256:dc2bfa1b7f434515182bc81c7a6e7a3b59c93f15f3ccd06c6389de2f26e4099d", size = 9009518, upload-time = "2025-02-03T15:52:10.247Z" },
+    { url = "https://files.pythonhosted.org/packages/0e/6d/ab208f775de97a926fd0bb2ce332c27e54799cb137404e495fc563c360c3/wagtail-6.0.6-py3-none-any.whl", hash = "sha256:9765fd986b39985cfc8227d0973ada6574c78341d52883b096ee2d89662fad36", size = 8720449, upload-time = "2024-07-11T10:48:11.006Z" },
 ]
 
 [[package]]

@@ -5,8 +5,7 @@ from django.shortcuts import redirect, render
 
 from wagtail.models import Page
 
-# TODO in Wagtail 6.0 Query moves to wagtail.contrib.search_promotions
-from wagtail.search.models import Query
+from wagtail.contrib.search_promotions.models import Query
 
 from exhibitions.models import ExhibitPage
 

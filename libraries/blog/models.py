@@ -70,7 +70,9 @@ class BlogPage(Page):
 
     # we reuse the same StreamField from categories
     body = StreamField(
-        BaseStreamBlock(), verbose_name="Page content", null=True, use_json_field=True
+        BaseStreamBlock(),
+        verbose_name="Page content",
+        null=True,
     )
 
     # for backwards compatibility with our Drupal blog posts

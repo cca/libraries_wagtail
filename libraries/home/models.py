@@ -30,19 +30,21 @@ class HomePage(Page):
 
     image_attribution = RichTextField(features=settings.RICHTEXT_BASIC, blank=True)
 
-    # TODO this is a quick, emergency hack to get links into the description
-    # we should redo these as StructBlocks with a title, link, & rich text
+    # TODO redo these as StructBlocks with a title, link, & rich text
     services_text = RichTextField(features=settings.RICHTEXT_BASIC, blank=True)
     services_link = StreamField(
-        [("link", LinkBlock())], blank=True, use_json_field=True
+        [("link", LinkBlock())],
+        blank=True,
     )
     collections_text = RichTextField(features=settings.RICHTEXT_BASIC, blank=True)
     collections_link = StreamField(
-        [("link", LinkBlock())], blank=True, use_json_field=True
+        [("link", LinkBlock())],
+        blank=True,
     )
     about_us_text = RichTextField(features=settings.RICHTEXT_BASIC, blank=True)
     about_us_link = StreamField(
-        [("link", LinkBlock())], blank=True, use_json_field=True
+        [("link", LinkBlock())],
+        blank=True,
     )
 
     # commented out are the actual, allowed subpages but they are singletons &
