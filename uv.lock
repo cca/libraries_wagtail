@@ -572,19 +572,6 @@ wheels = [
 ]
 
 [[package]]
-name = "html5lib"
-version = "1.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "six" },
-    { name = "webencodings" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ac/b6/b55c3f49042f1df3dcd422b7f224f939892ee94f22abcf503a9b7339eaf2/html5lib-1.1.tar.gz", hash = "sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f", size = 272215, upload-time = "2020-06-22T23:32:38.834Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/6c/dd/a834df6482147d48e225a49515aabc28974ad5a4ca3215c18a882565b028/html5lib-1.1-py2.py3-none-any.whl", hash = "sha256:0d78f8fde1c230e99fe37986a60526d7049ed4bf8a9fadbad5f00e22e58e041d", size = 112173, upload-time = "2020-06-22T23:32:36.781Z" },
-]
-
-[[package]]
 name = "idna"
 version = "3.10"
 source = { registry = "https://pypi.org/simple" }
@@ -660,7 +647,7 @@ requires-dist = [
     { name = "psycopg2", specifier = "==2.9.10" },
     { name = "pysftp", specifier = "==0.2.9" },
     { name = "uwsgi", specifier = "==2.0.30" },
-    { name = "wagtail", specifier = "==6.0.6" },
+    { name = "wagtail", specifier = "==6.2.4" },
     { name = "whitenoise", extras = ["brotli"], specifier = "==6.9.0" },
     { name = "xmltodict", specifier = "==0.14.2" },
 ]
@@ -984,7 +971,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/6f/f0/d794e9c7359f488b1
 
 [[package]]
 name = "wagtail"
-version = "6.0.6"
+version = "6.2.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyascii" },
@@ -997,7 +984,6 @@ dependencies = [
     { name = "django-treebeard" },
     { name = "djangorestframework" },
     { name = "draftjs-exporter" },
-    { name = "html5lib" },
     { name = "l18n" },
     { name = "laces" },
     { name = "openpyxl" },
@@ -1006,18 +992,9 @@ dependencies = [
     { name = "telepath" },
     { name = "willow", extra = ["heif"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ee/cf/d97ca7e7bf82e1dede67229d5173bc50969800ab21c2ce2aad44e4a84753/wagtail-6.0.6.tar.gz", hash = "sha256:c00a05eb4cee1e4bbfe7550e30ec121ecdb5143e328d75aaa586b93dff5d1b95", size = 6269592, upload-time = "2024-07-11T10:48:15.825Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4a/d1/3b7b2539bf5feb7e3efea60153dc71562bb85fd3e50c48257c9b850f9aa6/wagtail-6.2.4.tar.gz", hash = "sha256:401c2395b81d8581b2954892f0fb0df8440f716dc75f35fa274ce53c03c9aba2", size = 6574418, upload-time = "2025-06-17T15:52:36.656Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0e/6d/ab208f775de97a926fd0bb2ce332c27e54799cb137404e495fc563c360c3/wagtail-6.0.6-py3-none-any.whl", hash = "sha256:9765fd986b39985cfc8227d0973ada6574c78341d52883b096ee2d89662fad36", size = 8720449, upload-time = "2024-07-11T10:48:11.006Z" },
-]
-
-[[package]]
-name = "webencodings"
-version = "0.5.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0b/02/ae6ceac1baeda530866a85075641cec12989bd8d31af6d5ab4a3e8c92f47/webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923", size = 9721, upload-time = "2017-04-05T20:21:34.189Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/f4/24/2a3e3df732393fed8b3ebf2ec078f05546de641fe1b667ee316ec1dcf3b7/webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78", size = 11774, upload-time = "2017-04-05T20:21:32.581Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/99/021bc022f62b45bfaf23955908789481c1477b6381817768c14c3a4e897b/wagtail-6.2.4-py3-none-any.whl", hash = "sha256:eee3a3d1aca209796f704e4c4d2455086a714359c913fbf4705e14b83d92e4a8", size = 9073182, upload-time = "2025-06-17T15:52:31.27Z" },
 ]
 
 [[package]]
@@ -1036,15 +1013,15 @@ brotli = [
 
 [[package]]
 name = "willow"
-version = "1.6.3"
+version = "1.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "defusedxml" },
     { name = "filetype" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e1/96/71ade7a7f58b597873ec34ccc1d9a61bd00def099f37544c0dd17a00da12/willow-1.6.3.tar.gz", hash = "sha256:143cefd30d3bb816cdff857c454da24991dda35a0315ea795101675e0b14262f", size = 112128, upload-time = "2023-11-26T22:47:02.658Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a3/bd/2a383be24c3e47423aa9b0aa5b4ca818ef193506b58800dd51e1b89d7bb3/willow-1.11.0.tar.gz", hash = "sha256:70292b2d0cd2d5bb4076f0b3d61308aeaa0b225f3970d00752f08a8fd386c3d1", size = 113827, upload-time = "2025-07-16T08:46:26.939Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/75/a9/4752fccf68f64500ce23f0618f1da7533deb3f74a8bc6ed6d4e473a4d2e9/willow-1.6.3-py3-none-any.whl", hash = "sha256:f4b17a16c6315864604dadb6cdf2987d0b685e295cca74c6da28b94167a3126e", size = 118095, upload-time = "2023-11-26T22:47:00.564Z" },
+    { url = "https://files.pythonhosted.org/packages/c1/05/b3f1b443c31ad871c48e19ea2be189681c2df4ccf594b1dd83d6775c032b/willow-1.11.0-py3-none-any.whl", hash = "sha256:0a4388dbf18726eef8f27449659047689c39b7023045ca5a8a75410d3864ee6f", size = 119459, upload-time = "2025-07-16T08:46:25.596Z" },
 ]
 
 [package.optional-dependencies]

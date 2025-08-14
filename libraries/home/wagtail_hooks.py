@@ -23,7 +23,7 @@ def register_no_search_desc_report_menu_item():
     return MenuItem(
         "Pages lacking Search Description",
         reverse("no_search_description_report"),
-        classname="icon icon-" + NoSearchDescriptionReport.header_icon,
+        icon_name=NoSearchDescriptionReport.header_icon,
         order=700,
     )
 

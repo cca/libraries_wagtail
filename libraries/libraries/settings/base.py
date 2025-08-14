@@ -210,7 +210,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
-# ! this changes to STORAGES['staticfiles']['BACKEND'] in Django 4.2
+# Changed to STORAGES['staticfiles']['BACKEND'] in Django 4.2 but apparently still works?
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # necessary to serve Summon files or any arbitrary static file
 WHITENOISE_ROOT = STATIC_ROOT
