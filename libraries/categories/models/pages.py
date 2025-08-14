@@ -173,7 +173,10 @@ class RowComponent(Page):
     # if a row is requested, redirect to its parent CategoryPage instead
     def serve(self, request):
         parent = self.get_parent()
-        return redirect(parent.url)
+        if parent:
+            return redirect(parent.url)
+        else:
+            return redirect("/")
 
     # rendering drafts is complicated, we need to let the parent know to
     # include draft RowComponents in its context
@@ -181,7 +184,7 @@ class RowComponent(Page):
         parent = self.get_parent()
         request.GET = request.GET.copy()
         request.GET["DRAFT"] = True
-        ctx = CategoryPage.get_context(parent, request)
+        ctx = CategoryPage.get_context(parent, request)  # type: ignore
         return render(request, "categories/category_page.html", context=ctx)
 
 

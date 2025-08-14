@@ -1,5 +1,7 @@
 {
-    "workbench.editor.customLabels.patterns": {
-        "**/readme.md": "${dirname} readme"
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportAttributeAccessIssue": "none",
+        "reportCallIssue": "none",
     }
 }
