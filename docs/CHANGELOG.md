@@ -1,5 +1,22 @@
 # Changelog
 
+## 6.2.0
+
+**2025-08-15**: upgrade to Wagtail 6.2, including two upgrades in between.
+
+- [Wagtail 6.0](https://guide.wagtail.org/en-6.2.x/releases/new-in-wagtail-6-0/)
+  - More improved list views of snippets, images, etc.
+  - Accessibility checker runs in page editor
+  - Page types usage report
+  - Further accessibility improvements
+- [Wagtail 6.1](https://guide.wagtail.org/en-6.2.x/releases/new-in-wagtail-6-1/)
+  - User profile option to see a denser "snug" view of all listings
+- [Wagtail 6.2](https://guide.wagtail.org/en-6.2.x/releases/new-in-wagtail-6-2/)
+  - Content metrics: word count & reading time display under a glasses icon in editor
+  - Warning when two people are editing the a page simultaneously
+  - Alt text quality checker
+  - Reports use the new listing view, easier to edit a page from a report
+
 ## 5.2.0
 
 **2025-08-08**: upgrade to Wagtail 5.2, other upgrades, 404 page improvements, fix Exhibits bugs.

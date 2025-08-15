@@ -1,6 +1,6 @@
 [project]
 name = "libraries_wagtail"
-version = "5.2.0"
+version = "6.2.0"
 description = "CCA Libraries Wagtail website"
 authors = [
     {"name"= "Eric Phetteplace", email = "ephetteplace@cca.edu"},
