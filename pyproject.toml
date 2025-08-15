@@ -13,7 +13,7 @@ readme = "readme.md"
 requires-python = "==3.12.11"
 dependencies = [
     "dj-database-url==3.0.1",
-    "django==5.0.14",
+    "django==5.1.10",
     "django-cas-ng==5.0.1",
     "django-extensions==4.1",
     "django-storages[google]==1.14.6",
