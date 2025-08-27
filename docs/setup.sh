@@ -17,10 +17,10 @@ brew bundle install --file "$DIR/Brewfile"
 checkfor gcloud || echo "Google Cloud SDK is used to sync media and database files from the cloud. Install it yourself by following the instructions on https://cloud.google.com/sdk/docs/install-sdk"
 
 # Provide minikube with expanded resources
-minikube config set cpus 4
+minikube config set cpus 6
 # Make this match the version we're using GKE; see `kubectl version`
-minikube config set kubernetes-version 1.30.5
-minikube config set memory 8192
+minikube config set kubernetes-version 1.32.6
+minikube config set memory 11585
 minikube config set vm-driver docker
 # minikube addons enable metrics-server
 
