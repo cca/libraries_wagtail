@@ -7,7 +7,6 @@ import dj_database_url
 from google.cloud import secretmanager
 from google.oauth2.service_account import Credentials
 
-
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
@@ -109,9 +108,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
-# whitenoise must go first
+# security followed by whitenoise are first
 # the 2 cache middleware should sandwich everything else
-MIDDLEWARE = [
+MIDDLEWARE: list[str] = [
+    "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.gzip.GZipMiddleware",
@@ -122,7 +122,6 @@ MIDDLEWARE = [
     "django_cas_ng.middleware.CASMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.security.SecurityMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
@@ -162,8 +161,6 @@ ROOT_URLCONF = "libraries.urls"
 
 LOGIN_REDIRECT_URL = "wagtailadmin_home"
 
-from .logging import LOGGING
-
 WSGI_APPLICATION = "libraries.wsgi.application"
 
 # Mail
@@ -198,20 +195,22 @@ WAGTAILIMAGES_FORMAT_CONVERSIONS: dict[str, str] = {
     "webp": "webp",
 }
 
-# Static files (CSS, JavaScript, Images)
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-]
+##########################################
+# Static files (CSS, JavaScript, Images) #
+##########################################
 
-STATICFILES_DIRS = [
+STORAGES: dict[str, dict[str, str]] = {
+    # this is overriden to use Whitenoise/Google Cloud everywhere but during docker build
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    },
+}
+STATICFILES_DIRS: list[str] = [
     os.path.join(PROJECT_DIR, "static"),
 ]
-
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
-# Changed to STORAGES['staticfiles']['BACKEND'] in Django 4.2 but apparently still works?
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # necessary to serve Summon files or any arbitrary static file
 WHITENOISE_ROOT = STATIC_ROOT
 
@@ -393,11 +392,8 @@ if environment != "local":
 # ------------ #
 if not "DOCKER_BUILD" in env:
     INSTALLED_APPS += ("storages",)
-
-    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    STORAGES["default"] = {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"}
     GS_BUCKET_NAME = env.get("GS_BUCKET_NAME", "")
-
     GS_OBJECT_PARAMETERS = {"cache_control": "public, max-age=31536000"}
-
     # Ensure uploaded files are given distinct names, as per valid Django storage behaviour
     GS_FILE_OVERWRITE = False
