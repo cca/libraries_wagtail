@@ -2,23 +2,24 @@
 import io
 import json
 import os
+from typing import Any
 
 import dj_database_url
 from google.cloud import secretmanager
 from google.oauth2.service_account import Credentials
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
+PROJECT_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR: str = os.path.dirname(PROJECT_DIR)
 
 # need a default NS so we can run collectstatic (e.g. in Dockerfile)
-env = os.environ.copy()
-namespace = env.get("KUBERNETES_NAMESPACE", "libraries-wagtail")
+env: dict[str, str] = os.environ.copy()
+namespace: str = env.get("KUBERNETES_NAMESPACE", "libraries-wagtail")
 match namespace:
     case "libraries-wagtail":
-        environment = "local"
-        WAGTAILADMIN_BASE_URL = "http://127.0.0.1"
-        DEBUG = True
-        CACHES = {
+        environment: str = "local"
+        WAGTAILADMIN_BASE_URL: str = "http://127.0.0.1"
+        DEBUG: bool = True
+        CACHES: dict[str, dict[str, str]] = {
             "default": {
                 "BACKEND": "django.core.cache.backends.dummy.DummyCache",
             }
@@ -36,7 +37,7 @@ match namespace:
         raise RuntimeError(f"Unknown namespace: {namespace}")
 
 # values we don't want set during a docker build
-if not "DOCKER_BUILD" in env:
+if "DOCKER_BUILD" not in env:
     # Load GCP credentials from service account key
     GS_CREDENTIALS = Credentials.from_service_account_info(
         json.loads(env.get("GS_CREDENTIALS", ""))
@@ -54,12 +55,12 @@ if not "DOCKER_BUILD" in env:
 
 # TODO we'd like to hide this but docker image won't build without it
 # TODO because we run a mgmt cmd (collectstatic)
-SECRET_KEY = env.get(
+SECRET_KEY: str = env.get(
     "SECRET_KEY", r"ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb"
 )
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS: list[str] = ["*"]
 
-INSTALLED_APPS = [
+INSTALLED_APPS: list[str] = [
     # let whitenoise serve static files instead of Django
     "whitenoise.runserver_nostatic",
     # our apps
@@ -126,24 +127,24 @@ MIDDLEWARE: list[str] = [
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
-REST_FRAMEWORK = {
+REST_FRAMEWORK: dict[str, tuple[str]] = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
 
 # SSO/AUTH
-AUTHENTICATION_BACKENDS = [
+AUTHENTICATION_BACKENDS: list[str] = [
     "django.contrib.auth.backends.ModelBackend",
     "django_cas_ng.backends.CASBackend",
 ]
-CAS_CREATE_USER = False
-CAS_FORCE_CHANGE_USERNAME_CASE = "lower"
-CAS_LOGOUT_COMPLETELY = True
-CAS_SERVER_URL = env.get("CAS_SERVER_URL", "")
-LOGIN_URL = "cas_ng_login"
-WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
-WAGTAIL_PASSWORD_RESET_ENABLED = False
+CAS_CREATE_USER: bool = False
+CAS_FORCE_CHANGE_USERNAME_CASE: str = "lower"
+CAS_LOGOUT_COMPLETELY: bool = True
+CAS_SERVER_URL: str = env.get("CAS_SERVER_URL", "")
+LOGIN_URL: str = "cas_ng_login"
+WAGTAIL_FRONTEND_LOGIN_URL: str = LOGIN_URL
+WAGTAIL_PASSWORD_RESET_ENABLED: bool = False
 
 # caching in staging & production
 if environment != "local":
@@ -153,47 +154,30 @@ if environment != "local":
             "LOCATION": "libraries_wagtail_cache",
         }
     }
-    CACHE_MIDDLEWARE_ALIAS = "default"
-    CACHE_MIDDLEWARE_SECONDS = 300
-    CACHE_MIDDLEWARE_KEY_PREFIX = "ccalib"
+    CACHE_MIDDLEWARE_ALIAS: str = "default"
+    CACHE_MIDDLEWARE_SECONDS: int = 300
+    CACHE_MIDDLEWARE_KEY_PREFIX: str = "ccalib"
 
-ROOT_URLCONF = "libraries.urls"
+ROOT_URLCONF: str = "libraries.urls"
 
-LOGIN_REDIRECT_URL = "wagtailadmin_home"
+LOGIN_REDIRECT_URL: str = "wagtailadmin_home"
 
-WSGI_APPLICATION = "libraries.wsgi.application"
+WSGI_APPLICATION: str = "libraries.wsgi.application"
 
 # Mail
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = env.get("GOOGLE_SMTP_USER", "")
-EMAIL_HOST_PASSWORD = env.get("GOOGLE_SMTP_PASS", "")
+EMAIL_BACKEND: str = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS: bool = True
+EMAIL_PORT: int = 587
+EMAIL_HOST: str = "smtp.gmail.com"
+EMAIL_HOST_USER: str = env.get("GOOGLE_SMTP_USER", "")
+EMAIL_HOST_PASSWORD: str = env.get("GOOGLE_SMTP_PASS", "")
 
 # Internationalization
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "America/Los_Angeles"
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
-
-# Allow AIVF (5.1) & SVG (5.0) uploads
-WAGTAILIMAGES_EXTENSIONS: list[str] = [
-    "avif",
-    "gif",
-    "jpg",
-    "jpeg",
-    "png",
-    "svg",
-    "webp",
-]
-# https://docs.wagtail.org/en/stable/advanced_topics/images/image_file_formats.html#image-file-formats
-# By default AVIF and WEBP are converted to PNG but we would rather use the more modern formats
-WAGTAILIMAGES_FORMAT_CONVERSIONS: dict[str, str] = {
-    "avif": "avif",
-    "webp": "webp",
-}
+LANGUAGE_CODE: str = "en-us"
+TIME_ZONE: str = "America/Los_Angeles"
+USE_I18N: bool = True
+USE_L10N: bool = True
+USE_TZ: bool = True
 
 ##########################################
 # Static files (CSS, JavaScript, Images) #
@@ -209,15 +193,15 @@ STORAGES: dict[str, dict[str, str]] = {
 STATICFILES_DIRS: list[str] = [
     os.path.join(PROJECT_DIR, "static"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATIC_URL = "/static/"
+STATIC_ROOT: str = os.path.join(BASE_DIR, "static")
+STATIC_URL: str = "/static/"
 # necessary to serve Summon files or any arbitrary static file
-WHITENOISE_ROOT = STATIC_ROOT
+WHITENOISE_ROOT: str = STATIC_ROOT
 
 # these settings seem to still be necessary but note that we serve media from
 # a Google Storage Bucket — see the Google Cloud section at the bottom
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
+MEDIA_ROOT: str = os.path.join(BASE_DIR, "media")
+MEDIA_URL: str = "/media/"
 
 FILE_UPLOAD_PERMISSIONS = 0o644
 
@@ -225,14 +209,15 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 # Wagtail settings #
 ####################
 
-WAGTAIL_SITE_NAME = "CCA Libraries & Instructional Technology"
+WAGTAIL_SITE_NAME: str = "CCA Libraries & Instructional Technology"
+
 # https://docs.wagtail.org/en/latest/reference/settings.html#wagtaildocs-serve-method
 # We've used this in the past to ensure document requests are logged and aren't
 # forced downloads but it's no longer needed & we have no persistent logs.
 # WAGTAILDOCS_SERVE_METHOD = 'redirect'
 
 # https://docs.wagtail.org/en/stable/reference/settings.html#wagtailadmin-unsafe-page-deletion-limit
-WAGTAILADMIN_UNSAFE_PAGE_DELETION_LIMIT = 5
+WAGTAILADMIN_UNSAFE_PAGE_DELETION_LIMIT: int = 5
 
 # sets of HTML tags allowed in various rich text fields
 # full list here:
@@ -256,20 +241,38 @@ RICHTEXT_ADVANCED: list[str] = RICHTEXT_BASIC + [
     "ul",
 ]
 
+# Allow AIVF (5.1) & SVG (5.0) uploads
+WAGTAILIMAGES_EXTENSIONS: list[str] = [
+    "avif",
+    "gif",
+    "jpg",
+    "jpeg",
+    "png",
+    "svg",
+    "webp",
+]
+# https://docs.wagtail.org/en/stable/advanced_topics/images/image_file_formats.html#image-file-formats
+# By default AVIF and WEBP are converted to PNG but we would rather use the more modern formats
+WAGTAILIMAGES_FORMAT_CONVERSIONS: dict[str, str] = {
+    "avif": "avif",
+    "webp": "webp",
+}
+
 # https://docs.wagtail.org/en/latest/reference/settings.html#wagtailadmin-external-link-conversion
-WAGTAIL_EXTERNAL_LINK_CONVERSION = "confirm"
+WAGTAIL_EXTERNAL_LINK_CONVERSION: str = "confirm"
 
-ADMINS = (("Eric Phetteplace", "ephetteplace@cca.edu"),)
+ADMINS: tuple[tuple[str, str]] = (("Eric Phetteplace", "ephetteplace@cca.edu"),)
 # don't send these emails, they tend to be redundant with ones moderators get anyways
-WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS = False
+WAGTAILADMIN_NOTIFICATION_INCLUDE_SUPERUSERS: bool = False
 
-DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+DEFAULT_AUTO_FIELD: str = "django.db.models.AutoField"
 if "DATABASE_URL" in env:
-    DATABASES = {"default": dj_database_url.config()}
+    DATABASES: dict[str, Any] = {"default": dj_database_url.config()}
 
-# Brokenlinks app - "Summon Broken Links for Website Tests" Google Form
-# These are the input name attribute values if
-# They're the same for test & live forms, maybe because test is a copy?
+###################
+# Brokenlinks app #
+###################
+# These are the input name attribute values, inspect form to find
 BROKENLINKS_HASH: dict[str, str] = {
     "openurl": "entry.1430108689",
     "permalink": "entry.743539962",
@@ -278,20 +281,22 @@ BROKENLINKS_HASH: dict[str, str] = {
     "comments": "entry.249064033",
 }
 if environment == "production":
-    BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/e/1FAIpQLSehVHSXLkZ5_gcAYxh5ZEktbU-0axbakVONq9lavfP1SXGc_A/formResponse"
+    BROKENLINKS_GOOGLE_SHEET_URL: str = "https://docs.google.com/forms/d/e/1FAIpQLSehVHSXLkZ5_gcAYxh5ZEktbU-0axbakVONq9lavfP1SXGc_A/formResponse"
 else:
     # test form for local and staging
-    BROKENLINKS_GOOGLE_SHEET_URL = "https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse"
+    BROKENLINKS_GOOGLE_SHEET_URL: str = "https://docs.google.com/forms/d/16CqNzTnkLot289CqWcUVZf99KdxFaGp2Patu0Vri2Ok/formResponse"
 
 # Summon app
-SUMMON_SFTP_UN = "cdi_cca-catalog@customers.na"
-SUMMON_SFTP_HOST = "cdi-providers-dc01.hosted.exlibrisgroup.com"
-SUMMON_REPORT_URL = (
+SUMMON_SFTP_UN: str = "cdi_cca-catalog@customers.na"
+SUMMON_SFTP_HOST: str = "cdi-providers-dc01.hosted.exlibrisgroup.com"
+SUMMON_REPORT_URL: str = (
     "https://library.cca.edu/cgi-bin/koha/svc/report?id=152&sql_params={}"
 )
 
-# Search Backend
-ES_INDEX_SETTINGS = {
+##################
+# Search Backend #
+##################
+ES_INDEX_SETTINGS: dict[str, dict[str, Any]] = {
     "settings": {
         "index": {
             "number_of_shards": "5",
@@ -344,7 +349,7 @@ ES_INDEX_SETTINGS = {
         },
     }
 }
-WAGTAILSEARCH_BACKENDS = {
+WAGTAILSEARCH_BACKENDS: dict[str, dict[str, Any]] = {
     "default": {
         "BACKEND": "wagtail.search.backends.elasticsearch7",
         "URLS": [env.get("ES_URL", "")],
@@ -357,8 +362,10 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
-# Template caching
-TEMPLATES = [
+####################
+# Template caching #
+####################
+TEMPLATES: list[dict[str, Any]] = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
@@ -387,10 +394,10 @@ if environment != "local":
         ),
     ]
 
-# ------------ #
+################
 # Google Cloud #
-# ------------ #
-if not "DOCKER_BUILD" in env:
+################
+if "DOCKER_BUILD" not in env:
     INSTALLED_APPS += ("storages",)
     STORAGES["default"] = {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"}
     GS_BUCKET_NAME = env.get("GS_BUCKET_NAME", "")
