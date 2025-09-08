@@ -1,6 +1,7 @@
 {% load wagtailimages_tags %}
 
 <section class="blog-post-pagination">
+	<h2 class="sr-only">Previous & Next Blog Posts</h2>
 
 	{% if previous_post %}
 		<div class="blog-post-pagination__item">
@@ -16,13 +17,13 @@
 				></div>
 
 				<div class="blog-post-pagination__text">
-					<h4 class="blog-post-pagination__type previous">
+					<div class="blog-post-pagination__type previous">
 						Previous Article
-					</h4>
+					</div>
 
-					<h5 class="blog-post-pagination__post-title">
+					<div class="blog-post-pagination__post-title">
 						{{ previous_post.title }}
-					</h5>
+					</div>
 				</div>
 			</a>
 		</div>
@@ -43,14 +44,14 @@
 				></div>
 
 				<div class="blog-post-pagination__text">
-					<h4 class="blog-post-pagination__type next">
+					<div class="blog-post-pagination__type next">
 						Next Article
-					</h4>
-					<h5 class="blog-post-pagination__post-title">
+					</div>
+					<div class="blog-post-pagination__post-title">
 						<span class="blog-post-pagination__post-title-text">
 							{{ next_post.title }}
 						</span>
-					</h5>
+					</div>
 				</div>
 			</a>
 		</div>
