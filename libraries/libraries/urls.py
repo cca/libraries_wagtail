@@ -1,24 +1,20 @@
 import os
 
-from django.conf import settings
-from django.urls import include, path, re_path
-from django.contrib import admin
-from django.views.generic import RedirectView, TemplateView
-
-from django_cas_ng.views import LoginView, LogoutView
-
 from brokenlinks import views as brokenlinks_views
+from django.conf import settings
+from django.contrib import admin
+from django.urls import include, path, re_path
+from django.views.generic import RedirectView, TemplateView
+from django_cas_ng.views import LoginView, LogoutView
 from hours import views as hours_views
 from search import views as search_views
 from sersol_api import views as sersol_views
-
-from .api import api_router
-
+from wagtail import urls as wagtail_urls
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
-from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
+from .api import api_router
 
 admin.site.site_header = "CCA Libraries Administration"
 admin.autodiscover()
@@ -46,14 +42,29 @@ urlpatterns = [
         "favicon.ico",
         RedirectView.as_view(url="/static/images/favicon.ico", permanent=True),
     ),
-    # Robots.txt
-    path(
-        "robots.txt",
-        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
-    ),
     # XML sitemap
     path("sitemap.xml", sitemap),
 ]
+
+# Robots.txt
+if os.environ.get("KUBERNETES_NAMESPACE") == "lib-production":
+    urlpatterns += [
+        path(
+            "robots.txt",
+            TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+        )
+    ]
+else:
+    urlpatterns += [
+        path(
+            "robots.txt",
+            TemplateView.as_view(
+                # block everything on non-prod instances
+                template_name="staging_robots.txt",
+                content_type="text/plain",
+            ),
+        )
+    ]
 
 # when running locally with no GSB credentials
 if os.environ.get("GS_CREDENTIALS", True):
@@ -64,7 +75,7 @@ if os.environ.get("GS_CREDENTIALS", True):
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns = urlpatterns + [
+urlpatterns += [
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
