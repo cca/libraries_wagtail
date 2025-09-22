@@ -26,7 +26,7 @@ dependencies = [
     "uwsgi==2.0.30",
     "xmltodict==0.15.0",
     "wagtail==6.2.4",
-    "whitenoise[brotli]==6.9.0",
+    "whitenoise[brotli]==6.11.0",
 ]
 
 [project.urls]
