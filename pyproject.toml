@@ -24,9 +24,9 @@ dependencies = [
     "psycopg2==2.9.10",
     "pysftp==0.2.9",
     "uwsgi==2.0.30",
-    "xmltodict==0.15.0",
+    "xmltodict==1.0.2",
     "wagtail==6.2.4",
-    "whitenoise[brotli]==6.9.0",
+    "whitenoise[brotli]==6.11.0",
 ]
 
 [project.urls]
@@ -36,11 +36,8 @@ homepage = "https://github.com/cca/libraries_wagtail"
 issues = "https://github.com/cca/libraries_wagtail/issues"
 repository = "https://github.com/cca/libraries_wagtail"
 
-[tool.uv]
-dev-dependencies = [
-    "autopep8",
-    "django_managepy_anywhere==2.0",
-]
+[dependency-groups]
+dev = []
 
 [[tool.uv.index]]
 name = "pypi"
