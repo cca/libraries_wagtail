@@ -76,7 +76,7 @@ jobs:
 
       # From https://docs.docker.com/build/ci/github-actions/cache/
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.9.0
+        uses: docker/setup-buildx-action@v3.11.1
 
       - name: Build and push
         uses: docker/build-push-action@v6.14.0
