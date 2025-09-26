@@ -37,7 +37,7 @@ jobs:
       # including authenticating via a JSON credentials file.
       - id: auth
         name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2.1.8
+        uses: google-github-actions/auth@v3.0.0
         with:
           create_credentials_file: true # Important for Docker auth
           project_id: ${{ env.PROJECT_ID }}
@@ -103,7 +103,7 @@ jobs:
         uses: actions/checkout@v4.2.2
 
       - name: Set up Google Cloud Auth
-        uses: google-github-actions/auth@v2.1.8
+        uses: google-github-actions/auth@v3.0.0
         with:
           project_id: ${{ env.PROJECT_ID }}
           service_account: ${{ env.SERVICE_ACCOUNT }}
