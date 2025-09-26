@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/dependabot-2.0.json
 version: 2
 updates:
+  - package-ecosystem: docker
+    commit-message:
+      prefix: "chore"
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    commit-message:
+      prefix: "chore"
+    directory: /
+    schedule:
+      interval: weekly
   - package-ecosystem: npm
     commit-message:
       prefix: "chore"
@@ -13,9 +25,3 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-  - package-ecosystem: github-actions
-    commit-message:
-      prefix: "chore"
-    directory: /
-    schedule:
-      interval: weekly
