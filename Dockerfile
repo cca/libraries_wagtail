@@ -19,7 +19,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install -r --offline --pr
 RUN npx gulp build
 
 # Build the Django application itself. Python version must match mise.toml and pyproject.toml.
-FROM python:3.12.11-bookworm AS libraries
+FROM python:3.13.7-bookworm AS libraries
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 WORKDIR /app/libraries
 ENV PYTHONPATH=/app:/app/libraries
