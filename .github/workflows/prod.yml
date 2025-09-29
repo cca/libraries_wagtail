@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
 
       # Configure Workload Identity Federation and generate an access token.
       # See https://github.com/google-github-actions/auth for more options,
@@ -100,7 +100,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
 
       - name: Set up Google Cloud Auth
         uses: google-github-actions/auth@v3.0.0
