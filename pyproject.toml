@@ -23,7 +23,7 @@ dependencies = [
     "l18n==2021.3",
     "psycopg2==2.9.10",
     "pysftp==0.2.9",
-    "uwsgi==2.0.30",
+    "uwsgi==2.0.31",
     "xmltodict==1.0.2",
     "wagtail==6.2.4",
     "whitenoise[brotli]==6.11.0",
