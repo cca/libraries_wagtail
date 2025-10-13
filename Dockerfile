@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/node
-FROM node:24.9.0-slim AS assets
+FROM node:24.10.0-slim AS assets
 # we build static assets (JS, CSS, application images) in a node container
 WORKDIR /app
 
