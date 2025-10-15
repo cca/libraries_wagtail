@@ -1,5 +1,18 @@
 # Changelog
 
+## 6.3.0
+
+**2025-10-15**: exclude newsletters from Summon searches, Wagtail 6.3 upgrade, accessibility improvements.
+
+- Summon searches from the home page now exclude the "Newsletter" content type
+- [Wagtail 6.3](https://guide.wagtail.org/en-6.3.x/releases/new-in-wagtail-6-3/)
+  - Staff side dashboard page improvements
+  - New `ImageBlock` supports alt text, **please always provide alt text for images**! It helps visually impaired users navigate our website. This is a great accessibility enhancement that's been long overdue.
+  - HEIC/HEIF image support. Photos taken by iPhones can be uploaded directly without being converted to JPEGs.
+- Many other dependency upgrades, including Django 5.2
+- Better robots.txt to deter excessive AI crawlers
+- Fix many header hierarchy issues in the blog post template
+
 ## 6.2.0
 
 **2025-08-15**: upgrade to Wagtail 6.2, including two upgrades in between.

@@ -1,4 +1,5 @@
 [env]
+DJANGO_RUNSERVER_HIDE_WARNING = "true"
 # Python version must match Dockerfile and pyproject.toml
 UV_PYTHON = "3.12.11"
 
