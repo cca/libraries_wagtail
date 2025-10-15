@@ -2,12 +2,9 @@ import logging
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import redirect, render
-
-from wagtail.models import Page
-
-from wagtail.contrib.search_promotions.models import Query
-
 from exhibitions.models import ExhibitPage
+from wagtail.contrib.search_promotions.models import Query
+from wagtail.models import Page
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +33,9 @@ def search(request):
             logger.info("Summon search, query: {}".format(search_query))
             # disable Book Review content type by default issue #87
             return redirect(
-                summon_url + "?fvf=ContentType,Book%20Review,t&q=" + search_query,
+                summon_url
+                + "?fvf=ContentType,Book%20Review,t%7CContentType,Newsletter,t&q="
+                + search_query,
                 permanent=True,
             )
         else:
