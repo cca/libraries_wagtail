@@ -250,6 +250,7 @@ WAGTAILIMAGES_EXTENSIONS: list[str] = [
     "png",
     "svg",
     "webp",
+    "heic",
 ]
 # https://docs.wagtail.org/en/stable/advanced_topics/images/image_file_formats.html#image-file-formats
 # By default AVIF and WEBP are converted to PNG but we would rather use the more modern formats
