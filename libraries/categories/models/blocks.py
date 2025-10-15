@@ -1,22 +1,21 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
-
 from wagtail.blocks import (
+    CharBlock,
     ChoiceBlock,
+    ListBlock,
+    PageChooserBlock,
+    RawHTMLBlock,
+    RichTextBlock,
+    StreamBlock,
     StructBlock,
     StructValue,
-    StreamBlock,
-    CharBlock,
-    RichTextBlock,
     TextBlock,
-    RawHTMLBlock,
     URLBlock,
-    PageChooserBlock,
-    ListBlock,
 )
 from wagtail.contrib.table_block.blocks import TableBlock
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.images.blocks import ImageBlock
 
 
 # see docs.wagtail.io/en/v2.6.1/topics/streamfield.html#custom-value-class-for-structblock
@@ -74,7 +73,7 @@ class LinkBlock(StructBlock):
 
 
 class LinkedImageBlock(StructBlock):
-    image = ImageChooserBlock()
+    image = ImageBlock()
     caption = RichTextBlock(features=settings.RICHTEXT_BASIC, required=False)
     external_url = URLBlock(
         label="External URL",
@@ -92,7 +91,7 @@ class LinkedImageBlock(StructBlock):
 
 # for Portal-like card with thumbnail image, linked title, & body
 class CardBlock(StructBlock):
-    thumbnail = ImageChooserBlock(
+    thumbnail = ImageBlock(
         help_text="Should be 3x2 aspect ratio but may be stretched if used in a row without an equal distribution. Resized to roughly 345x230."
     )
     link = LinkBlock()
@@ -106,7 +105,7 @@ class CardBlock(StructBlock):
 
 
 class SidebarCardBlock(StructBlock):
-    image = ImageChooserBlock(
+    image = ImageBlock(
         required=False,
         help_text="Square, resized to 400x400. If you don't specify an image & select a Page below, the Page's Main Image will be used.",
     )
@@ -118,8 +117,7 @@ class SidebarCardBlock(StructBlock):
 
 
 class PullQuoteBlock(StructBlock):
-    # TODO use help_text instead of positional argument?
-    quote = TextBlock("quote title")
+    quote = TextBlock()
     name = CharBlock(required=False)
     position = CharBlock(required=False, label="Position or affiliation")
 
@@ -130,8 +128,7 @@ class PullQuoteBlock(StructBlock):
 
 class EmbedHTML(RawHTMLBlock):
     html = RawHTMLBlock(
-        "Embed code or raw HTML",
-        help_text="Use this sparingly, if possible.",
+        help_text="Paste HTML embed codes here. Use this sparingly, if possible.",
     )
 
     class Meta:
@@ -139,7 +136,6 @@ class EmbedHTML(RawHTMLBlock):
 
 
 class ProductGridBlock(ListBlock):
-
     class Meta:
         help_text = "Grid of images with (optional) links & captions. Grid is rows of three items on desktop-size screens."
         icon = "table"
@@ -147,7 +143,7 @@ class ProductGridBlock(ListBlock):
 
 
 class ProductGridItemBlock(StructBlock):
-    image = ImageChooserBlock()
+    image = ImageBlock()
     external_url = URLBlock(
         label="External URL",
         required=False,
