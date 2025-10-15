@@ -2,10 +2,11 @@
 
 import datetime
 
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views.decorators.cache import never_cache
-from django.http import JsonResponse
-from hours.models import get_open_hours, get_hours_for_lib, HoursPage, Library
+
+from hours.models import HoursPage, Library, get_hours_for_lib, get_open_hours
 
 
 def error_response(msg):

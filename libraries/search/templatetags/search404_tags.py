@@ -1,10 +1,9 @@
-from django import template
-from django.urls import reverse
-
-from wagtail.models import Page
 from urllib.parse import unquote_plus
 
 from categories.models import RowComponent
+from django import template
+from django.urls import reverse
+from wagtail.models import Page
 
 # most code swiped shamelessly from https://github.com/alexgleason/wagtailerrorpages
 register = template.Library()

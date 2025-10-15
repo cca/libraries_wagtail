@@ -1,19 +1,16 @@
-from io import BytesIO
 import json
 import logging
+from io import BytesIO
 from pathlib import Path
 from typing import Any
 
 import requests
-
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, CommandParser
-
-from wagtail.models import Collection
-from wagtail.images.models import Image
-
 from instagram.api import get_instagram
 from instagram.models import Instagram
+from wagtail.images.models import Image
+from wagtail.models import Collection
 
 logger = logging.getLogger("mgmt_cmd.script")
 
@@ -54,7 +51,7 @@ class Command(BaseCommand):
         # Did we get an error in the JSON?
         if "error" in data:
             logger.critical(
-                f'Unable to retrieve latest Instagram. Error: {data["error"]}'
+                f"Unable to retrieve latest Instagram. Error: {data['error']}"
             )
             exit(1)
 
@@ -87,7 +84,7 @@ class Command(BaseCommand):
         try:
             image: Image | None = Image.objects.create(
                 title=(
-                    f'Instagram Post {insta.get("url") if insta.get("url") else insta["id"]}'
+                    f"Instagram Post {insta.get('url') if insta.get('url') else insta['id']}"
                 ),
                 file=ImageFile(
                     BytesIO(response.content), name="{}.jpg".format(insta["id"])

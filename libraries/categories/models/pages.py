@@ -1,18 +1,15 @@
 from django.conf import settings
 from django.db import models
-
 from django.shortcuts import redirect, render
-
-from wagtail.api import APIField
-
+from libraries.utils import validate_clean
 from wagtail.admin.panels import FieldPanel, FieldRowPanel
+from wagtail.api import APIField
 from wagtail.blocks import StreamBlock
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
 from wagtail.search import index
 
 from categories.models.blocks import *
-from libraries.utils import validate_clean
 
 
 # helper method—for child pages, return their category i.e. parent CategoryPage

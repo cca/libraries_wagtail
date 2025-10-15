@@ -1,6 +1,5 @@
 import requests
 import xmltodict
-
 from django.http import JsonResponse
 
 
@@ -26,9 +25,7 @@ def sersol(request):
             response.text,
             process_namespaces=True,
             namespaces=namespaces,
-        )[
-            "openURLResponse"
-        ]  # everything's wrapped in this element
+        )["openURLResponse"]  # everything's wrapped in this element
 
         response = JsonResponse(data)
         # let library catalog request this data

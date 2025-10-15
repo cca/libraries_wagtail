@@ -3,15 +3,12 @@ import logging
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
-
 from modelcluster.fields import ParentalKey
-
-from wagtail.snippets.models import register_snippet
-from wagtail.models import Orderable, Page, PreviewableMixin
-from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.fields import RichTextField
+from wagtail.models import Orderable, Page, PreviewableMixin
 from wagtail.search import index
-
+from wagtail.snippets.models import register_snippet
 
 logger = logging.getLogger(__name__)
 

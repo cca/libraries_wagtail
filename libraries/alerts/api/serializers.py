@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from alerts.models import Alert
+from rest_framework import serializers
 
 
 class AlertSerializer(serializers.HyperlinkedModelSerializer):

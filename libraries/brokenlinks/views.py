@@ -1,10 +1,9 @@
 import logging
+
 import requests
-
 from django.conf import settings
-from django.http import JsonResponse, HttpResponse, QueryDict
+from django.http import HttpResponse, JsonResponse, QueryDict
 from django.views.decorators.csrf import csrf_exempt
-
 
 logger = logging.getLogger(__name__)
 

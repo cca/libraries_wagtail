@@ -1,7 +1,6 @@
 import os
 
 from django.core.management.base import BaseCommand, CommandError
-
 from wagtail.contrib.redirects import models
 
 
@@ -54,7 +53,7 @@ class Command(BaseCommand):
                             self.style.SUCCESS("added redirect from %s to %s")
                             % (old_path, redirect_link)
                         )
-                    except Exception as e:
+                    except:
                         self.stderr.write(
                             self.style.ERROR("unable to create redirect from %s to %s")
                             % (old_path, redirect_link)

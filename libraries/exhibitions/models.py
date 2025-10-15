@@ -1,22 +1,19 @@
+from categories.models import BaseStreamBlock
 from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-
+from libraries.utils import validate_clean
 from modelcluster.fields import ParentalKey
-
 from wagtail import hooks
-from wagtail.models import Orderable, Page
-from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import (
     FieldPanel,
     HelpPanel,
     InlinePanel,
     MultiFieldPanel,
 )
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Orderable, Page
 from wagtail.search import index
-
-from categories.models import BaseStreamBlock
-from libraries.utils import validate_clean
 
 
 # logic for showing/hiding appropriate art work fields based on type

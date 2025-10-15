@@ -6,12 +6,11 @@ One-time StreamField migration:
 
 import logging
 
-from django.core.management.base import BaseCommand
-from wagtail.blocks.stream_block import StreamValue
-
 from blog.models import BlogPage
 from categories.models import ServicePage
+from django.core.management.base import BaseCommand
 from exhibitions.models import ExhibitPage
+from wagtail.blocks.stream_block import StreamValue
 
 logger = logging.getLogger("mgmt_cmd.script")
 

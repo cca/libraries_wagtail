@@ -1,15 +1,13 @@
-from django.conf import settings
-from django.db import models
-
-from wagtail.models import Page
-from wagtail.fields import RichTextField, StreamField
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-
 from blog.models import all_blog_posts
 from categories.models import LinkBlock
+from django.conf import settings
+from django.db import models
 from exhibitions.models import ExhibitPage
 from hours.models import get_open_hours
 from instagram.models import Instagram
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Page
 
 
 class HomePage(Page):

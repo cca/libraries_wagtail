@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Library, OpenHours, Closure
+from .models import Closure, Library, OpenHours
 
 # Register your models here.
 

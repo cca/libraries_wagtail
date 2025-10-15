@@ -1,13 +1,11 @@
+from categories.models import BaseStreamBlock
 from django.db import models
 from django.shortcuts import render
-
-from wagtail.models import Page
-from wagtail.fields import RichTextField, StreamField
-from wagtail.admin.panels import FieldPanel
-from wagtail.search import index
-
-from categories.models import BaseStreamBlock
 from libraries.utils import validate_clean
+from wagtail.admin.panels import FieldPanel
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Page
+from wagtail.search import index
 
 
 # helper to get a list of published blog posts in reverse chronological order

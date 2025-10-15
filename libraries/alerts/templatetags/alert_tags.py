@@ -1,6 +1,5 @@
-from django import template
-
 from alerts.models import Alert
+from django import template
 
 register = template.Library()
 

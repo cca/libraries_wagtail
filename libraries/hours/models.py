@@ -5,7 +5,6 @@ from types import SimpleNamespace
 
 from django.conf import settings
 from django.db import models
-
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.fields import RichTextField
 from wagtail.models import Page
@@ -217,8 +216,7 @@ class HoursPage(Page):
     )
     order = models.IntegerField(
         default=1,
-        help_text="Defines the sort order in the parent row (lower numbers "
-        "go first).",
+        help_text="Defines the sort order in the parent row (lower numbers go first).",
     )
 
     content_panels = Page.content_panels + [

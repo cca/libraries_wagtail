@@ -1,9 +1,9 @@
+from alerts.models import Alert
 from django.core.cache import cache
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from wagtail.models import Site
 
-from alerts.models import Alert
 from .serializers import AlertSerializer
 
 PAGE_ANCESTORS_CACHE_KEY = "page_ancestors_{page_pk}"

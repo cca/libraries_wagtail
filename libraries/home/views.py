@@ -1,7 +1,6 @@
+from categories.models.pages import RowComponent
 from wagtail.admin.views.reports import PageReportView
 from wagtail.models import Page
-
-from categories.models.pages import RowComponent
 
 
 # https://docs.wagtail.io/en/stable/advanced_topics/adding_reports.html

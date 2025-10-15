@@ -1,5 +1,4 @@
-""" All the CCA Libraries' custom template tags
-
+"""All the CCA Libraries' custom template tags
 See: https://docs.djangoproject.com/en/2.2/howto/custom-template-tags/
 """
 
