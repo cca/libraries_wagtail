@@ -40,7 +40,6 @@ ENV CFLAGS="-Wno-error=deprecated-declarations"
 ENV CPPFLAGS="-DOPENSSL_API_COMPAT=0x10100000L -DOPENSSL_NO_DEPRECATED"
 ENV LDFLAGS="-lssl -lcrypto"
 ENV UV_COMPILE_BYTECODE=1
-ENV UV_PROJECT_ENVIRONMENT=/usr/local
 ENV UV_PYTHON_PREFERENCE=system
 COPY pyproject.toml uv.lock /app/
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
