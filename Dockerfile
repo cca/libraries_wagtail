@@ -42,7 +42,7 @@ RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-ins
 
 # Runtime image without builder tools like `uv`
 # TODO migrate both python images to Trixie Debian python:3.13.9-slim-trixie
-FROM python:3.13-slim-bookworm AS runtime
+FROM python:3.14-slim-bookworm AS runtime
 WORKDIR /app/libraries
 # Collect our compiled static files from the assets image
 COPY --from=assets /app/libraries/static /app/libraries/libraries/static
