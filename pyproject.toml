@@ -1,6 +1,6 @@
 [project]
 name = "libraries_wagtail"
-version = "6.2.0"
+version = "6.4.0"
 description = "CCA Libraries Wagtail website"
 authors = [
     {"name"= "Eric Phetteplace", email = "ephetteplace@cca.edu"},
@@ -25,7 +25,7 @@ dependencies = [
     "pysftp==0.2.9",
     "uwsgi==2.0.31",
     "xmltodict==1.0.2",
-    "wagtail==6.3.5",
+    "wagtail==6.4.2",
     "whitenoise[brotli]==6.11.0",
 ]
 

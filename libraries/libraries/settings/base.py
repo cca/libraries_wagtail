@@ -205,6 +205,9 @@ MEDIA_URL: str = "/media/"
 
 FILE_UPLOAD_PERMISSIONS = 0o644
 
+# 6.4 https://docs.wagtail.org/en/latest/releases/6.4.html#data-upload-max-number-fields-update
+DATA_UPLOAD_MAX_NUMBER_FIELDS: int = 10_000
+
 ####################
 # Wagtail settings #
 ####################
@@ -241,7 +244,7 @@ RICHTEXT_ADVANCED: list[str] = RICHTEXT_BASIC + [
     "ul",
 ]
 
-# Allow AIVF (5.1) & SVG (5.0) uploads
+# Allow SVG (5.0), AIVF (5.1), HEIC (6.3) uploads
 WAGTAILIMAGES_EXTENSIONS: list[str] = [
     "avif",
     "gif",
@@ -401,7 +404,7 @@ if environment != "local":
 if "DOCKER_BUILD" not in env:
     INSTALLED_APPS += ("storages",)
     STORAGES["default"] = {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"}
-    GS_BUCKET_NAME = env.get("GS_BUCKET_NAME", "")
-    GS_OBJECT_PARAMETERS = {"cache_control": "public, max-age=31536000"}
+    GS_BUCKET_NAME: str = env.get("GS_BUCKET_NAME", "")
+    GS_OBJECT_PARAMETERS: dict[str, str] = {"cache_control": "public, max-age=31536000"}
     # Ensure uploaded files are given distinct names, as per valid Django storage behaviour
-    GS_FILE_OVERWRITE = False
+    GS_FILE_OVERWRITE: bool = False
