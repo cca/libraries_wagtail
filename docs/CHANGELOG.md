@@ -1,5 +1,20 @@
 # Changelog
 
+## 6.4.0
+
+**2025-11-06**: upgrade to Wagtail 6.4 and Python 3.13.
+
+- [Wagtail 6.4](https://docs.wagtail.org/en/latest/releases/6.4.html)
+  - **Background tasks support**: Computationally expensive tasks (like image processing) are now handled outside the request cycle using [django-tasks](https://docs.wagtail.org/en/latest/releases/6.4.html#support-for-background-tasks-using-django-tasks), improving page load times
+  - **StreamField block previews**: Preview individual StreamField blocks before saving the entire page
+  - **Alt text improvements**: Enhanced alt text validation and accessibility features building on 6.2's quality checker
+  - **Shorthand for panels**: Simplified syntax for `FieldPanel` and `InlinePanel` definitions in page models
+  - **Drag-and-drop reordering**: Easier content organization with improved drag-and-drop for StreamField blocks and InlinePanel items
+  - **Search terms report**: New report showing what users are searching for on your site, helping identify content gaps
+  - **Performance optimizations**: Various under-the-hood improvements for faster page loading and editing
+- Python 3.13 upgrade
+- Other dependency upgrades, including the Django 5.2.8 security release
+
 ## 6.3.0
 
 **2025-10-15**: exclude newsletters from Summon searches, Wagtail 6.3 upgrade, accessibility improvements.
