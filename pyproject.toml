@@ -25,7 +25,7 @@ dependencies = [
     "pysftp==0.2.9",
     "uwsgi==2.0.31",
     "xmltodict==1.0.2",
-    "wagtail==6.4.2",
+    "wagtail==7.2",
     "whitenoise[brotli]==6.11.0",
 ]
 
