@@ -27,7 +27,7 @@
   "dependencies": {
     "@babel/core": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
-    "autoprefixer": "^10.4.21",
+    "autoprefixer": "^10.4.22",
     "gulp": "^5.0.1",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
@@ -35,7 +35,7 @@
     "gulp-sass": "^6.0.1",
     "gulp-uglify": "^3.0.2",
     "postcss": "^8.5.6",
-    "sass": "^1.93.3"
+    "sass": "^1.94.0"
   },
   "devDependencies": {
     "eslint": "^9.39.1",
