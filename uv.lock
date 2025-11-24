@@ -212,15 +212,15 @@ wheels = [
 
 [[package]]
 name = "django-cas-ng"
-version = "5.0.1"
+version = "5.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
     { name = "python-cas" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/bd/47/8e8ae048c3acdc999ebf30b2159c2473ac2bf8f30d0a45c4a0ddea05a4cd/django-cas-ng-5.0.1.tar.gz", hash = "sha256:e02ba35cc289e3478ca43185383ba24e4f690a41110927e87e92ac6675248541", size = 18912, upload-time = "2023-10-17T22:37:41.689Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e9/26/38ff585bc99890abd272b6957875c4948aaae6680f3e268d609e7729535e/django_cas_ng-5.1.0.tar.gz", hash = "sha256:131f80b12de9c639fb384cee16bca588bcbfa7dbbc2e0e005e2fe853d2dd2528", size = 24244, upload-time = "2025-11-18T17:08:57.392Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/da/0a/96342c8580bb7d564a4be53c9fef035acdbec3b578dfff5b89b2fedf57f1/django_cas_ng-5.0.1-py2.py3-none-any.whl", hash = "sha256:76f400c1efc75511fbc8566cb376ece7178a922187c8e01bede257f5b405892a", size = 27175, upload-time = "2023-10-17T22:37:39.429Z" },
+    { url = "https://files.pythonhosted.org/packages/1f/61/9b2960e21c0349a5002ea6cfe16663f238b7448ce1ad2c9cd4f95072da2f/django_cas_ng-5.1.0-py3-none-any.whl", hash = "sha256:b1a58810c8dfd69a6722793a091bd7ff0f6bec40386f9c201f1e9e070541be47", size = 23109, upload-time = "2025-11-18T17:08:56.273Z" },
 ]
 
 [[package]]
@@ -628,7 +628,7 @@ dependencies = [
 requires-dist = [
     { name = "dj-database-url", specifier = "==3.0.1" },
     { name = "django", specifier = "==5.2.8" },
-    { name = "django-cas-ng", specifier = "==5.0.1" },
+    { name = "django-cas-ng", specifier = "==5.1.0" },
     { name = "django-extensions", specifier = "==4.1" },
     { name = "django-storages", extras = ["google"], specifier = "==1.14.6" },
     { name = "djangorestframework-simplejwt", specifier = "==5.5.1" },
