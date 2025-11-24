@@ -2,6 +2,8 @@
 version: 2
 updates:
   - package-ecosystem: docker
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: "chore"
     directory: /
@@ -9,6 +11,8 @@ updates:
       interval: weekly
     target-branch: dev
   - package-ecosystem: github-actions
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: "chore"
     directory: /
@@ -16,6 +20,8 @@ updates:
       interval: weekly
     target-branch: dev
   - package-ecosystem: npm
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: "chore"
     directory: "/"
@@ -23,6 +29,9 @@ updates:
       interval: weekly
     target-branch: dev
   - package-ecosystem: "uv"
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
     commit-message:
       prefix: "chore"
     directory: "/"
