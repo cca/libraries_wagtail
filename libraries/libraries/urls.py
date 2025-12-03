@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic import RedirectView, TemplateView
-from django_cas_ng.views import LoginView, LogoutView
+from django_cas_ng.views import LoginView
 from hours import views as hours_views
 from search import views as search_views
 from sersol_api import views as sersol_views
@@ -15,6 +15,7 @@ from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
 
 from .api import api_router
+from .views import LogoutView
 
 admin.site.site_header = "CCA Libraries Administration"
 admin.autodiscover()
@@ -25,7 +26,7 @@ urlpatterns = [
     # NOTE: ^admin/logout/$ must appear before ^admin/ or it's impossible to logout
     path("login/", LoginView.as_view(), name="cas_ng_login"),
     path("admin/login/", LoginView.as_view()),
-    path("admin/logout/", LogoutView.as_view(), name="cas_ng_logout"),
+    path("admin/logout/", LogoutView.as_view()),
     path("documents/", include(wagtaildocs_urls)),
     path("admin/", include(wagtailadmin_urls)),
     # TODO can we do this using just Wagtail REST APIs instead of Django REST framework?
