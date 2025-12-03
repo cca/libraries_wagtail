@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.4.1
+
+**2025-12-03**: dependency updates including Django 5.2.9 security release.
+
 ## 6.4.0
 
 **2025-11-06**: upgrade to Wagtail 6.4 and Python 3.13.
