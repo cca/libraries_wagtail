@@ -158,7 +158,7 @@ def get_open_hours(day=datetime.date.today()):
             lib_hrs = hrs.filter(library=lib)
             # avoid NoneType errors by testing
             if lib_hrs:
-                output[lib.name] = lib_hrs.values_list(weekday).first()[0]
+                output[lib.name] = lib_hrs.values_list(weekday).first()[0]  # type: ignore
 
     return output
 

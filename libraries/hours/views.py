@@ -54,7 +54,6 @@ def hours(request):
 
         if library:
             hrs = get_hours_for_lib(library, date)
-            print("library hours", hrs)
 
             if hrs:
                 response = JsonResponse({"library": library, "hours": hrs})
@@ -76,7 +75,9 @@ def hours(request):
 
     # redirect HTML requests to the hours page
     else:
-        return redirect(HoursPage.objects.first().url)
+        hours_page = HoursPage.objects.first()
+        assert hours_page is not None, "No HoursPage found in database"
+        return redirect(hours_page.url)
 
 
 def validate(library, date):
