@@ -2,7 +2,7 @@ from django.urls import path, reverse
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
 
-from .views import NoSearchDescriptionReport
+from .views import NoSearchDescriptionReport, UnusedImagesReport
 
 
 # add our wiki to the "help" section of the main admin menu
@@ -27,6 +27,16 @@ def register_no_search_desc_report_menu_item():
     )
 
 
+@hooks.register("register_reports_menu_item")  # type: ignore
+def register_unused_images_report_menu_item():
+    return MenuItem(
+        "Unused Images",
+        reverse("unused_images_report"),
+        icon_name=UnusedImagesReport.header_icon,
+        order=710,
+    )
+
+
 @hooks.register("register_admin_urls")  # type: ignore
 def register_no_search_desc_report_url():
     return [
@@ -34,5 +44,16 @@ def register_no_search_desc_report_url():
             "reports/no-search-description/",
             NoSearchDescriptionReport.as_view(),
             name="no_search_description_report",
+        ),
+    ]
+
+
+@hooks.register("register_admin_urls")  # type: ignore
+def register_unused_images_report_url():
+    return [
+        path(
+            "reports/unused-images/",
+            UnusedImagesReport.as_view(),
+            name="unused_images_report",
         ),
     ]

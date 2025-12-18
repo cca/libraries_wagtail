@@ -1,0 +1,43 @@
+{% extends "wagtailadmin/reports/base_report.html" %}
+{% load wagtailimages_tags i18n %}
+
+{% block listing %}
+    <table class="listing">
+        <thead>
+            <tr>
+                <th>{% trans "Preview" %}</th>
+                <th>{% trans "Title" %}</th>
+                <th>{% trans "Description" %}</th>
+                <th>{% trans "Created" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for image in object_list %}
+                <tr>
+                    <td class="title">
+                        <div class="title-wrapper">
+                            {% if image.file %}
+                                {% image image max-165x165 %}
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{% url 'wagtailimages:edit' image.id %}">{{ image.title }}</a>
+                    </td>
+                    <td>
+                        {{ image.description|default:"—" }}
+                    </td>
+                    <td>
+                        {{ image.created_at|date:"j M Y, H:i" }}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4" class="no-results-message">
+                        {% trans "No unused images found." %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
