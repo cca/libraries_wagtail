@@ -43,7 +43,7 @@
     "postcss-scss": "^4.0.9",
     "stylelint": "^16.26.1",
     "stylelint-config-sass-guidelines": "^12.1.0",
-    "stylelint-order": "^7.0.0",
+    "stylelint-order": "^7.0.1",
     "stylelint-scss": "^6.13.0"
   },
   "engines": {
