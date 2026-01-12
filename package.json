@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "eslint": "^9.39.2",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "postcss-scss": "^4.0.9",
     "stylelint": "^16.26.1",
     "stylelint-config-sass-guidelines": "^12.1.0",
