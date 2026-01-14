@@ -49,6 +49,7 @@ if "DOCKER_BUILD" not in env:
         payload = smclient.access_secret_version(name=secret).payload.data.decode(
             "utf-8"
         )
+        # TODO convert secret to JSON, doing it this way creates potential parsing issues
         for line in io.StringIO(payload):
             key, value = line.strip().split("=", 1)
             env[key] = value
