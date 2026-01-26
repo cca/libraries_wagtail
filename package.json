@@ -26,7 +26,7 @@
   "homepage": "https://github.com/cca/libraries_wagtail#readme",
   "dependencies": {
     "@babel/core": "^7.28.5",
-    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-env": "^7.28.6",
     "autoprefixer": "^10.4.23",
     "gulp": "^5.0.1",
     "gulp-babel": "^8.0.0",
