@@ -1,5 +1,12 @@
 # Changelog
 
+## 6.4.2
+
+**2026-01-29**: fix log out bug, dependency upgrades.
+
+- [#245](https://github.com/cca/libraries_wagtail/issues/245) fix bug that made it impossible to log out
+- Many dependency upgrades but none to Django or Wagtail
+
 ## 6.4.1
 
 **2025-12-03**: dependency updates including Django 5.2.9 security release.
