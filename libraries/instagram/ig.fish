@@ -29,7 +29,7 @@ set response_code (curl --no-progress-meter --output $file.gz --write-out "%{res
     --header "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36" \
     --header "Accept-Language: en-US,en;q=0.9,ru;q=0.8" \
     --header "Accept-Encoding: gzip, deflate, br" \
-    --header "Accept */*" \
+    --header "Accept: */*" \
     "https://i.instagram.com/api/v1/users/web_profile_info/?username=$username")
 
 if [ $response_code -ne 200 ]
