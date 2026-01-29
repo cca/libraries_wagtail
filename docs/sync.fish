@@ -11,14 +11,11 @@ from either the staging or production instances. Options:"
     echo -e "\t-m, --media\tsync media files (images, videos, documents). Does not
 \tdownload files but uses rsync on (local, stage, prod) storage buckets."
     echo -e "\nExamples:"
-    echo -e "\tsync.fish -s — sync the staging database locally"
-    echo -e "\tsync.fish -s --db --media — sync the staging database and media locally"
-    echo -e "\tsync.fish --prod --media — sync production media (but not the database)"
-    echo -e "\tsync.fish --prod --stage --db — sync production database to staging"
-    echo -e "\n'Staging' here refers to Eric's libraries-libep.cca.edu site and its related
-database and media files, NOT Mark's libraries-libmg.cca.edu site. If we feel a need
-to differentiate, we can use three instance flags instead of the current two."
-    echo -e "You can sync the prod db or media to staging by providing _both_ instance
+    echo -e "\tsync.fish -s # sync the staging database locally"
+    echo -e "\tsync.fish -s --db --media # sync the staging database and media locally"
+    echo -e "\tsync.fish --prod --media # sync production media (but not the database)"
+    echo -e "\tsync.fish --prod --stage --db # sync production database to staging"
+    echo -e "\nYou can sync the prod db or media to staging by providing _both_ instance
 flags. This is always a unidirectional sync from prod to staging."
     exit 0
 end
