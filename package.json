@@ -35,11 +35,11 @@
     "gulp-sass": "^6.0.1",
     "gulp-uglify": "^3.0.2",
     "postcss": "^8.5.6",
-    "sass": "^1.97.2"
+    "sass": "^1.97.3"
   },
   "devDependencies": {
     "eslint": "^9.39.2",
-    "globals": "^17.0.0",
+    "globals": "^17.1.0",
     "postcss-scss": "^4.0.9",
     "stylelint": "^17.0.0",
     "stylelint-config-sass-guidelines": "^12.1.0",
