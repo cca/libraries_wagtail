@@ -41,7 +41,7 @@
     "eslint": "^9.39.2",
     "globals": "^17.1.0",
     "postcss-scss": "^4.0.9",
-    "stylelint": "^17.0.0",
+    "stylelint": "^17.1.0",
     "stylelint-config-sass-guidelines": "^12.1.0",
     "stylelint-order": "^7.0.1",
     "stylelint-scss": "^7.0.0"
