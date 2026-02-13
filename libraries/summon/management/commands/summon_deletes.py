@@ -3,11 +3,11 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from urllib.parse import quote
 
-import pysftp
 import requests
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
+from paramiko import SSHClient
 
 from summon.models import SummonDelete
 
@@ -68,14 +68,19 @@ class Command(BaseCommand):
                 fh.write(records)
 
             # PUT file to Summon SFTP server
-            with pysftp.Connection(
-                settings.SUMMON_SFTP_HOST,
-                port=10022,
-                private_key=str(key_path),
-                username=settings.SUMMON_SFTP_UN,
-            ) as sftp:
-                with sftp.cd("deletes"):
-                    sftp.put(fh.name)
+            # https://docs.paramiko.org/en/stable/api/client.html
+            with SSHClient() as ssh_client:
+                ssh_client.load_system_host_keys()
+                ssh_client.connect(
+                    hostname=settings.SUMMON_SFTP_HOST,
+                    port=10022,
+                    username=settings.SUMMON_SFTP_UN,
+                    key_filename=str(key_path),
+                )
+                # https://docs.paramiko.org/en/stable/api/sftp.html#paramiko.sftp_client.SFTPClient
+                with ssh_client.open_sftp() as sftp:
+                    sftp.chdir("deletes")
+                    sftp.put(str(path), path.name, confirm=True)
 
         # write last run date to model
         SummonDelete.objects.create(date=timezone.now(), number=number, records=records)
