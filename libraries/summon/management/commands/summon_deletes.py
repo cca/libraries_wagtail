@@ -16,7 +16,7 @@ key_path = Path("/root/.ssh/cdi_cca.key")
 
 
 class Command(BaseCommand):
-    help = "Send a list of deleted bib records to the Summon SFTP server so they can be removed from our discovery index. This command is meant to be run on a schedule."
+    help = "Send a list of deleted bib records to the Summon SFTP server so they can be removed from our discovery index. This command is intended to run on a schedule."
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -31,9 +31,8 @@ class Command(BaseCommand):
             raise CommandError(
                 f"Requires the CDI private key to be located at {key_path}"
             )
-        # lastrun is a STRING (not date!) of form "MM/DD/YYYY"
         try:
-            lastrun = options.get("lastrun", None) or SummonDelete.objects.latest(
+            lastrun: str = options.get("lastrun", "") or SummonDelete.objects.latest(
                 "date"
             ).date.strftime("%Y-%m-%d")
         except SummonDelete.DoesNotExist:
@@ -43,31 +42,27 @@ class Command(BaseCommand):
                 'There are no existing SummonDelete objects. Please run this management script with an argument of the date we last updated Summon in "MM/DD/YYYY" format.'
             )
             exit(1)
-        logger.info("Finding deleted MARC records since {}".format(lastrun))
+        logger.info(f"Finding deleted MARC records since {lastrun}")
 
-        response = requests.get(
-            settings.SUMMON_REPORT_URL.format(quote("{}".format(lastrun)))
-        )
+        response = requests.get(settings.SUMMON_REPORT_URL.format(quote(f"{lastrun}")))
         # Koha JSON is an array of arrays for each row of the report e.g. [[1], [2]]
-        rows = response.json()
-        number = len(rows)
+        rows: list[list[int]] = response.json()
+        number: int = len(rows)
 
         if number == 0:
             logger.info(
-                "No records were deleted since {}, not sending data to Summon".format(
-                    lastrun
-                )
+                f"No records were deleted since {lastrun}, not sending data to Summon"
             )
             exit(0)
 
-        logger.info("{} records were deleted since {}".format(number, lastrun))
+        logger.info(f"{number} records were deleted since {lastrun}")
         # unpack the record sub-lists into a newline-delimited string
         records = "\n".join([str(rec) for [rec] in rows])
 
         # write records text list to file in temporary directory
         with TemporaryDirectory() as tmpdir:
-            path = Path(tmpdir) / "cca-catalog-deletes-{}.mrc".format(
-                lastrun.replace("/", "-")
+            path: Path = (
+                Path(tmpdir) / f"cca-catalog-deletes-{lastrun.replace('/', '-')}.mrc"
             )
             with path.open("w+") as fh:
                 fh.write(records)
@@ -81,10 +76,7 @@ class Command(BaseCommand):
             ) as sftp:
                 with sftp.cd("deletes"):
                     sftp.put(fh.name)
-                    # write last run date to model
-                    SummonDelete.objects.create(
-                        date=timezone.now(), number=number, records=records
-                    )
-                    logger.info(
-                        "Successfully uploaded the deleted records to Summon FTP server."
-                    )
+
+        # write last run date to model
+        SummonDelete.objects.create(date=timezone.now(), number=number, records=records)
+        logger.info("Successfully uploaded the deleted records to Summon FTP server.")
