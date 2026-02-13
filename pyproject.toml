@@ -21,8 +21,6 @@ dependencies = [
     "elasticsearch==7.17.13",
     "google-cloud-secret-manager==2.26.0",
     "l18n==2021.3",
-    # TODO pysftp is incompatible with paramiko >=4.0.0
-    # https://github.com/cca/libraries_wagtail/issues/266
     "paramiko==4.0.0",
     "psycopg2==2.9.11",
     "uwsgi==2.0.31",
