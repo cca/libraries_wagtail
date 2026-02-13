@@ -1,4 +1,5 @@
 import logging
+from json import JSONDecodeError
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from urllib.parse import quote
@@ -45,8 +46,21 @@ class Command(BaseCommand):
         logger.info(f"Finding deleted MARC records since {lastrun}")
 
         response = requests.get(settings.SUMMON_REPORT_URL.format(quote(f"{lastrun}")))
-        # Koha JSON is an array of arrays for each row of the report e.g. [[1], [2]]
-        rows: list[list[int]] = response.json()
+        try:
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            logger.error(
+                f"Error fetching deleted records report from Koha since {lastrun}: {e}"
+            )
+            exit(1)
+        try:
+            # Koha JSON is an array of arrays for each row of the report e.g. [[1], [2]]
+            rows: list[list[int]] = response.json()
+        except JSONDecodeError as e:
+            logger.error(
+                f"Error decoding JSON response from Koha when fetching deleted records report since {lastrun}: {e}\nResponse body: {response.text}"
+            )
+            exit(1)
         number: int = len(rows)
 
         if number == 0:
@@ -82,6 +96,10 @@ class Command(BaseCommand):
                     sftp.chdir("deletes")
                     sftp.put(str(path), path.name, confirm=True)
 
-        # write last run date to model
-        SummonDelete.objects.create(date=timezone.now(), number=number, records=records)
-        logger.info("Successfully uploaded the deleted records to Summon FTP server.")
+                # write last run date to model
+                SummonDelete.objects.create(
+                    date=timezone.now(), number=number, records=records
+                )
+                logger.info(
+                    "Successfully uploaded the deleted records to Summon FTP server."
+                )
