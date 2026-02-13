@@ -1,33 +1,32 @@
 namespace: libraries-wagtail
 
-# does it make sense to break the libraries app off into
-# its own "base" or does it need to rely on these bases
-# so they are built & run first?
-bases:
-  - ./elasticsearch
-  - ./postgres
-
 resources:
-  - namespace.yml
-  # - volumes.yml
-  - deployment.yml
-  - service.yml
-  - configMap.yml
+- namespace.yml
+- deployment.yml
+- service.yml
+- configMap.yml
+# - volumes.yml
+- ./elasticsearch
+- ./postgres
 
 secretGenerator:
-  - name: app-secrets
-    env: secrets.env
-  - name: gsb-service-account
-    files:
-      - local-gsb-sa.json
-  # these files facilitate the summon_deletes mgmt cmd and are copied to /root/.ssh
-  # by a volume on the pod definition (see deployment.yml for how it's done locally)
-  - name: summon-sftp-secrets
-    files:
-      - assets/cdi_cca.key
-      - assets/known_hosts
+- envs:
+  - secrets.env
+  name: app-secrets
+- files:
+  - local-gsb-sa.json
+  name: gsb-service-account
+# these files facilitate the summon_deletes mgmt cmd and are copied to /root/.ssh
+# by a volume on the pod definition (see deployment.yml for how it's done locally)
+# they must be below k8s/local for security reasons
+- files:
+  - assets/cdi_cca.key
+  - assets/known_hosts
+  name: summon-sftp-secrets
 
 configMapGenerator:
-  - name: scripts
-    files:
-    - ./scripts/init.sh
+- files:
+  - ./scripts/init.sh
+  name: scripts
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
