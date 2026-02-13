@@ -21,9 +21,6 @@ spec:
         app: libraries
     spec:
       volumes:
-        # - name: code
-        #   persistentVolumeClaim:
-        #     claimName: code-pv-volumeclaim-app
         - name: scripts
           configMap:
             name: scripts
@@ -44,8 +41,6 @@ spec:
             - containerPort: 8000
 
           volumeMounts:
-            # - name: code
-            #   mountPath: /app/libraries
             - name: scripts
               mountPath: /scripts
             - name: summon-sftp-secrets
@@ -54,9 +49,10 @@ spec:
 
           resources:
               limits:
-                memory: 1024Mi
                 cpu: "1"
+                memory: 1024Mi
               requests:
+                cpu: "1"
                 memory: 1024Mi
 
           envFrom:
