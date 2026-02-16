@@ -38,7 +38,7 @@
     "sass": "^1.97.3"
   },
   "devDependencies": {
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.0",
     "globals": "^17.3.0",
     "postcss-scss": "^4.0.9",
     "stylelint": "^17.1.0",
