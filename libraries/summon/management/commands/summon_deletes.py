@@ -35,7 +35,7 @@ class Command(BaseCommand):
         try:
             lastrun: str = options.get("lastrun", "") or SummonDelete.objects.latest(
                 "date"
-            ).date.strftime("%Y-%m-%d")
+            ).date.strftime("%m/%d/%Y")
         except SummonDelete.DoesNotExist:
             # on the first run the above will raise an error because there are
             # no SummonDelete.objects yet
