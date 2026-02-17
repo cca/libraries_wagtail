@@ -1,4 +1,6 @@
 import logging
+import re
+from datetime import date
 from json import JSONDecodeError
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -24,7 +26,7 @@ class Command(BaseCommand):
             "lastrun",
             nargs="?",
             type=str,
-            help="date of last run (in MM/DD/YYYY format)",
+            help="date of last run (in YYYY-MM-DD format)",
         )
 
     def handle(self, **options):
@@ -32,20 +34,31 @@ class Command(BaseCommand):
             raise CommandError(
                 f"Requires the CDI private key to be located at {key_path}"
             )
+
+        if options.get("lastrun") and not re.match(
+            r"^\d{4}-\d{2}-\d{2}$", options["lastrun"]
+        ):
+            raise CommandError(
+                f"Invalid date format for lastrun: {options['lastrun']}. Please provide a date in YYYY-MM-DD format."
+            )
+
         try:
-            lastrun: str = options.get("lastrun", "") or SummonDelete.objects.latest(
-                "date"
-            ).date.strftime("%m/%d/%Y")
+            lastrun: date = (
+                date.fromisoformat(options.get("lastrun", ""))
+                or SummonDelete.objects.latest("date").date
+            )
         except SummonDelete.DoesNotExist:
             # on the first run the above will raise an error because there are
             # no SummonDelete.objects yet
-            logger.error(
-                'There are no existing SummonDelete objects. Please run this management script with an argument of the date we last updated Summon in "MM/DD/YYYY" format.'
+            raise CommandError(
+                'There are no existing SummonDelete objects. Please run this management script with an argument of the date we last updated Summon in "YYYY-MM-DD" format.'
             )
-            exit(1)
+
         logger.info(f"Finding deleted MARC records since {lastrun}")
 
-        response = requests.get(settings.SUMMON_REPORT_URL.format(quote(f"{lastrun}")))
+        response = requests.get(
+            settings.SUMMON_REPORT_URL.format(quote(lastrun.strftime("%Y%m%d")))
+        )
         try:
             response.raise_for_status()
         except requests.HTTPError as e:
@@ -57,10 +70,9 @@ class Command(BaseCommand):
             # Koha JSON is an array of arrays for each row of the report e.g. [[1], [2]]
             rows: list[list[int]] = response.json()
         except JSONDecodeError as e:
-            logger.error(
+            raise CommandError(
                 f"Error decoding JSON response from Koha when fetching deleted records report since {lastrun}: {e}\nResponse body: {response.text}"
             )
-            exit(1)
         number: int = len(rows)
 
         if number == 0:
@@ -71,12 +83,12 @@ class Command(BaseCommand):
 
         logger.info(f"{number} records were deleted since {lastrun}")
         # unpack the record sub-lists into a newline-delimited string
-        records = "\n".join([str(rec) for [rec] in rows])
+        records: str = "\n".join([str(rec) for [rec] in rows])
 
         # write records text list to file in temporary directory
         with TemporaryDirectory() as tmpdir:
             path: Path = (
-                Path(tmpdir) / f"cca-catalog-deletes-{lastrun.replace('/', '-')}.mrc"
+                Path(tmpdir) / f"cca-catalog-deletes-{lastrun.strftime('%Y-%m-%d')}.mrc"
             )
             with path.open("w+") as fh:
                 fh.write(records)

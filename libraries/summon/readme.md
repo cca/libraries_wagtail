@@ -16,6 +16,6 @@ set DATA (cat kubernetes/assets/known_hosts | base64 -w 0)
 kubectl -n$NS patch secret summon-sftp-secrets -p "{\"data\":{\"known_hosts\": \"$DATA\"}}"
 ```
 
-The first time the task runs, there are no previous iterations, which can cause an error. The management command accepts a "date last run" argument so you can run `python manage.py summon_deletes "MM/DD/YYYY"` the first time. Note that **Koha has changed the date format for report parameters _multiple times_** so we may need to try a few different formats and edit the command if they change it again.
+The first time the task runs, there are no previous iterations, which causes an error. The management command accepts a "date last run" argument so we can run `python manage.py summon_deletes YYYY-MM-DD` the first time. Note that **Koha has changed the date format for report parameters _multiple times_** so we may need to try a few different formats and edit the command if they change it again. It appears "YYYYMMDD" works best; using hyphens can lead to erroneous results.
 
 After the initial run, the task can be added as a cron job and run regularly.
