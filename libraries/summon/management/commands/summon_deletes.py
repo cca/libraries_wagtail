@@ -1,5 +1,4 @@
 import logging
-import re
 from datetime import date
 from json import JSONDecodeError
 from pathlib import Path
@@ -35,24 +34,21 @@ class Command(BaseCommand):
                 f"Requires the CDI private key to be located at {key_path}"
             )
 
-        if options.get("lastrun") and not re.match(
-            r"^\d{4}-\d{2}-\d{2}$", options["lastrun"]
-        ):
-            raise CommandError(
-                f"Invalid date format for lastrun: {options['lastrun']}. Please provide a date in YYYY-MM-DD format."
-            )
-
-        try:
-            lastrun: date = (
-                date.fromisoformat(options.get("lastrun") or "")
-                or SummonDelete.objects.latest("date").date
-            )
-        except SummonDelete.DoesNotExist:
-            # on the first run the above will raise an error because there are
-            # no SummonDelete.objects yet
-            raise CommandError(
-                'There are no existing SummonDelete objects. Please run this management script with an argument of the date we last updated Summon in "YYYY-MM-DD" format.'
-            )
+        if options.get("lastrun"):
+            try:
+                lastrun: date = date.fromisoformat(options["lastrun"])
+            except ValueError as e:
+                raise CommandError(
+                    f"Invalid lastrun date '{options['lastrun']}'. Please use YYYY-MM-DD format. Error details: {e}"
+                )
+        else:
+            try:
+                lastrun = SummonDelete.objects.latest("date").date
+            except SummonDelete.DoesNotExist:
+                # If we have no SummonDeletes we _must_ use lastrun arg
+                raise CommandError(
+                    'There are no SummonDelete objects. Please run this management script with the date we last updated Summon deletes in "YYYY-MM-DD" format.'
+                )
 
         logger.info(f"Finding deleted MARC records since {lastrun}")
 
