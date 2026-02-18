@@ -44,7 +44,7 @@ class Command(BaseCommand):
 
         try:
             lastrun: date = (
-                date.fromisoformat(options.get("lastrun", ""))
+                date.fromisoformat(options.get("lastrun") or "")
                 or SummonDelete.objects.latest("date").date
             )
         except SummonDelete.DoesNotExist:
