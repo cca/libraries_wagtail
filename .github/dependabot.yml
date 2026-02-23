@@ -10,6 +10,16 @@ updates:
     schedule:
       interval: weekly
     target-branch: dev
+  # image references in k8s manifests
+  - package-ecosystem: docker
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: "chore"
+    directory: /kubernetes
+    schedule:
+      interval: weekly
+    target-branch: dev
   - package-ecosystem: github-actions
     cooldown:
       default-days: 7
