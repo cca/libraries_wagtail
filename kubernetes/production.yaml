@@ -362,6 +362,8 @@ spec:
   selector:
     matchLabels:
       app: libraries
+    # This differs from staging where app pods have component=web
+    # but here we do the inverse; filtering _out_ component=cron pods
     matchExpressions:
       - key: component
         operator: NotIn
