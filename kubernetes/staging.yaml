@@ -39,17 +39,19 @@ metadata:
   name: app
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
-  # Start 1 copy of the application.
-  replicas: 1
+  # Start 2 copies of the application.
+  replicas: 2
   # Select the pods which are part of this deployment.
   selector:
     matchLabels:
       app: libraries
+      component: web
   # The pod template this deployment will create.
   template:
     metadata:
       labels:
         app: libraries
+        component: web
     spec:
       imagePullSecrets:
         - name: gcr-json-key
@@ -235,7 +237,6 @@ spec:
 #
 # All our cronjobs are suspended (spec.suspend = true) on staging
 # Edit their schedule to run soon & unsuspend when testing.
-
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -257,6 +258,7 @@ spec:
         metadata:
           labels:
             app: libraries
+            component: cron
         spec:
           restartPolicy: Never
           volumes:
@@ -317,6 +319,7 @@ spec:
         metadata:
           labels:
             app: libraries
+            component: cron
         spec:
           restartPolicy: Never
           containers:
@@ -349,3 +352,18 @@ spec:
                     secretKeyRef:
                       name: cloud-storage-credentials
                       key: credentials
+
+---
+# PDB Pod Disruption Budget
+# Ensures that at least 1 pod is always available during voluntary disruptions (e.g. node drain for maintenance)
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: app-lib-production
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: libraries
+      component: web
