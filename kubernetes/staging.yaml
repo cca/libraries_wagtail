@@ -359,7 +359,7 @@ spec:
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: app-lib-production
+  name: app-${KUBERNETES_NAMESPACE_OVERWRITE}
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 spec:
   minAvailable: 1
