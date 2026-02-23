@@ -38,10 +38,11 @@
     "sass": "^1.97.3"
   },
   "devDependencies": {
-    "eslint": "^9.39.2",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.0",
     "globals": "^17.3.0",
     "postcss-scss": "^4.0.9",
-    "stylelint": "^17.1.0",
+    "stylelint": "^17.3.0",
     "stylelint-config-sass-guidelines": "^13.0.0",
     "stylelint-order": "^7.0.1",
     "stylelint-scss": "^7.0.0"
