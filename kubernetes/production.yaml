@@ -238,7 +238,6 @@ spec:
 #
 # CRONJOBS
 #
-
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -256,6 +255,7 @@ spec:
         metadata:
           labels:
             app: libraries
+            component: cron
         spec:
           restartPolicy: Never
           volumes:
@@ -315,6 +315,7 @@ spec:
         metadata:
           labels:
             app: libraries
+            component: cron
         spec:
           restartPolicy: Never
           containers:
@@ -347,3 +348,22 @@ spec:
                     secretKeyRef:
                       name: cloud-storage-credentials
                       key: credentials
+
+---
+# PDB Pod Disruption Budget
+# Ensures that at least 1 pod is always available during voluntary disruptions (e.g. node drain for maintenance)
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: app-${KUBERNETES_NAMESPACE_OVERWRITE}
+  namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: libraries
+    matchExpressions:
+      - key: component
+        operator: NotIn
+        values:
+          - cron
