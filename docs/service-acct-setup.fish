@@ -8,7 +8,7 @@ set GAR_REPO docker-web
 set GITHUB_REPO cca/libraries_wagtail
 
 # create a Service Account (SA)
-gcloud iam service-accounts create $SA --project $PROJECT_ID
+gcloud iam service-accounts create $SA --description "Deploys Libraries Wagtail using GitHub Actions" --display-name "Library Wagtail GitHub Actions" --project $PROJECT_ID
 
 # create a workload identity pool
 # if you've run this script before the GitHub WIP will already exist
