@@ -25,7 +25,7 @@ dependencies = [
     "psycopg2==2.9.11",
     "uwsgi==2.0.31",
     "xmltodict==1.0.4",
-    "wagtail==7.0.4",
+    "wagtail==7.0.6",
     "whitenoise[brotli]==6.12.0",
 ]
 
