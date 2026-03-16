@@ -24,7 +24,7 @@ def sersol(request):
         data = xmltodict.parse(
             response.text,
             process_namespaces=True,
-            namespaces=namespaces,
+            namespaces=namespaces,  # type: ignore
         )["openURLResponse"]  # everything's wrapped in this element
 
         response = JsonResponse(data)
