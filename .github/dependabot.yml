@@ -48,3 +48,7 @@ updates:
     schedule:
       interval: "weekly"
     target-branch: dev
+    # Dependabot treats all .txt files as Python requirements files
+    # https://github.com/dependabot/dependabot-core/issues/13960
+    exclude-paths:
+      - "*.txt"
