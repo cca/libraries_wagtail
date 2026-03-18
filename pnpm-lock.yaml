@@ -39,8 +39,8 @@ importers:
         specifier: ^8.5.8
         version: 8.5.8
       sass:
-        specifier: ^1.97.3
-        version: 1.97.3
+        specifier: ^1.98.0
+        version: 1.98.0
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -61,8 +61,8 @@ importers:
         specifier: ^13.0.0
         version: 13.0.0(postcss@8.5.8)(stylelint@17.4.0)
       stylelint-order:
-        specifier: ^7.0.1
-        version: 7.0.1(stylelint@17.4.0)
+        specifier: ^8.0.0
+        version: 8.0.0(stylelint@17.4.0)
       stylelint-scss:
         specifier: ^7.0.0
         version: 7.0.0(stylelint@17.4.0)
@@ -1769,8 +1769,8 @@ packages:
     resolution: {integrity: sha512-orRsuYpJVw8LdAwqqLykBj9ecS5/cRHlI5+nvTo8LcCKmzDmqVORXtOIYEEQuL9D4BxtA1lm5isAqzQZCoQ6Eg==}
     engines: {node: '>=4'}
 
-  postcss-sorting@9.1.0:
-    resolution: {integrity: sha512-Mn8KJ45HNNG6JBpBizXcyf6LqY/qyqetGcou/nprDnFwBFBLGj0j/sNKV2lj2KMOVOwdXu14aEzqJv8CIV6e8g==}
+  postcss-sorting@10.0.0:
+    resolution: {integrity: sha512-TXbU+h6vVRW+86c/+ewhWq9k7pr7ijASTnepVhCQiC87zAOTkvB1v2dHyWP+ggstSTX/PNvjzS+IOqzejndz9w==}
     peerDependencies:
       postcss: ^8.4.20
 
@@ -1892,8 +1892,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass@1.97.3:
-    resolution: {integrity: sha512-fDz1zJpd5GycprAbu4Q2PV/RprsRtKC/0z82z0JLgdytmcq0+ujJbJ/09bPGDxCLkKY3Np5cRAOcWiVkLXJURg==}
+  sass@1.98.0:
+    resolution: {integrity: sha512-+4N/u9dZ4PrgzGgPlKnaaRQx64RO0JBKs9sDhQ2pLgN6JQZ25uPQZKQYaBJU48Kd5BxgXoJ4e09Dq7nMcOUW3A==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -1986,8 +1986,8 @@ packages:
       postcss: ^8.4.21
       stylelint: ^17.1.0
 
-  stylelint-order@7.0.1:
-    resolution: {integrity: sha512-GWPei1zBVDDjxM+/BmcSCiOcHNd8rSqW6FUZtqQGlTRpD0Z5nSzspzWD8rtKif5KPdzUG68DApKEV/y/I9VbTw==}
+  stylelint-order@8.0.0:
+    resolution: {integrity: sha512-1oAwPRz6Ba8u9LPjgvdbeMjZszHhjY6DBBK+xMlS3IC89GdTsvAPpGYvW+dkn6pxc4ZaI1S959g4c8CftZbhIg==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       stylelint: ^16.18.0 || ^17.0.0
@@ -3986,7 +3986,7 @@ snapshots:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
-  postcss-sorting@9.1.0(postcss@8.5.8):
+  postcss-sorting@10.0.0(postcss@8.5.8):
     dependencies:
       postcss: 8.5.8
 
@@ -4098,7 +4098,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass@1.97.3:
+  sass@1.98.0:
     dependencies:
       chokidar: 4.0.3
       immutable: 5.1.5
@@ -4193,10 +4193,10 @@ snapshots:
       stylelint: 17.4.0
       stylelint-scss: 7.0.0(stylelint@17.4.0)
 
-  stylelint-order@7.0.1(stylelint@17.4.0):
+  stylelint-order@8.0.0(stylelint@17.4.0):
     dependencies:
       postcss: 8.5.8
-      postcss-sorting: 9.1.0(postcss@8.5.8)
+      postcss-sorting: 10.0.0(postcss@8.5.8)
       stylelint: 17.4.0
 
   stylelint-scss@7.0.0(stylelint@17.4.0):
