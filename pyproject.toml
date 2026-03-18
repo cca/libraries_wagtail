@@ -7,7 +7,6 @@ authors = [
     {"name"= "Mark Goh", email = "mgoh@cca.edu"},
 ]
 license = "ECL-2.0"
-license-files = ["LICENSE.txt"]
 readme = "readme.md"
 # Python version must match Dockerfile and mise.toml
 requires-python = ">=3.13,<3.14"
