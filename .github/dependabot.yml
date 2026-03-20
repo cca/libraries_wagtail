@@ -11,12 +11,14 @@ updates:
       interval: weekly
     target-branch: dev
   # image references in k8s manifests
+  # ! this has not worked, needs dir globbing maybe?
   - package-ecosystem: docker
     cooldown:
       default-days: 7
     commit-message:
       prefix: "chore"
-    directory: /kubernetes
+    directories:
+      - /kubernetes/**/*
     schedule:
       interval: weekly
     target-branch: dev
