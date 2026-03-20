@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.4.3
+
+**2026-03-20**: only dependency updates.
+
 ## 6.4.2
 
 **2026-01-29**: fix log out bug, dependency upgrades.
