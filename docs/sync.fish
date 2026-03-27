@@ -87,7 +87,7 @@ if set -q _flag_m
         # we can use rsync because these buckets are under the same project
         echo "Syncing staging media to the bucket used during local development.
 This sync is additive; no files in the local bucket will be deleted."
-        gsutil -m rsync -r $MEDIA_GSB gs://libraries-media-local
+        gcloud storage rsync -r $MEDIA_GSB gs://libraries-media-local
     end
 end
 
@@ -105,7 +105,7 @@ if set -q _flag_d;
         # sync prod db to staging
         export_db
         # copy db file from a prod GSB to a staging one
-        gsutil cp $DB_URI $STAGE_DB_GSB
+        gcloud storage cp $DB_URI $STAGE_DB_GSB
         echo "Switching to staging context"
         set -gx GOOGLE_CLOUD_QUOTA_PROJECT cca-web-staging
         activate_config staging
@@ -149,7 +149,7 @@ this command again." 1>&2
         # Export database to GSB and then download it, copy to pod, and restore.
         # We delete cloudsql users to prevent errors when the export is restored.
         export_db
-        gsutil cp $DB_URI .
+        gcloud storage cp $DB_URI .
         echo "Using $PG_POD to restore $DB_NAME from $DB_FILE"
         kubectl -n libraries-wagtail cp ./$DB_FILE $PG_POD:/tmp/$DB_FILE
         kubectl -n libraries-wagtail exec $PG_POD -- sh -c "\
