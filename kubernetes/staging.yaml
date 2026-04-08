@@ -17,8 +17,7 @@ metadata:
   namespace: ${KUBERNETES_NAMESPACE_OVERWRITE}
 data:
   KUBERNETES_NAMESPACE: ${KUBERNETES_NAMESPACE_OVERWRITE}
-  # Most of these are references in libraries/libraries/settings/base.py
-  DJANGO_SETTINGS_MODULE: libraries.settings
+  DJANGO_SETTINGS_MODULE: libraries.settings.base
   CAS_SERVER_URL: "https://sso.cca.edu/cas/login"
   MEDIA_URL: "https://storage.googleapis.com/libraries-staging-${KUBERNETES_NAMESPACE_OVERWRITE}/"
   ES_INDEX_PREFIX: ${KUBERNETES_NAMESPACE_OVERWRITE}

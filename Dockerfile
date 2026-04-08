@@ -61,7 +61,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends postgresql-clie
     && rm -rf /var/lib/apt/lists/*
 
 # Settings environment variable
-ENV DJANGO_SETTINGS_MODULE=libraries.settings
+ENV DJANGO_SETTINGS_MODULE=libraries.settings.base
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
 

@@ -4,8 +4,6 @@ pip-selfcheck.json
 node_modules/
 .kpt-pipeline
 
-# local settings file for laptop development
-libraries/libraries/settings/local.py
 # k8s secrets, used in local/kustomize.yml secretGenerator
 secrets.env
 cdi_cca.key
