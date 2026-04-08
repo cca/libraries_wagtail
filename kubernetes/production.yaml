@@ -26,9 +26,6 @@ data:
   # For static files in Google Cloud Storage & secrets in Secret Manager
   GS_PROJECT_ID: cca-web-0
   GS_BUCKET_NAME: libraries-${KUBERNETES_NAMESPACE_OVERWRITE}
-  # Review Apps
-  # ? Where is this used?
-  DEPLOY_RELEASE: ${KUBERNETES_NAMESPACE_OVERWRITE}
 
 ---
 # The application itself.

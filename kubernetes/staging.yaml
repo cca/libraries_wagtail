@@ -26,10 +26,6 @@ data:
   GS_PROJECT_ID: cca-web-staging
   GS_BUCKET_NAME: libraries-media-staging-${KUBERNETES_NAMESPACE_OVERWRITE}
 
-  # Review Apps
-  # ? Where is this used?
-  DEPLOY_RELEASE: ${KUBERNETES_NAMESPACE_OVERWRITE}
-
 ---
 # The application itself.
 apiVersion: apps/v1
