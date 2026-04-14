@@ -2,8 +2,10 @@
 
 from django.http import HttpResponse
 from django.test import Client
-from wagtail.models import Page
+from wagtail.models import Page, Site
 from wagtail.test.utils import WagtailPageTestCase
+
+from home.models import HomePage
 
 
 class CMSPageTestCase(WagtailPageTestCase):
@@ -14,7 +16,30 @@ class CMSPageTestCase(WagtailPageTestCase):
     testing page routability, renderability, editability, and parent/child
     relationships. Also includes custom utilities for testing page loading,
     status codes, and content rendering without requiring external services.
+    
+    Creates a HomePage in setUpTestData that can be used as a parent for other
+    pages that require parent_page_types = ["home.HomePage"].
     """
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        # Create root page
+        cls.root = Page.get_first_root_node()
+        
+        # Create a test image for the HomePage background
+        from .utils import create_test_image
+        test_bg_image = create_test_image(name="home_background.png", size=(1440, 630))
+        
+        # Create HomePage under root for tests that need it as a parent
+        cls.home = HomePage(title="Home", background_image=test_bg_image)
+        cls.root.add_child(instance=cls.home)
+        cls.home.save_revision().publish()
+        
+        # Update the default Site to point to our HomePage
+        site = Site.objects.get(is_default_site=True)
+        site.root_page = cls.home
+        site.save()
 
     @classmethod
     def setUpClass(cls):

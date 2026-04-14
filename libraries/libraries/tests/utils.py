@@ -24,7 +24,7 @@ class PageFactory:
 
         Args:
             page_class: The Page subclass to instantiate
-            parent: Parent page (defaults to root if None)
+            parent: Parent page (defaults to HomePage if None, or root if no HomePage exists)
             published: Whether to publish the page immediately
             **kwargs: Additional fields to set on the page
 
@@ -32,9 +32,17 @@ class PageFactory:
             The created and saved (and optionally published) page
         """
         if parent is None:
-            parent = Page.get_root_nodes().first()  # type: ignore
-            if parent is None:
-                parent = Page.add_root(title="Root")
+            # Try to find a HomePage first (most pages require it as parent)
+            from home.models import HomePage
+            
+            home_pages = HomePage.objects.live()
+            if home_pages.exists():
+                parent = home_pages.first()
+            else:
+                # Fall back to root if no HomePage exists
+                parent = Page.get_root_nodes().first()  # type: ignore
+                if parent is None:
+                    parent = Page.add_root(title="Root")
 
         assert parent is not None, "Root page must exist to create test pages"
         # Set default title if not provided
@@ -47,6 +55,8 @@ class PageFactory:
 
         if published:
             page.save_revision().publish()
+            # Refresh from database to get the published version
+            page.refresh_from_db()
 
         return page
 
