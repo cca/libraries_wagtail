@@ -8,9 +8,8 @@ There is also a `test.py` settings file which is solely used during tests. It en
 
 The test settings file (`test.py`) includes special configurations for running tests:
 
-- **In-memory SQLite database** - Fast, isolated database for each test run
+- **In-memory SQLite database** - Isolated database for each test run
 - **Database search backend** - Replaces Elasticsearch with Django's database search
-- **Local memory cache** - Faster than external cache services
 - **Temporary media storage** - Uses Python's `tempfile.gettempdir()` to store uploaded files (like test images) in the system's temporary directory instead of the project root. This prevents test artifacts from cluttering the project and they're automatically cleaned up by the OS.
 
 ## Specifying settings to use

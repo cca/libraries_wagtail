@@ -14,6 +14,7 @@ from libraries.settings.shared import (
     PROJECT_DIR,
     RICHTEXT_ADVANCED,
     RICHTEXT_BASIC,
+    ROOT_URLCONF,
     STATIC_URL,
     TEMPLATES,
 )
@@ -166,8 +167,6 @@ if environment != "local":
     CACHE_MIDDLEWARE_ALIAS: str = "default"
     CACHE_MIDDLEWARE_SECONDS: int = 300
     CACHE_MIDDLEWARE_KEY_PREFIX: str = "ccalib"
-
-ROOT_URLCONF: str = "libraries.urls"
 
 LOGIN_REDIRECT_URL: str = "wagtailadmin_home"
 

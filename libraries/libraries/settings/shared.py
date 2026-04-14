@@ -32,6 +32,7 @@ RICHTEXT_ADVANCED: list[str] = RICHTEXT_BASIC + [
     "ul",
 ]
 STATIC_URL: str = "/static/"
+ROOT_URLCONF: str = "libraries.urls"
 TEMPLATES: list[dict[str, Any]] = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",

@@ -12,9 +12,14 @@ from libraries.settings.shared import (
     PROJECT_DIR,
     RICHTEXT_ADVANCED,
     RICHTEXT_BASIC,
+    ROOT_URLCONF,
     STATIC_URL,
     TEMPLATES,
 )
+
+# Minimal Django settings required for tests
+SECRET_KEY = "test-secret-key-not-for-production"
+DEBUG = True
 
 INSTALLED_APPS: list[str] = [
     # our apps
@@ -49,6 +54,7 @@ INSTALLED_APPS: list[str] = [
     "wagtail.sites",
     "wagtail.snippets",
     "wagtail.users",
+    "django_cas_ng",
     "django_extensions",
     "modelcluster",
     "rest_framework",
@@ -61,6 +67,7 @@ INSTALLED_APPS: list[str] = [
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
 ]
+
 # security followed by whitenoise are first
 # the 2 cache middleware should sandwich everything else
 MIDDLEWARE: list[str] = [
