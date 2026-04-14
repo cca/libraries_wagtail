@@ -59,6 +59,7 @@ if "DOCKER_BUILD" not in env:
 SECRET_KEY: str = env.get(
     "SECRET_KEY", r"ud-bm(brnp^zez%(=fv(5n=u1j1vr$_vxsg=lrhadzo%un-%gb"
 )
+# ! Can we not set this to be localhost, staging, & prod?
 ALLOWED_HOSTS: list[str] = ["*"]
 
 INSTALLED_APPS: list[str] = [
