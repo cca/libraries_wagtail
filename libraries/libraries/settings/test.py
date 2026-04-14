@@ -114,3 +114,11 @@ ALLOWED_HOSTS = ["*"]
 # Use temporary directory for media files during tests
 # This prevents test images from being saved to the project directory
 MEDIA_ROOT = tempfile.gettempdir()
+
+# Set a dummy admin base URL for tests (prevents wagtailadmin.W003 warning)
+WAGTAILADMIN_BASE_URL = "http://testserver"
+
+# Silence system check warnings that don't affect test functionality
+SILENCED_SYSTEM_CHECKS = [
+    "models.W042",  # Auto-created primary key warnings for various models
+]
