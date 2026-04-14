@@ -2,6 +2,9 @@
     "python.analysis.typeCheckingMode": "basic",
     "python.analysis.diagnosticSeverityOverrides": {
         "reportAttributeAccessIssue": "none",
-        "reportCallIssue": "none",
+        "reportCallIssue": "none"
+    },
+    "markdownlint.config": {
+        "MD032": false
     }
 }
