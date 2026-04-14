@@ -8,8 +8,15 @@ import dj_database_url
 from google.cloud import secretmanager
 from google.oauth2.service_account import Credentials
 
-PROJECT_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR: str = os.path.dirname(PROJECT_DIR)
+# ruff: noqa: F401
+from libraries.settings.shared import (
+    BASE_DIR,
+    PROJECT_DIR,
+    RICHTEXT_ADVANCED,
+    RICHTEXT_BASIC,
+    STATIC_URL,
+    TEMPLATES,
+)
 
 # need a default NS so we can run collectstatic (e.g. in Dockerfile)
 env: dict[str, str] = os.environ.copy()
@@ -196,7 +203,6 @@ STATICFILES_DIRS: list[str] = [
     os.path.join(PROJECT_DIR, "static"),
 ]
 STATIC_ROOT: str = os.path.join(BASE_DIR, "static")
-STATIC_URL: str = "/static/"
 # necessary to serve Summon files or any arbitrary static file
 WHITENOISE_ROOT: str = STATIC_ROOT
 
@@ -223,28 +229,6 @@ WAGTAIL_SITE_NAME: str = "CCA Libraries & Instructional Technology"
 
 # https://docs.wagtail.org/en/stable/reference/settings.html#wagtailadmin-unsafe-page-deletion-limit
 WAGTAILADMIN_UNSAFE_PAGE_DELETION_LIMIT: int = 5
-
-# sets of HTML tags allowed in various rich text fields
-# full list here:
-# https://docs.wagtail.io/en/latest/advanced_topics/customisation/page_editing_interface.html#rich-text-features
-RICHTEXT_BASIC: list[str] = [
-    "bold",
-    "document-link",
-    "italic",
-    "link",
-    "strikethrough",
-    "subscript",
-    "superscript",
-]
-RICHTEXT_ADVANCED: list[str] = RICHTEXT_BASIC + [
-    "code",
-    "embed",
-    "h3",
-    "hr",
-    "image",
-    "ol",
-    "ul",
-]
 
 # Allow SVG (5.0), AIVF (5.1), HEIC (6.3) uploads
 WAGTAILIMAGES_EXTENSIONS: list[str] = [
@@ -371,23 +355,6 @@ WAGTAILSEARCH_BACKENDS: dict[str, dict[str, Any]] = {
 ####################
 # Template caching #
 ####################
-TEMPLATES: list[dict[str, Any]] = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            os.path.join(PROJECT_DIR, "templates"),
-        ],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
-        },
-    },
-]
 if environment != "local":
     TEMPLATES[0]["APP_DIRS"] = False
     TEMPLATES[0]["OPTIONS"]["loaders"] = [
