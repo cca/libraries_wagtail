@@ -1,14 +1,12 @@
 # CMS Tests Framework
 
-This directory contains reusable tests for the Wagtail CMS, built to run in CI without requiring external services.
-
-Tests use Wagtail/Django's `manage.py test`, not `pytest`.
+This directory contains reusable tests for the Wagtail CMS, built to run in CI without requiring external services. Tests use Wagtail/Django's `manage.py test`, not `pytest`.
 
 ## Structure
 
-- **base.py** - Base test classes and mixins providing reusable utilities
+- **base.py** - Base test classes, mixins providing reusable utilities
 - **test_cms_pages.py** - Example tests for page loading and navigation
-- **conftest.py** - Pytest configuration
+- **utils.py** - Utility functions, e.g. a page factory & `create_test_image`
 
 ## Running Tests
 
@@ -25,11 +23,7 @@ uv run python libraries/manage.py test libraries.tests.test_cms_pages.HomePageTe
 uv run python libraries/manage.py test libraries.tests.test_cms_pages.HomePageTests.test_home_page_loads --settings=libraries.settings.test
 # Verbose output
 uv run python libraries/manage.py test libraries.tests -v 2 --settings=libraries.settings.test
-```
-
-Or set the environment variable once:
-
-```bash
+# Or set an env var for test settings
 export DJANGO_SETTINGS_MODULE=libraries.settings.test
 uv run python libraries/manage.py test libraries.tests
 ```
@@ -221,21 +215,4 @@ class MyAppPageTestCase(CMSPageTestCase):
     def assert_page_has_sidebar(self, url):
         response = self.assert_page_loads(url)
         self.assertContains(response, "sidebar-content")
-```
-
-## CI Integration
-
-These tests are designed to run in CI environments without external services:
-
-- No elasticsearch/search service required
-- No external API calls
-- Uses Django's test database (with test settings)
-- Can run in parallel if needed
-
-Example GitHub Actions:
-
-```yaml
-- name: Run CMS Tests
-  run: |
-    uv run python libraries/manage.py test libraries.tests --settings=libraries.settings.test --parallel
 ```

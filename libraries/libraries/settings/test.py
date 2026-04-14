@@ -4,6 +4,8 @@ Test settings for running CMS tests.
 Disables external dependencies like Elasticsearch and uses in-memory database.
 """
 
+import tempfile
+
 # ruff: noqa: F401
 from libraries.settings.shared import (
     BASE_DIR,
@@ -108,3 +110,7 @@ STORAGES = {
 
 # Disable host checking for tests
 ALLOWED_HOSTS = ["*"]
+
+# Use temporary directory for media files during tests
+# This prevents test images from being saved to the project directory
+MEDIA_ROOT = tempfile.gettempdir()
