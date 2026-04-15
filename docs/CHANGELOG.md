@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.4.14
+
+**2026-04-15**: More dependency updates, including Django and transitive python dependencies. Solves several open security alerts. This release also adds a basic unit testing suite.
+
 ## 6.4.13
 
 **2026-03-20**: only dependency updates. The jump in version number is due to minor releases in between that did little or also only updated dependencies.
