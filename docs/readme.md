@@ -11,7 +11,7 @@ We need docker, minikube, kubectl, and skaffold. Many of these are available fro
 ```sh
 > brew i kubectl minikube skaffold # kubectl is a dependeny of homebrew minikube
 > brew i --cask docker # Docker Desktop app
-> # OR use gcloud for these two components
+> # OR use gcloud for these three components
 > gcloud components install kubectl minikube skaffold
 ```
 
@@ -19,11 +19,21 @@ Docker Desktop provides visualizations of resources (images, volumes). We need t
 
 We currently run the entire app in minikube, including postgres database and elasticsearch, but other CCA teams (like cca.edu) are moving to running only Wagtail locally while using a cloud-hosted database and search engine. Ngoc has a notebook on how this conversion worked if we want to go that route.
 
-To authenticate locally, be sure to use `127.0.0.1` as the server domain, not `locahost`, as SSO is configured to work with the former and not the latter.
+To authenticate locally, use `127.0.0.1` as the server domain, not `locahost`, as SSO is configured to work with the former and not the latter.
+
+## Tools
+
+**setup.sh** bootstraps the local development environment so we can begin working on the site without needing to push to a remote instance like staging.
+
+**sync.fish** copies a remote instance's data to our local development environment. `./docs/sync.fish --prod --media` does the media files while `./docs/sync.fish --prod --db` does the database. It can sync from either `--stage` or `--prod`. It can also sync media/database between our production and staging instances if we provide _both_ instance flags. Run `./docs/sync.fish --help` for complete usage information.
+
+**dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when we're done. Note that this is just a convenience; there's no reason we cannot manage the development tools individually.
+
+**release** increments the latest tag that triggers our CI/CD workflow and pushes the tag to the remote. `./docs/release prod` does a production release. _This script might need to change when we migrate off of Gitlab CI to GitHub_.
 
 ### Port-forwarding
 
-If we use dev.fish, Skaffold should mostly take cares of this. Otherwise, there are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:
+If we use [dev.fish](./dev.fish), Skaffold mostly takes care of this. Otherwise, there are three ways to forward a port on the minikube cluster so we can open the website using our localhost domain in a browser:
 
 1. (easiest) run `skaffold dev` with the `--port-forward` flag. The [port-forward](https://skaffold.dev/docs/pipeline-stages/port-forwarding/) configuration is in Skaffold.yml. If we omit this from the Skaffold profile but use the `--port-forward` flag, Skaffold will automatically create forwarding for all services, but if the pods are recreated it will not recreate the forwarding, so this is not recommended.
 2. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000`, this is what Skaffold does behind the scenes
@@ -69,16 +79,6 @@ libraries-wagtail 8329aa97580d74cebbf9119904262c74e9d1b976198a722e2ab2076f7378e6
 
 We can see more info on minikube's usage with `docker system df` and `docker system prune` lets us remove other objects (containers, volumes) that might be taking up space. But realistically, it is the repeatedly re-built app images which consume the vast majority of disk.
 
-## Tools
-
-**setup.sh** bootstraps the local development environment so we can begin working on the site without needing to push to a remote instance like staging.
-
-**sync.fish** copies a remote instance's data to our local development environment. `./docs/sync.fish --prod --media` does the media files while `./docs/sync.fish --prod --db` does the database. It can sync from either `--stage` or `--prod`. It can also sync media/database between our production and staging instances if we provide _both_ instance flags. Run `./docs/sync.fish --help` for complete usage information.
-
-**dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when we're done. Note that this is just a convenience; there's no reason we cannot manage the development tools individually.
-
-**release** increments the latest tag that triggers our CI/CD workflow and pushes the tag to the remote. `./docs/release prod` does a production release. _This script might need to change when we migrate off of Gitlab CI to GitHub_.
-
 ## Development Git Flow
 
 Outline:
@@ -86,22 +86,22 @@ Outline:
 - Pick an app or feature to work on & checkout a logically-named branch based on the `dev` branch
   - `iss##` for work related to an issue is a fine naming convention
 - Start up the local development environment, `./docs/dev.fish up`
-- If model or database changes happen, run `makemigrations -n short_name`
+- If model or database changes happen, run `python manage.py makemigrations -n short_name`
   - Try to _always_ name migrations so it's possible infer what it's doing from the filename
-  - Combine multiple migrations for the same feature/issue _before pushing to the remote repo_ with `squashmigrations app_name first_number last_number`
+  - Combine multiple migrations for the same feature/issue _before pushing to the remote repo_ with `python manage.py squashmigrations app_name first_number last_number`
   - It is recommended to indicate that a commit requires running migrations, e.g. by appending `(MIGRATE)` to the end of the first line of the commit message
 - Feel free to `git push origin $BRANCH` to save intermediary changes to the remote repo
 - Once a feature is complete, checkout `dev` & `git merge $BRANCH` into it
-- Push the dev branch to a staging instance `git push && git tag lib-ep-$NUM && git push --tags` then test it at libraries-libep.cca.edu
+- Push the dev branch to a staging instance `./docs/release` then test it
 - Merge tested code into the main branch, `git checkout main` & `git merge dev`
 - Write release notes in the CHANGELOG.md and check if any of this documentation needs to be updated
-- Push changes to production, `git tag release-$NUM && git push && git push --tags`
+- Push changes to production, `./docs/release prod`
 
-See deployment.md for more details on deploying to remote instances like staging and production.
+See [deployment.md](./deployment.md) for more details on deploying to remote instances like staging and production.
 
 ### Frontend Development
 
-If you are working on frontend (JS, CSS via SCSS) files with a local Wagtail, the fastest way to get your changes on the running site is to run a `pnpx gulp watch` task on your host laptop in a parallel process to the usuall development (skaffold) tools. Gulp will see you make changes to source files, which triggers a build, gulp builds files directly into the static files directory where Wagtail serves them from, and Skaffold notices the new static files and copies them to the running kubernetes pod without restarting or rebuilding anything.
+If you are working on frontend (JS, CSS via SCSS) files with a local Wagtail, the fastest way to get your changes on the running site is to run a `pnpx gulp watch` task on your host laptop in a parallel process to the usual development (skaffold) tools. Gulp will see you make changes to source files, which triggers a build, gulp builds files directly into the static files directory where Wagtail serves them from, and Skaffold notices the new static files and copies them to the running kubernetes pod without restarting or rebuilding anything.
 
 Due to our two-step build process in the Dockerfile, the application pod does not have node available so you cannot actually compile the static files on it, e.g. by running a shell on the pod and then running gulp.
 
@@ -141,11 +141,11 @@ See [Upgrading Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.ht
 > k exec (k get pods -o name | grep wagtail) -- python manage.py migrate
 ```
 
-The upgrade notes say to run `python manage.py makemigrations` before migrate but technically all db migrations should already be included so that step _should_ be necessary. If migrations are needed, the local test server tells us so on startup.
+The upgrade notes say to run `python manage.py makemigrations` before migrate but technically all db migrations should already be included so that step _should_ be unnecessary. If migrations are needed, the local test server tells us so on startup.
 
 ## Installing dependencies locally
 
-We do not need to install the Python dependencies on our host laptop since the app runs in Minikube. However, some `uv` commands (like running `uv pip list --outdated` to find outdated dependencies) expect a functioning virtualenv to exist.
+We do not need to install the Python dependencies on our host laptop since the app runs in Minikube. However, some `uv` commands (like running `uv tree --outdated --depth 1` to find outdated dependencies) expect a functioning virtualenv to exist.
 
 If installing locally, note that `uwsgi` has trouble building against managed python installations, see [this comment](https://github.com/astral-sh/uv/issues/6488#issuecomment-2345417341) for instance. The solution is to set a `LIBRARY_PATH` shell var that points to the "lib" directory of our local python. With `mise` and fish shell, this looks like `set -x LIBRARY_PATH (mise where python)/lib`.
 
@@ -161,21 +161,17 @@ We use [Gulp](http://gulpjs.com/) for our front-end build tool. Note that tools 
 
 We have, as of 6/2023, about 4.5gb of media files (images, documents, a few videos) on the Libraries' Wagtail site. All the media are stored in [Google Storage Buckets](https://cloud.google.com/storage/docs/buckets) for all instances (local, staging, production) of the site.
 
-| Instance | GCP Project | GSB
-|----------|-------------|----
-| Local | CCA Web Staging | libraries-media-local
-| Staging | CCA Web Staging | libraries-media-staging-lib-ep
-| Production | CCA Web Prod | libraries-lib-production
-
-Some of these may change as we look into using the Autoclass storage feature and using a CDN with the site.
+| Instance | GCP Project | GSB |
+| -------- | ----------- | --- |
+| Local | CCA Web Staging | libraries-media-local |
+| Staging | CCA Web Staging | libraries-media-staging-lib-ep |
+| Production | CCA Web Prod | libraries-lib-production |
 
 The Wagtail app uses a `GS_BUCKET` env var to know which bucket to use in which context. Each bucket has one service account with a `Storage Object Admin` role that can modify its contents and there is a corresponding `GS_CREDENTIALS` env var that holds the account's JSON key as a string. To run the app locally, save the local bucket's key (it's shared in Dashlane) as kubernetes/local/local-gsb-sa.json.
 
-See the bottom of base.py for how these env vars are used. This is also where we tell Google to set a long-lived cache control header on all objects. This improves performance and our "whitenoise" static file library uses cache busting parameters in file names anyways.
+See base.py settings for how these env vars are used. This is also where we tell Google to set a long-lived cache control header on all objects to improve performance.
 
 All buckets allow public access (give user `allUsers` the `Storage Object Viewer` role) though it would be difficult to guess the URL of a resource that is not linked off of our websites. Buckets should use **Uniform** and not **Fine-grained** access control on the Permissions tab (as of Wagtail 3.0 / Django 4.0 / django-storages-google 1.14.2).
-
-The CI/CD pipeline does some juggling with media files, copying from _another_ intermediary bucket to the ones that are actually used to serve resources for the website.
 
 ## Database Migrations
 
@@ -184,7 +180,7 @@ When a model is changed, we must generate migration files that implement the cha
 ```sh
 > # make edits to a models.py file
 > k8 sh # enter the pod running the app using the `k8` helper
-> python manage.py makemigration -n "name_of_feature" # create named migrations
+> python manage.py makemigrations -n "name_of_feature" # create named migrations
 > python manage.py migrate # apply migrations
 > exit # leave the pod
 > ./docs/get_migrations.fish # copy the migration files off the pod
@@ -249,9 +245,9 @@ Upgrade gcloud postgres:
 
 ## Elasticsearch
 
-We have separate ES clusters for staging and production. Locally, we run ES without authentication. In the clusters, login with the credentials from Dashlane. Each cluster has a `libraries` user in a `libraries` role which can only access indices with the site's `ES_INDEX_PREFIX` which is in turn the kubernetes namespace of the instance (`lib-ep` for staging, `lib-production` for production). THe role also has `monitor` cluster access, otherwise `GET /` preflight check requests fail.
+We have separate ES clusters for staging and production. Locally, we run ES without authentication. In the clusters, login with the credentials from Dashlane. Each cluster has a `libraries` user in a `libraries` role which can only access indices with the site's `ES_INDEX_PREFIX` which is in turn the kubernetes namespace of the instance (`lib-ep` for staging, `lib-production` for production). The role also has `monitor` cluster access, otherwise `GET /` preflight check requests fail.
 
-Migrating Elasticsearch versions is easy compared to Postgres because we can rebuild the index from scratch, we don't need to migrate data. See [isse #54](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/54) which had more steps because it involved switching to authenticated ES but it's these steps:
+Migrating Elasticsearch versions is easy compared to Postgres because we can rebuild the index from scratch, we don't need to migrate data. See [issue #54](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/54) which had more steps because it involved switching to authenticated ES but it's these steps:
 
 - Update the local k8s cluster's ES version in kubernetes/local/elasticsearch/deployment.yaml for testing
 - Update the `elasticsearch` dependency in pyproject.toml
