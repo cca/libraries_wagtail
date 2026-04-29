@@ -21,7 +21,7 @@ dependencies = [
     "google-cloud-secret-manager==2.27.0",
     "l18n==2021.3",
     "paramiko==4.0.0",
-    "psycopg2==2.9.11",
+    "psycopg2==2.9.12",
     "uwsgi==2.0.31",
     "xmltodict==1.0.4",
     "wagtail==7.0.6",
