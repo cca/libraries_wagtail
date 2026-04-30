@@ -39,11 +39,12 @@ If we use [dev.fish](./dev.fish), Skaffold mostly takes care of this. Otherwise,
 2. Run `kubectl -n libraries-wagtail port-forward service/libraries 8000:8000`, this is what Skaffold does behind the scenes
 3. Use [Kube Forwarder.app](https://kube-forwarder.pixelpoint.io/) (install it with `brew install --cask kube-forwarder`) which provides a GUI interface around port forwarding
 
-### Kubernetes Namespace stuck in "terminating" status
+### Kubernetes Resources stuck in "terminating" status
 
-To rebuild the local dev application, Skaffold deletes all the kubernetes resources in the app's `libraries-wagtail` namespace. Sometimes, the namespace itself gets stuck in a "terminating" status. [This article](https://www.redhat.com/sysadmin/troubleshooting-terminating-namespaces) explains what's happening: the namespace's "finalizer" never allows it to be removed. The solution is to edit the namespace and remove the finalizer.
+To rebuild the local dev application, Skaffold deletes all the kubernetes resources in the app's `libraries-wagtail` namespace. Sometimes, particular resources of the namespace itself gets stuck in a "terminating" status. [This article](https://www.redhat.com/sysadmin/troubleshooting-terminating-namespaces) explains what's happening: the resource's "finalizer" never allows it to be removed. The solution is to edit the resource and remove the finalizer.
 
 ```sh
+# Removing the finalizer from the namespace
 k get ns libraries-wagtail -o json > ns.json
 # edit the JSON representation, remove 'kubernetes' from the 'finalizers' array
 $EDITOR ns.json
@@ -53,6 +54,8 @@ PORT=60406 curl -k -H "Content-Type: application/json" -X PUT --data-binary @ns.
 ```
 
 (in this code `k` is the libraries `kubectl -n $NS` alias)
+
+Resources can be patched to nullify their finalizers: `k patch pod <pod-name> -p '{"metadata":{"finalizers":null}}'`. In at least one instance, the namespace somehow terminated _before resources inside it_ which required recreating the namespace, deleting the resources manually, then deleting the namespace again. Our `k8` script has a `k8 fd TYPE/NAME` command for force deleting a resource.
 
 ### Minikube Disk Usage
 
