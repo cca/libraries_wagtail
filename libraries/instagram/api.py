@@ -82,7 +82,7 @@ def get_instagram(insta: dict[str, Any]) -> dict[str, str]:
             )
 
         return {
-            "accessibility_caption": gram.get("accessibility_caption", ""),
+            "accessibility_caption": gram.get("accessibility_caption", "") or "",
             # link hashtags & usernames as they'd appear on IG itself
             "html": linkify_text(first_caption),
             "id": gram.get("id", ""),
