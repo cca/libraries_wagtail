@@ -26,7 +26,7 @@ end
 echo "Requesting data from Instagram"
 set response_code (curl --no-progress-meter --output $file.gz --write-out "%{response_code}" \
     --header "x-ig-app-id: 936619743392459" \
-    --header "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36" \
+    --header "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36" \
     --header "Accept-Language: en-US,en;q=0.9,ru;q=0.8" \
     --header "Accept-Encoding: gzip, deflate, br" \
     --header "Accept: */*" \
