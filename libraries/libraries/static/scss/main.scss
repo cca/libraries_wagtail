@@ -1,6 +1,6 @@
 // Boostrap Mixins
 // import them all as some are dependencies of other BS utilities
-@use 'bootstrap/mixins/alerts';
+@use 'bootstrap/mixins/alerts' as alertMixins;
 @use 'bootstrap/mixins/background-variant';
 @use 'bootstrap/mixins/border-radius';
 @use 'bootstrap/mixins/buttons';
@@ -30,6 +30,8 @@
 @use 'bootstrap/mixins/text-emphasis';
 @use 'bootstrap/mixins/text-overflow';
 @use 'bootstrap/mixins/vendor-prefixes';
+// #315 add bootstrap alert styles, they depend on BS vars
+@use 'bootstrap/alerts';
 
 // Fonts
 @use 'fonts/cca-fonts';
