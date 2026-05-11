@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic import RedirectView, TemplateView
-from django_cas_ng.views import LoginView
+from django_cas_ng.views import LoginView, LogoutView
 from hours import views as hours_views
 from search import views as search_views
 from sersol_api import views as sersol_views
@@ -15,7 +15,6 @@ from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
 
 from .api import api_router
-from .views import LogoutView
 
 admin.site.site_header = "CCA Libraries Administration"
 admin.autodiscover()
