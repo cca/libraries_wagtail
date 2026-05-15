@@ -19,7 +19,7 @@ checkfor gcloud || echo "Google Cloud SDK is used to sync media and database fil
 # Provide minikube with expanded resources
 minikube config set cpus 6
 # Make this match the version we're using GKE; see `kubectl version`
-minikube config set kubernetes-version 1.32.6
+minikube config set kubernetes-version 1.33.10
 minikube config set memory 11585
 minikube config set vm-driver docker
 # minikube addons enable metrics-server
@@ -59,7 +59,7 @@ if ! minikube status 2&>/dev/null; then
     minikube stop
 fi
 
-echo -e "\nDo you want to load the (s)taging or (p)roduction media files onto your local machine? You need gcloud's gsutil installed but docker and minikube do not need to be running. Type \"n\" for \"no\". "
+echo -e "\nDo you want to load the (s)taging or (p)roduction media files into the libraries-media-local bucket? You need gcloud's gsutil installed but docker and minikube do not need to be running. Type \"n\" for \"no\". "
 read -r -n 1 -p "[n, p, s]? " result
 echo
 
@@ -74,6 +74,6 @@ case ${result} in
         ./docs/sync.fish --stage --media
         ;;
     *)
-        echo -e "\nUnrecognized input \"$result\", skipping database download. You can run ./docs/sync.fish to download the media files later."
+        echo -e "\nUnrecognized input \"$result\", skipping media download. You can run ./docs/sync.fish to download the media files later."
         ;;
 esac
