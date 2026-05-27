@@ -1,5 +1,5 @@
 # Build frontend assets in separate image
-FROM node:24-slim AS assets
+FROM node:26-slim AS assets
 WORKDIR /app
 
 # Copy project files into the docker image
