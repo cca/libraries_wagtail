@@ -151,7 +151,7 @@ spec:
     spec:
       containers:
         - name: cloudsqlproxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.26.0
+          image: gcr.io/cloudsql-docker/gce-proxy:1.38.0
           command:
             [
               "/cloud_sql_proxy",
