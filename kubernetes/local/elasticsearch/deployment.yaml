@@ -22,7 +22,7 @@ spec:
           env:
             - name: discovery.type
               value: single-node
-          image: elasticsearch:7.17.27
+          image: elasticsearch:8.19.16
           imagePullPolicy: IfNotPresent
           name: elasticsearch
           ports:
