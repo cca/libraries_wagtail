@@ -338,15 +338,17 @@ ES_INDEX_SETTINGS: dict[str, dict[str, Any]] = {
         },
     }
 }
+INDEX_PREFIX: str = ""
+if env.get("ES_INDEX_PREFIX"):
+    INDEX_PREFIX = env.get("ES_INDEX_PREFIX", "") + "_"
 WAGTAILSEARCH_BACKENDS: dict[str, dict[str, Any]] = {
     "default": {
         "BACKEND": "wagtail.search.backends.elasticsearch7",
         "URLS": [env.get("ES_URL", "")],
-        "INDEX": env.get("ES_INDEX_PREFIX", ""),
+        "INDEX_PREFIX": INDEX_PREFIX,  # Changed from "INDEX" in Wagtail 7.2
         "TIMEOUT": 10,
         "OPTIONS": {},
         "AUTO_UPDATE": True,
-        "ATOMIC_REBUILD": True,
         "INDEX_SETTINGS": ES_INDEX_SETTINGS,
     }
 }
