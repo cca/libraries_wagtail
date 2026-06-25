@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.2.0
+
+**2026-06-25**: Wagtail 7.2, improve CI & unit tests, dependency updates.
+
+- [Wagtail 7.2](https://docs.wagtail.org/en/stable/releases/7.2.html): drop Python 3.9, add Python 3.14, improved media/document views, readability scores, search engine configuration changes.
+- Unit tests for our apps: Summon, Serials Solutions API, Hours
+- Run unit tests in GitHub Actions on PRs, pushes to major branches, & before deployment
+- Update transitive dependencies, specifically cryptography which had a vulnerability.
+
 ## 6.4.14
 
 **2026-04-15**: More dependency updates, including Django and transitive python dependencies. Solves several open security alerts. This release also adds a basic unit testing suite.
