@@ -9,11 +9,14 @@ on:
       - '**.py'
       - 'pyproject.toml'
       - 'uv.lock'
+      - '.github/workflows/test.yml'
   pull_request:
     paths:
       - '**.py'
       - 'pyproject.toml'
       - 'uv.lock'
+      - '.github/workflows/test.yml'
+  workflow_call:
   workflow_dispatch:
 
 concurrency:
