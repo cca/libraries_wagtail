@@ -126,7 +126,7 @@ class Closure(models.Model):
 # returns a dict of each library's open hours for a given date e.g.
 # { meyer: '9-5', simpson: '9-6', materials: 'closed' }
 # the home page uses this function
-def get_open_hours(day=datetime.date.today()):
+def get_open_hours(day: str | datetime.date = datetime.date.today()):
     # if we're passed a string, convert it to a date
     if isinstance(day, str):
         # validate input, default to today if we can't get a valid date
