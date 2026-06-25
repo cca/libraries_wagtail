@@ -1,0 +1,49 @@
+name: 'Python Tests'
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'dev'
+    paths:
+      - '**.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
+  pull_request:
+    paths:
+      - '**.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: 'Unit Tests'
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 10
+
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v7.0.0'
+
+      - name: 'Install uv'
+        uses: 'astral-sh/setup-uv@v8.2.0'
+        with:
+          enable-cache: true
+
+      - name: 'Set up Python'
+        run: uv python install
+
+      - name: 'Install dependencies'
+        run: uv sync --frozen
+
+      - name: 'Run tests'
+        working-directory: '.'
+        run: >-
+          uv run python libraries/manage.py test
+          libraries.tests hours sersol_api summon
+          --settings=libraries.settings.test
