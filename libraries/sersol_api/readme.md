@@ -6,3 +6,11 @@ To test, try these URLs:
 
 - https://libraries-libep.cca.edu/sersol/?issn=2162-2574
 - https://libraries-libep.cca.edu/sersol/?issn=0172-7028
+
+## Running Tests
+
+To run the tests for the Serials Solution API app:
+
+```bash
+uv run python libraries/manage.py test sersol_api --settings=libraries.settings.test
+```

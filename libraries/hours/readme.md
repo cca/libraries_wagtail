@@ -39,3 +39,11 @@ Right now, the OpenHours model has seven attributes, one for each weekday, all o
 - closed
 
 where "#" is one or two digits.
+
+## Running Tests
+
+To run the tests for the hours app:
+
+```bash
+uv run python libraries/manage.py test hours --settings=libraries.settings.test
+```

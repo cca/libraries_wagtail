@@ -5,12 +5,16 @@ Tests use Django's `manage.py test` (not pytest) and run without external servic
 ## Running Tests
 
 ```bash
-# All tests
+# Run all tests (including module-specific tests)
+uv run python libraries/manage.py test libraries.tests hours sersol_api summon --settings=libraries.settings.test
+# Run core CMS tests
 uv run python libraries/manage.py test libraries.tests --settings=libraries.settings.test
-# Specific module/class/test
+# Run individual app tests
+uv run python libraries/manage.py test hours --settings=libraries.settings.test
+uv run python libraries/manage.py test sersol_api --settings=libraries.settings.test
+uv run python libraries/manage.py test summon --settings=libraries.settings.test
+# Run specific test file/module
 uv run python libraries/manage.py test libraries.tests.test_blog --settings=libraries.settings.test
-# Verbose
-uv run python libraries/manage.py test libraries.tests -v 2 --settings=libraries.settings.test
 ```
 
 ## Core Components
