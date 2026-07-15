@@ -120,7 +120,8 @@ class HoursAPITests(CMSPageTestCase, CMSSetupMixin):
         hours = get_hours_for_lib("Meyer", day)
 
         self.assertIsNotNone(hours)
-        self.assertEqual(hours["sat"], "closed")  # type: ignore
+        assert hours is not None  # for type checker
+        self.assertEqual(hours["sat"], "closed")
 
     def test_get_hours_for_lib_invalid(self):
         """Test get_hours_for_lib returns None if library has no hours."""

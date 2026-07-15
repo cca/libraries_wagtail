@@ -1,4 +1,5 @@
 import datetime
+from typing import cast
 from unittest.mock import MagicMock, patch
 from urllib.parse import quote
 
@@ -103,10 +104,11 @@ class TestSummonDeletesCommand(TestCase):
         self.assertEqual(SummonDelete.objects.count(), 1)
         log = SummonDelete.objects.first()
         self.assertIsNotNone(log)
-        self.assertEqual(log.number, 2)  # type: ignore
-        self.assertEqual(log.records, "12345\n67890")  # type: ignore
+        typed_log: SummonDelete = cast(SummonDelete, log)
+        self.assertEqual(typed_log.number, 2)
+        self.assertEqual(typed_log.records, "12345\n67890")
         self.assertAlmostEqual(
-            log.date,  # type: ignore
+            typed_log.date,
             timezone.now(),
-            delta=datetime.timedelta(seconds=5),  # type: ignore
+            delta=datetime.timedelta(seconds=5),
         )
