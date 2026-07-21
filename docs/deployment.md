@@ -1,5 +1,8 @@
 # Deployment
 
+> [!WARNING]
+> The staging instance no longer exists. All deployments should be done to production.
+
 Deployment is done with GitHub Actions and triggered by tags in the format ENVIRONMENT-TYPE-NUMBER, e.g. `stg-deploy-6`.
 
 - `stg-deploy-N` -> https://libraries-libep.cca.edu/

@@ -28,14 +28,8 @@ else if test "$argv[1]" = prod; or test "$argv[1]" = production
     end
 else
     # Default to staging deploy: stg-deploy-N. No other tags, no release in GH.
-    set LATEST_TAG (git tag --list 'stg-deploy-*' --sort=-v:refname | head -n 1)
-    if test -z "$LATEST_TAG"
-        set NEXT_TAG stg-deploy-1
-    else
-        set TAG_COMPONENTS (string split - $LATEST_TAG)
-        set TAG_COMPONENTS[3] (math $TAG_COMPONENTS[3] + 1)
-        set NEXT_TAG (string join - $TAG_COMPONENTS)
-    end
+    echo "Staging instance no longer exists, so this is a no-op. If you want to create a production release, pass 'prod' as an argument."
+    exit 1
 end
 
 git push

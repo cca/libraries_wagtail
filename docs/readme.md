@@ -23,9 +23,9 @@ To authenticate locally, use `127.0.0.1` as the server domain, not `locahost`, a
 
 ## Tools
 
-**setup.sh** bootstraps the local development environment so we can begin working on the site without needing to push to a remote instance like staging.
+**setup.sh** bootstraps the local development environment so we can begin working on the site without needing to push to a remote instance.
 
-**sync.fish** copies a remote instance's data to our local development environment. `./docs/sync.fish --prod --media` does the media files while `./docs/sync.fish --prod --db` does the database. It can sync from either `--stage` or `--prod`. It can also sync media/database between our production and staging instances if we provide _both_ instance flags. Run `./docs/sync.fish --help` for complete usage information.
+**sync.fish** copies a remote instance's data to our local development environment. `./docs/sync.fish --prod --media` does the media files while `./docs/sync.fish --prod --db` does the database. Run `./docs/sync.fish --help` for complete usage information.
 
 **dev.fish** starts or stop the local development toolchain (which is: docker, minikube, skaffold). Run `./dev.fish up` or `start` to begin and `./dev.fish down` or `stop` when we're done. Note that this is just a convenience; there's no reason we cannot manage the development tools individually.
 
@@ -95,12 +95,12 @@ Outline:
   - It is recommended to indicate that a commit requires running migrations, e.g. by appending `(MIGRATE)` to the end of the first line of the commit message
 - Feel free to `git push origin $BRANCH` to save intermediary changes to the remote repo
 - Once a feature is complete, checkout `dev` & `git merge $BRANCH` into it
-- Push the dev branch to a staging instance `./docs/release` then test it
+- ~~Push the dev branch to a staging instance `./docs/release` then test it~~
 - Merge tested code into the main branch, `git checkout main` & `git merge dev`
 - Write release notes in the CHANGELOG.md and check if any of this documentation needs to be updated
 - Push changes to production, `./docs/release prod`
 
-See [deployment.md](./deployment.md) for more details on deploying to remote instances like staging and production.
+See [deployment.md](./deployment.md) for more details on deploying to remote instances like production.
 
 ### Frontend Development
 
@@ -114,14 +114,14 @@ We use a combination of environment variables, kubernetes secrets, and Google Se
 
 - Environment variables are set in the kubernetes deployment files
   - [local configMap](../kubernetes/local/configMap.yml) and [deployment](../kubernetes/local/deployment.yml) files which in turn use a [secrets.env](../kubernetes/local/secrets.env) file
-  - [staging](../kubernetes/staging.yaml)
+  - ~~[staging](../kubernetes/staging.yaml)~~
   - [production](../kubernetes/production.yaml)
 - Secrets are in k8s, `kubectl -n $NAMESPACE get secrets` lists them & [`k8 decode $SECRET $KEY`](https://github.com/cca/libraries-k8s) can show their values
   - Staging and production use k8s secrets but there's no need to locally
   - Secrets have to be mounted as files or environment variables in the pod
   - We need _at least_ a service account JSON key added as a `GS_CREDENTIALS` env var which is used to authenticate with Secret Manager
 - Google Secret Manager is used for particularly confidential settings like the secret key, database URL, and search URL
-  - There is a libraries_staging secret in the CCA Web Staging project
+  - ~~There is a libraries_staging secret in the CCA Web Staging project~~
   - There is a libraries_production secret in the CCA Web Prod project
   - The same service account which is used for GSB access is used to access these secrets (in a Secret Manager Secret Accessor role)
 
@@ -134,7 +134,7 @@ See [Upgrading Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.ht
 - Upgrade blocking dependencies (e.g. Django, Python itself) in [pyproject.toml](../pyproject.toml), then run `uv lock` to update the lockfile
   - It's best to pin dependencies to a specific version, e.g. `"Django==3.2.8"` rather than `"Django>=3.2.8"`
   - Major Django updates can require database migrations, too
-- If there were significant dependency changes, do a full test/release cycle _at least_ on the staging instance
+- If there were significant dependency changes, do a full test/release cycle
 - Make Wagtail changes, e.g. editing module paths or fixing deprecation warnings
 - Update Wagtail in the same manner as above (edit pyproject, `uv lock`)
 - Run `migrate` on the app pod (using [libraries k8s aliases](https://github.com/cca/libraries-k8s)):
@@ -162,12 +162,12 @@ We use [Gulp](http://gulpjs.com/) for our front-end build tool. Note that tools 
 
 ## Media
 
-We have, as of 6/2023, about 4.5gb of media files (images, documents, a few videos) on the Libraries' Wagtail site. All the media are stored in [Google Storage Buckets](https://cloud.google.com/storage/docs/buckets) for all instances (local, staging, production) of the site.
+We have, as of 6/2023, about 4.5gb of media files (images, documents, a few videos) on the Libraries' Wagtail site. All the media are stored in [Google Storage Buckets](https://cloud.google.com/storage/docs/buckets) for all instances (local, ~~staging~~, production) of the site.
 
 | Instance | GCP Project | GSB |
 | -------- | ----------- | --- |
 | Local | CCA Web Staging | libraries-media-local |
-| Staging | CCA Web Staging | libraries-media-staging-lib-ep |
+| ~~Staging~~ | ~~CCA Web Staging~~ | ~~libraries-media-staging-lib-ep~~ |
 | Production | CCA Web Prod | libraries-lib-production |
 
 The Wagtail app uses a `GS_BUCKET` env var to know which bucket to use in which context. Each bucket has one service account with a `Storage Object Admin` role that can modify its contents and there is a corresponding `GS_CREDENTIALS` env var that holds the account's JSON key as a string. To run the app locally, save the local bucket's key (it's shared in Dashlane) as kubernetes/local/local-gsb-sa.json.
@@ -228,7 +228,7 @@ k exec (k8 pod) -- psql -U postgres -f db.sql
 
 Upgrade gcloud postgres:
 
-- Export current DB `gcloud sql export sql $INSTANCE $GSB_URI --database $DB_NAME --offload` where `GSB_URI` is a path to a storage bucket and filename like gs://libraries-db-dumps-ci/2023-09-29-libraries-lib-ep-staging.sql.gz
+- Export current DB `gcloud sql export sql $INSTANCE $GSB_URI --database $DB_NAME --offload` where `GSB_URI` is a path to a storage bucket and filename like gs://libraries-db-dumps-ci/2023-09-29-libraries.sql.gz
 - Cloud Console > SQL > go to the new verion's instance (someone else at CCA should've already created it, if not create it yourself) > Database > Add a database with the same name as the old one
   - Import > Enter the path to the SQL export in GSB and select the new database
   - Users > Add user with the same username and password as the current db
@@ -243,12 +243,11 @@ Upgrade gcloud postgres:
   - The cloudsql-instance-credentials secret should not need changes, it contains JSON credentials for a service account used during CD but the SA should have access to all Cloud SQL instances in the GCloud project
 - When we push a new tagged commit that triggers the GitLab pipelines, it will build the new Docker image with the updated postgres client and recreate the pods giving us any new secrets
 - For future use of docs/sync.fish with the new db instance, give the db's service account permission to export to the db dumps storage bucket
-  - GCP > Staging or Prod project > SQL > New instance > Copy **Service Account** username off of Overview page
   - GCP > Storage > DB dumps bucket > **Permissions** > **Grant Access** > Add the SA as a new principle with only the Storage Object Creator role
 
 ## Elasticsearch
 
-We have separate ES clusters for staging and production. Locally, we run ES without authentication. In the clusters, login with the credentials from Dashlane. Each cluster has a `libraries` user in a `libraries` role which can only access indices with the site's `ES_INDEX_PREFIX` which is in turn the kubernetes namespace of the instance (`lib-ep` for staging, `lib-production` for production). The role also has `monitor` cluster access, otherwise `GET /` preflight check requests fail.
+We have separate ES clusters for staging and production. Locally, we run ES without authentication. In the clusters, login with the credentials from Dashlane. Each cluster has a `libraries` user in a `libraries` role which can only access indices with the site's `ES_INDEX_PREFIX` which is in turn the kubernetes namespace of the instance (`lib-production` for production). The role also has `monitor` cluster access, otherwise `GET /` preflight check requests fail.
 
 Migrating Elasticsearch versions is easy compared to Postgres because we can rebuild the index from scratch, we don't need to migrate data. See [issue #54](https://gitlab.com/california-college-of-the-arts/libraries.cca.edu/-/issues/54) which had more steps because it involved switching to authenticated ES but it's these steps:
 
@@ -256,7 +255,7 @@ Migrating Elasticsearch versions is easy compared to Postgres because we can reb
 - Update the `elasticsearch` dependency in pyproject.toml
 - Update `WAGTAILSEARCH_BACKENDS` in`libraries/libraries/settings/base.py` to use the new version's backend
 - Run `python manage.py update_index` to rebuild the index
-- Edit the elasticsearch URL in kubernetes/staging.yaml and then kubernetes/production.yaml
+- Edit the elasticsearch URL in kubernetes/production.yaml
 
 ## Miscellaneous Extras
 

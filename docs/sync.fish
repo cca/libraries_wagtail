@@ -53,13 +53,8 @@ if set -q _flag_p
     set DB_GSB gs://cca-manual-db-dumps
     set MEDIA_GSB gs://libraries-lib-production
 else if set -q _flag_s
-    echo "Using staging context"
-    set CTX staging
-    set -gx GOOGLE_CLOUD_QUOTA_PROJECT cca-web-staging
-    activate_config staging
-    set DB_NAME $STAGE_DB_NAME
-    set DB_GSB $STAGE_DB_GSB
-    set MEDIA_GSB gs://libraries-media-staging-lib-ep
+    echo "ERROR: staging instance no longer exists; use --prod to sync" 1>&2
+    exit 1
 else
     set_color --bold red
     echo "You must specify either the -s/--stage or -p/--prod context."
