@@ -12,6 +12,13 @@
 .gitignore
 .scss-lint.yml
 readme.md
+
+# Ignore Python tests so Skaffold doesn't rebuild the image on test-only edits.
+libraries/**/tests.py
+libraries/**/test_*.py
+libraries/**/*_test.py
+libraries/**/tests/**
+
 # Distribution / packaging
 .Python
 .venv/
