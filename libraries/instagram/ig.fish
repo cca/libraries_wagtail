@@ -26,22 +26,35 @@ end
 echo "Requesting data from Instagram"
 set response_code (curl --no-progress-meter --output $file.gz --write-out "%{response_code}" \
     --header "x-ig-app-id: 936619743392459" \
-    --header "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36" \
-    --header "Accept-Language: en-US,en;q=0.9,ru;q=0.8" \
+    --header "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36" \
+    --header "referer: https://www.instagram.com/$username/" \
+    --header "Accept-Language: en-US,en;" \
     --header "Accept-Encoding: gzip, deflate, br" \
     --header "Accept: */*" \
     "https://i.instagram.com/api/v1/users/web_profile_info/?username=$username")
 
 if [ $response_code -ne 200 ]
-    gunzip $file.gz
-    echo "HTTP $response_code Error"
-    if command --query jq
-        echo "Instagram response:"
-        jq $file
-    else
-        echo "See response data in $file"
+    echo "Primary endpoint returned HTTP $response_code; trying feed fallback endpoint"
+    set response_code (curl --no-progress-meter --output $file.gz --write-out "%{response_code}" \
+        --header "x-ig-app-id: 936619743392459" \
+        --header "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36" \
+        --header "referer: https://www.instagram.com/$username/" \
+        --header "Accept-Language: en-US,en;" \
+        --header "Accept-Encoding: gzip, deflate, br" \
+        --header "Accept: */*" \
+        "https://i.instagram.com/api/v1/feed/user/$username/username/?count=1")
+
+    if [ $response_code -ne 200 ]
+        gunzip $file.gz
+        echo "Fallback endpoint also failed (HTTP $response_code)."
+        if command --query jq
+            echo "Instagram response:"
+            jq . $file
+        else
+            echo "See response data in $file"
+        end
+        exit 1
     end
-    exit 1
 end
 
 # unzip, copy to app pod, and pass to mgmt cmd

@@ -46,9 +46,7 @@ def linkify_text(text):
         try:
             validate_url(url)
         except ValidationError:
-            logger.warning(
-                'Regex found invalid URL "{}" in Instagram post.'.format(url)
-            )
+            logger.warning(f'Regex found invalid URL "{url}" in Instagram post.')
             # return unprocessed string
             return match.string
         return leading_space + '<a href="' + url + '">' + url + "</a>"
@@ -100,5 +98,46 @@ def get_instagram(insta: dict[str, Any]) -> dict[str, str]:
             "username": gram.get("owner", {}).get("username", ""),
         }
 
+    if "items" in insta:
+        if len(insta.get("items", [])) == 0:
+            raise ValueError("Unable to find posts in Instagram JSON data.")
+
+        gram = insta["items"][0]
+        caption = gram.get("caption") or {}
+        if isinstance(caption, dict):
+            first_caption = caption.get("text", "")
+        elif isinstance(caption, str):
+            first_caption = caption
+        else:
+            first_caption = ""
+
+        candidates = gram.get("image_versions2", {}).get("candidates", [])
+        image_url = gram.get("display_uri", "")
+        if image_url == "" and len(candidates):
+            image_url = candidates[0].get("url", "")
+        if image_url == "":
+            image_url = gram.get("thumbnail_url", "")
+
+        shortcode = gram.get("code", "")
+
+        return {
+            "accessibility_caption": gram.get("accessibility_caption", "") or "",
+            "html": linkify_text(first_caption),
+            "id": str(gram.get("id") or gram.get("pk") or ""),
+            "image": image_url,
+            "raw_json": json.dumps(gram),
+            "text": first_caption,
+            "thumbnail_url": gram.get("thumbnail_url", ""),
+            "url": f"https://instagram.com/p/{shortcode}" if shortcode else "",
+            # Prefer top-level feed user when available; item owner can differ for collabs.
+            "username": (
+                insta.get("user", {}).get("username", "")
+                or gram.get("owner", {}).get("username", "")
+                or gram.get("user", {}).get("username", "")
+            ),
+        }
+
     else:
-        raise ValidationError("Could not find data property in Instagram JSON.")
+        raise ValidationError(
+            "Could not find supported Instagram JSON properties ('data' or 'items')."
+        )
