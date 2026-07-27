@@ -1,5 +1,6 @@
 import json
 import logging
+import sys
 from io import BytesIO
 from pathlib import Path
 from typing import Any
@@ -7,10 +8,11 @@ from typing import Any
 import requests
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandError, CommandParser
-from instagram.api import get_instagram
-from instagram.models import Instagram
 from wagtail.images.models import Image
 from wagtail.models import Collection
+
+from instagram.api import get_instagram
+from instagram.models import Instagram
 
 logger = logging.getLogger("mgmt_cmd.script")
 
@@ -43,17 +45,17 @@ class Command(BaseCommand):
                 try:
                     data: dict[str, Any] = json.load(file)
                 except json.JSONDecodeError as e:
-                    raise CommandError(f"Invalid JSON file: {str(e)}")
+                    raise CommandError(f"Invalid JSON file: {e!r}")
 
         except Exception as e:
-            raise CommandError(f"An error occurred: {str(e)}")
+            raise CommandError(f"An error occurred: {e!r}")
 
         # Did we get an error in the JSON?
         if "error" in data:
             logger.critical(
                 f"Unable to retrieve latest Instagram. Error: {data['error']}"
             )
-            exit(1)
+            sys.exit(1)
 
         # get_instagram returns dict of just the data we're interested in
         insta: dict[str, str] = get_instagram(data)
@@ -61,7 +63,7 @@ class Command(BaseCommand):
         # do we already have this one?
         if len(Instagram.objects.filter(ig_id=insta["id"])) > 0:
             logger.info("No new Instagram posts; we already have the most recent one.")
-            exit(0)
+            sys.exit(0)
 
         # Add the image to Instagram collection in Wagtail
         # Videos have a thumbnail_url we use instead of media_url, images do not
@@ -112,5 +114,5 @@ class Command(BaseCommand):
             username=insta["username"],
         )
         logger.info(
-            'Latest Instagram retrieved successfully: "{0}"'.format(insta["text"])
+            'Latest Instagram retrieved successfully: "{}"'.format(insta["text"])
         )
