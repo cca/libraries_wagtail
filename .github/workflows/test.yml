@@ -48,5 +48,5 @@ jobs:
         working-directory: '.'
         run: >-
           uv run python libraries/manage.py test
-          libraries.tests hours sersol_api summon
+          libraries.tests hours instagram sersol_api summon
           --settings=libraries.settings.test

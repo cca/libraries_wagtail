@@ -13,6 +13,7 @@ local-gsb-sa.json
 libraries/logs/*
 libraries/media/*
 libraries/static/*
+instagram.json
 
 # track actual (not compiled) static files
 !libraries/libraries/static
@@ -20,7 +21,6 @@ libraries/static/*
 !libraries/static/.keep
 libraries/libraries/static/css
 
-# putting these below !libraries/libraries/static helps Atom out
 *.min.css
 *.min.css.map
 *.min.js
