@@ -29,7 +29,7 @@ class Instagram(models.Model):
         help_text="downloaded Instagram image",
     )
     # stackoverflow.com/questions/15470180/character-limit-on-instagram-usernames
-    username = models.CharField(blank=False, max_length=30)
+    username = models.CharField(blank=False, max_length=30, default="ccalibraries")
 
     def __str__(self):
         return self.text
