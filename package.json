@@ -36,7 +36,7 @@
     "gulp-sass": "^6.0.1",
     "gulp-uglify": "^3.0.2",
     "postcss": "^8.5.23",
-    "sass": "^1.101.7"
+    "sass": "^1.102.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
