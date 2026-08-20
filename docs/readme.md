@@ -43,6 +43,14 @@ If we use [dev.fish](./dev.fish), Skaffold mostly takes care of this. Otherwise,
 
 To rebuild the local dev application, Skaffold deletes all the kubernetes resources in the app's `libraries-wagtail` namespace. Sometimes, particular resources of the namespace itself gets stuck in a "terminating" status. [This article](https://www.redhat.com/sysadmin/troubleshooting-terminating-namespaces) explains what's happening: the resource's "finalizer" never allows it to be removed. The solution is to edit the resource and remove the finalizer.
 
+**Quick fix:** Run the cleanup script which handles all the common stuck resource scenarios:
+
+```sh
+./kubernetes/local/scripts/cleanup-namespace.sh
+```
+
+This script recreates the namespace if needed, force-deletes resources, removes finalizers from stuck PVCs and PVs, and cleans up orphaned volumes. Alternatively, remove the finalizer from the namespace:
+
 ```sh
 # Removing the finalizer from the namespace
 k get ns libraries-wagtail -o json > ns.json
