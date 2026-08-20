@@ -1,5 +1,7 @@
 # Summon (or other discovery layer) Broken Links app
 
+**Update 2026-08-20**: We no longer utilize this app because there is no bandwidth to respond to the reports, but the code remains in place.
+
 This app receives POSTed information and sends it to a Google Spreadsheet for analysis. It records the OpenURL, Summon permalink, and Summon content type of the item with the broken link as well as an email and open-ended comments field from the user reporting the broken link. To configure this app:
 
 1. create a Google Form with fields for each of the data listed above

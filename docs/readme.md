@@ -114,7 +114,7 @@ We use a combination of environment variables, kubernetes secrets, and Google Se
 
 - Environment variables are set in the kubernetes deployment files
   - [local configMap](../kubernetes/local/configMap.yml) and [deployment](../kubernetes/local/deployment.yml) files which in turn use a [secrets.env](../kubernetes/local/secrets.env) file
-  - ~~[staging](../kubernetes/staging.yaml)~~
+  - ~~staging~~
   - [production](../kubernetes/production.yaml)
 - Secrets are in k8s, `kubectl -n $NAMESPACE get secrets` lists them & [`k8 decode $SECRET $KEY`](https://github.com/cca/libraries-k8s) can show their values
   - Staging and production use k8s secrets but there's no need to locally
