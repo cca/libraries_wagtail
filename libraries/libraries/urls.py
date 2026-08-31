@@ -30,7 +30,6 @@ urlpatterns = [
     path("admin/", include(wagtailadmin_urls)),
     # TODO can we do this using just Wagtail REST APIs instead of Django REST framework?
     path("api/v2/", api_router.urls),
-    path("api/v1/", include("alerts.urls")),
     path("search/", search_views.search, name="search"),
     path("hours/", hours_views.hours, name="hours"),
     # Summon "broken links" app
