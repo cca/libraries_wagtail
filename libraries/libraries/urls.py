@@ -66,7 +66,7 @@ else:
     ]
 
 # when running locally with no GSB credentials
-if os.environ.get("GS_CREDENTIALS", True):
+if not os.environ.get("GS_CREDENTIALS"):
     from django.conf.urls.static import static
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
