@@ -703,7 +703,7 @@ requires-dist = [
     { name = "paramiko", specifier = "==5.0.0" },
     { name = "psycopg2", specifier = "==2.9.12" },
     { name = "uwsgi", specifier = "==2.0.31" },
-    { name = "wagtail", specifier = "==7.3.3" },
+    { name = "wagtail", specifier = "==7.4.3" },
     { name = "whitenoise", extras = ["brotli"], specifier = "==6.12.0" },
     { name = "xmltodict", specifier = "==1.0.4" },
 ]
@@ -739,15 +739,15 @@ wheels = [
 
 [[package]]
 name = "modelsearch"
-version = "1.2.2"
+version = "1.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
     { name = "django-tasks" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a2/7f/f775ea3ea2180a39fda4fb9bcce634478fc844ab0f436b899cc0a6e7a1c6/modelsearch-1.2.2.tar.gz", hash = "sha256:59fc29965d5411d607d0d5f80a65f0f49bec54bd5a425e8e0bfb185f04761e5b", size = 91157, upload-time = "2026-04-27T23:36:56.311Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/77/e3/5ce9c70828fe46be161781a04860fe3fe9d54c9b0b09539d9c291d15dbcf/modelsearch-1.3.2.tar.gz", hash = "sha256:52ede0f65e91efdb9d715f603e0bb3db96a95c80eba695abcd4628c03759999e", size = 105253, upload-time = "2026-08-11T14:38:12.199Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d3/03/24e5c5af6962e85fddebb58ba8448109789f62fee61b8375161284aa8e33/modelsearch-1.2.2-py3-none-any.whl", hash = "sha256:fd18522c1619e00452266513a78284a4e5016871c107036b078a45e42fa871e2", size = 111491, upload-time = "2026-04-27T23:36:54.712Z" },
+    { url = "https://files.pythonhosted.org/packages/6a/46/394e799ff69475093f05187929618b13cb230e9e9ce358313a1055724a5d/modelsearch-1.3.2-py3-none-any.whl", hash = "sha256:8738ad7dc6fd2f70f622e717c52fbdcc60285e6b74acc41a7bf3fe911718532b", size = 129677, upload-time = "2026-08-11T14:38:10.768Z" },
 ]
 
 [[package]]
@@ -1022,7 +1022,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/9f/49/2f57640e889ba509f
 
 [[package]]
 name = "wagtail"
-version = "7.3.3"
+version = "7.4.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyascii" },
@@ -1044,9 +1044,9 @@ dependencies = [
     { name = "telepath" },
     { name = "willow", extra = ["heif"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4b/b2/cde7f0adade51936a2b9e92437af9ac4b78db45e91c8aa011467bb8bab7f/wagtail-7.3.3.tar.gz", hash = "sha256:2ab1f0984734d623fb90b35d4c0a6be119504b00d9005b036f78eb462ed44713", size = 6875229, upload-time = "2026-06-15T15:27:10.486Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/de/cd7673469477c875ffa9135816c35e8346a41ce5253ccf4d6a4bece6c2b8/wagtail-7.4.3.tar.gz", hash = "sha256:e359e457ba7838b1c398f7169e34e203cefd75df9062eb8ecadb4be8f1c52912", size = 6834767, upload-time = "2026-08-20T15:28:47.912Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/14/ff/ee5d8cffe1c2f65fd2032c13cc3b3a47755ae5ef51c8ee44df02f30614e9/wagtail-7.3.3-py3-none-any.whl", hash = "sha256:0beb7efbf21078397eeab69de579a455b3ad0c4d86ef7ce197d2dbb6a6c7be59", size = 9491178, upload-time = "2026-06-15T15:27:03.443Z" },
+    { url = "https://files.pythonhosted.org/packages/13/7a/419900fddc7cdd6b614ac53d3cef877d68ae39751a771b49c62bd27fee89/wagtail-7.4.3-py3-none-any.whl", hash = "sha256:dafa7d25459724822362db816c37261cc37441dd1ff0e08f47386615d2644171", size = 9465320, upload-time = "2026-08-20T15:28:42.674Z" },
 ]
 
 [[package]]
