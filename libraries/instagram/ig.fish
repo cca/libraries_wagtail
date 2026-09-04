@@ -45,7 +45,11 @@ if [ $response_code -ne 200 ]
         "https://i.instagram.com/api/v1/feed/user/$username/username/?count=1")
 
     if [ $response_code -ne 200 ]
-        gunzip $file.gz
+        if file $file.gz | grep -q 'gzip compressed data'
+            gunzip $file.gz
+        else
+            mv $file.gz $file
+        end
         echo "Fallback endpoint also failed (HTTP $response_code)."
         if command --query jq
             echo "Instagram response:"
