@@ -39,8 +39,8 @@ importers:
         specifier: ^8.5.26
         version: 8.5.26
       sass:
-        specifier: ^1.103.1
-        version: 1.103.1
+        specifier: ^1.105.0
+        version: 1.105.0
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -981,6 +981,7 @@ packages:
   clone-buffer@1.0.0:
     resolution: {integrity: sha512-KLLTJWrvwIP+OPfMn0x2PheDEP20RPUcGXj/ERegTgdmPEZylALQldygiqrPPu8P45uNuPs7ckmReLY6v/iA5g==}
     engines: {node: '>= 0.10'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   clone-stats@1.0.0:
     resolution: {integrity: sha512-au6ydSpg6nsrigcZ4m8Bc9hxjeW+GJ8xh5G3BJCMt4WXe1H10UNaVOamqQTmrx1kjVuxAHIQSNU6hY4Nsn9/ag==}
@@ -1902,8 +1903,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass@1.103.1:
-    resolution: {integrity: sha512-9icZURbP51S6S0QGoyaeqk9uB06GNWxsFYWfH5RgpFgqK5FA8tJcM3AdVxrZEVJ7dz+L87nG95gBKf4VuaMHGw==}
+  sass@1.105.0:
+    resolution: {integrity: sha512-4EjSuRTyG8M4yRXXY1PT9OUV5zz23xBxJkbIAprohKHqf6HOU4MCpE3U3vAC+iO1gxobBjESNbcj8rYAQZWnyA==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -4026,7 +4027,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass@1.103.1:
+  sass@1.105.0:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.9
