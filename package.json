@@ -28,7 +28,7 @@
   "dependencies": {
     "@babel/core": "^8.0.1",
     "@babel/preset-env": "^8.0.2",
-    "autoprefixer": "^10.5.4",
+    "autoprefixer": "^10.6.1",
     "gulp": "^5.0.1",
     "gulp-babel": "^8.1.0",
     "gulp-concat": "^2.6.1",
