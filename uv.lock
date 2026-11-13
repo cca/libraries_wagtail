@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = "==3.13.*"
 
 [[package]]
@@ -258,15 +258,15 @@ wheels = [
 
 [[package]]
 name = "django-cas-ng"
-version = "5.1.1"
+version = "5.1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
     { name = "python-cas" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8f/38/686278cf67d59eef2a90de854060c8df1866370e5acbee4bc52f24ebc659/django_cas_ng-5.1.1.tar.gz", hash = "sha256:c89a4be2d24ab3fbcab3e59c212a3347a42840b0ad2677036b5655003ad4840c", size = 24543, upload-time = "2026-05-05T10:22:09.675Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/75/29/4691842a23ceeeaf71403ffaa0eea326c493bc624910bc141ea618b72a52/django_cas_ng-5.1.2.tar.gz", hash = "sha256:2c60495442d882d2833a75241fd10485f21a570e69335397628462aa15d83d58", size = 25442, upload-time = "2026-10-28T14:22:30.182Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b9/1d/be13d68b9278e2d7ac8ba4c0735edbdde995419c0baea72acc7aec2184a5/django_cas_ng-5.1.1-py3-none-any.whl", hash = "sha256:a1839aed955fc756ee35a479cb18eb3dd1912613888bdade069bcc4c405adb79", size = 23184, upload-time = "2026-05-05T10:22:08.57Z" },
+    { url = "https://files.pythonhosted.org/packages/42/c4/cc986c12a1c0610f95a3f777cf7bf6b4d9f67e52933b66246e00df0f1025/django_cas_ng-5.1.2-py3-none-any.whl", hash = "sha256:3022d1e938c36801a93cfc12cd850f5876b6755f8da1bbd6d20c2b4433e1a376", size = 23373, upload-time = "2026-10-28T14:22:29.123Z" },
 ]
 
 [[package]]
@@ -501,7 +501,7 @@ wheels = [
 
 [[package]]
 name = "google-cloud-secret-manager"
-version = "2.30.0"
+version = "2.32.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core", extra = ["grpc"] },
@@ -511,9 +511,9 @@ dependencies = [
     { name = "proto-plus" },
     { name = "protobuf" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/33/4a/7acb616b316c91969f7abf5f3719cb61cc4a97af86411e683ddb11147aa1/google_cloud_secret_manager-2.30.0.tar.gz", hash = "sha256:26ec87737731b483f7f95c26a8c7ab79e22cb66317c95006e7f6985dbc43c8a2", size = 286034, upload-time = "2026-07-16T20:36:23.29Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/09/02/472bdf6b83f78a9dfce9530811f3df0a1f5e3cb83ac631d2d82037fc21ea/google_cloud_secret_manager-2.32.0.tar.gz", hash = "sha256:104635f69f094f717caf0b68adf623f0f0cf7b3236dcba12d3a503e8637017e8", size = 286123, upload-time = "2026-11-05T18:40:19.95Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/18/8b/9347282b7f6828511d8cf927f3ab62b4b849aaa46aa12ae79e2f6da6cb0b/google_cloud_secret_manager-2.30.0-py3-none-any.whl", hash = "sha256:0f285e77d09a73700e3fca9abbc77f844a50276989bf76d64a76b6e2b871e396", size = 229181, upload-time = "2026-07-16T20:36:01.125Z" },
+    { url = "https://files.pythonhosted.org/packages/08/b7/b4fcf7d01d9deb3162975fef788845cf45fd2c923e4544aa9904a184c248/google_cloud_secret_manager-2.32.0-py3-none-any.whl", hash = "sha256:74eb64fb0bcdd7369ba95b17685860900cfbd2c07a2a8c043680cb25a1197860", size = 230048, upload-time = "2026-11-05T18:39:33.09Z" },
 ]
 
 [[package]]
@@ -693,15 +693,15 @@ dependencies = [
 requires-dist = [
     { name = "dj-database-url", specifier = "==3.1.2" },
     { name = "django", specifier = "==6.0.8" },
-    { name = "django-cas-ng", specifier = "==5.1.1" },
+    { name = "django-cas-ng", specifier = "==5.1.2" },
     { name = "django-extensions", specifier = "==4.1" },
     { name = "django-storages", extras = ["google"], specifier = "==1.14.6" },
     { name = "djangorestframework-simplejwt", specifier = "==5.5.1" },
     { name = "elasticsearch", specifier = "==7.17.13" },
-    { name = "google-cloud-secret-manager", specifier = "==2.30.0" },
+    { name = "google-cloud-secret-manager", specifier = "==2.32" },
     { name = "l18n", specifier = "==2021.3" },
     { name = "paramiko", specifier = "==5.0.0" },
-    { name = "psycopg2", specifier = "==2.9.12" },
+    { name = "psycopg2", specifier = "==2.9.13" },
     { name = "uwsgi", specifier = "==2.0.31" },
     { name = "wagtail", specifier = "==7.3.4" },
     { name = "whitenoise", extras = ["brotli"], specifier = "==6.12.0" },
@@ -845,11 +845,11 @@ wheels = [
 
 [[package]]
 name = "psycopg2"
-version = "2.9.12"
+version = "2.9.13"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c7/bc/f66df707ed1aec949fbf24e4460e4f4277a7ba23cdadb3965bb1f634ddb9/psycopg2-2.9.12.tar.gz", hash = "sha256:1dedb1c7a1d8552c4a6044c6b1c41a52e6a8e2d144af83eccac758076b1b7c15", size = 379683, upload-time = "2026-04-20T23:36:11.013Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/91/81/6ea19b8b28feb9405c8c87a307776614d6e404bdb98467d1ce10a39d2c1d/psycopg2-2.9.13.tar.gz", hash = "sha256:d36784fc2dae69523ba4b79c7d1d1b4d6e83e87836874f111262f4db940b16a6", size = 378068, upload-time = "2026-09-09T23:56:21.749Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/91/ab/03403779a251ca14a7f1b07a41c7aa735fd451f0aebe4c4f901a231167a4/psycopg2-2.9.12-cp313-cp313-win_amd64.whl", hash = "sha256:3d23e684927d37b95cee9a943f6927b04ae2fdcd056fd0e2a30929ee89fee5a9", size = 2757176, upload-time = "2026-04-20T23:33:23.577Z" },
+    { url = "https://files.pythonhosted.org/packages/e1/a5/a01216e7c2e477052469c0317a4e71e031293830c9882ca372bae167bec3/psycopg2-2.9.13-cp313-cp313-win_amd64.whl", hash = "sha256:165e25c1b0e616a1f28080c5c68bd2dc015051d83c90240b2171d3e76ca2b5ff", size = 2771568, upload-time = "2026-09-09T23:53:58.914Z" },
 ]
 
 [[package]]
