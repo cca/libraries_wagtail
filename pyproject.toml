@@ -20,7 +20,7 @@ dependencies = [
     "elasticsearch==7.17.13",
     "google-cloud-secret-manager==2.32",
     "l18n==2021.3",
-    "paramiko==5.0.0",
+    "paramiko==5.1",
     "psycopg2==2.9.13",
     "uwsgi==2.0.31",
     "xmltodict==1.0.4",
