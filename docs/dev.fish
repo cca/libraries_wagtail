@@ -8,21 +8,9 @@ end
 
 function start -d 'start the local wagtail application'
     # start docker
-    if not docker info &>/dev/null
-        if command --query dockerd
-            dockerd &>/dev/null &
-        else if docker desktop &>/dev/null
-            # docker desktop has a CLI as of version 4.37
-            docker desktop start
-        else
-            echo "Error: dockerd isn't in PATH and the 'docker desktop' command doesn't work, are you sure you have Docker installed?" >&2
-            exit 1
-        end
-
-        while not docker info &>/dev/null
-            echo (date "+%H:%M:%S") "waiting for Docker to start..."
-            sleep 10
-        end
+    if not docker desktop status &>/dev/null
+        # docker desktop has a CLI as of version 4.37
+        docker desktop start
     end
     echo "✅  Docker is running"
 
