@@ -5,7 +5,7 @@ WORKDIR /app
 # Copy project files into the docker image
 # See https://pnpm.io/cli/fetch#usage-scenario
 COPY libraries/libraries/static/ libraries/libraries/static
-COPY pnpm-lock.yaml gulpfile.js package.json ./
+COPY pnpm-lock.yaml pnpm-workspace.yaml gulpfile.js package.json ./
 # stops npm update notifier
 ENV CI=true
 ENV PNPM_HOME=/pnpm
