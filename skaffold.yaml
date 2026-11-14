@@ -25,6 +25,8 @@ profiles:
   - command: delete
   - command: render
   build:
+    local:
+      useBuildkit: true
     artifacts:
     - image: libraries-wagtail
       # Portal uses the custom cmd below which lets them have a DEVBUILD switch

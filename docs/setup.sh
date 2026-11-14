@@ -22,6 +22,7 @@ minikube config set cpus 6
 minikube config set kubernetes-version 1.33.10
 minikube config set memory 11585
 minikube config set vm-driver docker
+minikube config set container-runtime docker
 # minikube addons enable metrics-server
 
 [ -e "$DIR/../kubernetes/local/secrets.env" ] || echo -e "\nObtain a copy of secrets.env from a developer and place it in kubernetes/local\n"
